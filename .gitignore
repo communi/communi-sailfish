@@ -1,0 +1,17 @@
+Makefile
+Makefile.*
+Makefile_*.mk
+debug
+release
+*~
+*.o
+*.moc
+*.bak
+*.orig
+*.user
+*.user.*
+.qmake.cache
+.make.cache
+.tmp
+moc_*.cpp
+*.spec
