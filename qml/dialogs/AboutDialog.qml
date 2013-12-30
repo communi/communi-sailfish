@@ -47,7 +47,7 @@ Dialog {
                 color: Theme.highlightColor
                 font.family: Theme.fontFamilyHeading
                 font.pixelSize: Theme.fontSizeMedium
-                text: "Communi 0.1 for Sailfish"
+                text: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
             }
 
             Label {

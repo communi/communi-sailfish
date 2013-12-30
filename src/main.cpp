@@ -57,7 +57,7 @@ static void registerIrcTypes(const char* uri, int major = 3, int minor = 1)
 
 Q_DECL_EXPORT int main(int argc, char* argv[])
 {
-    QGuiApplication::setApplicationName("Communi");
+    QGuiApplication::setApplicationName("Communi for Sailfish");
     QGuiApplication::setOrganizationName("Communi");
     QGuiApplication::setApplicationVersion("0.1");
 

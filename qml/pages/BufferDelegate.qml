@@ -42,12 +42,13 @@ ListItem {
     menu: Component {
         ContextMenu {
             id: menu
+            property string reason: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
             MenuItem {
                 visible: buffer.sticky
                 text: buffer.connection.active ? qsTr("Disconnect") : qsTr("Connect")
                 onClicked: {
                     if (buffer.connection.active) {
-                        buffer.connection.quit()
+                        buffer.connection.quit(reason)
                         buffer.connection.close()
                     } else {
                         buffer.connection.open()
@@ -57,12 +58,12 @@ ListItem {
             MenuItem {
                 visible: buffer.connection.connected && buffer.channel
                 text: buffer.active ? qsTr("Part") : qsTr("Join")
-                onClicked: buffer.active ? buffer.part() : buffer.join()
+                onClicked: buffer.active ? buffer.part(reason) : buffer.join()
             }
             MenuItem {
                 text: qsTr("Remove")
                 onClicked: {
-                    buffer.close()
+                    buffer.close(reason)
                     if (buffer.sticky)
                         BufferModel.removeConnection(buffer.connection)
                     buffer.destroy()

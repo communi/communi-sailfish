@@ -46,7 +46,7 @@ Dialog {
     property string defaultPort: secure ? "6697" : "6667"
     property string defaultNickName: "Communi" + Math.floor(Math.random() * 12345)
     property string defaultUserName: "communi"
-    property string defaultRealName: qsTr("Communi 0.1 for Sailfish")
+    property string defaultRealName: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
 
     canAccept: !!host && !!nickName && !!userName && !!port
 
