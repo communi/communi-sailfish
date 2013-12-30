@@ -13,6 +13,7 @@
 */
 
 #include "bufferproxymodel.h"
+#include "zncmanager.h"
 #include <IrcBufferModel>
 #include <IrcConnection>
 #include <IrcBuffer>
@@ -57,6 +58,9 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
     model->setSortMethod(Irc::SortByTitle);
     connect(model, SIGNAL(added(IrcBuffer*)), this, SIGNAL(bufferAdded(IrcBuffer*)));
     connect(model, SIGNAL(removed(IrcBuffer*)), this, SIGNAL(bufferRemoved(IrcBuffer*)));
+
+    ZncManager* znc = new ZncManager(model);
+    znc->setModel(model);
 
     IrcBuffer* buffer = model->add(connection->displayName());
     buffer->setSticky(true);
