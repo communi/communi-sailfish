@@ -58,7 +58,7 @@ Page {
             linkColor: Theme.highlightColor
             font.pixelSize: Theme.fontSizeSmall
             onLinkActivated: Qt.openUrlExternally(link)
-            color: highlight ? "#ff4d4d" : seen ? "gray" : "white"
+            color: highlight ? "#ff4d4d" : seen ? Theme.secondaryColor : Theme.primaryColor
         }
 
         onCountChanged: {
