@@ -43,20 +43,20 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: "About Communi"
+                text: qsTr("About Communi")
                 onClicked: pageStack.push(Qt.resolvedUrl("../dialogs/AboutDialog.qml"))
             }
             MenuItem {
-                text: "Connect a network"
+                text: qsTr("Connect a network")
                 onClicked: pageStack.push(connectDialog)
             }
             MenuItem {
-                text: "Open a query"
+                text: qsTr("Open a query")
                 visible: BufferModel.models.length > 0
                 onClicked: pageStack.push(queryDialog, {model: BufferModel.models})
             }
             MenuItem {
-                text: "Join a channel"
+                text: qsTr("Join a channel")
                 visible: BufferModel.connections.length > 0
                 onClicked: pageStack.push(joinDialog, {model: BufferModel.connections})
             }
@@ -64,7 +64,7 @@ Page {
 
         ViewPlaceholder {
             enabled: view.count === 0
-            text: "Connect to a network"
+            text: qsTr("Connect to a network")
         }
 
         header: PageHeader { title: "Communi" }

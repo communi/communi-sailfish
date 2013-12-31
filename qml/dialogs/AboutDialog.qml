@@ -36,7 +36,7 @@ Dialog {
         spacing: Theme.paddingLarge
 
         header: DialogHeader {
-            title: "About"
+            title: qsTr("About")
             acceptTextVisible: false
         }
 
@@ -54,7 +54,7 @@ Dialog {
                 wrapMode: Text.WordWrap
                 anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
                 font.pixelSize: Theme.fontSizeSmall
-                text: "Communi is an IRC (Internet Relay Chat) client used to communicate with others on IRC networks around the world."
+                text: qsTr("Communi is an IRC (Internet Relay Chat) client used to communicate with others on IRC networks around the world.")
             }
 
             Label {
