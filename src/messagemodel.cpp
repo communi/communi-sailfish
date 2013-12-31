@@ -136,3 +136,12 @@ void MessageModel::append(const QString& message, bool hilite)
     m_highlights[row] = hilite;
     setData(index(row), message);
 }
+
+void MessageModel::clear()
+{
+    m_seen.clear();
+    m_highlights.clear();
+    setStringList(QStringList());
+    setActiveHighlight(false);
+    setBadge(0);
+}

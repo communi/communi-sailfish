@@ -52,6 +52,7 @@ public:
 public slots:
     void receive(IrcMessage* message);
     void append(const QString& message, bool hilite);
+    void clear();
 
 signals:
     void badgeChanged();
