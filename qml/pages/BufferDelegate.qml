@@ -91,8 +91,11 @@ ListItem {
         anchors { right: parent.right; verticalCenter: parent.verticalCenter }
     }
 
-    BusyIndicator {
+    Loader {
         anchors.centerIn: glass
-        running: buffer.sticky && buffer.connection.active && !buffer.connection.connected
+        active: buffer.sticky
+        sourceComponent: BusyIndicator {
+            running: buffer.connection.active && !buffer.connection.connected
+        }
     }
 }
