@@ -26,6 +26,7 @@ class MessageModel : public QStringListModel
 {
     Q_OBJECT
     Q_PROPERTY(IrcBuffer* buffer READ buffer CONSTANT)
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
     Q_PROPERTY(bool activeHighlight READ activeHighlight WRITE setActiveHighlight NOTIFY activeHighlightChanged)
     Q_PROPERTY(int badge READ badge WRITE setBadge NOTIFY badgeChanged)
@@ -34,6 +35,8 @@ public:
     MessageModel(IrcBuffer* buffer);
 
     IrcBuffer* buffer() const;
+
+    int count() const;
 
     bool isActive() const;
     void setActive(bool active);
@@ -55,6 +58,7 @@ public slots:
     void clear();
 
 signals:
+    void countChanged();
     void badgeChanged();
     void activeChanged();
     void activeHighlightChanged();

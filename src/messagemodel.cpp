@@ -29,11 +29,20 @@ MessageModel::MessageModel(IrcBuffer* buffer) : QStringListModel(buffer),
 {
     m_formatter->setBuffer(buffer);
     connect(buffer, SIGNAL(messageReceived(IrcMessage*)), this, SLOT(receive(IrcMessage*)));
+
+    connect(this, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SIGNAL(countChanged()));
+    connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SIGNAL(countChanged()));
+    connect(this, SIGNAL(modelReset()), this, SIGNAL(countChanged()));
 }
 
 IrcBuffer* MessageModel::buffer() const
 {
     return m_buffer;
+}
+
+int MessageModel::count() const
+{
+    return rowCount();
 }
 
 bool MessageModel::isActive() const
