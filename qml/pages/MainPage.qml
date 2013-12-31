@@ -51,10 +51,9 @@ Page {
                 onClicked: pageStack.push(connectDialog)
             }
             MenuItem {
-                enabled: false // TODO
                 text: "Open a query"
-                visible: BufferModel.connections.length > 0
-                onClicked: pageStack.push(queryDialog, {model: BufferModel.connections})
+                visible: BufferModel.models.length > 0
+                onClicked: pageStack.push(queryDialog, {model: BufferModel.models})
             }
             MenuItem {
                 text: "Join a channel"
@@ -189,9 +188,7 @@ Page {
         id: queryDialog
         QueryDialog {
             id: dialog
-            onAccepted: {
-                // TODO: model.add(dialog.name)
-            }
+            onAccepted: pageStack.replace(chatPage, {buffer: dialog.network.add(dialog.user)})
         }
     }
 }

@@ -34,8 +34,8 @@ Dialog {
     id: dialog
 
     property var model
-    property alias user: userField.text
-    property var connection: model[networkBox.currentIndex]
+    property string user: userField.text.trim()
+    property var network: model[networkBox.currentIndex]
 
     canAccept: !!user
 
@@ -51,7 +51,7 @@ Dialog {
                 menu: ContextMenu {
                     Repeater {
                         model: dialog.model
-                        delegate: MenuItem { text: modelData.displayName }
+                        delegate: MenuItem { text: modelData.connection.displayName }
                     }
                 }
             }
@@ -60,7 +60,7 @@ Dialog {
                 id: userField
                 width: parent.width
                 label: qsTr("Name")
-                errorHighlight: !!text
+                errorHighlight: !text
                 placeholderText: qsTr("Enter name")
 
                 EnterKey.text: qsTr("Open")
