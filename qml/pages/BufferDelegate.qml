@@ -79,7 +79,7 @@ ListItem {
         text: buffer.title
         verticalAlignment: Qt.AlignVCenter
         anchors { fill: parent; leftMargin: Theme.paddingLarge; rightMargin: glass.width }
-        color: MessageStorage.get(buffer).badge > 0 ? Theme.highlightColor : Theme.primaryColor
+        color: !buffer.active ? Theme.secondaryColor : MessageStorage.get(buffer).badge > 0 ? Theme.highlightColor : Theme.primaryColor
     }
 
     GlassItem {
