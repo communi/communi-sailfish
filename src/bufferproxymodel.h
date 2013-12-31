@@ -24,11 +24,13 @@ class BufferProxyModel : public RowsJoinerProxy
 {
     Q_OBJECT
     Q_PROPERTY(int count READ rowCount)
+    Q_PROPERTY(QList<QObject*> models READ models NOTIFY modelsChanged)
     Q_PROPERTY(QList<QObject*> connections READ connections NOTIFY connectionsChanged)
 
 public:
     BufferProxyModel(QObject* parent = 0);
 
+    QList<QObject*> models() const;
     QList<QObject*> connections() const;
     Q_INVOKABLE void addConnection(IrcConnection* connection);
     Q_INVOKABLE void removeConnection(IrcConnection* connection);
@@ -39,6 +41,7 @@ public:
     Q_INVOKABLE bool restoreState(const QByteArray& state);
 
 signals:
+    void modelsChanged();
     void connectionsChanged();
     void bufferAdded(IrcBuffer* buffer);
     void bufferRemoved(IrcBuffer* buffer);

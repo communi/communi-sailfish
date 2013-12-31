@@ -41,10 +41,18 @@ BufferProxyModel::BufferProxyModel(QObject* parent) : RowsJoinerProxy(parent)
 {
 }
 
+QList<QObject*> BufferProxyModel::models() const
+{
+    QList<QObject*> lst;
+    foreach (QAbstractItemModel* aim, RowsJoinerProxy::models())
+        lst += aim;
+    return lst;
+}
+
 QList<QObject*> BufferProxyModel::connections() const
 {
     QList<QObject*> lst;
-    foreach (QAbstractItemModel* aim, models()) {
+    foreach (QAbstractItemModel* aim, RowsJoinerProxy::models()) {
         IrcBufferModel* model = qobject_cast<IrcBufferModel*>(aim);
         if (model)
             lst += model->connection();
@@ -71,6 +79,7 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
 
     insertSourceModel(model);
     emit connectionsChanged();
+    emit modelsChanged();
 }
 
 void BufferProxyModel::removeConnection(IrcConnection* connection)
@@ -82,6 +91,7 @@ void BufferProxyModel::removeConnection(IrcConnection* connection)
 
         removeSourceModel(model);
         emit connectionsChanged();
+        emit modelsChanged();
     }
 }
 
@@ -101,7 +111,7 @@ QByteArray BufferProxyModel::saveState() const
 {
     //TODO: QVariantList modelStates;
     QVariantList connectionStates;
-    foreach (QAbstractItemModel* aim, models()) {
+    foreach (QAbstractItemModel* aim, RowsJoinerProxy::models()) {
         IrcBufferModel* model = qobject_cast<IrcBufferModel*>(aim);
         if (model) {
             //TODO: modelStates += model->saveState();
