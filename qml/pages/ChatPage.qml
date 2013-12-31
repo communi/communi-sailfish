@@ -123,11 +123,10 @@ Page {
             parser.addCommand(IrcCommand.Whois, "WHOIS <user>")
             parser.addCommand(IrcCommand.Whowas, "WHOWAS <user>")
 
-            // TODO: "custom" commands
-            //parser.addCommand(IrcCommand.Custom, "CLEAR")
-            //parser.addCommand(IrcCommand.Custom, "CLOSE")
-            //parser.addCommand(IrcCommand.Custom, "QUERY <user> (<message...>)")
-            //parser.addCommand(IrcCommand.Custom, "MSG <user/channel> <message...>")
+            parser.addCommand(IrcCommand.Custom, "CLEAR")
+            parser.addCommand(IrcCommand.Custom, "CLOSE")
+            parser.addCommand(IrcCommand.Custom, "QUERY <user> (<message...>)")
+            parser.addCommand(IrcCommand.Custom, "MSG <user/channel> <message...>")
         }
     }
 
@@ -145,12 +144,30 @@ Page {
         Keys.onReturnPressed: {
             var cmd = parser.parse(text)
             if (cmd) {
-                buffer.connection.sendCommand(cmd)
-                if (cmd.type === IrcCommand.Message
-                        || cmd.type === IrcCommand.CtcpAction
-                        || cmd.type === IrcCommand.Notice) {
-                    var msg = cmd.toMessage(buffer.connection.nickName, buffer.connection)
-                    buffer.receiveMessage(msg)
+                if (cmd.type === IrcCommand.Custom) {
+                    if (cmd.parameters[0] === "CLEAR") {
+                        MessageStorage.get(buffer).clear()
+                    } else if (cmd.parameters[0] === "CLOSE") {
+                        buffer.close(qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version))
+                        buffer.destroy()
+                        pageStack.pop()
+                    } else if (cmd.parameters[0] === "QUERY" || cmd.parameters[0] === "MSG") {
+                        var query = buffer.model.add(cmd.parameters[1])
+                        pageStack.replace(chatPage, {buffer: query})
+                        if (cmd.parameters.length > 2) {
+                            var msgCmd = ircCommand.createMessage(query.title, cmd.parameters.slice(2))
+                            query.sendCommand(msgCmd)
+                            query.receiveMessage(msgCmd.toMessage(query.connection.nickName, query.connection))
+                        }
+                    }
+                } else {
+                    buffer.connection.sendCommand(cmd)
+                    if (cmd.type === IrcCommand.Message
+                            || cmd.type === IrcCommand.CtcpAction
+                            || cmd.type === IrcCommand.Notice) {
+                        var msg = cmd.toMessage(buffer.connection.nickName, buffer.connection)
+                        buffer.receiveMessage(msg)
+                    }
                 }
                 field.text = ""
             }
