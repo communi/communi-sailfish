@@ -27,8 +27,8 @@ class MessageModel : public QStringListModel
     Q_OBJECT
     Q_PROPERTY(IrcBuffer* buffer READ buffer CONSTANT)
     Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
-    Q_PROPERTY(bool activeHighlight READ activeHighlight NOTIFY activeHighlightChanged)
-    Q_PROPERTY(int badge READ badge NOTIFY badgeChanged)
+    Q_PROPERTY(bool activeHighlight READ activeHighlight WRITE setActiveHighlight NOTIFY activeHighlightChanged)
+    Q_PROPERTY(int badge READ badge WRITE setBadge NOTIFY badgeChanged)
 
 public:
     MessageModel(IrcBuffer* buffer);
@@ -39,8 +39,10 @@ public:
     void setActive(bool active);
 
     bool activeHighlight() const;
+    void setActiveHighlight(bool highlight);
 
     int badge() const;
+    void setBadge(int badge);
 
     QHash<int, QByteArray> roleNames() const;
 

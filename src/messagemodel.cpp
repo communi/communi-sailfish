@@ -47,15 +47,9 @@ void MessageModel::setActive(bool active)
         m_active = active;
         if (!active) {
             m_seen.fill(true);
-            if (m_highlight) {
-                m_highlight = false;
-                emit activeHighlightChanged();
-            }
+            setActiveHighlight(false);
         } else {
-            if (m_badge > 0) {
-                m_badge = 0;
-                emit badgeChanged();
-            }
+            setBadge(0);
         }
         emit activeChanged();
     }
@@ -66,9 +60,25 @@ bool MessageModel::activeHighlight() const
     return m_highlight;
 }
 
+void MessageModel::setActiveHighlight(bool highlight)
+{
+    if (m_highlight != highlight) {
+        m_highlight = highlight;
+        emit activeHighlightChanged();
+    }
+}
+
 int MessageModel::badge() const
 {
     return m_badge;
+}
+
+void MessageModel::setBadge(int badge)
+{
+    if (m_badge != badge) {
+        m_badge = badge;
+        emit badgeChanged();
+    }
 }
 
 QHash<int, QByteArray> MessageModel::roleNames() const
@@ -109,14 +119,10 @@ void MessageModel::receive(IrcMessage* message)
         append(formatted, hilite);
         if (!m_active) {
             if (hilite || message->property("private").toBool()) {
-                if (!m_highlight) {
-                    m_highlight = true;
-                    emit activeHighlightChanged();
-                }
+                setActiveHighlight(true);
                 emit highlighted(message);
             }
-            ++m_badge;
-            emit badgeChanged();
+            setBadge(m_badge + 1);
         }
     }
 }
