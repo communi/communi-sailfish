@@ -44,6 +44,9 @@ signals:
     void connectionsChanged();
     void bufferAdded(IrcBuffer* buffer);
     void bufferRemoved(IrcBuffer* buffer);
+
+private slots:
+    void closeConnection(IrcBuffer* buffer);
 };
 
 #endif // BUFFERPROXYMODEL_H

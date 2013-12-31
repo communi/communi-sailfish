@@ -71,6 +71,7 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
     znc->setModel(model);
 
     IrcBuffer* buffer = model->add(connection->displayName());
+    connect(buffer, SIGNAL(destroyed(IrcBuffer*)), this, SLOT(closeConnection(IrcBuffer*)));
     buffer->setSticky(true);
 
     connect(connection, SIGNAL(displayNameChanged(QString)), buffer, SLOT(setName(QString)));
@@ -148,6 +149,11 @@ bool BufferProxyModel::restoreState(const QByteArray& data)
             connection->open();
     }
     return true;
+}
+
+void BufferProxyModel::closeConnection(IrcBuffer* buffer)
+{
+    removeConnection(buffer->connection());
 }
 
 #include "bufferproxymodel.moc"

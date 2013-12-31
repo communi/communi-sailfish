@@ -64,8 +64,6 @@ ListItem {
                 text: qsTr("Remove")
                 onClicked: {
                     buffer.close(reason)
-                    if (buffer.sticky)
-                        BufferModel.removeConnection(buffer.connection)
                     buffer.destroy()
                 }
             }
