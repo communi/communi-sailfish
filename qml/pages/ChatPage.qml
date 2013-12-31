@@ -148,9 +148,8 @@ Page {
                     if (cmd.parameters[0] === "CLEAR") {
                         MessageStorage.get(buffer).clear()
                     } else if (cmd.parameters[0] === "CLOSE") {
-                        buffer.close(qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version))
-                        buffer.destroy()
                         pageStack.pop()
+                        buffer.close(qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version))
                     } else if (cmd.parameters[0] === "QUERY" || cmd.parameters[0] === "MSG") {
                         var query = buffer.model.add(cmd.parameters[1])
                         pageStack.replace(chatPage, {buffer: query})

@@ -62,10 +62,7 @@ ListItem {
             }
             MenuItem {
                 text: qsTr("Remove")
-                onClicked: {
-                    buffer.close(reason)
-                    buffer.destroy()
-                }
+                onClicked: buffer.close(reason)
             }
         }
     }
