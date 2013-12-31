@@ -83,10 +83,40 @@ Page {
         target: buffer.title
 
         Component.onCompleted: {
+            parser.addCommand(IrcCommand.CtcpAction, "ACTION <target> <message...>")
+            parser.addCommand(IrcCommand.Admin, "ADMIN (<server>)")
+            parser.addCommand(IrcCommand.Away, "AWAY (<reason...>)")
+            parser.addCommand(IrcCommand.Info, "INFO (<server>)")
+            parser.addCommand(IrcCommand.Invite, "INVITE <user> (<#channel>)")
             parser.addCommand(IrcCommand.Join, "JOIN <#channel> (<key>)")
+            parser.addCommand(IrcCommand.Kick, "KICK (<#channel>) <user> (<reason...>)")
+            parser.addCommand(IrcCommand.Knock, "KNOCK <#channel> (<message...>)")
+            parser.addCommand(IrcCommand.List, "LIST (<channels>) (<server>)")
             parser.addCommand(IrcCommand.CtcpAction, "ME [target] <message...>")
+            parser.addCommand(IrcCommand.Mode, "MODE (<channel/user>) (<mode>) (<arg>)")
+            parser.addCommand(IrcCommand.Motd, "MOTD (<server>)")
+            parser.addCommand(IrcCommand.Names, "NAMES (<#channel>)")
             parser.addCommand(IrcCommand.Nick, "NICK <nick>")
+            parser.addCommand(IrcCommand.Notice, "NOTICE <#channel/user> <message...>")
             parser.addCommand(IrcCommand.Part, "PART (<#channel>) (<message...>)")
+            parser.addCommand(IrcCommand.Ping, "PING (<user>)")
+            parser.addCommand(IrcCommand.Quit, "QUIT (<message...>)")
+            parser.addCommand(IrcCommand.Quote, "QUOTE <command> (<parameters...>)")
+            parser.addCommand(IrcCommand.Stats, "STATS <query> (<server>)")
+            parser.addCommand(IrcCommand.Time, "TIME (<user>)")
+            parser.addCommand(IrcCommand.Topic, "TOPIC (<#channel>) (<topic...>)")
+            parser.addCommand(IrcCommand.Trace, "TRACE (<target>)")
+            parser.addCommand(IrcCommand.Users, "USERS (<server>)")
+            parser.addCommand(IrcCommand.Version, "VERSION (<user>)")
+            parser.addCommand(IrcCommand.Who, "WHO <mask>")
+            parser.addCommand(IrcCommand.Whois, "WHOIS <user>")
+            parser.addCommand(IrcCommand.Whowas, "WHOWAS <user>")
+
+            // TODO: "custom" commands
+            //parser.addCommand(IrcCommand.Custom, "CLEAR")
+            //parser.addCommand(IrcCommand.Custom, "CLOSE")
+            //parser.addCommand(IrcCommand.Custom, "QUERY <user> (<message...>)")
+            //parser.addCommand(IrcCommand.Custom, "MSG <user/channel> <message...>")
         }
     }
 
