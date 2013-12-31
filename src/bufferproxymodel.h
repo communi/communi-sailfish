@@ -23,7 +23,6 @@ class IrcConnection;
 class BufferProxyModel : public RowsJoinerProxy
 {
     Q_OBJECT
-    Q_PROPERTY(int count READ rowCount)
     Q_PROPERTY(QList<QObject*> models READ models NOTIFY modelsChanged)
     Q_PROPERTY(QList<QObject*> connections READ connections NOTIFY connectionsChanged)
 
