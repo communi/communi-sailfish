@@ -47,6 +47,17 @@ Page {
         clip: true
         anchors { top: parent.top; left: parent.left; right: parent.right; bottom: field.top }
 
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("Clear")
+                enabled: MessageStorage.get(buffer).count
+                onClicked: {
+                    // TODO: why the view position jumps?
+                    MessageStorage.get(buffer).clear()
+                }
+            }
+        }
+
         header: PageHeader { title: buffer.title }
 
         model: MessageStorage.get(buffer)
