@@ -78,5 +78,6 @@ Dialog {
                 EnterKey.onClicked: channelField.forceActiveFocus()
             }
         }
+        VerticalScrollDecorator { }
     }
 }

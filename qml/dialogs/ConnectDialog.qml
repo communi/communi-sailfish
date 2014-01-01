@@ -115,6 +115,7 @@ Dialog {
                 }
             }
         }
+        VerticalScrollDecorator { }
     }
 
     Page {
@@ -165,6 +166,7 @@ Dialog {
                     EnterKey.onClicked: userNameField.forceActiveFocus()
                 }
             }
+            VerticalScrollDecorator { }
         }
     }
 }

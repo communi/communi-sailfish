@@ -64,5 +64,6 @@ Dialog {
                 text: "Copyright (C) 2014 Robin Burchell & J-P Nurmi"
             }
         }
+        VerticalScrollDecorator { }
     }
 }

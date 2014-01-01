@@ -77,6 +77,8 @@ Page {
                 positioner.start()
         }
         Component.onCompleted: view.positionViewAtEnd()
+
+        VerticalScrollDecorator { }
     }
 
     Timer {

@@ -69,5 +69,6 @@ Dialog {
                 EnterKey.onClicked: dialog.accept()
             }
         }
+        VerticalScrollDecorator { }
     }
 }

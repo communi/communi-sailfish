@@ -79,6 +79,7 @@ Page {
                     pageStack.pushAttached(usersPage, {channel: model.buffer.toChannel()})
             }
         }
+        VerticalScrollDecorator { }
     }
 
     NonGraphicalFeedback {
@@ -140,6 +141,7 @@ Page {
                     }
                     onClicked: pageStack.replace(chatPage, {buffer: channel.model.add(model.name)})
                 }
+                VerticalScrollDecorator { }
             }
         }
     }
