@@ -5,7 +5,7 @@ include(src/src.pri)
 include(src/shared/shared.pri)
 include(src/backend/src/src.pri)
 
-OTHER_FILES += qml/communi.qml \
+OTHER_FILES += qml/main.qml \
     qml/cover/CoverPage.qml \
     qml/dialogs/AboutDialog.qml \
     qml/dialogs/ConnectDialog.qml \
