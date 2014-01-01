@@ -31,21 +31,69 @@ import QtQuick 2.1
 import Sailfish.Silica 1.0
 
 CoverBackground {
+    anchors.fill: parent
+
     Label {
-        id: label
-        anchors.centerIn: parent
-        text: "My Cover"
+        id: titleLabel
+        anchors {
+            verticalCenter: parent.verticalCenter
+            verticalCenterOffset: - parent.height / 6
+            horizontalCenter: parent.horizontalCenter
+        }
+        font.pixelSize: parent.width * 2.5
+        color: Theme.rgba(Theme.primaryColor, 0.2)
+        text: "#"
+    }
+    Label {
+        id: unreadLabel
+        anchors {
+            top: parent.top
+            left: parent.left
+            margins: 20
+        }
+        font.pixelSize: Theme.fontSizeExtraLarge
+        text: "0"
+    }
+    Label {
+        anchors {
+            left: unreadLabel.right
+            top: unreadLabel.top
+            leftMargin: 20
+        }
+        font.pixelSize: Theme.fontSizeExtraLarge / 2
+        text: qsTr("Unread\nhighlights")
+    }
+    Item {
+        id: recentChannels
+        anchors {
+            top: unreadLabel.bottom
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+            margins: 20
+        }
+        Column {
+            anchors.fill: parent
+            Repeater {
+                model: ListModel {
+                    ListElement { bufferName: "#communi" }
+                    ListElement { bufferName: "#jollamobile" }
+                    ListElement { bufferName: "#sailfishos" }
+                    ListElement { bufferName: "#qt" }
+                    ListElement { bufferName: "#nemomobile-porters" }
+                }
+                delegate: Label {
+                    color: Theme.highlightColor
+                    text: model.bufferName
+                }
+            }
+        }
+    }
+    OpacityRampEffect {
+        direction: OpacityRamp.LeftToRight
+        slope: 2
+        offset: 0.5
+        sourceItem: recentChannels
     }
 
-    CoverActionList {
-        id: coverAction
-
-        CoverAction {
-            iconSource: "image://theme/icon-cover-next"
-        }
-
-        CoverAction {
-            iconSource: "image://theme/icon-cover-pause"
-        }
-    }
 }
