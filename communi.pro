@@ -12,7 +12,7 @@ OTHER_FILES += qml/main.qml \
     qml/dialogs/JoinDialog.qml \
     qml/dialogs/QueryDialog.qml \
     qml/pages/BufferDelegate.qml \
-    qml/pages/ChatPage.qml \
+    qml/pages/BufferPage.qml \
     qml/pages/MainPage.qml \
     rpm/communi.spec \
     rpm/communi.yaml \

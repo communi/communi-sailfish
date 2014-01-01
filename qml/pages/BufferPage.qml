@@ -154,7 +154,7 @@ Page {
                         buffer.close(qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version))
                     } else if (cmd.parameters[0] === "QUERY" || cmd.parameters[0] === "MSG") {
                         var query = buffer.model.add(cmd.parameters[1])
-                        pageStack.replace(chatPage, {buffer: query})
+                        pageStack.replace(bufferPage, {buffer: query})
                         if (cmd.parameters.length > 2) {
                             var msgCmd = ircCommand.createMessage(query.title, cmd.parameters.slice(2))
                             query.sendCommand(msgCmd)

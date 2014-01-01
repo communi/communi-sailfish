@@ -74,7 +74,7 @@ Page {
         delegate: BufferDelegate {
             buffer: model.buffer
             onClicked: {
-                pageStack.push(chatPage, {buffer: model.buffer})
+                pageStack.push(bufferPage, {buffer: model.buffer})
                 if (model.buffer.channel)
                     pageStack.pushAttached(usersPage, {channel: model.buffer.toChannel()})
             }
@@ -94,9 +94,9 @@ Page {
 
         onClicked: {
             if (pageStack.depth > 1)
-                pageStack.replace(chatPage, {buffer: backgroundNotification.buffer})
+                pageStack.replace(bufferPage, {buffer: backgroundNotification.buffer})
             else
-                pageStack.push(chatPage, {buffer: backgroundNotification.buffer})
+                pageStack.push(bufferPage, {buffer: backgroundNotification.buffer})
             window.activate()
         }
     }
@@ -118,8 +118,8 @@ Page {
     }
 
     Component {
-        id: chatPage
-        ChatPage { }
+        id: bufferPage
+        BufferPage { }
     }
 
     Component {
@@ -139,7 +139,7 @@ Page {
                         text: title
                         anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge; verticalCenter: parent.verticalCenter }
                     }
-                    onClicked: pageStack.replace(chatPage, {buffer: channel.model.add(model.name)})
+                    onClicked: pageStack.replace(bufferPage, {buffer: channel.model.add(model.name)})
                 }
                 VerticalScrollDecorator { }
             }
@@ -190,7 +190,7 @@ Page {
         id: queryDialog
         QueryDialog {
             id: dialog
-            onAccepted: pageStack.replace(chatPage, {buffer: dialog.network.add(dialog.user)})
+            onAccepted: pageStack.replace(bufferPage, {buffer: dialog.network.add(dialog.user)})
         }
     }
 }
