@@ -306,13 +306,10 @@ Dialog {
             // the RIGHT WAY would be to listen to Qt.inputMethod.animatingChanged instead
             // details: https://together.jolla.com/question/8611/bug-qinputmethodanimatingchanged-is-never-emitted/
             onHeightChanged: {
-                reallyScrollToBottom();
+                positionViewAtEnd();
             }
             onContentHeightChanged: {
-                reallyScrollToBottom();
-            }
-            function reallyScrollToBottom() {
-                contentY = contentHeight - height - headerItem.height;
+                positionViewAtEnd();
             }
             // </workaround>
 
