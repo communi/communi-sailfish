@@ -263,15 +263,20 @@ Dialog {
         }
 
         SilicaListView {
+            id: setChannelsView
+
             anchors {
                 top: parent.top
                 left: parent.left
                 right: parent.right
-                bottom: setChannelsToolbar.top
+                bottom: parent.bottom
+                bottomMargin: setChannelsToolbar.height
             }
+            clip: true
 
             spacing: Theme.paddingMedium
             header: DialogHeader {
+                id: setChannelsDialogHeader
                 title: qsTr("Set channels")
             }
             model: setChannelsListModel
@@ -288,6 +293,7 @@ Dialog {
                         }
                     }
                 }
+
                 Label {
                     x: Theme.paddingLarge
                     text: channelName
@@ -296,6 +302,19 @@ Dialog {
                 }
             }
 
+            // <workaround>
+            // the RIGHT WAY would be to listen to Qt.inputMethod.animatingChanged instead
+            // details: https://together.jolla.com/question/8611/bug-qinputmethodanimatingchanged-is-never-emitted/
+            onHeightChanged: {
+                reallyScrollToBottom();
+            }
+            onContentHeightChanged: {
+                reallyScrollToBottom();
+            }
+            function reallyScrollToBottom() {
+                contentY = contentHeight - height - headerItem.height;
+            }
+            // </workaround>
 
             VerticalScrollDecorator {}
         }
