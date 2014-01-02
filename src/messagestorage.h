@@ -37,9 +37,11 @@ public slots:
 
 signals:
     void highlighted(IrcBuffer* buffer, IrcMessage* message);
+    void messageCountChanged(QString bufferDisplayName);
 
 private slots:
     void onHighlighted(IrcMessage* message);
+    void onCountChanged();
 
 private:
     MessageStorage(QObject* parent = 0);

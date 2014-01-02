@@ -17,3 +17,5 @@ OTHER_FILES += qml/main.qml \
     rpm/communi.spec \
     rpm/communi.yaml \
     communi.desktop
+
+CONFIG += c++11

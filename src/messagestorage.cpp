@@ -37,6 +37,7 @@ void MessageStorage::add(IrcBuffer* buffer)
         buffer->setPersistent(true);
         MessageModel* model = new MessageModel(buffer);
         connect(model, SIGNAL(highlighted(IrcMessage*)), this, SLOT(onHighlighted(IrcMessage*)));
+        connect(model, SIGNAL(countChanged()), this, SLOT(onCountChanged()));
         m_models.insert(buffer, model);
     }
 }
@@ -54,5 +55,13 @@ void MessageStorage::onHighlighted(IrcMessage* message)
         IrcBuffer* buffer = model->buffer();
         if (buffer)
             emit highlighted(buffer, message);
+    }
+}
+
+void MessageStorage::onCountChanged()
+{
+    MessageModel* model = qobject_cast<MessageModel*>(sender());
+    if (model != nullptr && model->buffer() != nullptr) {
+        emit this->messageCountChanged(model->buffer()->title());
     }
 }

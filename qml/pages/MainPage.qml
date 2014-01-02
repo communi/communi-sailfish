@@ -119,6 +119,11 @@ Page {
                 appCover.unreadHighlights += 1;
             }
         }
+        onMessageCountChanged: {
+            if (!window.applicationActive) {
+                appCover.addActiveBuffer(bufferDisplayName);
+            }
+        }
     }
 
     Component {
