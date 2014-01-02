@@ -118,7 +118,7 @@ Dialog {
                 Label {
                     id: advancedLabel
                     width: parent.width - 2 * Theme.paddingLarge
-                    text: qsTr("Username") + ": " + userName + ", " + qsTr("Port") + ": " + port + (password ? ", Password: ***" : "") + (secure ? ", Use SSL" : "")
+                    text: qsTr("Username") + ": " + userName + ", " + qsTr("Port") + ": " + port + (password ? ", " + qsTr("Password") + ": ***" : "") + (secure ? ", " + qsTr("Use SSL") : "")
                     enabled: false
                     wrapMode: Text.Wrap
                     color: Theme.secondaryColor
@@ -216,7 +216,7 @@ Dialog {
                     id: secureBox
                     anchors { left: parent.left; right: parent.right; rightMargin: Theme.paddingLarge }
                     description: qsTr("SSL provides a secure, encrypted connection with the server")
-                    text: qsTr("SSL")
+                    text: qsTr("Use SSL")
                 }
 
                 TextField {
