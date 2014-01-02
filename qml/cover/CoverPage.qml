@@ -31,7 +31,43 @@ import QtQuick 2.1
 import Sailfish.Silica 1.0
 
 CoverBackground {
+    id: cover
     anchors.fill: parent
+
+    // Number of unread highlights
+    property int unreadHighlights: 0
+
+    // Resets the cover (called when the app goes to the foreground)
+    function resetCover() {
+        // Clear unread highlights
+        cover.unreadHighlights = 0;
+        // Clear top active buffers
+        topActiveBuffers.clear();
+    }
+
+    // Adds a new name to display in the top active buffers list
+    function addActiveBuffer(bufferName) {
+        // Check if bufferName is already in the top
+        for (var i = 0; i < topActiveBuffers.count; i++) {
+            var item = topActiveBuffers.get(i);
+            if (item.bufferName === bufferName) {
+                // If bufferName is found, remove it
+                topActiveBuffers.remove(i, 1);
+                break;
+            }
+        }
+        // If the top contains more than 5 items, remove the last
+        if (topActiveBuffers.count >= 5) {
+            topActiveBuffers.remove(4, 1);
+        }
+
+        // Insert bufferName into the front
+        topActiveBuffers.insert(0, { bufferName: bufferName });
+    }
+
+    ListModel {
+        id: topActiveBuffers
+    }
 
     Label {
         id: titleLabel
@@ -52,7 +88,7 @@ CoverBackground {
             margins: 20
         }
         font.pixelSize: Theme.fontSizeExtraLarge
-        text: "0"
+        text: cover.unreadHighlights
     }
     Label {
         anchors {
@@ -75,13 +111,7 @@ CoverBackground {
         Column {
             anchors.fill: parent
             Repeater {
-                model: ListModel {
-                    ListElement { bufferName: "#communi" }
-                    ListElement { bufferName: "#jollamobile" }
-                    ListElement { bufferName: "#sailfishos" }
-                    ListElement { bufferName: "#qt" }
-                    ListElement { bufferName: "#nemomobile-porters" }
-                }
+                model: topActiveBuffers
                 delegate: Label {
                     color: Theme.highlightColor
                     text: model.bufferName
