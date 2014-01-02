@@ -280,13 +280,11 @@ Dialog {
                 menu: Component {
                     ContextMenu {
                         MenuItem {
-                            text: "Delete"
+                            text: qsTr("Remove")
                             onClicked: {
-
+                                // NOTE: since this is not actual important data, we don't need a remorse action here
+                                setChannelsListModel.remove(index, 1);
                             }
-                        }
-                        MenuItem {
-                            text: "Second option"
                         }
                     }
                 }
