@@ -14,6 +14,7 @@
 
 #include "bufferproxymodel.h"
 #include "zncmanager.h"
+#include <QCoreApplication>
 #include <IrcBufferModel>
 #include <IrcConnection>
 #include <IrcBuffer>
@@ -24,16 +25,23 @@ class IrcServerBuffer : public IrcBuffer
 
 public:
     explicit IrcServerBuffer(QObject* parent = 0) : IrcBuffer(parent) { }
+    ~IrcServerBuffer() { quit(tr("%1 %2").arg(qApp->applicationName(), qApp->applicationVersion())); }
 
 public slots:
     void close(const QString& reason)
     {
-        IrcConnection* c = connection();
-        if (c && c->isActive()) {
-            c->quit(reason);
-            c->close();
-        }
+        quit(reason);
         IrcBuffer::close(reason);
+    }
+
+private slots:
+    void quit(const QString& reason)
+    {
+        IrcConnection* connection = IrcBuffer::connection();
+        if (connection && connection->isActive()) {
+            connection->quit(reason);
+            connection->close();
+        }
     }
 };
 
@@ -70,9 +78,11 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
     ZncManager* znc = new ZncManager(model);
     znc->setModel(model);
 
-    IrcBuffer* buffer = model->add(connection->displayName());
+    IrcServerBuffer* buffer = new IrcServerBuffer(model);
     connect(buffer, SIGNAL(destroyed(IrcBuffer*)), this, SLOT(closeConnection(IrcBuffer*)));
+    buffer->setName(connection->displayName());
     buffer->setSticky(true);
+    model->add(buffer);
 
     connect(connection, SIGNAL(displayNameChanged(QString)), buffer, SLOT(setName(QString)));
     // TODO: more fine-grained delivery (WHOIS replies etc. to the current buffer)
