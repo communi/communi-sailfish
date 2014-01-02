@@ -48,6 +48,7 @@ Page {
         anchors { top: parent.top; left: parent.left; right: parent.right; bottom: field.top }
 
         PullDownMenu {
+            id: bufferPagePullDownMenu
             MenuItem {
                 text: qsTr("Clear")
                 enabled: MessageStorage.get(buffer).count
@@ -72,11 +73,22 @@ Page {
             color: highlight ? "#ff4d4d" : seen ? Theme.secondaryColor : Theme.primaryColor
         }
 
-        onCountChanged: {
-            if (view.visibleArea.yPosition + view.visibleArea.heightRatio > 0.9)
-                positioner.start()
+        Component.onCompleted: {
+            view.positionViewAtEnd();
         }
-        Component.onCompleted: view.positionViewAtEnd()
+        onCountChanged: {
+            if (view.visibleArea.yPosition + view.visibleArea.heightRatio > 0.9) {
+                positioner.restart();
+            }
+        }
+
+        // <workaround>
+        // the RIGHT WAY would be to listen to Qt.inputMethod.animatingChanged instead
+        // details: https://together.jolla.com/question/8611/bug-qinputmethodanimatingchanged-is-never-emitted/
+        onHeightChanged: {
+            positioner.restart();
+        }
+        // </workaround>
 
         VerticalScrollDecorator { }
     }
@@ -84,7 +96,13 @@ Page {
     Timer {
         id: positioner
         interval: 100
-        onTriggered: if (!view.moving) view.positionViewAtEnd()
+        onTriggered: {
+            view.cancelFlick();
+            view.positionViewAtEnd();
+        }
+        triggeredOnStart: false
+        running: false
+        repeat: false
     }
 
     IrcCommandParser {
