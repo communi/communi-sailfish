@@ -134,7 +134,11 @@ Page {
 
     TextField {
         id: field
-        anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+        }
 
         EnterKey.text: qsTr("Send")
         EnterKey.enabled: !!text
@@ -142,6 +146,11 @@ Page {
 
         placeholderText: qsTr("Hi, %1").arg(buffer.title)
         placeholderColor: Theme.secondaryHighlightColor
+        inputMethodHints: Qt.ImhNoAutoUppercase
+        focusOutBehavior: FocusBehavior.ClearPageFocus
+        textLeftMargin: Theme.itemSizeSmall + 2 * Theme.paddingSmall
+        textTopMargin: (implicitHeight - editor.implicitHeight) / 2
+        textRightMargin: 0
 
         Keys.onReturnPressed: {
             var cmd = parser.parse(text)
@@ -171,6 +180,60 @@ Page {
                     }
                 }
                 field.text = ""
+            }
+        }
+
+        Keys.onTabPressed: {
+            field.autoComplete();
+        }
+
+        background: Component {
+            Item {
+                anchors.fill: parent
+
+                IconButton {
+                    id: autocompleteButton
+                    icon.source: "image://theme/icon-s-retweet"
+                    onClicked: {
+                        field.autoComplete();
+                    }
+                    anchors {
+                        left: parent.left
+                        leftMargin: Theme.paddingSmall
+                        verticalCenter: parent.verticalCenter
+                    }
+                    highlighted: down || field.editor.activeFocus
+                    width: Theme.itemSizeSmall
+                    height: Theme.itemSizeSmall
+                }
+
+                Rectangle {
+                    height: 1
+                    anchors {
+                        left: parent.left
+                        leftMargin: autocompleteButton.width + 2 * Theme.paddingSmall
+                        right: parent.right
+                        rightMargin: Theme.paddingMedium
+                    }
+                    y: field.textTopMargin + field.editor.height + Theme.paddingSmall
+                    color: field.editor.activeFocus ? Theme.highlightColor : Theme.secondaryColor
+                }
+            }
+        }
+
+        function autoComplete() {
+            field.forceActiveFocus();
+            Qt.inputMethod.commit();
+            completer.complete(field.text, field.cursorPosition);
+        }
+
+        IrcCompleter {
+            id: completer
+            buffer: page.buffer
+            parser: parser
+            onCompleted: {
+                field.text = text;
+                field.cursorPosition = cursor;
             }
         }
     }
