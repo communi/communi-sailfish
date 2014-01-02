@@ -332,6 +332,14 @@ Dialog {
                 }
             }
 
+            // Makes the entire area of the thing clickable so it works even if the user doesn't tap exactly the text field
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    addChannelField.forceActiveFocus();
+                }
+            }
+
             // Input for the channel to add
             TextField {
                 id: addChannelField
