@@ -37,17 +37,12 @@ Dialog {
 
         header: DialogHeader {
             title: qsTr("About")
-            acceptTextVisible: false
         }
 
         model: VisualItemModel {
-            Label {
-                wrapMode: Text.WordWrap
-                anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
-                color: Theme.highlightColor
-                font.family: Theme.fontFamilyHeading
-                font.pixelSize: Theme.fontSizeMedium
-                text: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
+
+            PageHeader {
+                title: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
             }
 
             Label {
@@ -57,13 +52,30 @@ Dialog {
                 text: qsTr("Communi is an IRC (Internet Relay Chat) client used to communicate with others on IRC networks around the world.")
             }
 
+            SectionHeader {
+                text: qsTr("Developers")
+            }
+
             Label {
                 wrapMode: Text.WordWrap
                 anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
-                font.pixelSize: Theme.fontSizeExtraSmall
-                text: "Copyright (C) 2014 Robin Burchell & J-P Nurmi"
+                font.pixelSize: Theme.fontSizeSmall
+                text: "Robin Burchell\nJ-P Nurmi\nTimur Kristóf"
             }
+
+            SectionHeader {
+                text: qsTr("Icon design")
+            }
+
+            Label {
+                wrapMode: Text.WordWrap
+                anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
+                font.pixelSize: Theme.fontSizeSmall
+                text: "Stephan Beyerle"
+            }
+
         }
+
         VerticalScrollDecorator { }
     }
 }
