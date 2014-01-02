@@ -31,11 +31,19 @@ import QtQuick 2.1
 import Sailfish.Silica 1.0
 import Qt.labs.settings 1.0
 import "pages"
+import "cover"
 
 ApplicationWindow {
     id: window
     initialPage: Component { MainPage { } }
-    cover: Qt.resolvedUrl("cover/CoverPage.qml")
+    cover: CoverPage {
+        id: appCover
+    }
+    onApplicationActiveChanged: {
+        if (window.applicationActive) {
+            appCover.resetCover();
+        }
+    }
 
     Settings {
         id: settings

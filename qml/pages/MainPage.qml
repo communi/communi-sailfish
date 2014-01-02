@@ -107,12 +107,16 @@ Page {
             if (Qt.application.active) {
                 activeEffect.play();
             } else {
+                // Send notification
                 backgroundNotification.summary = qsTr("New message")
                 backgroundNotification.body = qsTr("%1: %2").arg(message.nick).arg(message.content)
                 backgroundNotification.previewSummary = qsTr("New message")
                 backgroundNotification.previewBody = qsTr("%1: %2").arg(message.nick).arg(message.content)
                 backgroundNotification.buffer = buffer
                 backgroundNotification.publish()
+
+                // Increase highlight count on cover
+                appCover.unreadHighlights += 1;
             }
         }
     }
