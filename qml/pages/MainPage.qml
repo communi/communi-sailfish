@@ -156,7 +156,7 @@ Page {
     }
 
     Component {
-        id: component
+        id: ircConnection
         IrcConnection { }
     }
 
@@ -169,7 +169,7 @@ Page {
         ConnectDialog {
             id: dialog
             onAccepted: {
-                var connection = component.createObject(BufferModel)
+                var connection = ircConnection.createObject(BufferModel)
                 connection.host = dialog.host
                 connection.port = dialog.port
                 connection.secure = dialog.secure
