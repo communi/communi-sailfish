@@ -110,18 +110,20 @@ QHash<int, QByteArray> BufferProxyModel::roleNames() const
 
 QByteArray BufferProxyModel::saveState() const
 {
-    //TODO: QVariantList modelStates;
+    QVariantList modelStates;
     QVariantList connectionStates;
     foreach (QAbstractItemModel* aim, RowsJoinerProxy::models()) {
         IrcBufferModel* model = qobject_cast<IrcBufferModel*>(aim);
         if (model) {
-            //TODO: modelStates += model->saveState();
             connectionStates += model->connection()->saveState();
+            // do not save the server buffer - let addConnection() handle it when restoring
+            model->remove(model->get(0));
+            modelStates += model->saveState();
         }
     }
 
     QVariantMap state;
-    //TODO: state.insert("models", modelStates);
+    state.insert("models", modelStates);
     state.insert("connections", connectionStates);
 
     QByteArray data;
@@ -138,15 +140,23 @@ bool BufferProxyModel::restoreState(const QByteArray& data)
     if (in.status() != QDataStream::Ok)
         return false;
 
-    //TODO: QVariantList modelStates = state.value("models").toList();
+    QVariantList modelStates = state.value("models").toList();
     QVariantList connectionStates = state.value("connections").toList();
 
     for (int i = 0; i < connectionStates.length(); ++i) {
         IrcConnection* connection = new IrcConnection(this);
         connection->restoreState(connectionStates.at(i).toByteArray());
         addConnection(connection);
-        if (connection->isEnabled())
+        if (connection->isEnabled()) {
+            // TODO: Give bouncers a sec or two to start joining channels after getting connected.
+            //       If that happens, the saved buffers shouldn't be restored to avoid restoring
+            //       a buffer that was closed using another client meanwhile.
+            IrcBufferModel* model = connection->findChild<IrcBufferModel*>();
+            if (model)
+                model->restoreState(modelStates.value(i).toByteArray());
+
             connection->open();
+        }
     }
     return true;
 }
