@@ -118,7 +118,7 @@ Dialog {
                 Label {
                     id: advancedLabel
                     width: parent.width - 2 * Theme.paddingLarge
-                    text: qsTr("Tap the button to set advanced settings.")
+                    text: qsTr("Username") + ": " + userName + ", " + qsTr("Port") + ": " + port + (password ? ", Password: ***" : "") + (secure ? ", Use SSL" : "")
                     enabled: false
                     wrapMode: Text.Wrap
                     color: Theme.secondaryColor
@@ -133,7 +133,7 @@ Dialog {
 
                 Button {
                     id: button
-                    text: qsTr("Go advanced")
+                    text: qsTr("Change")
                     anchors.centerIn: parent
                     onClicked: pageStack.push(details)
                 }
