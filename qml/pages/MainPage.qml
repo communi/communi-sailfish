@@ -43,7 +43,7 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr("About Communi")
+                text: qsTr("About IRC")
                 onClicked: pageStack.push(Qt.resolvedUrl("../dialogs/AboutDialog.qml"))
             }
             MenuItem {
@@ -67,7 +67,7 @@ Page {
             text: qsTr("Connect to a network")
         }
 
-        header: PageHeader { title: "Communi" }
+        header: PageHeader { title: qsTr("IRC") }
 
         model: BufferModel
 

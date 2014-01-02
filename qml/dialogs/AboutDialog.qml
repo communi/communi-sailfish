@@ -49,7 +49,7 @@ Dialog {
                 wrapMode: Text.WordWrap
                 anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
                 font.pixelSize: Theme.fontSizeSmall
-                text: qsTr("Communi is an IRC (Internet Relay Chat) client used to communicate with others on IRC networks around the world.")
+                text: qsTr("Internet Relay Chat (IRC) is a protocol for live interactive Internet text messaging (chat) or synchronous conferencing. It is mainly designed for group communication in discussion forums, called channels, but also allows one-to-one communication via private messages.")
             }
 
             SectionHeader {
