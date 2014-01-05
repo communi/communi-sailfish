@@ -88,6 +88,9 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
     // TODO: more fine-grained delivery (WHOIS replies etc. to the current buffer)
     connect(model, SIGNAL(messageIgnored(IrcMessage*)), buffer, SLOT(receiveMessage(IrcMessage*)));
 
+    connect(connection, SIGNAL(nickNameReserved(QString*)), this, SLOT(onNickNameReserved()));
+    connect(connection, SIGNAL(channelKeyRequired(QString,QString*)), this, SLOT(onChannelKeyRequired(QString)));
+
     insertSourceModel(model);
     emit connectionsChanged();
     emit modelsChanged();
@@ -174,6 +177,20 @@ bool BufferProxyModel::restoreState(const QByteArray& data)
 void BufferProxyModel::closeConnection(IrcBuffer* buffer)
 {
     removeConnection(buffer->connection());
+}
+
+void BufferProxyModel::onChannelKeyRequired(const QString& channel)
+{
+    IrcConnection* connection = qobject_cast<IrcConnection*>(sender());
+    if (connection)
+        emit channelKeyRequired(connection, channel);
+}
+
+void BufferProxyModel::onNickNameReserved()
+{
+    IrcConnection* connection = qobject_cast<IrcConnection*>(sender());
+    if (connection)
+        emit nickNameReserved(connection);
 }
 
 #include "bufferproxymodel.moc"

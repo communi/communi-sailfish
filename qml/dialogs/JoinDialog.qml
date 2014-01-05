@@ -40,6 +40,11 @@ Dialog {
 
     canAccept: channel.length > 1
 
+    Component.onCompleted: {
+        if (channel.length > 1)
+            passwordField.errorHighlight = Qt.binding(function() { return !passwordField.text })
+    }
+
     SilicaListView {
         anchors.fill: parent
         spacing: Theme.paddingMedium

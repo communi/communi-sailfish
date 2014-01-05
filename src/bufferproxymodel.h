@@ -45,8 +45,13 @@ signals:
     void bufferAdded(IrcBuffer* buffer);
     void bufferRemoved(IrcBuffer* buffer);
 
+    void nickNameReserved(IrcConnection* connection);
+    void channelKeyRequired(IrcConnection* connection, const QString& channel);
+
 private slots:
     void closeConnection(IrcBuffer* buffer);
+    void onChannelKeyRequired(const QString& channel);
+    void onNickNameReserved();
 };
 
 #endif // BUFFERPROXYMODEL_H

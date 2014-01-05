@@ -102,6 +102,18 @@ Page {
     }
 
     Connections {
+        target: BufferModel
+        onNickNameReserved: {
+            // TODO: show NickDialog
+            connection.nickName += "_"
+        }
+        onChannelKeyRequired: {
+            // TODO: cannot push while transition is in progress
+            pageStack.push(joinDialog, {channel: channel, model: BufferModel.connections})
+        }
+    }
+
+    Connections {
         target: MessageStorage
         onHighlighted: {
             if (Qt.application.active) {
