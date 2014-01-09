@@ -12,9 +12,12 @@ OTHER_FILES += qml/main.qml \
     qml/dialogs/JoinDialog.qml \
     qml/dialogs/QueryDialog.qml \
     qml/pages/BufferDelegate.qml \
+    qml/pages/BufferListPanel.qml \
     qml/pages/BufferPage.qml \
-    qml/pages/MainPage.qml \
+    qml/pages/Panel.qml \
+    qml/pages/PanelView.qml \
     qml/pages/TextEntry.qml \
+    qml/pages/UserListPanel.qml \
     rpm/communi.spec \
     rpm/communi.yaml \
     communi.desktop

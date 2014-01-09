@@ -40,7 +40,7 @@ TextField {
     EnterKey.enabled: !!text
     EnterKey.highlighted: true
 
-    placeholderText: qsTr("Hi, %1").arg(buffer.title)
+    placeholderText: buffer ? qsTr("Hi, %1").arg(buffer.title) : ""
     placeholderColor: Theme.secondaryHighlightColor
     inputMethodHints: Qt.ImhNoAutoUppercase
     focusOutBehavior: FocusBehavior.ClearPageFocus
@@ -128,8 +128,8 @@ TextField {
 
         tolerant: true
         triggers: ["/"]
-        channels: buffer.model.channels
-        target: buffer.title
+        channels: buffer ? buffer.model.channels : []
+        target: buffer ? buffer.title : ""
 
         Component.onCompleted: {
             parser.addCommand(IrcCommand.CtcpAction, "ACTION <target> <message...>")
@@ -170,7 +170,7 @@ TextField {
 
     IrcCompleter {
         id: completer
-        buffer: buffer
+        buffer: field.buffer
         parser: parser
         onCompleted: {
             field.text = text;
