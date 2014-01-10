@@ -128,7 +128,7 @@ ApplicationWindow {
         id: viewer
 
         anchors.fill: parent
-        interactive: !!currentPage && !!currentPage.__isBufferPage
+        visible: !!currentPage && !!currentPage.__isBufferPage
 
         leftPanel: BufferListPanel {
             id: leftPanel
