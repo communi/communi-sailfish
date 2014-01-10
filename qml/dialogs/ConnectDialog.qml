@@ -42,7 +42,6 @@ Dialog {
     property string userName: userNameField.text
     property string realName: realNameField.text || defaultRealName
     property string password: passwordField.text
-    property var channels: channelField.text.split(/[\s,]+/)
 
     property string defaultPort: secure ? "6697" : "6667"
     property string defaultNickName: qsTr("Sailor%1").arg(Math.floor(Math.random() * 12345))
@@ -50,29 +49,12 @@ Dialog {
     property string defaultRealName: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
 
     canAccept: !!host && !!nickName && !!userName && !!port
-    onStatusChanged: {
-        if (dialog.status === PageStatus.Active) {
-            // Set text field to default channel names
-            setChannelsPage.setChannelNames();
-        }
-    }
-
-    // The default list of channels to join
-    ListModel {
-        id: setChannelsListModel
-        ListElement { channelName: "#jollamobile" }
-        ListElement { channelName: "#sailfishos" }
-    }
 
     SilicaListView {
         anchors.fill: parent
         spacing: Theme.paddingMedium
         header: DialogHeader { title: qsTr("Connect") }
         model: VisualItemModel {
-
-            SectionHeader {
-                text: qsTr("Basic settings")
-            }
 
             TextField {
                 id: nickNameField
@@ -106,33 +88,13 @@ Dialog {
                 EnterKey.iconSource: "image://theme/icon-m-enter-next"
             }
 
-            SectionHeader {
-                text: qsTr("Advanced settings")
-            }
-
-            Item {
-                width: parent.width
-                height: advancedLabel.height + 2 * Theme.paddingMedium
-
-                Label {
-                    id: advancedLabel
-                    width: parent.width - 2 * Theme.paddingLarge
-                    text: qsTr("Username") + ": " + userName + ", " + qsTr("Port") + ": " + port + (password ? ", " + qsTr("Password") + ": ***" : "") + (secure ? ", " + qsTr("Use SSL") : "")
-                    enabled: false
-                    wrapMode: Text.Wrap
-                    color: Theme.secondaryColor
-                    anchors.centerIn: parent
-
-                }
-            }
-
             Item {
                 width: parent.width
                 height: button.height + 2 * Theme.paddingMedium
 
                 Button {
                     id: button
-                    text: qsTr("Change")
+                    text: qsTr("Advanced")
                     anchors.centerIn: parent
                     onClicked: pageStack.push(details)
                 }
@@ -142,42 +104,6 @@ Dialog {
                     color: !userName || !port ? "#ff4d4d" : "transparent"
                 }
             }
-
-            SectionHeader {
-                text: qsTr("Channels")
-            }
-
-            Item {
-                width: parent.width
-                height: channelField.height + 2 * Theme.paddingMedium
-
-                Label {
-                    id: channelField
-                    width: parent.width - 2 * Theme.paddingLarge
-                    text: ""
-                    enabled: false
-                    wrapMode: Text.Wrap
-                    color: Theme.secondaryColor
-                    anchors.centerIn: parent
-
-                }
-            }
-
-            Item {
-                width: parent.width
-                height: button.height +  Theme.paddingLarge
-
-                Button {
-                    id: setChannelsButton
-                    text: qsTr("Set channels")
-                    onClicked: pageStack.push(setChannelsPage)
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                        top: parent.top
-                    }
-                }
-            }
-
         }
         VerticalScrollDecorator { }
     }
@@ -187,7 +113,7 @@ Dialog {
         SilicaListView {
             anchors.fill: parent
             spacing: Theme.paddingMedium
-            header: DialogHeader { title: qsTr("Advanced settings") }
+            header: DialogHeader { title: qsTr("Advanced") }
             model: VisualItemModel {
                 TextField {
                     id: userNameField
@@ -231,153 +157,6 @@ Dialog {
                 }
             }
             VerticalScrollDecorator { }
-        }
-    }
-
-    Page {
-        id: setChannelsPage
-        onStatusChanged: {
-            if (setChannelsPage.status === PageStatus.Deactivating) {
-                addChannelField.focus = false;
-                setChannelNames();
-            }
-            else if (setChannelsPage.status === PageStatus.Active) {
-                addChannelField.forceActiveFocus();
-            }
-        }
-
-        function setChannelNames() {
-            var allChannelsText = "";
-
-            // Aggregate channel names
-            for (var i = 0; i < setChannelsListModel.count; i++) {
-                var item = setChannelsListModel.get(i);
-                if (i !== 0) {
-                    allChannelsText += ", ";
-                }
-                allChannelsText += item.channelName;
-            }
-
-            channelField.text = allChannelsText;
-        }
-
-        SilicaListView {
-            id: setChannelsView
-
-            anchors {
-                top: parent.top
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom
-                bottomMargin: setChannelsToolbar.height
-            }
-            clip: true
-
-            spacing: Theme.paddingMedium
-            header: DialogHeader {
-                id: setChannelsDialogHeader
-                title: qsTr("Set channels")
-            }
-            model: setChannelsListModel
-            delegate: ListItem {
-                id: listItem
-                menu: Component {
-                    ContextMenu {
-                        MenuItem {
-                            text: qsTr("Remove")
-                            onClicked: {
-                                // NOTE: since this is not actual important data, we don't need a remorse action here
-                                setChannelsListModel.remove(index, 1);
-                            }
-                        }
-                    }
-                }
-
-                Label {
-                    x: Theme.paddingLarge
-                    text: channelName
-                    anchors.verticalCenter: parent.verticalCenter
-                    color: listItem.highlighted ? Theme.highlightColor : Theme.primaryColor
-                }
-            }
-
-            // <workaround>
-            // the RIGHT WAY would be to listen to Qt.inputMethod.animatingChanged instead
-            // details: https://together.jolla.com/question/8611/bug-qinputmethodanimatingchanged-is-never-emitted/
-            onHeightChanged: {
-                positionViewAtEnd();
-            }
-            onContentHeightChanged: {
-                positionViewAtEnd();
-            }
-            // </workaround>
-
-            VerticalScrollDecorator {}
-        }
-
-        // Sort of toolbar thingy for adding new channels quickly
-        Rectangle {
-            id: setChannelsToolbar
-            height: addChannelField.height + 2 * Theme.paddingSmall
-            color: Theme.rgba(Theme.primaryColor, 0.15)
-            anchors {
-                bottom: parent.bottom
-                left: parent.left
-                right: parent.right
-            }
-
-            // Adds the currently entered channel to the list
-            function addChannel() {
-                var channelName = addChannelField.text;
-                if (channelName && channelName !== "#") {
-                    // Check if channel is already added
-                    for (var i = 0; i < setChannelsListModel.count; i++) {
-                        var item = setChannelsListModel.get(i);
-
-                        if (item.channelName === channelName) {
-                            cantAddBuzz.play();
-                            return;
-                        }
-                    }
-
-                    // Clear text field
-                    addChannelField.text = "#";
-                    // Add to list model
-                    setChannelsListModel.append({ channelName: channelName });
-                }
-            }
-
-            // Makes the entire area of the thing clickable so it works even if the user doesn't tap exactly the text field
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    addChannelField.forceActiveFocus();
-                }
-            }
-
-            // Input for the channel to add
-            TextField {
-                id: addChannelField
-                anchors {
-                    left: parent.left
-                    leftMargin: Theme.paddingSmall
-                    right: parent.right
-                    rightMargin: Theme.paddingSmall
-                    bottom: parent.bottom
-                }
-                text: "#"
-                label: qsTr("Enter a channel name")
-                EnterKey.text: qsTr("Add")
-                EnterKey.onClicked: {
-                    setChannelsToolbar.addChannel();
-                }
-            }
-
-            // Effect used to tell the user that the entered channel can't be added
-            ThemeEffect {
-                id: cantAddBuzz
-                effect: ThemeEffect.PressStrong
-            }
         }
     }
 }
