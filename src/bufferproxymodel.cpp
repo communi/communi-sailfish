@@ -49,6 +49,20 @@ BufferProxyModel::BufferProxyModel(QObject* parent) : RowsJoinerProxy(parent)
 {
 }
 
+IrcBuffer* BufferProxyModel::get(int index) const
+{
+    foreach (QAbstractItemModel* aim, RowsJoinerProxy::models()) {
+        IrcBufferModel* model = qobject_cast<IrcBufferModel*>(aim);
+        if (model) {
+            int count = model->count();
+            if (index < count)
+                return model->get(index);
+            index -= count;
+        }
+    }
+    return 0;
+}
+
 QList<QObject*> BufferProxyModel::models() const
 {
     QList<QObject*> lst;

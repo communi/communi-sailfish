@@ -29,6 +29,8 @@ class BufferProxyModel : public RowsJoinerProxy
 public:
     BufferProxyModel(QObject* parent = 0);
 
+    Q_INVOKABLE IrcBuffer* get(int index) const;
+
     QList<QObject*> models() const;
     QList<QObject*> connections() const;
     Q_INVOKABLE void addConnection(IrcConnection* connection);
