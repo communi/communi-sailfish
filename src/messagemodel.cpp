@@ -56,9 +56,9 @@ void MessageModel::setActive(bool active)
         m_active = active;
         if (!active) {
             m_seen.fill(true);
-            setActiveHighlight(false);
         } else {
             setBadge(0);
+            setActiveHighlight(false);
         }
         emit activeChanged();
     }
