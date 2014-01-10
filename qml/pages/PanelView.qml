@@ -64,17 +64,11 @@ SilicaListView {
         }
     }
 
-    Binding {
-        target: leftPanel
-        property: "__view"
-        value: container
-    }
+    Binding { target: leftPanel; property: "__view"; value: container }
+    Binding { target: leftPanel; property: "edge"; value: Qt.LeftEdge }
 
-    Binding {
-        target: rightPanel
-        property: "__view"
-        value: container
-    }
+    Binding { target: rightPanel; property: "__view"; value: container }
+    Binding { target: rightPanel; property: "edge"; value: Qt.RightEdge }
 
     Component.onCompleted: {
         if (leftPanel && leftPanel.active) {

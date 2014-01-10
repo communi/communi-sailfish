@@ -34,6 +34,8 @@ Rectangle {
 
     property bool active: true
     property bool highlighted: false
+    property int edge: Qt.LeftEdge
+    property int index: edge === Qt.LeftEdge ? 0 : 2
 
     signal toggled()
 
@@ -63,11 +65,18 @@ Rectangle {
         visible: __view
         width: Theme.paddingLarge
         height: parent.height / 2
-        anchors.horizontalCenter: __view && __view.leftPanel === panel ? parent.right : parent.left
+        anchors.horizontalCenter: panel.edge === Qt.LeftEdge ? parent.right : parent.left
         anchors.verticalCenter: parent.verticalCenter
         color: panel.highlighted ? Theme.highlightColor : Theme.primaryColor
         falloffRadius: 0.17
         brightness: 1.0
         radius: 0.25
+    }
+
+    InverseMouseArea {
+        anchors.fill: parent
+        enabled: panel.active && __view && __view.currentIndex === panel.index
+        stealPress: true
+        onPressedOutside: panel.hide()
     }
 }
