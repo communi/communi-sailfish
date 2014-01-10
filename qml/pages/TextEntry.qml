@@ -37,7 +37,7 @@ TextField {
     property IrcBuffer buffer
 
     EnterKey.text: qsTr("Send")
-    EnterKey.enabled: !!text
+    EnterKey.enabled: !!text.trim()
     EnterKey.highlighted: true
 
     placeholderText: buffer ? qsTr("Hi, %1").arg(buffer.title) : ""
