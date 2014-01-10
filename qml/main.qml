@@ -85,6 +85,14 @@ ApplicationWindow {
 
     Connections {
         target: BufferModel
+        onNickNameReserved: {
+            // TODO: show NickDialog
+            connection.nickName += "_"
+        }
+        onChannelKeyRequired: {
+            // TODO: cannot push while transition is in progress
+            pageStack.push(joinDialog, {channel: channel, model: BufferModel.connections})
+        }
         onBufferAboutToBeRemoved: {
             if (buffer === currentBuffer) {
                 var idx = buffer.model.indexOf(buffer)
