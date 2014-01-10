@@ -45,8 +45,8 @@ Dialog {
     property var channels: channelField.text.split(/[\s,]+/)
 
     property string defaultPort: secure ? "6697" : "6667"
-    property string defaultNickName: "Communi" + Math.floor(Math.random() * 12345)
-    property string defaultUserName: "communi"
+    property string defaultNickName: qsTr("Sailor%1").arg(Math.floor(Math.random() * 12345))
+    property string defaultUserName: "sailfish"
     property string defaultRealName: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
 
     canAccept: !!host && !!nickName && !!userName && !!port
@@ -60,7 +60,6 @@ Dialog {
     // The default list of channels to join
     ListModel {
         id: setChannelsListModel
-        ListElement { channelName: "#communi" }
         ListElement { channelName: "#jollamobile" }
         ListElement { channelName: "#sailfishos" }
     }
