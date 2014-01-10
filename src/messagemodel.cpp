@@ -23,7 +23,7 @@ enum DataRole {
     HighlightRole
 };
 
-MessageModel::MessageModel(IrcBuffer* buffer) : QStringListModel(buffer),
+MessageModel::MessageModel(IrcBuffer* buffer) : QAbstractListModel(buffer),
     m_badge(0), m_active(false), m_highlight(false),
     m_buffer(buffer), m_formatter(new MessageFormatter(this))
 {
@@ -42,7 +42,12 @@ IrcBuffer* MessageModel::buffer() const
 
 int MessageModel::count() const
 {
-    return rowCount();
+    return m_messages.count();
+}
+
+int MessageModel::rowCount(const QModelIndex& parent) const
+{
+    return parent.isValid() ? 0 : m_messages.count();
 }
 
 bool MessageModel::isActive() const
@@ -55,7 +60,12 @@ void MessageModel::setActive(bool active)
     if (m_active != active) {
         m_active = active;
         if (!active) {
-            m_seen.fill(true);
+            for (int i = m_messages.count() - 1; i >= 0; --i) {
+                bool& seen = m_messages[i].seen;
+                if (seen)
+                    break;
+                seen = true;
+            }
         } else {
             setBadge(0);
             setActiveHighlight(false);
@@ -93,7 +103,8 @@ void MessageModel::setBadge(int badge)
 QHash<int, QByteArray> MessageModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles[Qt::DisplayRole] = "display";
+    roles[Qt::DisplayRole] = "richtext";
+    roles[Qt::EditRole] = "plaintext";
     roles[HighlightRole] = "highlight";
     roles[SeenRole] = "seen";
     return roles;
@@ -101,31 +112,33 @@ QHash<int, QByteArray> MessageModel::roleNames() const
 
 QVariant MessageModel::data(const QModelIndex& index, int role) const
 {
-    if (role == HighlightRole) {
-        return m_highlights.value(index.row(), false);
-    }
-    if (role == SeenRole)
-        return m_seen.value(index.row(), false);
-    return QStringListModel::data(index, role);
-}
+    const int row = index.row();
+    if (row < 0 || row >= m_messages.count())
+        return QVariant();
 
-bool MessageModel::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-    if (role == HighlightRole)
-        m_highlights[index.row()] = value.toBool();
-    if (role == SeenRole)
-        m_seen[index.row()] = value.toBool();
-    return QStringListModel::setData(index, value, role);
+    switch (role) {
+    case HighlightRole:
+        return m_messages.at(row).hilite;
+    case SeenRole:
+        return m_messages.at(row).seen;
+    case Qt::DisplayRole:
+        return m_messages.at(row).richtext;
+    case Qt::EditRole:
+        return m_messages.at(row).plaintext;
+    default:
+        return QVariant();
+    }
 }
 
 void MessageModel::receive(IrcMessage* message)
 {
-    QString formatted = m_formatter->formatMessage(message);
-    if (!formatted.isEmpty()) {
+    QString plaintext = m_formatter->formatMessage(message, Qt::PlainText);
+    if (!plaintext.isEmpty()) {
         bool hilite = false;
         if (!(message->flags() & IrcMessage::Own))
             hilite = message->property("content").toString().contains(message->connection()->nickName(), Qt::CaseInsensitive);
-        append(formatted, hilite);
+        QString richtext = m_formatter->formatMessage(message, Qt::RichText);
+        append(richtext, plaintext, hilite);
         if (!m_active) {
             if (hilite || message->property("private").toBool()) {
                 setActiveHighlight(true);
@@ -136,21 +149,24 @@ void MessageModel::receive(IrcMessage* message)
     }
 }
 
-void MessageModel::append(const QString& message, bool hilite)
+void MessageModel::append(const QString& richtext, const QString& plaintext, bool hilite)
 {
-    int row = rowCount();
-    insertRow(row);
-    m_seen.resize(row + 1);
-    m_highlights.resize(row + 1);
-    m_highlights[row] = hilite;
-    setData(index(row), message);
+    int row = m_messages.count();
+    beginInsertRows(QModelIndex(), row, row);
+    MessageData data;
+    data.seen = false;
+    data.hilite = hilite;
+    data.richtext = richtext;
+    data.plaintext = plaintext;
+    m_messages.append(data);
+    endInsertRows();
 }
 
 void MessageModel::clear()
 {
-    m_seen.clear();
-    m_highlights.clear();
-    setStringList(QStringList());
+    beginResetModel();
+    m_messages.clear();
+    endResetModel();
     setActiveHighlight(false);
     setBadge(0);
 }

@@ -15,14 +15,14 @@
 #ifndef MESSAGEMODEL_H
 #define MESSAGEMODEL_H
 
-#include <QStringListModel>
+#include <QAbstractListModel>
 #include <QVector>
 
 class IrcBuffer;
 class IrcMessage;
 class MessageFormatter;
 
-class MessageModel : public QStringListModel
+class MessageModel : public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(IrcBuffer* buffer READ buffer CONSTANT)
@@ -37,6 +37,7 @@ public:
     IrcBuffer* buffer() const;
 
     int count() const;
+    int rowCount(const QModelIndex& parent) const;
 
     bool isActive() const;
     void setActive(bool active);
@@ -50,11 +51,8 @@ public:
     QHash<int, QByteArray> roleNames() const;
 
     QVariant data(const QModelIndex& index, int role) const;
-    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
 
 public slots:
-    void receive(IrcMessage* message);
-    void append(const QString& message, bool hilite);
     void clear();
 
 signals:
@@ -64,14 +62,24 @@ signals:
     void activeHighlightChanged();
     void highlighted(IrcMessage* message = 0);
 
+private slots:
+    void receive(IrcMessage* message);
+    void append(const QString& richtext, const QString& plaintext, bool hilite);
+
 private:
+    struct MessageData {
+        bool seen;
+        bool hilite;
+        QString richtext;
+        QString plaintext;
+    };
+
     int m_badge;
     bool m_active;
     bool m_highlight;
     IrcBuffer* m_buffer;
-    QVector<bool> m_seen;
-    QVector<bool> m_highlights;
     MessageFormatter* m_formatter;
+    QVector<MessageData> m_messages;
 };
 
 #endif // MESSAGEMODEL_H

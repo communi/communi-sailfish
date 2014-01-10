@@ -96,7 +96,7 @@ Page {
             model: MessageStorage.get(buffer)
 
             delegate: Label {
-                text: display
+                text: richtext
                 anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
                 wrapMode: Text.Wrap
                 linkColor: Theme.highlightColor
