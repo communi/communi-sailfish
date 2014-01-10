@@ -86,8 +86,7 @@ ApplicationWindow {
     Connections {
         target: BufferModel
         onNickNameReserved: {
-            // TODO: show NickDialog
-            connection.nickName += "_"
+            pageStack.push(nickDialog, {nick: connection.nickName, model: BufferModel.connections, network: BufferModel.connections.indexOf(connection)})
         }
         onChannelKeyRequired: {
             // TODO: cannot push while transition is in progress
@@ -217,6 +216,14 @@ ApplicationWindow {
         QueryDialog {
             id: dialog
             onAccepted: pageStack.replace(bufferPage, {buffer: dialog.network.add(dialog.user)})
+        }
+    }
+
+    Component {
+        id: nickDialog
+        NickDialog {
+            id: dialog
+            onAccepted: dialog.connection.nickName = dialog.nick.trim()
         }
     }
 
