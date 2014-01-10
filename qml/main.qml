@@ -163,8 +163,11 @@ ApplicationWindow {
                 connection.realName = dialog.realName
                 connection.userName = dialog.userName
                 connection.password = dialog.password
-                for (var i = 0; i < dialog.channels.length; ++i)
-                    connection.sendCommand(ircCommand.createJoin(dialog.channels[i]))
+                for (var i = 0; i < dialog.channels.length; ++i) {
+                    var channel = dialog.channels[i].trim()
+                    if (!!channel)
+                        connection.sendCommand(ircCommand.createJoin(channel))
+                }
 
                 BufferModel.addConnection(connection)
                 if (NetworkSession.open())
