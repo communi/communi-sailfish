@@ -44,8 +44,8 @@ ListItem {
         ContextMenu {
             id: menu
             MenuItem {
-                visible: buffer.sticky
-                text: buffer.connection.active ? qsTr("Disconnect") : qsTr("Connect")
+                visible: buffer && buffer.sticky
+                text: buffer && buffer.connection.active ? qsTr("Disconnect") : qsTr("Connect")
                 onClicked: {
                     if (buffer.connection.active) {
                         buffer.connection.quit(reason)
@@ -56,8 +56,8 @@ ListItem {
                 }
             }
             MenuItem {
-                visible: buffer.connection.connected && buffer.channel
-                text: buffer.active ? qsTr("Part") : qsTr("Join")
+                visible: buffer && buffer.connection.connected && buffer.channel
+                text: buffer && buffer.active ? qsTr("Part") : qsTr("Join")
                 onClicked: buffer.active ? buffer.part(reason) : buffer.join()
             }
             MenuItem {
@@ -80,15 +80,15 @@ ListItem {
 
     Label {
         id: title
-        text: buffer.title
+        text: buffer ? buffer.title : text
         verticalAlignment: Qt.AlignVCenter
         anchors { fill: parent; leftMargin: Theme.paddingLarge; rightMargin: glass.width }
-        color: !buffer.active ? Theme.secondaryColor : MessageStorage.get(buffer).badge > 0 ? Theme.highlightColor : Theme.primaryColor
+        color: !buffer || !buffer.active ? Theme.secondaryColor : MessageStorage.get(buffer).badge > 0 ? Theme.highlightColor : Theme.primaryColor
     }
 
     GlassItem {
         id: glass
-        visible: MessageStorage.get(buffer).activeHighlight
+        visible: buffer && MessageStorage.get(buffer).activeHighlight
         color: Theme.highlightColor
         falloffRadius: 0.16
         radius: 0.15
@@ -97,7 +97,7 @@ ListItem {
 
     Loader {
         anchors.centerIn: glass
-        active: buffer.sticky
+        active: buffer && buffer.sticky
         sourceComponent: BusyIndicator {
             running: buffer.connection.active && !buffer.connection.connected
         }
