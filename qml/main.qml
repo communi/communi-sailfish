@@ -192,12 +192,38 @@ ApplicationWindow {
                 connection.userName = dialog.userName
                 connection.password = dialog.password
 
+                // TODO: this fails if the transition is still in progress
+                // while we already get connected => find more reliable way
+                connection.connecting.connect(showConnectingDialog.bind(connection))
+
                 BufferModel.addConnection(connection)
                 if (NetworkSession.open())
                     connection.open()
 
                 if (!currentPage || !currentPage.__isBufferPage)
                     pageStack.replace(bufferPage, {buffer: BufferModel.models[BufferModel.models.length-1].get(0)})
+            }
+        }
+    }
+
+    function showConnectingDialog() {
+        if (!this.userData) {
+            this.userData = true
+            pageStack.push(connectingDialog, {connection: this})
+        }
+    }
+
+    Component {
+        id: connectingDialog
+        ConnectingDialog {
+            id: dialog
+            onAccepted: {
+                var channels = dialog.channelNames()
+                for (var i = 0; i < channels.length; ++i) {
+                    var channel = channels[i].trim()
+                    if (!!channel)
+                        dialog.connection.sendCommand(ircCommand.createJoin(channel))
+                }
             }
         }
     }
