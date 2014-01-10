@@ -95,14 +95,26 @@ Page {
 
             model: MessageStorage.get(buffer)
 
-            delegate: Label {
-                text: richtext
-                anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
-                wrapMode: Text.Wrap
-                linkColor: Theme.highlightColor
-                font.pixelSize: Theme.fontSizeSmall
-                onLinkActivated: Qt.openUrlExternally(link)
-                color: highlight ? "#ff4d4d" : seen ? Theme.secondaryColor : Theme.primaryColor
+            delegate: ListItem {
+                contentHeight: label.height
+                Label {
+                    id: label
+                    text: richtext
+                    anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
+                    wrapMode: Text.Wrap
+                    linkColor: Theme.highlightColor
+                    font.pixelSize: Theme.fontSizeSmall
+                    onLinkActivated: Qt.openUrlExternally(link)
+                    color: highlight ? "#ff4d4d" : seen ? Theme.secondaryColor : Theme.primaryColor
+                }
+                menu: Component {
+                    ContextMenu {
+                        MenuItem {
+                            text: qsTr("Copy")
+                            onClicked: Clipboard.text = plaintext
+                        }
+                    }
+                }
             }
 
             Component.onCompleted: {
