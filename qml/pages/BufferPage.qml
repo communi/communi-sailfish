@@ -42,7 +42,7 @@ Page {
     Binding {
         target: MessageStorage.get(buffer)
         property: "active"
-        value: page.status === PageStatus.Active
+        value: Qt.application.active && page.status === PageStatus.Active
     }
 
     Column {
