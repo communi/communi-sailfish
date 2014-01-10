@@ -35,6 +35,7 @@ ListItem {
     id: root
 
     property IrcBuffer buffer
+    property string reason: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
 
     contentHeight: Theme.itemSizeMedium
     ListView.onRemove: animateRemoval(root)
@@ -42,7 +43,6 @@ ListItem {
     menu: Component {
         ContextMenu {
             id: menu
-            property string reason: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
             MenuItem {
                 visible: buffer.sticky
                 text: buffer.connection.active ? qsTr("Disconnect") : qsTr("Connect")
@@ -62,14 +62,21 @@ ListItem {
             }
             MenuItem {
                 text: qsTr("Remove")
-                onClicked: buffer.close(reason)
+                onClicked: remove()
             }
         }
     }
 
     function remove() {
-        // TODO: remorseAction("Deleting", function() { view.model.remove(index) })
+        var reason = root.reason
+        var buffer = root.buffer
+        if (buffer.sticky)
+            remorse.execute(root, "Removing", function() { buffer.close(reason) } )
+        else
+            buffer.close(reason)
     }
+
+    RemorseItem { id: remorse }
 
     Label {
         id: title
