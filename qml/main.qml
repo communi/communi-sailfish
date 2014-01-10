@@ -83,6 +83,22 @@ ApplicationWindow {
         }
     }
 
+    Connections {
+        target: BufferModel
+        onBufferAboutToBeRemoved: {
+            if (buffer === currentBuffer) {
+                var idx = buffer.model.indexOf(buffer)
+                var replacement = buffer.model.get(idx + 1) || buffer.model.get(Math.max(0, idx - 1))
+                if (replacement !== buffer)
+                    pageStack.replace(bufferPage, {buffer: replacement})
+            }
+        }
+        onReseted: {
+            pageStack.replace(connectDialog) // TODO: WelcomePage
+            leftPanel.hide()
+        }
+    }
+
     NonGraphicalFeedback {
         id: activeEffect
         event: "chat_fg"
@@ -108,6 +124,7 @@ ApplicationWindow {
         interactive: !!currentPage && !!currentPage.__isBufferPage
 
         leftPanel: BufferListPanel {
+            id: leftPanel
             highlighted: MessageStorage.activeHighlight
             onClicked: {
                 if (buffer !== currentBuffer)

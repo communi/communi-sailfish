@@ -88,6 +88,8 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
     model->setSortMethod(Irc::SortByTitle);
     connect(model, SIGNAL(added(IrcBuffer*)), this, SIGNAL(bufferAdded(IrcBuffer*)));
     connect(model, SIGNAL(removed(IrcBuffer*)), this, SIGNAL(bufferRemoved(IrcBuffer*)));
+    connect(model, SIGNAL(aboutToBeAdded(IrcBuffer*)), this, SIGNAL(bufferAboutToBeAdded(IrcBuffer*)));
+    connect(model, SIGNAL(aboutToBeRemoved(IrcBuffer*)), this, SIGNAL(bufferAboutToBeRemoved(IrcBuffer*)));
 
     ZncManager* znc = new ZncManager(model);
     znc->setModel(model);
@@ -116,10 +118,14 @@ void BufferProxyModel::removeConnection(IrcConnection* connection)
     if (model) {
         disconnect(model, SIGNAL(added(IrcBuffer*)), this, SIGNAL(bufferAdded(IrcBuffer*)));
         disconnect(model, SIGNAL(removed(IrcBuffer*)), this, SIGNAL(bufferRemoved(IrcBuffer*)));
+        disconnect(model, SIGNAL(aboutToBeAdded(IrcBuffer*)), this, SIGNAL(bufferAboutToBeAdded(IrcBuffer*)));
+        disconnect(model, SIGNAL(aboutToBeRemoved(IrcBuffer*)), this, SIGNAL(bufferAboutToBeRemoved(IrcBuffer*)));
 
         removeSourceModel(model);
         emit connectionsChanged();
         emit modelsChanged();
+        if (RowsJoinerProxy::models().isEmpty())
+            emit reseted();
     }
 }
 

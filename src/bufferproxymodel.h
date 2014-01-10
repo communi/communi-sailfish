@@ -42,10 +42,13 @@ public:
     Q_INVOKABLE bool restoreState(const QByteArray& state);
 
 signals:
+    void reseted();
     void modelsChanged();
     void connectionsChanged();
     void bufferAdded(IrcBuffer* buffer);
     void bufferRemoved(IrcBuffer* buffer);
+    void bufferAboutToBeAdded(IrcBuffer* buffer);
+    void bufferAboutToBeRemoved(IrcBuffer* buffer);
 
     void nickNameReserved(IrcConnection* connection);
     void channelKeyRequired(IrcConnection* connection, const QString& channel);
