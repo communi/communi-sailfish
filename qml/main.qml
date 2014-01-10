@@ -52,6 +52,12 @@ ApplicationWindow {
         }
     }
 
+    Binding {
+        target: MessageFormatter
+        property: "baseColor"
+        value: Theme.highlightColor // alternatively a bit less prominent Theme.secondaryHighlightColor
+    }
+
     Connections {
         target: MessageStorage
         onHighlighted: {

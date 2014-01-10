@@ -25,6 +25,7 @@
 #include "bufferproxymodel.h"
 #include "networksession.h"
 #include "messagestorage.h"
+#include "messageformatter.h"
 
 #include <IrcCore>
 #include <IrcModel>
@@ -75,6 +76,9 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 
     BufferProxyModel* model = new BufferProxyModel(app.data());
     viewer->rootContext()->setContextProperty("BufferModel", model);
+
+    MessageFormatter* formatter = new MessageFormatter(app.data());
+    viewer->rootContext()->setContextProperty("MessageFormatter", formatter);
 
     viewer->rootContext()->setContextProperty("MessageStorage", MessageStorage::instance());
     QObject::connect(model, SIGNAL(bufferAdded(IrcBuffer*)), MessageStorage::instance(), SLOT(add(IrcBuffer*)));
