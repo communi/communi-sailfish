@@ -108,7 +108,7 @@ ApplicationWindow {
         interactive: !!currentPage && !!currentPage.__isBufferPage
 
         leftPanel: BufferListPanel {
-            highlighted: false // TODO
+            highlighted: MessageStorage.activeHighlight
             onClicked: {
                 if (buffer !== currentBuffer)
                     pageStack.replace(bufferPage, {buffer: buffer})
