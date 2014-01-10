@@ -127,11 +127,13 @@ ApplicationWindow {
     PanelView {
         id: viewer
 
-        anchors.fill: parent
+        width: parent.width
+        height: visible ? currentPage.contentHeight : 0
         visible: !!currentPage && !!currentPage.__isBufferPage
 
         leftPanel: BufferListPanel {
             id: leftPanel
+            height: pageStack.height
             highlighted: MessageStorage.activeHighlight
             onClicked: {
                 if (buffer !== currentBuffer)
@@ -141,7 +143,9 @@ ApplicationWindow {
         }
 
         rightPanel: UserListPanel {
+            id: rightPanel
             buffer: currentBuffer
+            height: pageStack.height
             active: !!buffer && buffer.channel && buffer.active
             onClicked: {
                 var buffer = user.channel.model.add(user.name)

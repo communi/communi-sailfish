@@ -132,7 +132,7 @@ SilicaListView {
         }
         Binding {
             target: panel
-            property: "height"
+            property: "implicitHeight"
             value: container.height
         }
         Binding {

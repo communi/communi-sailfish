@@ -36,6 +36,7 @@ Page {
 
     property IrcBuffer buffer
     property alias contentItem: column
+    readonly property alias contentHeight: view.height
 
     anchors.fill: parent
 
