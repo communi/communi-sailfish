@@ -94,7 +94,7 @@ Page {
                 }
             }
 
-            header: PageHeader { title: buffer ? buffer.title : qsTr("IRC") }
+            header: PageHeader { title: buffer ? buffer.title : "" }
 
             model: MessageStorage.get(buffer)
 
