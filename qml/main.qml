@@ -141,7 +141,10 @@ ApplicationWindow {
             onClicked: {
                 if (buffer !== currentBuffer)
                     scheduler.replace(bufferPage, {buffer: buffer})
-                hide()
+            }
+            Connections {
+                target: pageStack
+                onCurrentPageChanged: leftPanel.hide()
             }
         }
 
@@ -153,7 +156,10 @@ ApplicationWindow {
             onClicked: {
                 var buffer = user.channel.model.add(user.name)
                 scheduler.replace(bufferPage, {buffer: buffer})
-                hide()
+            }
+            Connections {
+                target: pageStack
+                onCurrentPageChanged: rightPanel.hide()
             }
         }
     }
