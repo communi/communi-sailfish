@@ -35,6 +35,7 @@ TextField {
     id: field
 
     property IrcBuffer buffer
+    property bool backgroundVisible: false
 
     EnterKey.text: qsTr("Send")
     EnterKey.enabled: !!text.trim()
@@ -86,6 +87,13 @@ TextField {
     background: Component {
         Item {
             anchors.fill: parent
+
+            Rectangle {
+                anchors.fill: parent
+                color: Theme.rgba(Theme.highlightDimmerColor, 0.8)
+                opacity: field.backgroundVisible ? 1.0 : 0.0
+                Behavior on opacity { FadeAnimation { } }
+            }
 
             IconButton {
                 id: autocompleteButton
