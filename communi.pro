@@ -6,6 +6,7 @@ include(src/shared/shared.pri)
 include(src/backend/src/src.pri)
 
 OTHER_FILES += qml/main.qml \
+    qml/PageStackScheduler.qml \
     qml/cover/CoverPage.qml \
     qml/dialogs/AboutDialog.qml \
     qml/dialogs/ConnectDialog.qml \

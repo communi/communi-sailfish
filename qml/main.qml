@@ -43,6 +43,10 @@ ApplicationWindow {
     property Page currentPage: pageStack.currentPage
     property IrcBuffer currentBuffer: currentPage ? currentPage.buffer || null : null
 
+    PageStackScheduler {
+        id: scheduler
+    }
+
     cover: CoverPage {
         id: appCover
     }
@@ -86,22 +90,21 @@ ApplicationWindow {
     Connections {
         target: BufferModel
         onNickNameReserved: {
-            pageStack.push(nickDialog, {nick: connection.nickName, model: BufferModel.connections, network: BufferModel.connections.indexOf(connection)})
+            scheduler.push(nickDialog, {nick: connection.nickName, model: BufferModel.connections, network: BufferModel.connections.indexOf(connection)})
         }
         onChannelKeyRequired: {
-            // TODO: cannot push while transition is in progress
-            pageStack.push(joinDialog, {channel: channel, model: BufferModel.connections})
+            scheduler.push(joinDialog, {channel: channel, model: BufferModel.connections})
         }
         onBufferAboutToBeRemoved: {
             if (buffer === currentBuffer) {
                 var idx = buffer.model.indexOf(buffer)
                 var replacement = buffer.model.get(idx + 1) || buffer.model.get(Math.max(0, idx - 1))
                 if (replacement !== buffer)
-                    pageStack.replace(bufferPage, {buffer: replacement})
+                    scheduler.replace(bufferPage, {buffer: replacement})
             }
         }
         onReseted: {
-            pageStack.replace(connectDialog) // TODO: WelcomePage
+            scheduler.push(connectDialog) // TODO: restore WelcomePage instead
             leftPanel.hide()
         }
     }
@@ -137,7 +140,7 @@ ApplicationWindow {
             highlighted: MessageStorage.activeHighlight
             onClicked: {
                 if (buffer !== currentBuffer)
-                    pageStack.replace(bufferPage, {buffer: buffer})
+                    scheduler.replace(bufferPage, {buffer: buffer})
                 hide()
             }
         }
@@ -149,7 +152,7 @@ ApplicationWindow {
             active: !!buffer && buffer.channel && buffer.active
             onClicked: {
                 var buffer = user.channel.model.add(user.name)
-                pageStack.replace(bufferPage, {buffer: buffer})
+                scheduler.replace(bufferPage, {buffer: buffer})
                 hide()
             }
         }
@@ -192,8 +195,6 @@ ApplicationWindow {
                 connection.userName = dialog.userName
                 connection.password = dialog.password
 
-                // TODO: this fails if the transition is still in progress
-                // while we already get connected => find more reliable way
                 connection.connecting.connect(showConnectingDialog.bind(connection))
 
                 BufferModel.addConnection(connection)
@@ -201,7 +202,7 @@ ApplicationWindow {
                     connection.open()
 
                 if (!currentPage || !currentPage.__isBufferPage)
-                    pageStack.replace(bufferPage, {buffer: BufferModel.models[BufferModel.models.length-1].get(0)})
+                    scheduler.replace(bufferPage, {buffer: BufferModel.models[BufferModel.models.length-1].get(0)})
             }
         }
     }
@@ -209,7 +210,7 @@ ApplicationWindow {
     function showConnectingDialog() {
         if (!this.userData) {
             this.userData = true
-            pageStack.push(connectingDialog, {connection: this})
+            scheduler.push(connectingDialog, {connection: this})
         }
     }
 
@@ -240,7 +241,7 @@ ApplicationWindow {
         id: queryDialog
         QueryDialog {
             id: dialog
-            onAccepted: pageStack.replace(bufferPage, {buffer: dialog.network.add(dialog.user)})
+            onAccepted: scheduler.replace(bufferPage, {buffer: dialog.network.add(dialog.user)})
         }
     }
 
@@ -260,9 +261,9 @@ ApplicationWindow {
     Component.onCompleted: {
         BufferModel.restoreState(settings.state)
         if (BufferModel.models.length)
-            pageStack.replace(bufferPage, {buffer: BufferModel.models[0].get(0)})
+            scheduler.replace(bufferPage, {buffer: BufferModel.models[0].get(0)})
         else
-            pageStack.push(connectDialog) // TODO: WelcomePage instead
+            scheduler.push(connectDialog) // TODO: just keep WelcomePage visible instead
     }
 
     Component.onDestruction: settings.state = BufferModel.saveState()
