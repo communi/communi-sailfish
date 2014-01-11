@@ -28,32 +28,58 @@
 */
 
 import QtQuick 2.1
-import QtFeedback 5.0
+import Communi 3.1
 import Sailfish.Silica 1.0
 import QtGraphicalEffects 1.0
 
 Dialog {
     id: dialog
 
-    property string host: hostField.text
-    property string port: portField.text
-    property alias secure: secureBox.checked
-    property string nickName: nickNameField.text
-    property string userName: userNameField.text
-    property string realName: realNameField.text || defaultRealName
-    property string password: passwordField.text
+    property IrcConnection connection
 
-    property string defaultPort: secure ? "6697" : "6667"
+    property string title: qsTr("Connect")
+    property string defaultPort: secureBox.checked ? "6697" : "6667"
     property string defaultNickName: qsTr("Sailor%1").arg(Math.floor(Math.random() * 12345))
     property string defaultUserName: "sailfish"
     property string defaultRealName: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
 
-    canAccept: !!host && !!nickName && !!userName && !!port
+    canAccept: !!hostField.text && !!nickNameField.text && !!userNameField.text && !!portField.text
+
+    Component.onCompleted: {
+        if (connection) {
+            title = qsTr("Edit")
+            hostField.text = connection.host
+            portField.text = connection.port
+            secureBox.checked = connection.secure
+            nickNameField.text = connection.nickName
+            userNameField.text = connection.userName
+            realNameField.text = connection.realName
+            passwordField.text = connection.password
+        }
+    }
+
+    onAccepted: {
+        if (!connection)
+            connection = ircConnection.createObject(BufferModel)
+
+        connection.host = hostField.text
+        connection.port = portField.text
+        connection.secure = secureBox.checked
+        connection.nickName = nickNameField.text
+        connection.userName = userNameField.text
+        connection.realName = realNameField.text || defaultRealName
+        connection.password = passwordField.text
+    }
+
+    Component {
+        id: ircConnection
+        IrcConnection { }
+    }
 
     SilicaListView {
         anchors.fill: parent
         spacing: Theme.paddingMedium
-        header: DialogHeader { title: qsTr("Connect") }
+        header: DialogHeader { title: dialog.title }
         model: VisualItemModel {
 
             TextField {
@@ -101,7 +127,7 @@ Dialog {
                 ColorOverlay {
                     source: button
                     anchors.fill: button
-                    color: !userName || !port ? "#ff4d4d" : "transparent"
+                    color: !userNameField.text || !portField.text ? "#ff4d4d" : "transparent"
                 }
             }
         }

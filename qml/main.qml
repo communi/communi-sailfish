@@ -172,13 +172,13 @@ ApplicationWindow {
         }
     }
 
-    Component {
-        id: ircConnection
-        IrcConnection { }
-    }
-
     IrcCommand {
         id: ircCommand
+    }
+
+    Component {
+        id: editDialog
+        ConnectDialog { }
     }
 
     Component {
@@ -186,15 +186,7 @@ ApplicationWindow {
         ConnectDialog {
             id: dialog
             onAccepted: {
-                var connection = ircConnection.createObject(BufferModel)
-                connection.host = dialog.host
-                connection.port = dialog.port
-                connection.secure = dialog.secure
-                connection.nickName = dialog.nickName
-                connection.realName = dialog.realName
-                connection.userName = dialog.userName
-                connection.password = dialog.password
-
+                var connection = dialog.connection
                 connection.connecting.connect(showConnectingDialog.bind(connection))
 
                 BufferModel.addConnection(connection)

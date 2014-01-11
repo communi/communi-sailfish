@@ -56,6 +56,12 @@ ListItem {
                 }
             }
             MenuItem {
+                visible: buffer && buffer.sticky
+                text: qsTr("Edit")
+                enabled: buffer && !buffer.connection.active
+                onClicked: pageStack.push(editDialog, {connection: buffer.connection})
+            }
+            MenuItem {
                 visible: buffer && buffer.connection.connected && buffer.channel
                 text: buffer && buffer.active ? qsTr("Part") : qsTr("Join")
                 onClicked: buffer.active ? buffer.part(reason) : buffer.join()
