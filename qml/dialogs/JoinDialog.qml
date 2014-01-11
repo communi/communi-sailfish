@@ -48,7 +48,7 @@ Dialog {
     SilicaListView {
         anchors.fill: parent
         spacing: Theme.paddingMedium
-        header: DialogHeader { title: qsTr("Join a channel") }
+        header: DialogHeader { title: qsTr("Join") }
         model: VisualItemModel {
             ComboBox {
                 id: networkBox

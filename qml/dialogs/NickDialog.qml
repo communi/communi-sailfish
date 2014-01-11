@@ -46,7 +46,7 @@ Dialog {
     SilicaListView {
         anchors.fill: parent
         spacing: Theme.paddingMedium
-        header: DialogHeader { title: qsTr("Set nick") }
+        header: DialogHeader { title: qsTr("Set") }
         model: VisualItemModel {
             ComboBox {
                 id: networkBox

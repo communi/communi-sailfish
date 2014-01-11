@@ -42,7 +42,7 @@ Dialog {
     SilicaListView {
         anchors.fill: parent
         spacing: Theme.paddingMedium
-        header: DialogHeader { title: qsTr("Open a query") }
+        header: DialogHeader { title: qsTr("Open") }
         model: VisualItemModel {
             ComboBox {
                 id: networkBox
