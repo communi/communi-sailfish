@@ -36,7 +36,7 @@ Dialog {
     property var model
     property alias channel: channelField.text
     property alias password: passwordField.text
-    property var connection: model[networkBox.currentIndex]
+    property var network: model[networkBox.currentIndex]
 
     canAccept: channel.length > 1
 
@@ -59,7 +59,7 @@ Dialog {
                 menu: ContextMenu {
                     Repeater {
                         model: dialog.model
-                        delegate: MenuItem { text: modelData.displayName }
+                        delegate: MenuItem { text: modelData.connection.displayName }
                     }
                 }
             }

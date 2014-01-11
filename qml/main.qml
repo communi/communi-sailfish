@@ -93,7 +93,7 @@ ApplicationWindow {
             scheduler.push(nickDialog, {nick: connection.nickName, model: BufferModel.connections, network: BufferModel.connections.indexOf(connection)})
         }
         onChannelKeyRequired: {
-            scheduler.push(joinDialog, {channel: channel, model: BufferModel.connections})
+            scheduler.push(joinDialog, {channel: channel, model: BufferModel.models})
         }
         onBufferAboutToBeRemoved: {
             if (buffer === currentBuffer) {
@@ -231,7 +231,13 @@ ApplicationWindow {
         id: joinDialog
         JoinDialog {
             id: dialog
-            onAccepted: dialog.connection.sendCommand(ircCommand.createJoin(dialog.channel, dialog.password))
+            onAccepted: {
+                var channel = dialog.network.add(dialog.channel.trim())
+                channel.join(dialog.password)
+                var prev = pageStack.previousPage()
+                if (prev && channel !== prev.buffer)
+                    scheduler.replace(bufferPage, {buffer: channel})
+            }
         }
     }
 

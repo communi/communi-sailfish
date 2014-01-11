@@ -81,7 +81,7 @@ Page {
                 MenuItem {
                     text: qsTr("Join a channel")
                     visible: BufferModel.connections.length > 0
-                    onClicked: pageStack.push(joinDialog, {model: BufferModel.connections})
+                    onClicked: pageStack.push(joinDialog, {model: BufferModel.models})
                 }
                 MenuItem {
                     text: qsTr("Open a query")
