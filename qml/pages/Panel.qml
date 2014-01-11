@@ -40,7 +40,7 @@ Rectangle {
     signal toggled()
 
     function hide() {
-        __view.currentIndex = 1
+        hideAnimation.start()
     }
 
     property var __view: null
@@ -51,11 +51,17 @@ Rectangle {
         if (active)
             toggled()
         else
-            inactivator.start()
+            closeAnimation.start()
     }
 
     SequentialAnimation {
-        id: inactivator
+        id: hideAnimation
+        PauseAnimation { duration: 50 }
+        PropertyAction { target: __view; property: "currentIndex"; value: 1 }
+    }
+
+    SequentialAnimation {
+        id: closeAnimation
         PropertyAction { target: __view; property: "currentIndex"; value: 1 }
         PauseAnimation { duration: 200 }
         ScriptAction { script: panel.toggled() }
@@ -76,7 +82,6 @@ Rectangle {
     InverseMouseArea {
         anchors.fill: parent
         enabled: panel.active && __view && __view.currentIndex === panel.index
-        stealPress: true
-        onPressedOutside: panel.hide()
+        onClickedOutside: panel.hide()
     }
 }
