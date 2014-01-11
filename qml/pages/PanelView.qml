@@ -35,7 +35,7 @@ SilicaListView {
     property Panel leftPanel
     property Panel rightPanel
 
-    property real panelWidth: container.width / 2
+    property real panelWidth: container.width / 5 * 3
 
     currentIndex: 0
     orientation: Qt.Horizontal
