@@ -55,30 +55,33 @@ Page {
 
         SilicaListView {
             id: view
-            clip: true
+
             width: parent.width
             height: parent.height - entry.height
 
-    //        PullDownMenu {
-    //            id: bufferPagePullDownMenu
-    //            MenuItem {
-    //                text: qsTr("Clear")
-    //                enabled: MessageStorage.get(buffer).count
-    //                onClicked: {
-    //                    // TODO: why the view position jumps?
-    //                    MessageStorage.get(buffer).clear()
-    //                }
-    //            }
-    //        }
-
             PullDownMenu {
+                id: pullDownMenu
                 MenuItem {
                     text: qsTr("About IRC")
                     onClicked: pageStack.push(Qt.resolvedUrl("../dialogs/AboutDialog.qml"))
                 }
                 MenuItem {
-                    text: qsTr("Connect a network")
-                    onClicked: pageStack.push(connectDialog)
+                    text: qsTr("Clear messages")
+                    enabled: MessageStorage.get(buffer).count
+                    onClicked: {
+                        // TODO: why the view position jumps?
+                        MessageStorage.get(buffer).clear()
+                    }
+                }
+            }
+
+            PushUpMenu {
+                id: pushUpMenu
+                transform: Translate { y: entry.height }
+                MenuItem {
+                    text: qsTr("Join a channel")
+                    visible: BufferModel.connections.length > 0
+                    onClicked: pageStack.push(joinDialog, {model: BufferModel.connections})
                 }
                 MenuItem {
                     text: qsTr("Open a query")
@@ -86,9 +89,8 @@ Page {
                     onClicked: pageStack.push(queryDialog, {model: BufferModel.models})
                 }
                 MenuItem {
-                    text: qsTr("Join a channel")
-                    visible: BufferModel.connections.length > 0
-                    onClicked: pageStack.push(joinDialog, {model: BufferModel.connections})
+                    text: qsTr("Connect a network")
+                    onClicked: pageStack.push(connectDialog)
                 }
             }
 
