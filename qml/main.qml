@@ -141,6 +141,8 @@ ApplicationWindow {
             onClicked: {
                 if (buffer !== currentBuffer)
                     scheduler.replace(bufferPage, {buffer: buffer})
+                else
+                    leftPanel.hide()
             }
             Connections {
                 target: pageStack
