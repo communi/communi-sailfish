@@ -41,8 +41,10 @@ Dialog {
     canAccept: channel.length > 1
 
     Component.onCompleted: {
-        if (channel.length > 1)
+        if (channel.length > 1) {
             passwordField.errorHighlight = Qt.binding(function() { return !passwordField.text })
+            dialog.canAccept = Qt.binding(function() { return channel.length > 1 && !!password })
+        }
     }
 
     SilicaListView {
@@ -69,8 +71,11 @@ Dialog {
                 text: qsTr("#")
                 errorHighlight: text.length <= 1
                 placeholderText: qsTr("Enter channel")
-                EnterKey.iconSource: "image://theme/icon-m-enter-next"
-                EnterKey.onClicked: passwordField.forceActiveFocus()
+
+                EnterKey.text: qsTr("Join")
+                EnterKey.enabled: dialog.canAccept
+                EnterKey.highlighted: true
+                EnterKey.onClicked: dialog.accept()
             }
 
             TextField {
@@ -79,8 +84,11 @@ Dialog {
                 label: qsTr("Password")
                 placeholderText: qsTr("Enter password")
                 echoMode: TextInput.PasswordEchoOnEdit
-                EnterKey.iconSource: "image://theme/icon-m-enter-next"
-                EnterKey.onClicked: channelField.forceActiveFocus()
+
+                EnterKey.text: qsTr("Join")
+                EnterKey.enabled: dialog.canAccept
+                EnterKey.highlighted: true
+                EnterKey.onClicked: dialog.accept()
             }
         }
         VerticalScrollDecorator { }
