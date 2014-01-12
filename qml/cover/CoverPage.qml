@@ -77,7 +77,7 @@ CoverBackground {
             horizontalCenter: parent.horizontalCenter
         }
         font.pixelSize: parent.width * 2.5
-        color: Theme.rgba(Theme.primaryColor, 0.2)
+        color: Theme.rgba(Theme.primaryColor, 0.15)
         text: "#"
     }
     Label {
