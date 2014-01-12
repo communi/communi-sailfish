@@ -37,11 +37,13 @@ TextField {
     property IrcBuffer buffer
     property bool backgroundVisible: false
 
+    enabled: buffer.connection.connected
+
     EnterKey.text: qsTr("Send")
     EnterKey.enabled: !!text.trim()
     EnterKey.highlighted: true
 
-    placeholderText: buffer ? qsTr("Hi, %1").arg(buffer.title) : ""
+    placeholderText: buffer ? (buffer.connection.connected ? qsTr("Hi, %1").arg(buffer.title) : qsTr("Not connected")) : ""
     placeholderColor: Theme.secondaryHighlightColor
     inputMethodHints: Qt.ImhNoAutoUppercase
     focusOutBehavior: FocusBehavior.ClearPageFocus
