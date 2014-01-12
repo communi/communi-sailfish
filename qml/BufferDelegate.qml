@@ -89,7 +89,7 @@ ListItem {
         elide: Text.ElideRight
         text: buffer ? buffer.title : text
         verticalAlignment: Qt.AlignVCenter
-        anchors { fill: parent; leftMargin: Theme.paddingLarge; rightMargin: glass.width }
+        anchors { fill: parent; leftMargin: Theme.paddingLarge; rightMargin: glass.visible || loader.active ? glass.width : 0 }
         color: !buffer || !buffer.active ? Theme.secondaryColor : MessageStorage.get(buffer).badge > 0 ? Theme.highlightColor : Theme.primaryColor
     }
 
@@ -103,10 +103,11 @@ ListItem {
     }
 
     Loader {
+        id: loader
         anchors.centerIn: glass
-        active: buffer && buffer.sticky
+        active: buffer && buffer.sticky && buffer.connection.active && !buffer.connection.connected
         sourceComponent: BusyIndicator {
-            running: buffer.connection.active && !buffer.connection.connected
+            running: true
         }
     }
 }
