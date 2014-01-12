@@ -37,7 +37,7 @@ TextField {
     property IrcBuffer buffer
     property bool backgroundVisible: false
 
-    enabled: buffer.connection.connected
+    enabled: buffer && buffer.connection.connected
 
     EnterKey.text: qsTr("Send")
     EnterKey.enabled: !!text.trim()

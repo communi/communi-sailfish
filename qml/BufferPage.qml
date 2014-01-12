@@ -37,11 +37,12 @@ Page {
     property IrcBuffer buffer
     property alias contentItem: column
     readonly property alias contentHeight: view.height
+    readonly property var storage: MessageStorage.get(buffer)
 
     anchors.fill: parent
 
     Binding {
-        target: MessageStorage.get(buffer)
+        target: storage
         property: "active"
         value: Qt.application.active && page.status === PageStatus.Active
     }
@@ -67,10 +68,10 @@ Page {
                 }
                 MenuItem {
                     text: qsTr("Clear messages")
-                    enabled: MessageStorage.get(buffer).count
+                    enabled: storage && storage.count
                     onClicked: {
                         // TODO: why the view position jumps?
-                        MessageStorage.get(buffer).clear()
+                        storage.clear()
                     }
                 }
                 MenuItem {
@@ -110,7 +111,7 @@ Page {
 
             header: PageHeader { title: buffer ? buffer.title : "" }
 
-            model: MessageStorage.get(buffer)
+            model: storage
 
             delegate: ListItem {
                 contentHeight: label.height
