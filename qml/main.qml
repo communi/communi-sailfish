@@ -44,6 +44,18 @@ ApplicationWindow {
     property IrcBuffer currentBuffer: currentPage ? currentPage.buffer || null : null
     property var allNotifications: []
 
+    // Clears all notifications that belong to the app
+    function clearAllNotifications() {
+        // Close all notifications
+        for (var i = 0; i < window.allNotifications.length; i++) {
+            var notification = window.allNotifications[i];
+            notification.close();
+        }
+
+        // Clear notifications array
+        allNotifications.length = 0;
+    }
+
     PageStackScheduler {
         id: scheduler
     }
@@ -56,15 +68,8 @@ ApplicationWindow {
             // Clear cover
             appCover.resetCover();
 
-            // Close all notifications
             // TODO: instead of clearing all notifications here, remove them when the user actually looks at the buffer that created them
-            for (var i = 0; i < window.allNotifications.length; i++) {
-                var notification = window.allNotifications[i];
-                notification.close();
-            }
-
-            // Clear notifications array
-            allNotifications.length = 0;
+            window.clearAllNotifications();
         }
     }
 
@@ -72,6 +77,14 @@ ApplicationWindow {
         target: MessageFormatter
         property: "baseColor"
         value: Theme.highlightColor // alternatively a bit less prominent Theme.secondaryHighlightColor
+    }
+
+    Connections {
+        target: Qt.application
+        onAboutToQuit: {
+            // These notifications become useless when the user quits the app, so let's clear them
+            window.clearAllNotifications();
+        }
     }
 
     Connections {
