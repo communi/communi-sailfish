@@ -68,8 +68,7 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
     registerIrcTypes("harbour.communi");
 
 #if QT_VERSION < 0x050200
-    // TODO: switch to Qt.labs.settings in Qt 5.2
-    qmlRegisterType<QQmlSettings>("harbour.communi.settings", 1, 0, "Settings");
+    qmlRegisterType<QQmlSettings>("Qt.labs.settings", 1, 0, "Settings");
 #endif
 
     NetworkSession* session = new NetworkSession(app.data());
