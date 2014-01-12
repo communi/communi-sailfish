@@ -73,6 +73,13 @@ Page {
                         MessageStorage.get(buffer).clear()
                     }
                 }
+                MenuItem {
+                    text: qsTr("Jump to bottom")
+                    onClicked: {
+                        view.cancelFlick();
+                        view.positionViewAtEnd();
+                    }
+                }
             }
 
             PushUpMenu {
@@ -91,6 +98,13 @@ Page {
                 MenuItem {
                     text: qsTr("Connect a network")
                     onClicked: pageStack.push(connectDialog)
+                }
+                MenuItem {
+                    text: qsTr("Jump to top")
+                    onClicked: {
+                        view.cancelFlick();
+                        view.positionViewAtBeginning();
+                    }
                 }
             }
 
