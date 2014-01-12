@@ -38,6 +38,8 @@ SilicaListView {
     property real panelWidth: container.width / 5 * 3
     property real panelHeight: container.height
 
+    readonly property bool closed: container.contentX === container.panelWidth
+
     currentIndex: 0
     orientation: Qt.Horizontal
     snapMode: ListView.SnapOneItem
@@ -50,7 +52,7 @@ SilicaListView {
         width: container.width
         height: container.panelHeight
         color: Theme.highlightDimmerColor
-        opacity: container.moving || container.currentIndex !== 1 || container.contentX !== container.panelWidth ? 0.5 : 0.0
+        opacity: container.moving || container.currentIndex !== 1 || !container.closed ? 0.5 : 0.0
         Behavior on opacity { FadeAnimation { } }
     }
 

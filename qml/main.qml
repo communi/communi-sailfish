@@ -145,7 +145,6 @@ ApplicationWindow {
         }
         onReseted: {
             scheduler.push(connectDialog) // TODO: restore WelcomePage instead
-            leftPanel.hide()
         }
     }
 
@@ -175,8 +174,15 @@ ApplicationWindow {
 
         width: parent.width
         panelHeight: pageStack.height
-        height: visible ? currentPage.contentHeight : 0
-        visible: !!currentPage && !!currentPage.__isBufferPage
+        height: currentPage && currentPage.contentHeight || 0
+        visible: (!!currentPage && !!currentPage.__isBufferPage) || !viewer.closed
+
+        Binding {
+            target: viewer
+            property: "currentIndex"
+            value: 1
+            when: !!currentPage && !!currentPage.__isBufferPage
+        }
 
         leftPanel: BufferListPanel {
             id: leftPanel
