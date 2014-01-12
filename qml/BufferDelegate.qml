@@ -86,6 +86,7 @@ ListItem {
 
     Label {
         id: title
+        elide: Text.ElideRight
         text: buffer ? buffer.title : text
         verticalAlignment: Qt.AlignVCenter
         anchors { fill: parent; leftMargin: Theme.paddingLarge; rightMargin: glass.width }
