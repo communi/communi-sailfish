@@ -60,7 +60,7 @@ signals:
     void badgeChanged();
     void activeChanged();
     void activeHighlightChanged();
-    void highlighted(IrcMessage* message = 0);
+    void highlighted(IrcMessage* message = nullptr, IrcBuffer *buffer = nullptr);
 
 private slots:
     void receive(IrcMessage* message);

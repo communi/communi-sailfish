@@ -42,6 +42,7 @@ ApplicationWindow {
 
     property Page currentPage: pageStack.currentPage
     property IrcBuffer currentBuffer: currentPage ? currentPage.buffer || null : null
+    property var allNotifications: []
 
     PageStackScheduler {
         id: scheduler
@@ -52,7 +53,18 @@ ApplicationWindow {
     }
     onApplicationActiveChanged: {
         if (window.applicationActive) {
+            // Clear cover
             appCover.resetCover();
+
+            // Close all notifications
+            // TODO: instead of clearing all notifications here, remove them when the user actually looks at the buffer that created them
+            for (var i = 0; i < window.allNotifications.length; i++) {
+                var notification = window.allNotifications[i];
+                notification.close();
+            }
+
+            // Clear notifications array
+            allNotifications.length = 0;
         }
     }
 
@@ -68,13 +80,29 @@ ApplicationWindow {
             if (Qt.application.active) {
                 activeEffect.play();
             } else {
-                // Send notification
-                backgroundNotification.summary = qsTr("New message")
-                backgroundNotification.body = qsTr("%1: %2").arg(message.nick).arg(message.content)
-                backgroundNotification.previewSummary = qsTr("New message")
-                backgroundNotification.previewBody = qsTr("%1: %2").arg(message.nick).arg(message.content)
-                backgroundNotification.buffer = buffer
-                backgroundNotification.publish()
+                // Create notification
+                var notificationProperties = {
+                    previewSummary: buffer.title,
+                    summary: qsTr("IRC highlight - %1").arg(buffer.title),
+                    previewBody: qsTr("%1: %2").arg(message.nick).arg(message.content),
+                    body: qsTr("%1: %2").arg(message.nick).arg(message.content)
+                };
+                var notification = backgroundNotificationComponent.createObject(window, notificationProperties);
+                notification.clicked.connect(function() {
+                    scheduler.replace(bufferPage, { buffer: buffer });
+                    window.activate();
+                });
+                notification.closed.connect(function() {
+                    // Remove this notification
+                    var i = window.allNotifications.indexOf(notification);
+                    if (i >= 0) {
+                        window.allNotifications.splice(i, 1);
+                    }
+                });
+                window.allNotifications.push(notification);
+
+                // Publish notification
+                notification.publish();
 
                 // Increase highlight count on cover
                 appCover.unreadHighlights += 1;
@@ -114,14 +142,12 @@ ApplicationWindow {
         event: "chat_fg"
     }
 
-    Notification {
-        id: backgroundNotification
-        category: "x-nemo.messaging.im"
-        property IrcBuffer buffer
+    Component {
+        id: backgroundNotificationComponent
 
-        onClicked: {
-            bufferPage.buffer = backgroundNotification.buffer
-            window.activate()
+        Notification {
+            id: backgroundNotification
+            category: "x-nemo.messaging.im"
         }
     }
 

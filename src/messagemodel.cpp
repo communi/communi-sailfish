@@ -145,7 +145,7 @@ void MessageModel::receive(IrcMessage* message)
         if (!m_active) {
             if (hilite || message->property("private").toBool()) {
                 setActiveHighlight(true);
-                emit highlighted(message);
+                emit highlighted(message, this->m_buffer);
             }
             setBadge(m_badge + 1);
         }
