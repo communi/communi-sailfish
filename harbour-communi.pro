@@ -1,4 +1,4 @@
-TARGET = communi
+TARGET = harbour-communi
 CONFIG += sailfishapp
 
 include(src/src.pri)
