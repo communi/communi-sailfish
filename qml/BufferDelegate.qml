@@ -58,7 +58,6 @@ ListItem {
             MenuItem {
                 visible: buffer && buffer.sticky
                 text: qsTr("Edit")
-                enabled: buffer && !buffer.connection.active
                 onClicked: pageStack.push(editDialog, {connection: buffer.connection})
             }
             MenuItem {
