@@ -28,6 +28,9 @@ MessageModel::MessageModel(IrcBuffer* buffer) : QAbstractListModel(buffer),
     m_buffer(buffer), m_formatter(new MessageFormatter(this))
 {
     m_formatter->setBuffer(buffer);
+    m_formatter->setTimeStampFormat("hh:mm");
+    m_formatter->setPrivateMessageNickFormat("%1:");
+
     connect(buffer, SIGNAL(messageReceived(IrcMessage*)), this, SLOT(receive(IrcMessage*)));
 
     connect(this, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SIGNAL(countChanged()));
