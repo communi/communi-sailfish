@@ -159,7 +159,7 @@ Page {
             buffer: page.buffer
             width: parent.width
 
-            backgroundVisible: !pushUpMenu.active && !view.atYEnd
+            backgroundVisible: !positioner.running && !pushUpMenu.active && !view.atYEnd
             opacity: pullDownMenu.active || pushUpMenu.active ? 0.0 : 1.0
             Behavior on opacity { FadeAnimation { } }
         }
