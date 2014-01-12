@@ -168,6 +168,11 @@ ApplicationWindow {
     PanelView {
         id: viewer
 
+        // a workaround to avoid TextAutoScroller picking up PanelView as an "outer"
+        // flickable and doing undesired contentX adjustments (the right side panel
+        // slides partially in) meanwhile typing/scrolling long TextEntry content
+        property bool maximumFlickVelocity: false
+
         width: parent.width
         height: visible ? currentPage.contentHeight : 0
         visible: !!currentPage && !!currentPage.__isBufferPage
