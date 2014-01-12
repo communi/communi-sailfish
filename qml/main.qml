@@ -28,7 +28,7 @@
 */
 
 import QtQuick 2.1
-import harbour.communi 3.1
+import Communi 3.1
 import Sailfish.Silica 1.0
 import Qt.labs.settings 1.0
 import org.nemomobile.ngf 1.0

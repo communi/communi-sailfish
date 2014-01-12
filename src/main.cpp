@@ -65,7 +65,7 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QScopedPointer<QQuickView> viewer(SailfishApp::createView());
 
-    registerIrcTypes("harbour.communi");
+    registerIrcTypes("Communi");
 
 #if QT_VERSION < 0x050200
     qmlRegisterType<QQmlSettings>("Qt.labs.settings", 1, 0, "Settings");
