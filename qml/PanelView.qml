@@ -36,6 +36,7 @@ SilicaListView {
     property Panel rightPanel
 
     property real panelWidth: container.width / 5 * 3
+    property real panelHeight: container.height
 
     currentIndex: 0
     orientation: Qt.Horizontal
@@ -43,6 +44,15 @@ SilicaListView {
     boundsBehavior: Flickable.StopAtBounds
     highlightRangeMode: ListView.StrictlyEnforceRange
     highlightMoveDuration: 200
+
+    Rectangle {
+        z: -1
+        width: container.width
+        height: container.panelHeight
+        color: Theme.highlightDimmerColor
+        opacity: container.moving || container.currentIndex !== 1 || container.contentX !== container.panelWidth ? 0.5 : 0.0
+        Behavior on opacity { FadeAnimation { } }
+    }
 
     Connections {
         target: leftPanel
@@ -121,13 +131,13 @@ SilicaListView {
         }
         Binding {
             target: panel
-            property: "width"
+            property: "implicitWidth"
             value: container.panelWidth
         }
         Binding {
             target: panel
             property: "implicitHeight"
-            value: container.height
+            value: container.panelHeight
         }
         Binding {
             target: panel

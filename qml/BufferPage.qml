@@ -49,7 +49,7 @@ Page {
     Column {
         id: column
 
-        z: -1
+        z: -2
         width: page.width
         height: page.height
 
