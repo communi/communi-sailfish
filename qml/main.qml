@@ -34,7 +34,6 @@ import Qt.labs.settings 1.0
 import org.nemomobile.ngf 1.0
 import org.nemomobile.notifications 1.0
 import "dialogs"
-import "pages"
 import "cover"
 
 ApplicationWindow {
