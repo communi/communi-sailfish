@@ -90,8 +90,11 @@ Dialog {
                 errorHighlight: !text
                 placeholderText: qsTr("Enter nick name")
                 text: defaultNickName
-                EnterKey.iconSource: "image://theme/icon-m-enter-next"
-                EnterKey.onClicked: realNameField.forceActiveFocus()
+
+                EnterKey.text: dialog.title
+                EnterKey.enabled: dialog.canAccept
+                EnterKey.highlighted: true
+                EnterKey.onClicked: dialog.accept()
             }
 
             TextField {
@@ -100,8 +103,11 @@ Dialog {
                 label: qsTr("Real name")
                 text: defaultRealName
                 placeholderText: qsTr("Enter real name")
-                EnterKey.iconSource: "image://theme/icon-m-enter-next"
-                EnterKey.onClicked: hostField.forceActiveFocus()
+
+                EnterKey.text: dialog.title
+                EnterKey.enabled: dialog.canAccept
+                EnterKey.highlighted: true
+                EnterKey.onClicked: dialog.accept()
             }
 
             TextField {
@@ -112,7 +118,11 @@ Dialog {
                 text: "irc.freenode.net"
                 placeholderText: qsTr("Enter server address")
                 inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText | Qt.ImhUrlCharactersOnly
-                EnterKey.iconSource: "image://theme/icon-m-enter-next"
+
+                EnterKey.text: dialog.title
+                EnterKey.enabled: dialog.canAccept
+                EnterKey.highlighted: true
+                EnterKey.onClicked: dialog.accept()
             }
 
             Item {
@@ -150,8 +160,11 @@ Dialog {
                     errorHighlight: !text
                     placeholderText: qsTr("Enter user name")
                     inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
-                    EnterKey.iconSource: "image://theme/icon-m-enter-next"
-                    EnterKey.onClicked: passwordField.forceActiveFocus()
+
+                    EnterKey.text: dialog.title
+                    EnterKey.enabled: dialog.canAccept
+                    EnterKey.highlighted: true
+                    EnterKey.onClicked: dialog.accept()
                 }
 
                 TextField {
@@ -160,8 +173,11 @@ Dialog {
                     label: qsTr("Password")
                     placeholderText: qsTr("Enter password")
                     echoMode: TextInput.PasswordEchoOnEdit
-                    EnterKey.iconSource: "image://theme/icon-m-enter-next"
-                    EnterKey.onClicked: portField.forceActiveFocus()
+
+                    EnterKey.text: dialog.title
+                    EnterKey.enabled: dialog.canAccept
+                    EnterKey.highlighted: true
+                    EnterKey.onClicked: dialog.accept()
                 }
 
                 TextSwitch {
@@ -179,8 +195,11 @@ Dialog {
                     errorHighlight: !text
                     inputMethodHints: Qt.ImhDigitsOnly
                     placeholderText: qsTr("Enter port")
-                    EnterKey.iconSource: "image://theme/icon-m-enter-next"
-                    EnterKey.onClicked: userNameField.forceActiveFocus()
+
+                    EnterKey.text: dialog.title
+                    EnterKey.enabled: dialog.canAccept
+                    EnterKey.highlighted: true
+                    EnterKey.onClicked: dialog.accept()
                 }
             }
             VerticalScrollDecorator { }
