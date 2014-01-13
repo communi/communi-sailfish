@@ -49,7 +49,7 @@ Dialog {
         delegate: ListItem {
             id: listItem
             showMenuOnPressAndHold: false
-            height: connectionSwitch.height + Theme.paddingMedium
+            contentHeight: connectionSwitch.height + Theme.paddingMedium
             menu: Component {
                 ContextMenu {
                     MenuItem {
