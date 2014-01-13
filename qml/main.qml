@@ -162,7 +162,7 @@ ApplicationWindow {
         onReseted: {
             // Hacky instanceof
             if (String(window.currentPage).indexOf("WelcomePage") !== 0) {
-                scheduler.replace(welcomePageComponent);
+                scheduler.replace(welcomeDialogComponent);
             }
         }
     }
