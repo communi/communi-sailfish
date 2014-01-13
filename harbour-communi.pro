@@ -1,5 +1,9 @@
+
+TEMPLATE = app
 TARGET = harbour-communi
 CONFIG += sailfishapp
+VERSION = 0.1
+DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 include(src/src.pri)
 include(src/shared/shared.pri)
