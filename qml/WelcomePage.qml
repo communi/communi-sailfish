@@ -33,15 +33,16 @@ import Communi 3.1
 import Sailfish.Silica 1.0
 import "dialogs"
 
-Page {
+Dialog {
     id: welcomePage
 
-    signal connectPressed
+    canAccept: BufferModel.models.length > 0 && BufferModel.connections.some(function (c) { return c.enabled; })
+    backNavigation: false
 
     SilicaListView {
         id: welcomePageListView
         anchors.fill: parent
-        header: PageHeader {
+        header: DialogHeader {
             id: welcomePageHeaderTop
             title: qsTr("Welcome to IRC")
         }
@@ -120,13 +121,6 @@ Page {
                 text: qsTr("Add a network")
                 onClicked: {
                     pageStack.push(addConnectionComponent);
-                }
-            }
-            MenuItem {
-                text: qsTr("Connect")
-                enabled: BufferModel.models.length > 0 && BufferModel.connections.some(function (c) { return c.enabled; })
-                onClicked: {
-                    welcomePage.connectPressed();
                 }
             }
         }

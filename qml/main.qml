@@ -55,11 +55,25 @@ ApplicationWindow {
         allNotifications.length = 0;
     }
 
+    // Opens all IRC connections
+    function openAllConnections() {
+        if (NetworkSession.open()) {
+            scheduler.replace(bufferPage, { buffer: BufferModel.models[0].get(0) });
+
+            for (var i = 0; i < BufferModel.connections.length; i++) {
+                BufferModel.connections[i].open();
+            }
+        }
+        else {
+            // TODO: display error message?
+        }
+    }
+
     PageStackScheduler {
         id: scheduler
     }
 
-    initialPage: welcomePageComponent
+    initialPage: bufferPage
     cover: CoverPage {
         id: appCover
     }
@@ -169,17 +183,8 @@ ApplicationWindow {
     Component {
         id: welcomePageComponent
         WelcomePage {
-            onConnectPressed: {
-                if (NetworkSession.open()) {
-                    scheduler.replace(bufferPage, { buffer: BufferModel.models[0].get(0) });
-
-                    for (var i = 0; i < BufferModel.connections.length; i++) {
-                        BufferModel.connections[i].open();
-                    }
-                }
-                else {
-                    // TODO: display error message?
-                }
+            onAccepted: {
+                window.openAllConnections();
             }
         }
     }
@@ -348,6 +353,8 @@ ApplicationWindow {
 
     Component.onCompleted: {
         BufferModel.restoreState(settings.state)
+        // TODO: check "connect automatically" setting and call window.openAllConnections if true
+        pageStack.push(welcomePageComponent);
     }
 
     Component.onDestruction: settings.state = BufferModel.saveState()
