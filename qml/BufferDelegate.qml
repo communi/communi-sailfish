@@ -51,6 +51,7 @@ ListItem {
                         buffer.connection.quit(reason)
                         buffer.connection.close()
                     } else {
+                        buffer.connection.enabled = true;
                         buffer.connection.open()
                     }
                 }
