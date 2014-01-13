@@ -162,7 +162,9 @@ ApplicationWindow {
         }
     }
 
-    initialPage: Component { Page { } } // TODO: WelcomePage
+    initialPage: Component {
+        WelcomePage { }
+    }
 
     PanelView {
         id: viewer
@@ -230,6 +232,18 @@ ApplicationWindow {
 
     IrcCommand {
         id: ircCommand
+    }
+
+    Component {
+        id: addConnectionComponent
+        ConnectDialog {
+            id: dialog
+            title: qsTr("Add connection")
+            onAccepted: {
+                var connection = dialog.connection;
+                BufferModel.addConnection(connection);
+            }
+        }
     }
 
     Component {
@@ -314,10 +328,6 @@ ApplicationWindow {
 
     Component.onCompleted: {
         BufferModel.restoreState(settings.state)
-        if (BufferModel.models.length)
-            scheduler.replace(bufferPage, {buffer: BufferModel.models[0].get(0)})
-        else
-            scheduler.push(connectDialog) // TODO: just keep WelcomePage visible instead
     }
 
     Component.onDestruction: settings.state = BufferModel.saveState()

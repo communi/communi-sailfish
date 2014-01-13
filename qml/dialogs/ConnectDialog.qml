@@ -43,7 +43,6 @@ Dialog {
     property string defaultUserName: "sailfish"
     property string defaultRealName: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
 
-    backNavigation: BufferModel.models.length
     canAccept: !!hostField.text && !!nickNameField.text && !!userNameField.text && !!portField.text
 
     Component.onCompleted: {
