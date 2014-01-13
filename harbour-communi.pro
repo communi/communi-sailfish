@@ -18,3 +18,6 @@ OTHER_FILES += \
     README.md
 
 CONFIG += c++11
+
+RESOURCES += \
+    sailfish-ui.qrc
