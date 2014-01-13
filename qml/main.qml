@@ -181,8 +181,8 @@ ApplicationWindow {
     }
 
     Component {
-        id: welcomePageComponent
-        WelcomePage {
+        id: welcomeDialogComponent
+        WelcomeDialog {
             onAccepted: {
                 window.openAllConnections();
             }
@@ -354,7 +354,7 @@ ApplicationWindow {
     Component.onCompleted: {
         BufferModel.restoreState(settings.state)
         // TODO: check "connect automatically" setting and call window.openAllConnections if true
-        pageStack.push(welcomePageComponent);
+        pageStack.push(welcomeDialogComponent);
     }
 
     Component.onDestruction: settings.state = BufferModel.saveState()
