@@ -40,6 +40,8 @@ SilicaListView {
 
     readonly property bool closed: container.contentX === container.panelWidth
 
+    pressDelay: 0 // important! (makes vertical flicking "stable")
+
     currentIndex: 0
     orientation: Qt.Horizontal
     snapMode: ListView.SnapOneItem
