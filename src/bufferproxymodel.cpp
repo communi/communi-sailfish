@@ -187,8 +187,6 @@ bool BufferProxyModel::restoreState(const QByteArray& data)
             IrcBufferModel* model = connection->findChild<IrcBufferModel*>();
             if (model)
                 model->restoreState(modelStates.value(i).toByteArray());
-
-            connection->open();
         }
     }
     return true;
