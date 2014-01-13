@@ -76,7 +76,7 @@ ListItem {
         var reason = root.reason
         var buffer = root.buffer
         if (buffer.sticky)
-            remorse.execute(root, "Removing", function() { buffer.close(reason) } )
+            remorse.execute(root, qsTr("Removing"), function() { buffer.close(reason) } )
         else
             buffer.close(reason)
     }
