@@ -14,4 +14,3 @@ release
 .make.cache
 .tmp
 moc_*.cpp
-*.spec

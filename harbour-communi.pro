@@ -1,7 +1,7 @@
 
 TEMPLATE = app
 TARGET = harbour-communi
-CONFIG += sailfishapp
+#CONFIG += sailfishapp
 VERSION = 0.1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
@@ -15,7 +15,6 @@ OTHER_FILES += \
     qml/dialogs/*.qml \
     qml/misc/*.qml \
     rpm/harbour-communi.spec \
-    rpm/harbour-communi.yaml \
     harbour-communi.desktop \
     harbour-communi.png \
     harbour-communi.svg \
@@ -25,3 +24,10 @@ CONFIG += c++11
 
 RESOURCES += \
     sailfish-ui.qrc
+
+target.path = /usr/bin
+iconfile.path = /usr/share/icons/hicolor/86x86/apps
+iconfile.files = harbour-communi.png
+desktopfile.path = /usr/share/applications
+desktopfile.files = harbour-communi.desktop
+INSTALLS = target desktopfile iconfile
