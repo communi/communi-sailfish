@@ -59,6 +59,7 @@ ApplicationWindow {
         id: scheduler
     }
 
+    initialPage: welcomePageComponent
     cover: CoverPage {
         id: appCover
     }
@@ -144,7 +145,10 @@ ApplicationWindow {
             }
         }
         onReseted: {
-            scheduler.push(connectDialog) // TODO: restore WelcomePage instead
+            // Hacky instanceof
+            if (String(window.currentPage).indexOf("WelcomePage") !== 0) {
+                scheduler.replace(welcomePageComponent);
+            }
         }
     }
 
@@ -162,7 +166,8 @@ ApplicationWindow {
         }
     }
 
-    initialPage: Component {
+    Component {
+        id: welcomePageComponent
         WelcomePage {
             onConnectPressed: {
                 if (NetworkSession.open()) {
