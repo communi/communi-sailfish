@@ -9,6 +9,7 @@ OTHER_FILES += \
     qml/*.qml \
     qml/cover/*.qml \
     qml/dialogs/*.qml \
+    qml/misc/*.qml \
     rpm/harbour-communi.spec \
     rpm/harbour-communi.yaml \
     harbour-communi.desktop \

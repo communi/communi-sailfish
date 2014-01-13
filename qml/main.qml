@@ -35,6 +35,7 @@ import org.nemomobile.ngf 1.0
 import org.nemomobile.notifications 1.0
 import "dialogs"
 import "cover"
+import "misc"
 
 ApplicationWindow {
     id: window
