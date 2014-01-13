@@ -1,7 +1,12 @@
 
 TEMPLATE = app
 TARGET = harbour-communi
-#CONFIG += sailfishapp
+QT += quick
+
+CONFIG += link_pkgconfig
+PKGCONFIG += sailfishapp
+INCLUDEPATH += /usr/include/sailfishapp
+
 VERSION = 0.1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
