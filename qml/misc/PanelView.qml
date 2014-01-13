@@ -54,6 +54,12 @@ SilicaListView {
         color: Theme.highlightDimmerColor
         opacity: container.moving || container.currentIndex !== 1 || !container.closed ? 0.5 : 0.0
         Behavior on opacity { FadeAnimation { } }
+
+        MouseArea {
+            anchors.fill: parent
+            enabled: !container.closed
+            onClicked: leftPanel.hide()
+        }
     }
 
     Connections {

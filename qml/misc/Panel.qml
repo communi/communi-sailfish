@@ -78,10 +78,4 @@ Rectangle {
         brightness: 1.0
         radius: 0.25
     }
-
-    InverseMouseArea {
-        anchors.fill: parent
-        enabled: panel.active && __view && __view.currentIndex === panel.index
-        onClickedOutside: panel.hide()
-    }
 }
