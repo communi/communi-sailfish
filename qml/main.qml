@@ -238,7 +238,7 @@ ApplicationWindow {
         id: addConnectionComponent
         ConnectDialog {
             id: dialog
-            title: qsTr("Add connection")
+            title: qsTr("Add network")
             onAccepted: {
                 var connection = dialog.connection;
                 BufferModel.addConnection(connection);
@@ -248,7 +248,9 @@ ApplicationWindow {
 
     Component {
         id: editDialog
-        ConnectDialog { }
+        ConnectDialog {
+            title: qsTr("Edit network")
+        }
     }
 
     Component {
