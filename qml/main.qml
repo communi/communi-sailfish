@@ -163,7 +163,20 @@ ApplicationWindow {
     }
 
     initialPage: Component {
-        WelcomePage { }
+        WelcomePage {
+            onConnectPressed: {
+                if (NetworkSession.open()) {
+                    scheduler.replace(bufferPage, { buffer: BufferModel.models[0].get(0) });
+
+                    for (var i = 0; i < BufferModel.connections.length; i++) {
+                        BufferModel.connections[i].open();
+                    }
+                }
+                else {
+                    // TODO: display error message?
+                }
+            }
+        }
     }
 
     PanelView {

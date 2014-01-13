@@ -36,6 +36,8 @@ import "dialogs"
 Page {
     id: welcomePage
 
+    signal connectPressed
+
     SilicaListView {
         anchors.fill: parent
         header: PageHeader {
@@ -117,6 +119,13 @@ Page {
                 text: qsTr("Add a network")
                 onClicked: {
                     pageStack.push(addConnectionComponent);
+                }
+            }
+            MenuItem {
+                text: qsTr("Connect")
+                enabled: BufferModel.models.length > 0
+                onClicked: {
+                    welcomePage.connectPressed();
                 }
             }
         }
