@@ -64,15 +64,18 @@ signals:
 
 private slots:
     void receive(IrcMessage* message);
-    void append(const QString& richtext, const QString& plaintext, bool hilite);
 
 private:
     struct MessageData {
+        MessageData() : seen(false), event(false), hilite(false) { }
         bool seen;
+        bool event;
         bool hilite;
         QString richtext;
         QString plaintext;
     };
+
+    void append(const MessageData& data);
 
     int m_badge;
     bool m_active;

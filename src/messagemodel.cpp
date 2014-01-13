@@ -20,7 +20,8 @@
 
 enum DataRole {
     SeenRole = Qt::UserRole,
-    HighlightRole
+    HighlightRole,
+    EventRole
 };
 
 MessageModel::MessageModel(IrcBuffer* buffer) : QAbstractListModel(buffer),
@@ -109,6 +110,7 @@ QHash<int, QByteArray> MessageModel::roleNames() const
     roles[Qt::DisplayRole] = "richtext";
     roles[Qt::EditRole] = "plaintext";
     roles[HighlightRole] = "highlight";
+    roles[EventRole] = "event";
     roles[SeenRole] = "seen";
     return roles;
 }
@@ -122,6 +124,8 @@ QVariant MessageModel::data(const QModelIndex& index, int role) const
     switch (role) {
     case HighlightRole:
         return m_messages.at(row).hilite;
+    case EventRole:
+        return m_messages.at(row).event;
     case SeenRole:
         return m_messages.at(row).seen;
     case Qt::DisplayRole:
@@ -135,15 +139,16 @@ QVariant MessageModel::data(const QModelIndex& index, int role) const
 
 void MessageModel::receive(IrcMessage* message)
 {
-    QString plaintext = m_formatter->formatMessage(message, Qt::PlainText);
-    if (!plaintext.isEmpty()) {
-        bool hilite = false;
+    MessageData data;
+    data.plaintext = m_formatter->formatMessage(message, Qt::PlainText);
+    if (!data.plaintext.isEmpty()) {
+        data.event = (message->type() != IrcMessage::Private && message->type() != IrcMessage::Notice);
         if (!(message->flags() & IrcMessage::Own))
-            hilite = message->property("content").toString().contains(message->connection()->nickName(), Qt::CaseInsensitive);
-        QString richtext = m_formatter->formatMessage(message, Qt::RichText);
-        append(richtext, plaintext, hilite);
+            data.hilite = message->property("content").toString().contains(message->connection()->nickName(), Qt::CaseInsensitive);
+        data.richtext = m_formatter->formatMessage(message, Qt::RichText);
+        append(data);
         if (!m_active) {
-            if (hilite || message->property("private").toBool()) {
+            if (data.hilite || message->property("private").toBool()) {
                 setActiveHighlight(true);
                 emit highlighted(message, this->m_buffer);
             }
@@ -152,15 +157,10 @@ void MessageModel::receive(IrcMessage* message)
     }
 }
 
-void MessageModel::append(const QString& richtext, const QString& plaintext, bool hilite)
+void MessageModel::append(const MessageData& data)
 {
     int row = m_messages.count();
     beginInsertRows(QModelIndex(), row, row);
-    MessageData data;
-    data.seen = false;
-    data.hilite = hilite;
-    data.richtext = richtext;
-    data.plaintext = plaintext;
     m_messages.append(data);
     endInsertRows();
 }
