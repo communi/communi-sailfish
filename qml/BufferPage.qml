@@ -77,6 +77,7 @@ Page {
                 }
                 MenuItem {
                     text: qsTr("Jump to bottom")
+                    visible: view.contentHeight && view.contentHeight > view.height
                     onClicked: {
                         view.cancelFlick();
                         view.positionViewAtEnd();
@@ -103,6 +104,7 @@ Page {
                 }
                 MenuItem {
                     text: qsTr("Jump to top")
+                    visible: view.contentHeight && view.contentHeight > view.height
                     onClicked: {
                         view.cancelFlick();
                         view.positionViewAtBeginning();
