@@ -39,6 +39,7 @@ Page {
     signal connectPressed
 
     SilicaListView {
+        id: welcomePageListView
         anchors.fill: parent
         header: PageHeader {
             id: welcomePageHeaderTop
@@ -131,5 +132,16 @@ Page {
         }
 
         VerticalScrollDecorator { }
+    }
+
+    Label {
+        visible: BufferModel.connections.length === 0
+        anchors.fill: parent
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        wrapMode: Text.Wrap
+        text: qsTr("Pull down to add a network.")
+        color: Theme.primaryColor
+        font.pixelSize: Theme.fontSizeLarge
     }
 }
