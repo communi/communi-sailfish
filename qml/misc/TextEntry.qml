@@ -99,7 +99,7 @@ TextField {
 
             IconButton {
                 id: autocompleteButton
-                icon.source: "image://theme/icon-s-retweet"
+                icon.source: "../images/complete.png"
                 onClicked: {
                     field.autoComplete();
                 }
