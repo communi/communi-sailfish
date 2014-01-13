@@ -123,7 +123,7 @@ Page {
             }
             MenuItem {
                 text: qsTr("Connect")
-                enabled: BufferModel.models.length > 0
+                enabled: BufferModel.models.length > 0 && BufferModel.connections.some(function (c) { return c.enabled; })
                 onClicked: {
                     welcomePage.connectPressed();
                 }
