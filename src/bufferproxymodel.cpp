@@ -15,6 +15,7 @@
 #include "bufferproxymodel.h"
 #include "zncmanager.h"
 #include <QCoreApplication>
+#include <QTimer>
 #include <IrcBufferModel>
 #include <IrcConnection>
 #include <IrcBuffer>
@@ -181,12 +182,21 @@ bool BufferProxyModel::restoreState(const QByteArray& data)
         connection->restoreState(connectionStates.at(i).toByteArray());
         addConnection(connection);
         if (connection->isEnabled()) {
-            // TODO: Give bouncers a sec or two to start joining channels after getting connected.
-            //       If that happens, the saved buffers shouldn't be restored to avoid restoring
-            //       a buffer that was closed using another client meanwhile.
-            IrcBufferModel* model = connection->findChild<IrcBufferModel*>();
-            if (model)
-                model->restoreState(modelStates.value(i).toByteArray());
+            // Give bouncers a sec or two to start joining channels after getting connected.
+            // If that happens, the saved buffers shouldn't be restored to avoid restoring
+            // a buffer that was closed using another client meanwhile.
+
+            auto *timer = new QTimer(this);
+            QObject::connect(timer, &QTimer::timeout, [=]() -> void {
+                IrcBufferModel* model = connection->findChild<IrcBufferModel*>();
+                if (model && model->buffers().length() <= 1)
+                {
+                    model->restoreState(modelStates.value(i).toByteArray());
+                }
+                timer->deleteLater();
+            });
+            timer->setSingleShot(true);
+            timer->start(2000);
         }
     }
     return true;
