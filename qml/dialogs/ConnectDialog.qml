@@ -90,7 +90,7 @@ Dialog {
                 placeholderText: qsTr("Enter nick name")
                 text: defaultNickName
 
-                EnterKey.text: dialog.title
+                EnterKey.text: dialog.title.split(" ")[0]
                 EnterKey.enabled: dialog.canAccept
                 EnterKey.highlighted: true
                 EnterKey.onClicked: dialog.accept()
@@ -103,7 +103,7 @@ Dialog {
                 text: defaultRealName
                 placeholderText: qsTr("Enter real name")
 
-                EnterKey.text: dialog.title
+                EnterKey.text: dialog.title.split(" ")[0]
                 EnterKey.enabled: dialog.canAccept
                 EnterKey.highlighted: true
                 EnterKey.onClicked: dialog.accept()
@@ -118,7 +118,7 @@ Dialog {
                 placeholderText: qsTr("Enter server address")
                 inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText | Qt.ImhUrlCharactersOnly
 
-                EnterKey.text: dialog.title
+                EnterKey.text: dialog.title.split(" ")[0]
                 EnterKey.enabled: dialog.canAccept
                 EnterKey.highlighted: true
                 EnterKey.onClicked: dialog.accept()
@@ -160,10 +160,10 @@ Dialog {
                     placeholderText: qsTr("Enter user name")
                     inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
 
-                    EnterKey.text: dialog.title
-                    EnterKey.enabled: dialog.canAccept
+                    EnterKey.text: qsTr("Ok")
+                    EnterKey.enabled: !!userNameField.text && !!portField.text
                     EnterKey.highlighted: true
-                    EnterKey.onClicked: dialog.accept()
+                    EnterKey.onClicked: pageStack.pop()
                 }
 
                 TextField {
@@ -173,10 +173,10 @@ Dialog {
                     placeholderText: qsTr("Enter password")
                     echoMode: TextInput.PasswordEchoOnEdit
 
-                    EnterKey.text: dialog.title
-                    EnterKey.enabled: dialog.canAccept
+                    EnterKey.text: qsTr("Ok")
+                    EnterKey.enabled: !!userNameField.text && !!portField.text
                     EnterKey.highlighted: true
-                    EnterKey.onClicked: dialog.accept()
+                    EnterKey.onClicked: pageStack.pop()
                 }
 
                 TextSwitch {
@@ -195,10 +195,10 @@ Dialog {
                     inputMethodHints: Qt.ImhDigitsOnly
                     placeholderText: qsTr("Enter port")
 
-                    EnterKey.text: dialog.title
-                    EnterKey.enabled: dialog.canAccept
+                    EnterKey.text: qsTr("Ok")
+                    EnterKey.enabled: !!userNameField.text && !!portField.text
                     EnterKey.highlighted: true
-                    EnterKey.onClicked: dialog.accept()
+                    EnterKey.onClicked: pageStack.pop()
                 }
             }
             VerticalScrollDecorator { }
