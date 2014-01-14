@@ -64,14 +64,14 @@ Dialog {
             }
 
             SectionHeader {
-                text: qsTr("Icon design")
+                text: qsTr("Artwork")
             }
 
             Label {
                 wrapMode: Text.WordWrap
                 anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
                 font.pixelSize: Theme.fontSizeSmall
-                text: "Stephan Beyerle"
+                text: "Stephan Beyerle\nStanislaw Dac"
             }
 
         }
