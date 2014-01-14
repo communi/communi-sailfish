@@ -43,6 +43,7 @@ ApplicationWindow {
     property Page currentPage: pageStack.currentPage
     property IrcBuffer currentBuffer: currentPage ? currentPage.buffer || null : null
     property var allNotifications: []
+    property color nickHighlight: "#ff4d4d"
 
     // Clears all notifications that belong to the app
     function clearAllNotifications() {

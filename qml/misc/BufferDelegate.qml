@@ -36,6 +36,7 @@ ListItem {
 
     property IrcBuffer buffer
     property string reason: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
+    property variant messageModel: MessageStorage.get(buffer)
 
     contentHeight: Theme.itemSizeMedium
     ListView.onRemove: animateRemoval(root)
@@ -90,13 +91,15 @@ ListItem {
         text: buffer ? buffer.title : text
         verticalAlignment: Qt.AlignVCenter
         anchors { fill: parent; leftMargin: Theme.paddingLarge; rightMargin: glass.visible || loader.active ? glass.width : 0 }
-        color: !buffer || !buffer.active ? Theme.secondaryColor : MessageStorage.get(buffer).badge > 0 ? Theme.highlightColor : Theme.primaryColor
+        // inactive buffer > highlighted buffer > unread messages buffer > nothing special buffer
+        color: (!buffer || !buffer.active) ? Theme.secondaryColor : (messageModel.activeHighlight ? window.nickHighlight : (messageModel.badge > 0 ? Theme.highlightColor : Theme.primaryColor))
+        font.bold: buffer === window.currentBuffer
     }
 
     GlassItem {
         id: glass
-        visible: buffer && MessageStorage.get(buffer).activeHighlight
-        color: Theme.highlightColor
+        visible: buffer === window.currentBuffer
+        color: Theme.primaryColor
         falloffRadius: 0.16
         radius: 0.15
         anchors { right: parent.right; verticalCenter: parent.verticalCenter }
