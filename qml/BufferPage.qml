@@ -72,7 +72,7 @@ Page {
                 }
                 MenuItem {
                     text: qsTr("Clear messages")
-                    enabled: storage && storage.count
+                    visible: storage && storage.count
                     onClicked: {
                         // TODO: why the view position jumps?
                         storage.clear()
