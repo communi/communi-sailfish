@@ -78,7 +78,7 @@ Dialog {
                 property bool bindNow: false
 
                 id: connectionSwitch
-                text: modelData.host
+                text: modelData.displayName
                 description: modelData.nickName
                 checked: modelData.enabled
                 automaticCheck: false
