@@ -98,7 +98,8 @@ ListItem {
 
     GlassItem {
         id: glass
-        visible: buffer === window.currentBuffer
+        opacity: buffer === window.currentBuffer ? 1.0 : 0.0
+        Behavior on opacity { FadeAnimation { } }
         color: Theme.primaryColor
         falloffRadius: 0.16
         radius: 0.15
