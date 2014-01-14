@@ -33,6 +33,7 @@ public:
 
     QList<QObject*> models() const;
     QList<QObject*> connections() const;
+    Q_INVOKABLE QObject* model(IrcConnection* connection) const;
     Q_INVOKABLE void addConnection(IrcConnection* connection);
     Q_INVOKABLE void removeConnection(IrcConnection* connection);
 

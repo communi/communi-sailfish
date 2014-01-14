@@ -72,6 +72,13 @@ QList<QObject*> BufferProxyModel::models() const
     return lst;
 }
 
+QObject* BufferProxyModel::model(IrcConnection* connection) const
+{
+    if (connection)
+        return connection->findChild<IrcBufferModel*>();
+    return 0;
+}
+
 QList<QObject*> BufferProxyModel::connections() const
 {
     QList<QObject*> lst;
