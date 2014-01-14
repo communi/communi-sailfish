@@ -60,7 +60,11 @@ ApplicationWindow {
     // Opens all IRC connections
     function openAllConnections() {
         if (NetworkSession.open()) {
-            scheduler.replace(bufferPage, { buffer: BufferModel.models[0].get(0) });
+            var prev = pageStack.previousPage();
+            if (prev && prev.buffer === null)
+                prev.buffer = BufferModel.models[0].get(0);
+            else
+                scheduler.replace(bufferPage, { buffer: BufferModel.models[0].get(0) });
 
             for (var i = 0; i < BufferModel.connections.length; i++) {
                 BufferModel.connections[i].open();
