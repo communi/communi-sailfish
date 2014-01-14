@@ -115,14 +115,20 @@ Dialog {
     }
 
     // Sort of toolbar thingy for adding new channels quickly
-    Rectangle {
+    Item {
         id: setChannelsToolbar
         height: addChannelField.height + 2 * Theme.paddingSmall
-        color: Theme.rgba(Theme.primaryColor, 0.15)
         anchors {
             bottom: parent.bottom
             left: parent.left
             right: parent.right
+        }
+
+        Rectangle {
+            anchors.fill: parent
+            color: Theme.rgba(Theme.highlightDimmerColor, 0.8)
+            opacity: !setChannelsView.atYEnd ? 1.0 : 0.0
+            Behavior on opacity { FadeAnimation { } }
         }
 
         // Adds the currently entered channel to the list
