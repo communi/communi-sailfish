@@ -60,15 +60,22 @@ ApplicationWindow {
     // Opens all IRC connections
     function openAllConnections() {
         if (NetworkSession.open()) {
+            var buffer = null;
+            for (var i = 0; i < BufferModel.connections.length; i++) {
+                var connection = BufferModel.connections[i];
+                if (connection.enabled) {
+                    connection.open();
+                    if (!buffer)
+                        buffer = BufferModel.model(connection).get(0);
+                }
+            }
+
             var prev = pageStack.previousPage();
             if (prev && prev.buffer === null)
-                prev.buffer = BufferModel.models[0].get(0);
+                prev.buffer = buffer;
             else
-                scheduler.replace(bufferPage, { buffer: BufferModel.models[0].get(0) });
+                scheduler.replace(bufferPage, { buffer: buffer });
 
-            for (var i = 0; i < BufferModel.connections.length; i++) {
-                BufferModel.connections[i].open();
-            }
         }
         else {
             // TODO: display error message?
