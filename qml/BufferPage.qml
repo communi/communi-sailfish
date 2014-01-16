@@ -128,6 +128,7 @@ Page {
                     text: richtext
                     anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
                     wrapMode: Text.Wrap
+                    textFormat: Text.RichText
                     linkColor: Theme.highlightColor
                     font.pixelSize: Theme.fontSizeSmall
                     onLinkActivated: Qt.openUrlExternally(link)
