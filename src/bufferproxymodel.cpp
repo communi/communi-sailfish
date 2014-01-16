@@ -112,8 +112,21 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
     // TODO: more fine-grained delivery (WHOIS replies etc. to the current buffer)
     connect(model, SIGNAL(messageIgnored(IrcMessage*)), buffer, SLOT(receiveMessage(IrcMessage*)));
 
+    connect(connection, SIGNAL(enabledChanged(bool)), this, SLOT(onConnectionEnabledChanged(bool)));
     connect(connection, SIGNAL(nickNameReserved(QString*)), this, SLOT(onNickNameReserved()));
     connect(connection, SIGNAL(channelKeyRequired(QString,QString*)), this, SLOT(onChannelKeyRequired(QString)));
+
+    // Give bouncers a sec or two to start joining channels after getting connected.
+    // If that happens, the saved buffers shouldn't be restored to avoid restoring
+    // a buffer that was closed using another client meanwhile.
+    QTimer* timer = new QTimer(connection);
+    timer->setSingleShot(true);
+    timer->setInterval(2000);
+    connect(connection, SIGNAL(connected()), timer, SLOT(start()));
+    QObject::connect(timer, &QTimer::timeout, [=]() -> void {
+        if (model->count() <= 1)
+            model->restoreState(model->property("savedState").toByteArray());
+    });
 
     insertSourceModel(model);
     emit connectionsChanged();
@@ -159,7 +172,10 @@ QByteArray BufferProxyModel::saveState() const
             connectionStates += model->connection()->saveState();
             // do not save the server buffer - let addConnection() handle it when restoring
             model->remove(model->get(0));
-            modelStates += model->saveState();
+            if (model->connection()->isEnabled())
+                modelStates += model->saveState();
+            else
+                modelStates += model->property("savedState");
         }
     }
 
@@ -188,25 +204,24 @@ bool BufferProxyModel::restoreState(const QByteArray& data)
         IrcConnection* connection = new IrcConnection(this);
         connection->restoreState(connectionStates.at(i).toByteArray());
         addConnection(connection);
-        if (connection->isEnabled()) {
-            // Give bouncers a sec or two to start joining channels after getting connected.
-            // If that happens, the saved buffers shouldn't be restored to avoid restoring
-            // a buffer that was closed using another client meanwhile.
-
-            auto *timer = new QTimer(this);
-            QObject::connect(timer, &QTimer::timeout, [=]() -> void {
-                IrcBufferModel* model = connection->findChild<IrcBufferModel*>();
-                if (model && model->buffers().length() <= 1)
-                {
-                    model->restoreState(modelStates.value(i).toByteArray());
-                }
-                timer->deleteLater();
-            });
-            timer->setSingleShot(true);
-            timer->start(2000);
-        }
+        IrcBufferModel* model = connection->findChild<IrcBufferModel*>();
+        model->setProperty("savedState", modelStates.value(i));
     }
     return true;
+}
+
+void BufferProxyModel::onConnectionEnabledChanged(bool enabled)
+{
+    // store the model state when a connection is disabled
+    // see #25: Don't save/restore buffers for disabled connections
+    if (!enabled) {
+        IrcConnection* connection = qobject_cast<IrcConnection*>(sender());
+        if (connection) {
+            IrcBufferModel* model = connection->findChild<IrcBufferModel*>();
+            if (model && model->count() > 1)
+                model->setProperty("savedState", model->saveState());
+        }
+    }
 }
 
 void BufferProxyModel::closeConnection(IrcBuffer* buffer)

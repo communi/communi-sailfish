@@ -55,6 +55,7 @@ signals:
     void channelKeyRequired(IrcConnection* connection, const QString& channel);
 
 private slots:
+    void onConnectionEnabledChanged(bool enabled);
     void closeConnection(IrcBuffer* buffer);
     void onChannelKeyRequired(const QString& channel);
     void onNickNameReserved();
