@@ -58,10 +58,10 @@ Dialog {
                 label: qsTr("Network:")
                 menu: ContextMenu {
                     Repeater {
-                        model: BufferModel.models
+                        model: BufferModel.connections
                         delegate: MenuItem {
-                            visible: modelData.connection.enabled
-                            text: modelData.connection.displayName
+                            visible: modelData.enabled
+                            text: modelData.displayName
                         }
                     }
                 }
