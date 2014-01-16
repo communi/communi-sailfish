@@ -344,7 +344,7 @@ ApplicationWindow {
         id: nickDialog
         NickDialog {
             id: dialog
-            onAccepted: dialog.connection.nickName = dialog.nick.trim()
+            onAccepted: dialog.model.connection.nickName = dialog.nick.trim()
         }
     }
 
