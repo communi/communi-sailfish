@@ -33,10 +33,10 @@ import Sailfish.Silica 1.0
 Dialog {
     id: dialog
 
-    property var model
     property alias channel: channelField.text
     property alias password: passwordField.text
-    property var network: model[networkBox.currentIndex]
+    property alias index: networkBox.currentIndex
+    readonly property var model: BufferModel.models[networkBox.currentIndex]
 
     canAccept: channel.length > 1
 
@@ -58,8 +58,11 @@ Dialog {
                 label: qsTr("Network:")
                 menu: ContextMenu {
                     Repeater {
-                        model: dialog.model
-                        delegate: MenuItem { text: modelData.connection.displayName }
+                        model: BufferModel.models
+                        delegate: MenuItem {
+                            visible: modelData.connection.enabled
+                            text: modelData.connection.displayName
+                        }
                     }
                 }
             }

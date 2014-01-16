@@ -161,7 +161,7 @@ ApplicationWindow {
             scheduler.push(nickDialog, {nick: connection.nickName, model: BufferModel.connections, network: BufferModel.connections.indexOf(connection)})
         }
         onChannelKeyRequired: {
-            scheduler.push(joinDialog, {channel: channel, model: BufferModel.models})
+            scheduler.push(joinDialog, {channel: channel, index: BufferModel.connections.indexOf(connection)})
         }
         onBufferAboutToBeRemoved: {
             if (buffer === currentBuffer) {
@@ -322,11 +322,12 @@ ApplicationWindow {
         JoinDialog {
             id: dialog
             onAccepted: {
-                var channel = dialog.network.add(dialog.channel.trim())
-                channel.join(dialog.password)
+                var buffer = dialog.model.add(dialog.channel.trim())
+                if (buffer.channel)
+                    buffer.join(dialog.password)
                 var prev = pageStack.previousPage()
-                if (prev && channel !== prev.buffer)
-                    scheduler.replace(bufferPage, {buffer: channel})
+                if (prev && buffer !== prev.buffer)
+                    scheduler.replace(bufferPage, {buffer: buffer})
             }
         }
     }
