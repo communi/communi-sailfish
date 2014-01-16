@@ -299,36 +299,19 @@ ApplicationWindow {
         ConnectDialog {
             id: dialog
             onAccepted: {
-                var connection = dialog.connection
-                connection.connecting.connect(showConnectingDialog.bind(connection))
+                var connection = dialog.connection;
+                BufferModel.addConnection(connection);
 
-                BufferModel.addConnection(connection)
-                if (NetworkSession.open())
-                    connection.open()
+                if (NetworkSession.open()) {
+                    connection.open();
 
-                if (!currentPage || !currentPage.__isBufferPage)
-                    scheduler.replace(bufferPage, {buffer: BufferModel.models[BufferModel.models.length-1].get(0)})
-            }
-        }
-    }
-
-    function showConnectingDialog() {
-        if (!this.userData) {
-            this.userData = true
-            scheduler.push(connectingDialog, {connection: this})
-        }
-    }
-
-    Component {
-        id: connectingDialog
-        ConnectingDialog {
-            id: dialog
-            onAccepted: {
-                var channels = dialog.channelNames()
-                for (var i = 0; i < channels.length; ++i) {
-                    var channel = channels[i].trim()
-                    if (!!channel)
-                        dialog.connection.sendCommand(ircCommand.createJoin(channel))
+                    if (!currentPage || !currentPage.__isBufferPage) {
+                        var newBuffer = BufferModel.models[BufferModel.models.length - 1].get(0);
+                        scheduler.replace(bufferPage, { buffer: newBuffer });
+                    }
+                }
+                else {
+                    // TODO: show error message?
                 }
             }
         }

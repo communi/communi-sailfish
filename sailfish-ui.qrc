@@ -3,7 +3,6 @@
         <file>qml/cover/CoverPage.qml</file>
         <file>qml/dialogs/AboutDialog.qml</file>
         <file>qml/dialogs/ConnectDialog.qml</file>
-        <file>qml/dialogs/ConnectingDialog.qml</file>
         <file>qml/dialogs/JoinDialog.qml</file>
         <file>qml/dialogs/NickDialog.qml</file>
         <file>qml/dialogs/QueryDialog.qml</file>
