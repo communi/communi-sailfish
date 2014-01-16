@@ -17,8 +17,8 @@
    inkscape:version="0.48.4 r9939"
    version="1.1"
    id="svg2"
-   height="84"
-   width="84">
+   height="86"
+   width="86">
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -26,9 +26,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6568542"
-     inkscape:cx="73.662691"
-     inkscape:cy="42.363444"
+     inkscape:zoom="4"
+     inkscape:cx="95.676909"
+     inkscape:cy="38.982384"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -60,11 +60,11 @@
        id="guide8213" />
     <sodipodi:guide
        orientation="1,0"
-       position="42,43.3125"
+       position="43,45.5"
        id="guide8259" />
     <sodipodi:guide
        orientation="0,1"
-       position="46.75,42"
+       position="44.459339,43.000931"
        id="guide8578" />
     <sodipodi:guide
        orientation="0,1"
@@ -266,6 +266,16 @@
          offset="1"
          id="stop3793-4-3" />
     </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3789-6"
+       id="linearGradient3106"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.97674419,0,0,0.97674396,0,24.473779)"
+       x1="24.5"
+       y1="973.86218"
+       x2="69.75"
+       y2="1052.6122" />
   </defs>
   <metadata
      id="metadata7">
@@ -280,19 +290,10 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(0,-968.36218)"
+     transform="translate(0,-966.36218)"
      id="layer1"
      inkscape:groupmode="layer"
      inkscape:label="Layer 1">
-    <path
-       sodipodi:nodetypes="ssccsss"
-       inkscape:connector-curvature="0"
-       id="path5226"
-       d="m 0,1010.3622 c 0,23.1959 18.804041,42 42,42 11.245204,0 40.046512,0 40.046512,0 0.976744,0 1.953488,-0.9767 1.953488,-1.9535 0,0 0,-29.2808 0,-40.0465 0,-23.19596 -18.804041,-42 -42,-42 -23.195959,0 -42,18.80404 -42,42 z"
-       style="fill:url(#linearGradient8793);fill-opacity:1;stroke:none"
-       inkscape:export-filename="/home/z/programy/communi-sailfish/harbour-communi.png"
-       inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90" />
     <path
        sodipodi:type="arc"
        style="opacity:0.99331103;color:#000000;fill:none;stroke:#ffffff;stroke-width:4.5999999;stroke-opacity:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
@@ -301,24 +302,40 @@
        sodipodi:cy="41.75"
        sodipodi:rx="34.75"
        sodipodi:ry="34.75"
-       d="M 75.75,41.75 C 75.75,60.941895 60.191895,76.5 41,76.5 21.808105,76.5 6.25,60.941895 6.25,41.75 6.25,22.558105 21.808105,7 41,7 60.191895,7 75.75,22.558105 75.75,41.75 z"
+       d="m 75.75,41.75 a 34.75,34.75 0 1 1 -69.5,0 34.75,34.75 0 1 1 69.5,0 z"
        transform="matrix(0.92240216,0,0,0.92240216,-102.19349,976.72689)" />
-    <path
-       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.398;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
-       d="m 41.99875,978.60615 c -17.501033,0 -31.71875,14.24892 -31.71875,31.75025 0,17.501 14.217712,31.7188 31.71875,31.7188 l 31.694435,0.037 0.02432,-31.7558 c 0,-17.50133 -14.217717,-31.75025 -31.71875,-31.75025 z m 0,3.40625 c 15.664619,0 28.3125,12.67909 28.3125,28.344 l 0,28.3125 -28.3125,0 c -15.664614,0 -28.3125,-12.6479 -28.3125,-28.3125 0,-15.66491 12.647881,-28.344 28.3125,-28.344 z"
-       id="path5226-6"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sscccssscsss" />
-    <text
-       xml:space="preserve"
-       style="font-size:45.54673386px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="22.906141"
-       y="1026.7122"
-       id="text3974"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan3976"
-         x="22.906141"
-         y="1026.7122">#</tspan></text>
+    <g
+       id="g3100"
+       transform="translate(1,-1.00002)"
+       inkscape:export-filename="/home/z/programy/communi-sailfish/harbour-communi.png"
+       inkscape:export-xdpi="92.14286"
+       inkscape:export-ydpi="92.14286">
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/z/programy/communi-sailfish/harbour-communi.png"
+         style="fill:url(#linearGradient3106);fill-opacity:1;stroke:none"
+         d="m 0,1010.3622 c 0,23.1959 18.804041,42 42,42 11.245204,0 40.046512,0 40.046512,0 0.976744,0 1.953488,-0.9767 1.953488,-1.9535 0,0 0,-29.2808 0,-40.0465 0,-23.19596 -18.804041,-42 -42,-42 -23.195959,0 -42,18.80404 -42,42 z"
+         id="path5226"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ssccsss" />
+      <path
+         sodipodi:nodetypes="sscccssscsss"
+         inkscape:connector-curvature="0"
+         id="path5226-6"
+         d="m 42.98875,977.60637 c -17.501033,0 -31.71875,14.24892 -31.71875,31.75003 0,17.501 14.217712,31.7188 31.71875,31.7188 l 31.694435,0.037 0.02432,-31.7558 c 0,-17.50111 -14.217717,-31.75003 -31.71875,-31.75003 z m 0,3.40625 c 15.664619,0 28.3125,12.67909 28.3125,28.34378 l 0,28.3125 -28.3125,0 c -15.664614,0 -28.3125,-12.6479 -28.3125,-28.3125 0,-15.66469 12.647881,-28.34378 28.3125,-28.34378 z"
+         style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.398;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3974"
+         y="1025.7122"
+         x="23.906141"
+         style="font-size:45.54673386px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         xml:space="preserve"><tspan
+           y="1025.7122"
+           x="23.906141"
+           id="tspan3976"
+           sodipodi:role="line">#</tspan></text>
+    </g>
   </g>
 </svg>
