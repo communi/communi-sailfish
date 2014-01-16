@@ -158,7 +158,7 @@ ApplicationWindow {
     Connections {
         target: BufferModel
         onNickNameReserved: {
-            scheduler.push(nickDialog, {nick: connection.nickName, model: BufferModel.connections, network: BufferModel.connections.indexOf(connection)})
+            scheduler.push(nickDialog, {nick: connection.nickName, index: BufferModel.connections.indexOf(connection)})
         }
         onChannelKeyRequired: {
             scheduler.push(joinDialog, {channel: channel, index: BufferModel.connections.indexOf(connection)})

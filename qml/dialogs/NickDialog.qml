@@ -33,10 +33,9 @@ import Sailfish.Silica 1.0
 Dialog {
     id: dialog
 
-    property var model
     property alias nick: nickField.text
-    property var connection: model[networkBox.currentIndex]
-    property alias network: networkBox.currentIndex
+    property alias index: networkBox.currentIndex
+    readonly property var model: BufferModel.models[networkBox.currentIndex]
 
     canAccept: !!nick.trim() && nick !== initialNick
 
@@ -54,8 +53,11 @@ Dialog {
                 label: qsTr("Network:")
                 menu: ContextMenu {
                     Repeater {
-                        model: dialog.model
-                        delegate: MenuItem { text: modelData.displayName }
+                        model: BufferModel.connections
+                        delegate: MenuItem {
+                            visible: modelData.enabled
+                            text: modelData.displayName
+                        }
                     }
                 }
             }
