@@ -336,7 +336,7 @@ ApplicationWindow {
         id: queryDialog
         QueryDialog {
             id: dialog
-            onAccepted: scheduler.replace(bufferPage, {buffer: dialog.network.add(dialog.user)})
+            onAccepted: scheduler.replace(bufferPage, {buffer: dialog.model.add(dialog.user)})
         }
     }
 

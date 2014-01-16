@@ -101,7 +101,7 @@ Page {
                 MenuItem {
                     text: qsTr("Open a query")
                     visible: BufferModel.models.length > 0
-                    onClicked: pageStack.push(queryDialog, {model: BufferModel.models})
+                    onClicked: pageStack.push(queryDialog, {index: BufferModel.models.indexOf(buffer.model)})
                 }
                 MenuItem {
                     text: qsTr("Connect a network")
