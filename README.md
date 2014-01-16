@@ -12,7 +12,7 @@ Credits
 * Robin Burchell
 * Timur Kristóf
 
-### Icon design
+### Artwork
 
 * Stephan Beyerle
-
+* Stanislaw Dac
