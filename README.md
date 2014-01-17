@@ -1,7 +1,7 @@
-communi-sailfish
+IRC for Sailfish
 ================
 
-The first and foremost IRC client for Sailfish, based on the Communi libraries.
+The first and foremost IRC client for Sailfish, based on the Communi IRC framework.
 
 Credits
 -------
