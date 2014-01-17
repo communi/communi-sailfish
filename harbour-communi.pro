@@ -11,6 +11,8 @@ VERSION = 0.1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 include(src/src.pri)
+
+!exists(src/shared/shared.pri)|!exists(src/backend/src/src.pri):error(A Git submodule is missing. Run \'git submodule update --init\' in the project root.)
 include(src/shared/shared.pri)
 include(src/backend/src/src.pri)
 
