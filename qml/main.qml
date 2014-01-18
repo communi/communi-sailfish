@@ -41,9 +41,13 @@ ApplicationWindow {
     id: window
 
     property Page currentPage: pageStack.currentPage
-    property IrcBuffer currentBuffer: currentPage ? currentPage.buffer || null : null
     property var allNotifications: []
     property color nickHighlight: "#ff4d4d"
+
+    onCurrentPageChanged: {
+        if (currentPage && currentPage.buffer)
+            MessageStorage.currentBuffer = currentPage.buffer
+    }
 
     // Clears all notifications that belong to the app
     function clearAllNotifications() {
@@ -129,7 +133,8 @@ ApplicationWindow {
                 };
                 var notification = backgroundNotificationComponent.createObject(window, notificationProperties);
                 notification.clicked.connect(function() {
-                    scheduler.replace(bufferPage, { buffer: buffer });
+                    if (buffer !== MessageStorage.currentBuffer)
+                        scheduler.replace(bufferPage, { buffer: buffer });
                     window.activate();
                 });
                 notification.closed.connect(function() {
@@ -164,7 +169,7 @@ ApplicationWindow {
             scheduler.push(joinDialog, {channel: channel, index: BufferModel.connections.indexOf(connection)})
         }
         onBufferAboutToBeRemoved: {
-            if (buffer === currentBuffer) {
+            if (buffer === MessageStorage.currentBuffer) {
                 var idx = buffer.model.indexOf(buffer)
                 var replacement = buffer.model.get(idx + 1) || buffer.model.get(Math.max(0, idx - 1))
                 if (replacement !== buffer)
@@ -231,7 +236,7 @@ ApplicationWindow {
             id: leftPanel
             highlighted: MessageStorage.activeHighlight
             onClicked: {
-                if (buffer !== currentBuffer)
+                if (buffer !== MessageStorage.currentBuffer)
                     scheduler.replace(bufferPage, {buffer: buffer})
                 else
                     leftPanel.hide()
@@ -244,7 +249,7 @@ ApplicationWindow {
 
         rightPanel: UserListPanel {
             id: rightPanel
-            buffer: currentBuffer
+            buffer: MessageStorage.currentBuffer
             active: !!buffer && buffer.channel && buffer.active
             onClicked: {
                 var buffer = user.channel.model.add(user.name)

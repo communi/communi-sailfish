@@ -31,6 +31,29 @@ QObject* MessageStorage::get(IrcBuffer* buffer) const
     return m_models.value(buffer);
 }
 
+IrcBuffer* MessageStorage::currentBuffer() const
+{
+    return m_current;
+}
+
+void MessageStorage::setCurrentBuffer(IrcBuffer* buffer)
+{
+    if (m_current != buffer) {
+        if (m_current) {
+            MessageModel* model = m_models.value(m_current);
+            if (model)
+                model->setCurrent(false);
+        }
+        if (buffer) {
+            MessageModel* model = m_models.value(buffer);
+            if (model)
+                model->setCurrent(true);
+        }
+        m_current = buffer;
+        emit currentBufferChanged(buffer);
+    }
+}
+
 bool MessageStorage::activeHighlight() const
 {
     return m_highlight;

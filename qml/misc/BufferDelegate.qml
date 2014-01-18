@@ -93,12 +93,12 @@ ListItem {
         anchors { fill: parent; leftMargin: Theme.paddingLarge; rightMargin: glass.visible || loader.active ? glass.width : 0 }
         // inactive buffer > highlighted buffer > unread messages buffer > nothing special buffer
         color: (!buffer || !buffer.active) ? Theme.secondaryColor : (messageModel.activeHighlight ? window.nickHighlight : (messageModel.badge > 0 ? Theme.highlightColor : Theme.primaryColor))
-        font.bold: buffer === window.currentBuffer
+        font.bold: buffer === MessageStorage.currentBuffer
     }
 
     GlassItem {
         id: glass
-        opacity: buffer === window.currentBuffer ? 1.0 : 0.0
+        opacity: buffer === MessageStorage.currentBuffer ? 1.0 : 0.0
         Behavior on opacity { FadeAnimation { } }
         color: Theme.primaryColor
         falloffRadius: 0.16

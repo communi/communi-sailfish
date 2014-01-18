@@ -45,7 +45,7 @@ Page {
 
     Binding {
         target: storage
-        property: "active"
+        property: "visible"
         value: Qt.application.active && page.status === PageStatus.Active
     }
 

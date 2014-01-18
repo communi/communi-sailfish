@@ -27,7 +27,8 @@ class MessageModel : public QAbstractListModel
     Q_OBJECT
     Q_PROPERTY(IrcBuffer* buffer READ buffer CONSTANT)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
-    Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
+    Q_PROPERTY(bool current READ isCurrent WRITE setCurrent NOTIFY currentChanged)
+    Q_PROPERTY(bool visible READ isVisible WRITE setVisible NOTIFY visibleChanged)
     Q_PROPERTY(bool activeHighlight READ activeHighlight WRITE setActiveHighlight NOTIFY activeHighlightChanged)
     Q_PROPERTY(int badge READ badge WRITE setBadge NOTIFY badgeChanged)
 
@@ -39,8 +40,11 @@ public:
     int count() const;
     int rowCount(const QModelIndex& parent) const;
 
-    bool isActive() const;
-    void setActive(bool active);
+    bool isCurrent() const;
+    void setCurrent(bool current);
+
+    bool isVisible() const;
+    void setVisible(bool visible);
 
     bool activeHighlight() const;
     void setActiveHighlight(bool highlight);
@@ -58,7 +62,8 @@ public slots:
 signals:
     void countChanged();
     void badgeChanged();
-    void activeChanged();
+    void currentChanged();
+    void visibleChanged();
     void activeHighlightChanged();
     void highlighted(IrcMessage* message = nullptr, IrcBuffer *buffer = nullptr);
 
@@ -78,7 +83,8 @@ private:
     void append(const MessageData& data);
 
     int m_badge;
-    bool m_active;
+    bool m_current;
+    bool m_visible;
     bool m_highlight;
     IrcBuffer* m_buffer;
     MessageFormatter* m_formatter;

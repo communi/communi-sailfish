@@ -15,8 +15,9 @@
 #ifndef MESSAGESTORAGE_H
 #define MESSAGESTORAGE_H
 
-#include <QObject>
 #include <QHash>
+#include <QObject>
+#include <QPointer>
 
 class IrcBuffer;
 class IrcMessage;
@@ -25,12 +26,16 @@ class MessageModel;
 class MessageStorage : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(IrcBuffer* currentBuffer READ currentBuffer WRITE setCurrentBuffer NOTIFY currentBufferChanged)
     Q_PROPERTY(bool activeHighlight READ activeHighlight NOTIFY activeHighlightChanged)
 
 public:
     static MessageStorage* instance();
 
     Q_INVOKABLE QObject* get(IrcBuffer* buffer) const;
+
+    IrcBuffer* currentBuffer() const;
+    void setCurrentBuffer(IrcBuffer* buffer);
 
     bool activeHighlight() const;
     void setActiveHighlight(bool highlight);
@@ -41,6 +46,7 @@ public slots:
 
 signals:
     void activeHighlightChanged();
+    void currentBufferChanged(IrcBuffer* buffer);
     void highlighted(IrcBuffer* buffer, IrcMessage* message);
     void messageCountChanged(QString bufferDisplayName);
 
@@ -53,6 +59,7 @@ private:
     MessageStorage(QObject* parent = 0);
 
     bool m_highlight;
+    QPointer<IrcBuffer> m_current;
     QHash<IrcBuffer*, MessageModel*> m_models;
 };
 

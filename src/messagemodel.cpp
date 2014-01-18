@@ -25,7 +25,7 @@ enum DataRole {
 };
 
 MessageModel::MessageModel(IrcBuffer* buffer) : QAbstractListModel(buffer),
-    m_badge(0), m_active(false), m_highlight(false),
+    m_badge(0), m_current(false), m_visible(false), m_highlight(false),
     m_buffer(buffer), m_formatter(new MessageFormatter(this))
 {
     m_formatter->setBuffer(buffer);
@@ -54,16 +54,16 @@ int MessageModel::rowCount(const QModelIndex& parent) const
     return parent.isValid() ? 0 : m_messages.count();
 }
 
-bool MessageModel::isActive() const
+bool MessageModel::isCurrent() const
 {
-    return m_active;
+    return m_current;
 }
 
-void MessageModel::setActive(bool active)
+void MessageModel::setCurrent(bool current)
 {
-    if (m_active != active) {
-        m_active = active;
-        if (!active) {
+    if (m_current != current) {
+        m_current = current;
+        if (!current) {
             for (int i = m_messages.count() - 1; i >= 0; --i) {
                 bool& seen = m_messages[i].seen;
                 if (seen)
@@ -74,7 +74,20 @@ void MessageModel::setActive(bool active)
             setBadge(0);
             setActiveHighlight(false);
         }
-        emit activeChanged();
+        emit currentChanged();
+    }
+}
+
+bool MessageModel::isVisible() const
+{
+    return m_visible;
+}
+
+void MessageModel::setVisible(bool visible)
+{
+    if (m_visible != visible) {
+        m_visible = visible;
+        emit visibleChanged();
     }
 }
 
@@ -147,12 +160,14 @@ void MessageModel::receive(IrcMessage* message)
             data.hilite = message->property("content").toString().contains(message->connection()->nickName(), Qt::CaseInsensitive);
         data.richtext = m_formatter->formatMessage(message, Qt::RichText);
         append(data);
-        if (!m_active) {
+        if (!m_current || !m_visible) {
             if (data.hilite || message->property("private").toBool()) {
-                setActiveHighlight(true);
-                emit highlighted(message, this->m_buffer);
+                if (!m_current)
+                    setActiveHighlight(true);
+                if (!m_current || !m_visible)
+                    emit highlighted(message, this->m_buffer);
             }
-            if (!data.event) {
+            if (!m_current && !data.event) {
                 // TODO: create a setting for this?
                 setBadge(m_badge + 1);
             }
