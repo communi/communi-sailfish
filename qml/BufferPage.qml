@@ -76,14 +76,6 @@ Page {
                         storage.clear()
                     }
                 }
-                MenuItem {
-                    text: qsTr("Jump to bottom")
-                    visible: view.contentHeight && view.contentHeight > view.height
-                    onClicked: {
-                        view.cancelFlick();
-                        view.positionViewAtEnd();
-                    }
-                }
             }
 
             PushUpMenu {
@@ -103,14 +95,6 @@ Page {
                 MenuItem {
                     text: qsTr("Connect a network")
                     onClicked: pageStack.push(connectDialog)
-                }
-                MenuItem {
-                    text: qsTr("Jump to top")
-                    visible: view.contentHeight && view.contentHeight > view.height
-                    onClicked: {
-                        view.cancelFlick();
-                        view.positionViewAtBeginning();
-                    }
                 }
             }
 
@@ -160,6 +144,32 @@ Page {
             // </workaround>
 
             VerticalScrollDecorator { }
+
+            property bool arrowsVisible: idle < 2000 && !positioner.running && !pullDownMenu.active && !pushUpMenu.active
+            property int idle: view.moving || view.dragging || view.flicking ? 0 : 2000
+            Behavior on idle { NumberAnimation { duration: 2000 } }
+
+            IconButton {
+                icon.source: "image://theme/icon-l-up"
+                opacity: view.arrowsVisible && !view.atYBeginning ? 1.0 : 0.0
+                Behavior on opacity { FadeAnimation { } }
+                onClicked: {
+                    view.cancelFlick();
+                    view.positionViewAtBeginning();
+                }
+                anchors { top: parent.top; right: parent.right; margins: Theme.paddingLarge }
+            }
+
+            IconButton {
+                icon.source: "image://theme/icon-l-down"
+                opacity: view.arrowsVisible && !view.atYEnd ? 1.0 : 0.0
+                Behavior on opacity { FadeAnimation { } }
+                onClicked: {
+                    view.cancelFlick();
+                    view.positionViewAtEnd();
+                }
+                anchors { bottom: parent.bottom; right: parent.right; margins: Theme.paddingLarge }
+            }
         }
 
         TextEntry {
