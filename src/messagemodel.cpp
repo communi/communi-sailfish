@@ -154,7 +154,7 @@ void MessageModel::receive(IrcMessage* message)
         if (!(message->flags() & IrcMessage::Own))
             data.hilite = message->property("content").toString().contains(message->connection()->nickName(), Qt::CaseInsensitive);
         data.richtext = m_formatter->formatMessage(message, Qt::RichText);
-        bool seen = m_current && m_visible;
+        bool seen = (m_current && m_visible) || !message->connection()->isConnected();
         append(data, seen);
         if (!m_current || !m_visible) {
             if (data.hilite || message->property("private").toBool()) {
