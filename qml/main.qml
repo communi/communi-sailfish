@@ -234,6 +234,7 @@ ApplicationWindow {
 
         leftPanel: BufferListPanel {
             id: leftPanel
+            busy: viewer.closed && !!BufferModel.connections && BufferModel.connections.some(function (c) { return c.active && !c.connected; })
             highlighted: MessageStorage.activeHighlight
             onClicked: {
                 if (buffer !== MessageStorage.currentBuffer)

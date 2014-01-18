@@ -39,7 +39,6 @@ Page {
     property alias contentItem: column
     readonly property alias contentHeight: view.height
     readonly property var storage: MessageStorage.get(buffer)
-    readonly property bool isConnecting: buffer && buffer.connection.active && !buffer.connection.connected
 
     anchors.fill: parent
 
@@ -64,7 +63,6 @@ Page {
 
             PullDownMenu {
                 id: pullDownMenu
-                busy: page.isConnecting
 
                 MenuItem {
                     text: qsTr("About IRC")
@@ -91,7 +89,6 @@ Page {
             PushUpMenu {
                 id: pushUpMenu
                 transform: Translate { y: entry.height }
-                busy: page.isConnecting
 
                 MenuItem {
                     text: qsTr("Join a channel")

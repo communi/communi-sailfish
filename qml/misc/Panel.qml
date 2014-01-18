@@ -33,6 +33,7 @@ Rectangle {
     id: panel
 
     property bool active: true
+    property bool busy: false
     property bool highlighted: false
     property int edge: Qt.LeftEdge
     property int index: edge === Qt.LeftEdge ? 0 : 2
@@ -68,14 +69,36 @@ Rectangle {
     }
 
     GlassItem {
+        id: indicator
         visible: __view
         width: Theme.paddingLarge
         height: parent.height / 2
         anchors.horizontalCenter: panel.edge === Qt.LeftEdge ? parent.right : parent.left
         anchors.verticalCenter: parent.verticalCenter
         color: panel.highlighted ? window.nickHighlight : Theme.highlightColor
-        falloffRadius: 0.17
-        brightness: 1.0
         radius: 0.25
+        falloffRadius: 0.17
+        Behavior on falloffRadius {
+            NumberAnimation { duration: panel.busy ? 450 : 50; easing.type: Easing.InOutQuad }
+        }
+        brightness: 1.0
+        Behavior on brightness {
+            NumberAnimation { duration: panel.busy ? 450 : 50; easing.type: Easing.InOutQuad }
+        }
+    }
+
+    Timer {
+        id: busyTimer
+        running: panel.busy && Qt.application.active
+        interval: 500
+        repeat: true
+        onRunningChanged: {
+            indicator.brightness = 1.0
+            indicator.falloffRadius = 0.17
+        }
+        onTriggered: {
+            indicator.falloffRadius = indicator.falloffRadius < 0.09 ? 0.3 : 0.075
+            indicator.brightness = indicator.brightness < 0.5 ? 1.0 : 0.4
+        }
     }
 }
