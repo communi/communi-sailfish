@@ -69,7 +69,7 @@ QtObject {
 
     property Timer __timer: Timer {
         id: timer
-        interval: 50
+        interval: 16
         onTriggered: {
             if (!pageStack.busy && __operations.length)
                 __operate(__operations.shift(), __pages.shift(), __properties.shift())
