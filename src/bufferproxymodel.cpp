@@ -108,6 +108,7 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
     buffer->setSticky(true);
     model->add(buffer);
 
+    connection->setReconnectDelay(5); // TODO: settings?
     connect(connection, SIGNAL(displayNameChanged(QString)), buffer, SLOT(setName(QString)));
     // TODO: more fine-grained delivery (WHOIS replies etc. to the current buffer)
     connect(model, SIGNAL(messageIgnored(IrcMessage*)), buffer, SLOT(receiveMessage(IrcMessage*)));
