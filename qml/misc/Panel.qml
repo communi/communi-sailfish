@@ -73,7 +73,7 @@ Rectangle {
         height: parent.height / 2
         anchors.horizontalCenter: panel.edge === Qt.LeftEdge ? parent.right : parent.left
         anchors.verticalCenter: parent.verticalCenter
-        color: panel.highlighted ? Theme.highlightColor : Theme.primaryColor
+        color: panel.highlighted ? window.nickHighlight : Theme.highlightColor
         falloffRadius: 0.17
         brightness: 1.0
         radius: 0.25
