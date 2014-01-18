@@ -43,7 +43,7 @@ TextField {
     EnterKey.enabled: !!text.trim()
     EnterKey.highlighted: true
 
-    placeholderText: buffer ? (buffer.connection.connected ? qsTr("Hi, %1").arg(buffer.title) : qsTr("Not connected")) : ""
+    placeholderText: buffer ? (buffer.connection.active ? qsTr("Hi, %1").arg(buffer.title) : qsTr("Not connected")) : ""
     placeholderColor: Theme.secondaryHighlightColor
     inputMethodHints: Qt.ImhNoAutoUppercase
     focusOutBehavior: FocusBehavior.ClearPageFocus
