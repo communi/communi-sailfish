@@ -16,6 +16,7 @@
 #define MESSAGEMODEL_H
 
 #include <QAbstractListModel>
+#include <QBitArray>
 #include <QVector>
 
 class IrcBuffer;
@@ -72,15 +73,14 @@ private slots:
 
 private:
     struct MessageData {
-        MessageData() : seen(false), event(false), hilite(false) { }
-        bool seen;
+        MessageData() : event(false), hilite(false) { }
         bool event;
         bool hilite;
         QString richtext;
         QString plaintext;
     };
 
-    void append(const MessageData& data);
+    void append(const MessageData& data, bool seen);
 
     int m_badge;
     bool m_current;
@@ -89,6 +89,7 @@ private:
     IrcBuffer* m_buffer;
     MessageFormatter* m_formatter;
     QVector<MessageData> m_messages;
+    QBitArray m_seen;
 };
 
 #endif // MESSAGEMODEL_H

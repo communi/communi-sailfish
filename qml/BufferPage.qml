@@ -129,7 +129,8 @@ Page {
                     linkColor: Theme.highlightColor
                     font.pixelSize: Theme.fontSizeSmall
                     onLinkActivated: Qt.openUrlExternally(link)
-                    color: highlight ? window.nickHighlight : event ? Theme.secondaryColor : seen ? Theme.primaryColor : Theme.highlightColor
+                    color: highlight ? window.nickHighlight : event ? Theme.secondaryColor : Theme.primaryColor
+                    font.bold: !seen
                 }
                 menu: Component {
                     ContextMenu {

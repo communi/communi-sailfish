@@ -64,12 +64,7 @@ void MessageModel::setCurrent(bool current)
     if (m_current != current) {
         m_current = current;
         if (!current) {
-            for (int i = m_messages.count() - 1; i >= 0; --i) {
-                bool& seen = m_messages[i].seen;
-                if (seen)
-                    break;
-                seen = true;
-            }
+            m_seen.fill(true);
         } else {
             setBadge(0);
             setActiveHighlight(false);
@@ -140,7 +135,7 @@ QVariant MessageModel::data(const QModelIndex& index, int role) const
     case EventRole:
         return m_messages.at(row).event;
     case SeenRole:
-        return m_messages.at(row).seen;
+        return m_seen.at(row);
     case Qt::DisplayRole:
         return m_messages.at(row).richtext;
     case Qt::EditRole:
@@ -159,7 +154,8 @@ void MessageModel::receive(IrcMessage* message)
         if (!(message->flags() & IrcMessage::Own))
             data.hilite = message->property("content").toString().contains(message->connection()->nickName(), Qt::CaseInsensitive);
         data.richtext = m_formatter->formatMessage(message, Qt::RichText);
-        append(data);
+        bool seen = m_current && m_visible;
+        append(data, seen);
         if (!m_current || !m_visible) {
             if (data.hilite || message->property("private").toBool()) {
                 if (!m_current)
@@ -175,11 +171,14 @@ void MessageModel::receive(IrcMessage* message)
     }
 }
 
-void MessageModel::append(const MessageData& data)
+void MessageModel::append(const MessageData& data, bool seen)
 {
     int row = m_messages.count();
     beginInsertRows(QModelIndex(), row, row);
     m_messages.append(data);
+    m_seen.resize(row + 1);
+    m_seen[row] = seen;
+    Q_ASSERT(m_messages.size() == m_seen.size());
     endInsertRows();
 }
 
@@ -187,6 +186,7 @@ void MessageModel::clear()
 {
     beginResetModel();
     m_messages.clear();
+    m_seen.clear();
     endResetModel();
     setActiveHighlight(false);
     setBadge(0);
