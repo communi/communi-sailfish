@@ -187,11 +187,10 @@ Page {
         id: positioner
         interval: 100
         onTriggered: {
-            view.cancelFlick();
-            view.positionViewAtEnd();
+            if (!pullDownMenu.active && !pushUpMenu.active) {
+                view.cancelFlick();
+                view.positionViewAtEnd();
+            }
         }
-        triggeredOnStart: false
-        running: false
-        repeat: false
     }
 }
