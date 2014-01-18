@@ -14,7 +14,7 @@ URL:        http://communi.github.io/
 Source0:    %{name}-%{version}.tar.gz
 
 Version:    0.1
-Release:    1
+Release:    beta
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
 BuildRequires:  pkgconfig(Qt5Core), pkgconfig(Qt5Qml), pkgconfig(Qt5Quick), pkgconfig(sailfishapp) >= 0.0.10
@@ -40,6 +40,5 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 %attr(644,root,root) %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 
 %changelog
-* Mon Jan 13 2014 Timur Kristóf <venemo@fedoraproject.org> 0.1-1
+* Sat Jan 18 2014 Timur Kristóf <venemo@fedoraproject.org> 0.1-beta
 - Initial Sailfish beta release
-

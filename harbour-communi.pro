@@ -7,7 +7,7 @@ CONFIG += link_pkgconfig
 PKGCONFIG += sailfishapp
 INCLUDEPATH += /usr/include/sailfishapp
 
-VERSION = 0.1
+VERSION = 0.1-beta
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 include(src/src.pri)
