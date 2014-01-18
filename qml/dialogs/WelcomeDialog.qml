@@ -39,11 +39,14 @@ Dialog {
     backNavigation: false
 
     SilicaListView {
-        id: welcomePageListView
+        id: view
         anchors.fill: parent
         header: DialogHeader {
-            id: welcomePageHeaderTop
-            title: qsTr("Welcome to IRC")
+            title: view.count > 0 ? qsTr("Connect") : qsTr("Welcome to IRC")
+        }
+        ViewPlaceholder {
+            enabled: BufferModel.connections.length === 0
+            text: qsTr("Pull down to add a network.")
         }
         model: BufferModel.connections
         delegate: ListItem {
@@ -125,16 +128,5 @@ Dialog {
         }
 
         VerticalScrollDecorator { }
-    }
-
-    Label {
-        visible: BufferModel.connections.length === 0
-        anchors.fill: parent
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        wrapMode: Text.Wrap
-        text: qsTr("Pull down to add a network.")
-        color: Theme.primaryColor
-        font.pixelSize: Theme.fontSizeLarge
     }
 }
