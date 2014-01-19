@@ -26,8 +26,8 @@ enum DataRole {
 };
 
 MessageModel::MessageModel(IrcBuffer* buffer) : QAbstractListModel(buffer),
-    m_badge(0), m_current(false), m_visible(false), m_highlight(false),
-    m_buffer(buffer), m_formatter(new MessageFormatter(this))
+    m_badge(0), m_current(false), m_visible(false), m_separator(-1),
+    m_highlight(false), m_buffer(buffer), m_formatter(new MessageFormatter(this))
 {
     m_formatter->setBuffer(buffer);
     m_formatter->setTimeStampFormat("");
@@ -55,6 +55,19 @@ int MessageModel::rowCount(const QModelIndex& parent) const
     return parent.isValid() ? 0 : m_messages.count();
 }
 
+int MessageModel::separator() const
+{
+    return m_separator;
+}
+
+void MessageModel::setSeparator(int separator)
+{
+    if (m_separator != separator) {
+        m_separator = separator;
+        emit separatorChanged();
+    }
+}
+
 bool MessageModel::isCurrent() const
 {
     return m_current;
@@ -66,9 +79,12 @@ void MessageModel::setCurrent(bool current)
         m_current = current;
         if (!current) {
             m_seen.fill(true);
+            setSeparator(m_messages.count() - 1);
         } else {
             setBadge(0);
             setActiveHighlight(false);
+            if (m_separator == -1)
+                setSeparator(m_messages.count() - 1);
         }
         emit currentChanged();
     }

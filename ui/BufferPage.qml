@@ -100,6 +100,24 @@ Page {
 
             header: PageHeader { title: buffer ? buffer.title : "" }
 
+            currentIndex: storage ? storage.separator : -1
+            highlight: Item {
+                visible: view.currentIndex > 0 && view.currentIndex < view.count - 1
+                Rectangle {
+                    rotation: 90
+                    width: 1
+                    anchors.centerIn: parent
+                    anchors.verticalCenterOffset: Math.ceil(parent.height / 2) + 1
+                    height: parent.width - 2 * Theme.paddingLarge
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "transparent" }
+                        GradientStop { position: 0.25; color: Theme.secondaryColor }
+                        GradientStop { position: 0.75; color: Theme.secondaryColor }
+                        GradientStop { position: 1.0; color: "transparent" }
+                    }
+                }
+            }
+
             model: storage
 
             delegate: ListItem {
