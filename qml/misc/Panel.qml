@@ -41,7 +41,8 @@ Rectangle {
     signal toggled()
 
     function hide() {
-        hideAnimation.start()
+        if (!__view.moving)
+            hideAnimation.start()
     }
 
     property var __view: null
