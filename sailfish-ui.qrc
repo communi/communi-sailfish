@@ -7,6 +7,8 @@
         <file>qml/dialogs/NickDialog.qml</file>
         <file>qml/dialogs/QueryDialog.qml</file>
         <file>qml/dialogs/WelcomeDialog.qml</file>
+        <file>qml/images/arrow-up.png</file>
+        <file>qml/images/arrow-down.png</file>
         <file>qml/images/complete.png</file>
         <file>qml/misc/BufferDelegate.qml</file>
         <file>qml/misc/BufferListPanel.qml</file>
