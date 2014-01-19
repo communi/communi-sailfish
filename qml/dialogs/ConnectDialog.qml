@@ -171,7 +171,7 @@ Dialog {
                     width: parent.width
                     label: qsTr("Password")
                     placeholderText: qsTr("Enter password")
-                    echoMode: TextInput.PasswordEchoOnEdit
+                    echoMode: TextInput.Password
 
                     EnterKey.text: qsTr("Ok")
                     EnterKey.enabled: !!userNameField.text && !!portField.text
