@@ -69,61 +69,64 @@ CoverBackground {
         id: topActiveBuffers
     }
 
-    Label {
-        id: titleLabel
+    Image {
+        source: "../images/cover.png"
+        opacity: 0.15
         anchors {
-            verticalCenter: parent.verticalCenter
-            verticalCenterOffset: - parent.height / 6
             horizontalCenter: parent.horizontalCenter
         }
-        font.pixelSize: parent.width * 2.5
-        color: Theme.rgba(Theme.primaryColor, 0.15)
-        text: "#"
+    }
+    Label {
+        id: unreadCount
+        text: cover.unreadHighlights
+        x: Theme.paddingLarge
+        y: Theme.paddingMedium
+        font.pixelSize: Theme.fontSizeHuge
+        font.family: Theme.fontFamilyHeading
     }
     Label {
         id: unreadLabel
+        text: qsTr("Unread highlights")
+        font.pixelSize: Theme.fontSizeExtraSmall
+        font.family: Theme.fontFamilyHeading
+        font.weight: Font.Light
+        elide: Text.ElideRight
+        wrapMode: Text.Wrap
+        maximumLineCount: 2
+        lineHeight: 0.8
+        height: implicitHeight + Theme.paddingLarge
         anchors {
-            top: parent.top
-            left: parent.left
-            margins: 20
+            right: parent.right
+            left: unreadCount.right
+            leftMargin: Theme.paddingMedium
+            baseline: unreadCount.baseline
+            baselineOffset: -implicitHeight/2
         }
-        font.pixelSize: Theme.fontSizeExtraLarge
-        text: cover.unreadHighlights
     }
-    Label {
-        anchors {
-            left: unreadLabel.right
-            top: unreadLabel.top
-            leftMargin: 20
-        }
-        font.pixelSize: Theme.fontSizeExtraLarge / 2
-        text: qsTr("Unread\nhighlights")
+    OpacityRampEffect {
+        sourceItem: unreadLabel
     }
-    Item {
+
+    Column {
         id: recentChannels
         anchors {
-            top: unreadLabel.bottom
+            top: unreadCount.bottom
             left: parent.left
             right: parent.right
             bottom: parent.bottom
-            margins: 20
+            margins: Theme.paddingLarge
         }
-        Column {
-            anchors.fill: parent
-            Repeater {
-                model: topActiveBuffers
-                delegate: Label {
-                    color: Theme.highlightColor
-                    text: model.bufferName
-                }
+        Repeater {
+            model: topActiveBuffers
+            delegate: Label {
+                color: Theme.highlightColor
+                text: model.bufferName
+                elide: Text.ElideRight
+                width: recentChannels.width
             }
         }
     }
     OpacityRampEffect {
-        direction: OpacityRamp.LeftToRight
-        slope: 2
-        offset: 0.5
         sourceItem: recentChannels
     }
-
 }

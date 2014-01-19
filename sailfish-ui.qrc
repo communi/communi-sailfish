@@ -10,6 +10,7 @@
         <file>qml/images/arrow-up.png</file>
         <file>qml/images/arrow-down.png</file>
         <file>qml/images/complete.png</file>
+        <file>qml/images/cover.png</file>
         <file>qml/misc/BufferDelegate.qml</file>
         <file>qml/misc/BufferListPanel.qml</file>
         <file>qml/misc/PageStackScheduler.qml</file>
