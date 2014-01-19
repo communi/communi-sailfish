@@ -104,17 +104,28 @@ Page {
 
             delegate: ListItem {
                 contentHeight: label.height
-                Label {
-                    id: label
-                    text: richtext
+                Row {
+                    id: row
+                    spacing: Theme.paddingSmall
                     anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
-                    wrapMode: Text.Wrap
-                    textFormat: Text.RichText
-                    linkColor: Theme.highlightColor
-                    font.pixelSize: Theme.fontSizeSmall
-                    onLinkActivated: Qt.openUrlExternally(link)
-                    color: highlight ? window.nickHighlight : event ? Theme.secondaryColor : Theme.primaryColor
-                    font.bold: !seen
+                    Label {
+                        id: stamp
+                        font.pixelSize: Theme.fontSizeTiny
+                        text: Qt.formatTime(model.timestamp, "hh:mm")
+                        color: seen ? Theme.secondaryColor : Theme.primaryColor
+                        anchors.baseline: label.baseline
+                    }
+                    Label {
+                        id: label
+                        text: richtext
+                        wrapMode: Text.Wrap
+                        textFormat: Text.RichText
+                        linkColor: Theme.highlightColor
+                        font.pixelSize: Theme.fontSizeSmall
+                        onLinkActivated: Qt.openUrlExternally(link)
+                        color: highlight ? window.nickHighlight : event ? Theme.secondaryColor : Theme.primaryColor
+                        width: row.width - stamp.width - row.spacing
+                    }
                 }
                 menu: Component {
                     ContextMenu {

@@ -16,6 +16,7 @@
 #define MESSAGEMODEL_H
 
 #include <QAbstractListModel>
+#include <QDateTime>
 #include <QBitArray>
 #include <QVector>
 
@@ -78,6 +79,7 @@ private:
         bool hilite;
         QString richtext;
         QString plaintext;
+        QDateTime timestamp;
     };
 
     void append(const MessageData& data, bool seen);

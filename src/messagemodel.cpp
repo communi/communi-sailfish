@@ -21,6 +21,7 @@
 enum DataRole {
     SeenRole = Qt::UserRole,
     HighlightRole,
+    TimestampRole,
     EventRole
 };
 
@@ -29,7 +30,7 @@ MessageModel::MessageModel(IrcBuffer* buffer) : QAbstractListModel(buffer),
     m_buffer(buffer), m_formatter(new MessageFormatter(this))
 {
     m_formatter->setBuffer(buffer);
-    m_formatter->setTimeStampFormat("hh:mm");
+    m_formatter->setTimeStampFormat("");
     m_formatter->setPrivateMessageNickFormat("%1:");
 
     connect(buffer, SIGNAL(messageReceived(IrcMessage*)), this, SLOT(receive(IrcMessage*)));
@@ -118,6 +119,7 @@ QHash<int, QByteArray> MessageModel::roleNames() const
     roles[Qt::DisplayRole] = "richtext";
     roles[Qt::EditRole] = "plaintext";
     roles[HighlightRole] = "highlight";
+    roles[TimestampRole] = "timestamp";
     roles[EventRole] = "event";
     roles[SeenRole] = "seen";
     return roles;
@@ -132,6 +134,8 @@ QVariant MessageModel::data(const QModelIndex& index, int role) const
     switch (role) {
     case HighlightRole:
         return m_messages.at(row).hilite;
+    case TimestampRole:
+        return m_messages.at(row).timestamp;
     case EventRole:
         return m_messages.at(row).event;
     case SeenRole:
@@ -150,6 +154,7 @@ void MessageModel::receive(IrcMessage* message)
     MessageData data;
     data.plaintext = m_formatter->formatMessage(message, Qt::PlainText);
     if (!data.plaintext.isEmpty()) {
+        data.timestamp = message->timeStamp();
         data.event = (message->type() != IrcMessage::Private && message->type() != IrcMessage::Notice);
         if (!(message->flags() & IrcMessage::Own))
             data.hilite = message->property("content").toString().contains(message->connection()->nickName(), Qt::CaseInsensitive);
