@@ -71,10 +71,10 @@ CoverBackground {
 
     Image {
         source: "../images/cover.png"
-        opacity: 0.15
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-        }
+        opacity: 0.1
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width
+        height: sourceSize.height * width / sourceSize.width
     }
     Label {
         id: unreadCount
