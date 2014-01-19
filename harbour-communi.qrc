@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ui/cover/CoverPage.qml</file>
+        <file>ui/dialogs/AboutDialog.qml</file>
+        <file>ui/dialogs/ConnectDialog.qml</file>
+        <file>ui/dialogs/JoinDialog.qml</file>
+        <file>ui/dialogs/NickDialog.qml</file>
+        <file>ui/dialogs/QueryDialog.qml</file>
+        <file>ui/dialogs/WelcomeDialog.qml</file>
+        <file>ui/images/arrow-up.png</file>
+        <file>ui/images/arrow-down.png</file>
+        <file>ui/images/complete.png</file>
+        <file>ui/images/cover.png</file>
+        <file>ui/misc/BufferDelegate.qml</file>
+        <file>ui/misc/BufferListPanel.qml</file>
+        <file>ui/misc/PageStackScheduler.qml</file>
+        <file>ui/misc/Panel.qml</file>
+        <file>ui/misc/PanelView.qml</file>
+        <file>ui/misc/TextEntry.qml</file>
+        <file>ui/misc/UserListPanel.qml</file>
+        <file>ui/BufferPage.qml</file>
+        <file>ui/main.qml</file>
+    </qresource>
+</RCC>
