@@ -90,7 +90,7 @@ ListItem {
         elide: Text.ElideRight
         text: buffer ? buffer.title : text
         verticalAlignment: Qt.AlignVCenter
-        anchors { fill: parent; leftMargin: Theme.paddingLarge; rightMargin: glass.visible || loader.active ? glass.width : 0 }
+        anchors { fill: parent; leftMargin: Theme.paddingLarge; rightMargin: glass.opacity > 0 || loader.active ? glass.width : 0 }
         // inactive buffer > highlighted buffer > unread messages buffer > nothing special buffer
         color: (!buffer || !buffer.active) ? Theme.secondaryColor : (messageModel.activeHighlight ? window.nickHighlight : (messageModel.badge > 0 ? Theme.highlightColor : Theme.primaryColor))
     }
