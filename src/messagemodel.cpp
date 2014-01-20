@@ -17,6 +17,7 @@
 #include <IrcConnection>
 #include <IrcMessage>
 #include <IrcBuffer>
+#include <QDateTime>
 
 enum DataRole {
     SeenRole = Qt::UserRole,
@@ -170,7 +171,7 @@ void MessageModel::receive(IrcMessage* message)
     MessageData data;
     data.plaintext = m_formatter->formatMessage(message, Qt::PlainText);
     if (!data.plaintext.isEmpty()) {
-        data.timestamp = message->timeStamp();
+        data.timestamp = message->timeStamp().toString("hh:mm");
         data.event = (message->type() != IrcMessage::Private && message->type() != IrcMessage::Notice);
         if (!(message->flags() & IrcMessage::Own))
             data.hilite = message->property("content").toString().contains(message->connection()->nickName(), Qt::CaseInsensitive);

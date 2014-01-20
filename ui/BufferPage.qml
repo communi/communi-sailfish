@@ -124,8 +124,8 @@ Page {
                 contentHeight: label.height + (index > 0 && index < view.count - 1 && ListView.isCurrentItem ? Theme.paddingMedium : 0)
                 Label {
                     id: stamp
+                    text: timestamp
                     font.pixelSize: Theme.fontSizeTiny
-                    text: Qt.formatTime(model.timestamp, "hh:mm")
                     color: seen ? Theme.secondaryColor : Theme.primaryColor
                     anchors { baseline: label.baseline; left: parent.left; leftMargin: Theme.paddingLarge }
                 }
