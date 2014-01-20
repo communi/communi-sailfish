@@ -107,7 +107,7 @@ Page {
                     rotation: 90
                     width: 1
                     anchors.centerIn: parent
-                    anchors.verticalCenterOffset: Math.ceil(parent.height / 2) + 1
+                    anchors.verticalCenterOffset: Math.ceil(parent.height / 2) - Theme.paddingMedium / 2
                     height: parent.width - 2 * Theme.paddingLarge
                     gradient: Gradient {
                         GradientStop { position: 0.0; color: "transparent" }
@@ -121,29 +121,24 @@ Page {
             model: storage
 
             delegate: ListItem {
-                contentHeight: label.height
-                Row {
-                    id: row
-                    spacing: Theme.paddingSmall
-                    anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
-                    Label {
-                        id: stamp
-                        font.pixelSize: Theme.fontSizeTiny
-                        text: Qt.formatTime(model.timestamp, "hh:mm")
-                        color: seen ? Theme.secondaryColor : Theme.primaryColor
-                        anchors.baseline: label.baseline
-                    }
-                    Label {
-                        id: label
-                        text: richtext
-                        wrapMode: Text.Wrap
-                        textFormat: Text.RichText
-                        linkColor: Theme.highlightColor
-                        font.pixelSize: Theme.fontSizeSmall
-                        onLinkActivated: Qt.openUrlExternally(link)
-                        color: highlight ? window.nickHighlight : event ? Theme.secondaryColor : Theme.primaryColor
-                        width: row.width - stamp.width - row.spacing
-                    }
+                contentHeight: label.height + (index > 0 && index < view.count - 1 && ListView.isCurrentItem ? Theme.paddingMedium : 0)
+                Label {
+                    id: stamp
+                    font.pixelSize: Theme.fontSizeTiny
+                    text: Qt.formatTime(model.timestamp, "hh:mm")
+                    color: seen ? Theme.secondaryColor : Theme.primaryColor
+                    anchors { baseline: label.baseline; left: parent.left; leftMargin: Theme.paddingLarge }
+                }
+                Label {
+                    id: label
+                    anchors { left: stamp.right; right: parent.right; leftMargin: Theme.paddingSmall; rightMargin: Theme.paddingLarge }
+                    text: richtext
+                    wrapMode: Text.Wrap
+                    textFormat: Text.RichText
+                    linkColor: Theme.highlightColor
+                    font.pixelSize: Theme.fontSizeSmall
+                    onLinkActivated: Qt.openUrlExternally(link)
+                    color: highlight ? window.nickHighlight : event ? Theme.secondaryColor : Theme.primaryColor
                 }
                 menu: Component {
                     ContextMenu {
