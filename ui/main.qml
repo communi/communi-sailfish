@@ -41,24 +41,11 @@ ApplicationWindow {
     id: window
 
     property Page currentPage: pageStack.currentPage
-    property var allNotifications: []
     property color nickHighlight: "#ff4d4d"
 
     onCurrentPageChanged: {
         if (currentPage && currentPage.buffer)
             MessageStorage.currentBuffer = currentPage.buffer
-    }
-
-    // Clears all notifications that belong to the app
-    function clearAllNotifications() {
-        // Close all notifications
-        for (var i = 0; i < window.allNotifications.length; i++) {
-            var notification = window.allNotifications[i];
-            notification.close();
-        }
-
-        // Clear notifications array
-        allNotifications.length = 0;
     }
 
     // Opens all IRC connections
@@ -100,7 +87,7 @@ ApplicationWindow {
             appCover.resetCover();
 
             // TODO: instead of clearing all notifications here, remove them when the user actually looks at the buffer that created them
-            window.clearAllNotifications();
+            notification.close();
         }
     }
 
@@ -114,7 +101,7 @@ ApplicationWindow {
         target: Qt.application
         onAboutToQuit: {
             // These notifications become useless when the user quits the app, so let's clear them
-            window.clearAllNotifications();
+            notification.close();
         }
     }
 
@@ -124,33 +111,13 @@ ApplicationWindow {
             if (Qt.application.active) {
                 activeEffect.play();
             } else {
-                // Create notification
-                var notificationProperties = {
-                    previewSummary: buffer.title,
-                    summary: qsTr("IRC highlight - %1").arg(buffer.title),
-                    previewBody: qsTr("%1: %2").arg(message.nick).arg(message.content),
-                    body: qsTr("%1: %2").arg(message.nick).arg(message.content)
-                };
-                var notification = backgroundNotificationComponent.createObject(window, notificationProperties);
-                notification.clicked.connect(function() {
-                    if (buffer !== MessageStorage.currentBuffer)
-                        scheduler.replace(bufferPage, { buffer: buffer });
-                    window.activate();
-                });
-                notification.closed.connect(function() {
-                    // Remove this notification
-                    var i = window.allNotifications.indexOf(notification);
-                    if (i >= 0) {
-                        window.allNotifications.splice(i, 1);
-                    }
-                });
-                window.allNotifications.push(notification);
-
-                // Publish notification
-                notification.publish();
-
                 // Increase highlight count on cover
                 appCover.unreadHighlights += 1;
+
+                notification.buffer = buffer;
+                notification.previewBody = qsTr("%1: %2").arg(message.nick).arg(message.content);
+                notification.body = qsTr("%1: %2").arg(message.nick).arg(message.content);
+                notification.publish();
             }
         }
         onMessageCountChanged: {
@@ -189,13 +156,20 @@ ApplicationWindow {
         event: "chat_fg"
     }
 
-    Component {
-        id: backgroundNotificationComponent
+    Notification {
+        id: notification
+        property IrcBuffer buffer
+        category: "x-nemo.messaging.im"
+        itemCount: appCover.unreadHighlights
+        previewSummary: buffer ? buffer.title : ""
+        summary: buffer ? qsTr("IRC highlight - %1").arg(buffer.title) : ""
 
-        Notification {
-            id: backgroundNotification
-            category: "x-nemo.messaging.im"
+        onClicked: {
+            if (buffer && buffer !== MessageStorage.currentBuffer)
+                scheduler.replace(bufferPage, { buffer: buffer });
+            window.activate();
         }
+        onClosed: buffer = null
     }
 
     Component {
