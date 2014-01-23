@@ -55,6 +55,7 @@ Dialog {
             userNameField.text = connection.userName
             realNameField.text = connection.realName
             passwordField.text = connection.password
+            displayNameField.text = connection.displayName
         }
     }
 
@@ -69,6 +70,8 @@ Dialog {
         connection.userName = userNameField.text
         connection.realName = realNameField.text || defaultRealName
         connection.password = passwordField.text
+        if (!!displayNameField.text)
+            connection.displayName = displayNameField.text
     }
 
     Component {
@@ -152,6 +155,17 @@ Dialog {
             header: DialogHeader { title: qsTr("Advanced") }
             model: VisualItemModel {
                 TextField {
+                    id: displayNameField
+                    width: parent.width
+                    label: qsTr("Network name")
+                    placeholderText: qsTr("Enter network name")
+
+                    EnterKey.text: qsTr("Ok")
+                    EnterKey.enabled: !!userNameField.text && !!portField.text
+                    EnterKey.highlighted: true
+                    EnterKey.onClicked: { pageStack.pop(); focus = false; }
+                }
+                TextField {
                     id: userNameField
                     width: parent.width
                     label: qsTr("Username")
@@ -163,7 +177,7 @@ Dialog {
                     EnterKey.text: qsTr("Ok")
                     EnterKey.enabled: !!userNameField.text && !!portField.text
                     EnterKey.highlighted: true
-                    EnterKey.onClicked: pageStack.pop()
+                    EnterKey.onClicked: { pageStack.pop(); focus = false; }
                 }
 
                 TextField {
@@ -176,7 +190,7 @@ Dialog {
                     EnterKey.text: qsTr("Ok")
                     EnterKey.enabled: !!userNameField.text && !!portField.text
                     EnterKey.highlighted: true
-                    EnterKey.onClicked: pageStack.pop()
+                    EnterKey.onClicked: { pageStack.pop(); focus = false; }
                 }
 
                 TextSwitch {
@@ -198,7 +212,7 @@ Dialog {
                     EnterKey.text: qsTr("Ok")
                     EnterKey.enabled: !!userNameField.text && !!portField.text
                     EnterKey.highlighted: true
-                    EnterKey.onClicked: pageStack.pop()
+                    EnterKey.onClicked: { pageStack.pop(); focus = false; }
                 }
             }
             VerticalScrollDecorator { }
