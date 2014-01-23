@@ -39,6 +39,7 @@ Panel {
     signal clicked(IrcUser user)
 
     SilicaListView {
+        pressDelay: 0
         anchors.fill: parent
 
         model: IrcUserModel {

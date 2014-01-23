@@ -37,6 +37,7 @@ Panel {
     signal clicked(IrcBuffer buffer)
 
     SilicaListView {
+        pressDelay: 0
         anchors.fill: parent
 
         model: BufferModel
