@@ -42,6 +42,20 @@ SilicaListView {
 
     pressDelay: 0 // important! (makes vertical flicking "stable")
 
+    function hidePanel() {
+        if (container.moving)
+            delayedHide = true
+        else
+            container.currentIndex = 1
+    }
+
+    property bool delayedHide: false
+    onMovementEnded: {
+        if (container.delayedHide)
+            container.currentIndex = 1
+        container.delayedHide = false
+    }
+
     currentIndex: 0
     orientation: Qt.Horizontal
     snapMode: ListView.SnapOneItem
@@ -60,7 +74,7 @@ SilicaListView {
         MouseArea {
             anchors.fill: parent
             enabled: !container.closed
-            onClicked: leftPanel.hide()
+            onClicked: container.hidePanel()
         }
     }
 

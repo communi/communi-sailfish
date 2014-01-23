@@ -40,11 +40,6 @@ Rectangle {
 
     signal toggled()
 
-    function hide() {
-        if (!__view.moving)
-            hideAnimation.start()
-    }
-
     property var __view: null
 
     color: Theme.rgba(Theme.highlightDimmerColor, 0.8)
@@ -54,12 +49,6 @@ Rectangle {
             toggled()
         else
             closeAnimation.start()
-    }
-
-    SequentialAnimation {
-        id: hideAnimation
-        PauseAnimation { duration: 50 }
-        PropertyAction { target: __view; property: "currentIndex"; value: 1 }
     }
 
     SequentialAnimation {

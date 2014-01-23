@@ -222,6 +222,11 @@ ApplicationWindow {
             when: !!currentPage && !!currentPage.__isBufferPage
         }
 
+        Connections {
+            target: pageStack
+            onCurrentPageChanged: viewer.hidePanel()
+        }
+
         leftPanel: BufferListPanel {
             id: leftPanel
             busy: viewer.closed && !!BufferModel.connections && BufferModel.connections.some(function (c) { return c.active && !c.connected; })
@@ -230,11 +235,7 @@ ApplicationWindow {
                 if (buffer !== MessageStorage.currentBuffer)
                     scheduler.replace(bufferPage, {buffer: buffer})
                 else
-                    leftPanel.hide()
-            }
-            Connections {
-                target: pageStack
-                onCurrentPageChanged: leftPanel.hide()
+                    viewer.hidePanel()
             }
         }
 
@@ -245,10 +246,6 @@ ApplicationWindow {
             onClicked: {
                 var buffer = user.channel.model.add(user.name)
                 scheduler.replace(bufferPage, {buffer: buffer})
-            }
-            Connections {
-                target: pageStack
-                onCurrentPageChanged: rightPanel.hide()
             }
         }
     }
