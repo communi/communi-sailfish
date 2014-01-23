@@ -83,6 +83,7 @@ CoverBackground {
         y: Theme.paddingMedium
         font.pixelSize: Theme.fontSizeHuge
         font.family: Theme.fontFamilyHeading
+        visible: NetworkSession.enabled
     }
     Label {
         id: unreadLabel
@@ -100,6 +101,7 @@ CoverBackground {
             baseline: unreadCount.baseline
             baselineOffset: -implicitHeight/2
         }
+        visible: NetworkSession.enabled
     }
     OpacityRampEffect {
         sourceItem: unreadLabel
@@ -107,6 +109,7 @@ CoverBackground {
 
     Column {
         id: recentChannels
+        visible: NetworkSession.enabled
         anchors {
             top: unreadCount.bottom
             left: parent.left
