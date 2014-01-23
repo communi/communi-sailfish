@@ -128,6 +128,20 @@ ApplicationWindow {
     }
 
     Connections {
+        target: NetworkSession
+        onOnlineStateChanged: {
+            if (NetworkSession.online && NetworkSession.open())
+                BufferModel.connections.forEach(function(c) { c.open(); })
+            else
+                BufferModel.connections.forEach(function(c) { c.close(); })
+        }
+        onConnectionChanged: {
+            if (NetworkSession.open())
+                BufferModel.connections.forEach(function(c) { c.close(); c.open(); })
+        }
+    }
+
+    Connections {
         target: BufferModel
         onNickNameReserved: {
             scheduler.push(nickDialog, {nick: connection.nickName, index: BufferModel.connections.indexOf(connection)})
@@ -145,7 +159,8 @@ ApplicationWindow {
         }
         onReseted: {
             // Hacky instanceof
-            if (String(window.currentPage).indexOf("WelcomePage") !== 0) {
+            if (String(window.currentPage).indexOf("WelcomeDialog") !== 0) {
+                NetworkSession.enabled = false;
                 scheduler.replace(welcomeDialogComponent);
             }
         }
@@ -176,6 +191,7 @@ ApplicationWindow {
         id: welcomeDialogComponent
         WelcomeDialog {
             onAccepted: {
+                NetworkSession.enabled = true;
                 window.openAllConnections();
             }
         }

@@ -16,19 +16,39 @@
 #define NETWORKSESSION_H
 
 #include <QNetworkSession>
+#include <QNetworkConfigurationManager>
 
 class NetworkSession : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool online READ isOnline NOTIFY onlineStateChanged)
+    Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
 
 public:
     NetworkSession(QObject* parent = 0);
 
+    bool isEnabled() const;
+    void setEnabled(bool enabled);
+
+    bool isOnline() const;
+
 public slots:
     bool open();
 
+signals:
+    void enabledChanged();
+    void connectionChanged();
+    void onlineStateChanged();
+
+private slots:
+    void onOnlineStateChanged();
+    void onNetworkConfigurationChanged(const QNetworkConfiguration& config);
+
 private:
+    bool m_enabled;
     QNetworkSession* m_session;
+    QNetworkConfiguration m_config;
+    QNetworkConfigurationManager* m_manager;
 };
 
 #endif // NETWORKSESSION_H
