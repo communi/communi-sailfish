@@ -45,7 +45,7 @@ Page {
     Binding {
         target: storage
         property: "visible"
-        value: Qt.application.active && (page.status === PageStatus.Active || page.status === PageStatus.Activating)
+        value: Qt.application.active && page.status !== PageStatus.Inactive
     }
 
     Column {
@@ -100,6 +100,8 @@ Page {
 
             header: PageHeader { title: buffer ? buffer.title : "" }
 
+            highlightMoveDuration: 0
+            highlightResizeDuration: 0
             currentIndex: storage ? storage.separator : -1
             highlight: Item {
                 visible: view.currentIndex > 0 && view.currentIndex < view.count - 1
