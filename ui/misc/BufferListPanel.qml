@@ -46,6 +46,9 @@ Panel {
             onClicked: panel.clicked(model.buffer)
         }
 
-        VerticalScrollDecorator { }
+        VerticalScrollDecorator {
+            anchors.left: parent.left
+            anchors.right: undefined
+        }
     }
 }
