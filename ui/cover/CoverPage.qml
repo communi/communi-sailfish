@@ -86,19 +86,17 @@ CoverBackground {
     }
     Label {
         id: unreadLabel
-        text: qsTr("Unread highlights")
+        text: qsTr("Unread\nhighlights")
         font.pixelSize: Theme.fontSizeExtraSmall
         font.family: Theme.fontFamilyHeading
         font.weight: Font.Light
-        elide: Text.ElideRight
-        wrapMode: Text.Wrap
-        maximumLineCount: 2
         lineHeight: 0.8
         height: implicitHeight + Theme.paddingLarge
         anchors {
             right: parent.right
             left: unreadCount.right
             leftMargin: Theme.paddingMedium
+            rightMargin: Theme.paddingLarge
             baseline: unreadCount.baseline
             baselineOffset: -implicitHeight/2
         }
