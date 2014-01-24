@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2014 J-P Nurmi <jpnurmi@gmail.com>
+  Copyright (C) 2013-2014 The Communi Project
 
   You may use this file under the terms of BSD license as follows:
 
