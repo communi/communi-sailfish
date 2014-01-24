@@ -36,63 +36,35 @@ ListItem {
 
     property IrcBuffer buffer
     property string reason: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
-    property variant messageModel: MessageStorage.get(buffer)
+    property variant storage: MessageStorage.get(buffer)
 
-    contentHeight: Theme.itemSizeMedium
+    visible: buffer && !buffer.sticky
+    contentHeight: buffer && !buffer.sticky ? Theme.itemSizeMedium : 0
     ListView.onRemove: animateRemoval(root)
 
     menu: Component {
         ContextMenu {
             id: menu
             MenuItem {
-                visible: buffer && buffer.sticky
-                text: buffer && buffer.connection.active ? qsTr("Disconnect") : qsTr("Connect")
-                onClicked: {
-                    if (buffer.connection.active) {
-                        buffer.connection.quit(reason)
-                        buffer.connection.close()
-                    } else {
-                        buffer.connection.enabled = true;
-                        buffer.connection.open()
-                    }
-                }
-            }
-            MenuItem {
-                visible: buffer && buffer.sticky
-                text: qsTr("Edit")
-                onClicked: pageStack.push(editDialog, {connection: buffer.connection})
-            }
-            MenuItem {
-                visible: buffer && buffer.connection.connected && buffer.channel
+                visible: buffer && buffer.channel && buffer.connection.connected
                 text: buffer && buffer.active ? qsTr("Part") : qsTr("Join")
                 onClicked: buffer.active ? buffer.part(reason) : buffer.join()
             }
             MenuItem {
                 text: qsTr("Remove")
-                onClicked: remove()
+                onClicked: buffer.close(reason)
             }
         }
     }
-
-    function remove() {
-        var reason = root.reason
-        var buffer = root.buffer
-        if (buffer.sticky)
-            remorse.execute(root, qsTr("Removing"), function() { buffer.close(reason) }, 3000 )
-        else
-            buffer.close(reason)
-    }
-
-    RemorseItem { id: remorse }
 
     Label {
         id: title
         elide: Text.ElideRight
         text: buffer ? buffer.title : text
         verticalAlignment: Qt.AlignVCenter
-        anchors { fill: parent; leftMargin: Theme.paddingLarge; rightMargin: glass.opacity > 0 || loader.active ? glass.width : 0 }
+        anchors { fill: parent; leftMargin: Theme.paddingLarge; rightMargin: glass.opacity > 0 ? glass.width : 0 }
         // inactive buffer > highlighted buffer > unread messages buffer > nothing special buffer
-        color: (!buffer || !buffer.active) ? Theme.secondaryColor : (messageModel.activeHighlights > 0 ? window.nickHighlight : (messageModel.badge > 0 ? Theme.highlightColor : Theme.primaryColor))
+        color: (!buffer || !buffer.active) ? Theme.secondaryColor : (storage.activeHighlights > 0 ? window.nickHighlight : (storage.badge > 0 ? Theme.highlightColor : Theme.primaryColor))
     }
 
     GlassItem {
@@ -103,14 +75,5 @@ ListItem {
         falloffRadius: 0.16
         radius: 0.15
         anchors { right: parent.right; verticalCenter: parent.verticalCenter }
-    }
-
-    Loader {
-        id: loader
-        anchors.centerIn: glass
-        active: buffer && buffer.sticky && buffer.connection.active && !buffer.connection.connected
-        sourceComponent: BusyIndicator {
-            running: true
-        }
     }
 }

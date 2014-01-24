@@ -13,6 +13,7 @@
         <file>ui/images/cover.png</file>
         <file>ui/misc/BufferDelegate.qml</file>
         <file>ui/misc/BufferListPanel.qml</file>
+        <file>ui/misc/NetworkDelegate.qml</file>
         <file>ui/misc/PageStackScheduler.qml</file>
         <file>ui/misc/Panel.qml</file>
         <file>ui/misc/PanelView.qml</file>

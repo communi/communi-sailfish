@@ -42,6 +42,14 @@ Panel {
 
         model: BufferModel
 
+        section.property: "section"
+        section.labelPositioning: ViewSection.InlineLabels | ViewSection.CurrentLabelAtStart
+
+        section.delegate: NetworkDelegate {
+            buffer: BufferModel.servers[section] || null
+            onClicked: panel.clicked(buffer)
+        }
+
         delegate: BufferDelegate {
             buffer: model.buffer
             onClicked: panel.clicked(model.buffer)
