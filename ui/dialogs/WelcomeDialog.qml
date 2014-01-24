@@ -120,7 +120,7 @@ Dialog {
             MenuItem {
                 text: qsTr("Add a network")
                 onClicked: {
-                    pageStack.push(addConnectionComponent);
+                    pageStack.push(networkDialog);
                 }
             }
         }

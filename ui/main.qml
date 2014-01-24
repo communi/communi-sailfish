@@ -65,10 +65,6 @@ ApplicationWindow {
                 prev.buffer = buffer;
             else
                 scheduler.replace(bufferPage, { buffer: buffer });
-
-        }
-        else {
-            // TODO: display error message?
         }
     }
 
@@ -138,7 +134,7 @@ ApplicationWindow {
         onReseted: {
             // Hacky instanceof
             if (String(window.currentPage).indexOf("WelcomeDialog") !== 0) {
-                scheduler.replace(welcomeDialogComponent);
+                scheduler.replace(welcomeDialog);
             }
         }
     }
@@ -172,12 +168,9 @@ ApplicationWindow {
     }
 
     Component {
-        id: welcomeDialogComponent
+        id: welcomeDialog
         WelcomeDialog {
-            id: dialog
-            onAccepted: {
-                window.openAllConnections();
-            }
+            onAccepted: window.openAllConnections();
             Component.onCompleted: NetworkSession.enabled = false
             Component.onDestruction: NetworkSession.enabled = true
         }
@@ -250,7 +243,7 @@ ApplicationWindow {
     }
 
     Component {
-        id: addConnectionComponent
+        id: networkDialog
         ConnectDialog {
             id: dialog
             title: qsTr("Add network")
@@ -283,9 +276,6 @@ ApplicationWindow {
                         var newBuffer = BufferModel.servers[BufferModel.servers.length - 1];
                         scheduler.replace(bufferPage, { buffer: newBuffer });
                     }
-                }
-                else {
-                    // TODO: show error message?
                 }
             }
         }
@@ -330,7 +320,7 @@ ApplicationWindow {
     Component.onCompleted: {
         BufferModel.restoreState(settings.state)
         // TODO: check "connect automatically" setting and call window.openAllConnections if true
-        pageStack.push(welcomeDialogComponent);
+        pageStack.push(welcomeDialog);
     }
 
     Component.onDestruction: settings.state = BufferModel.saveState()
