@@ -32,32 +32,8 @@ import Sailfish.Silica 1.0
 
 CoverBackground {
     id: cover
+
     anchors.fill: parent
-
-    // Adds a new name to display in the top active buffers list
-    function addActiveBuffer(buffer) {
-        // Check if buffer is already in the top
-        for (var i = 0; i < topActiveBuffers.count; i++) {
-            var item = topActiveBuffers.get(i);
-            if (item.title === buffer.title) {
-                // If buffer is not the first already, promote it to the top
-                if (i > 0)
-                    topActiveBuffers.move(i, 0, 1);
-                return;
-            }
-        }
-        // If the top contains more than 5 items, remove the last
-        if (topActiveBuffers.count >= 5) {
-            topActiveBuffers.remove(4, 1);
-        }
-
-        // Insert bufferName into the front
-        topActiveBuffers.insert(0, { title: buffer.title });
-    }
-
-    ListModel {
-        id: topActiveBuffers
-    }
 
     Image {
         source: "../images/cover.png"
@@ -113,10 +89,11 @@ CoverBackground {
             font.family: Theme.fontFamilyHeading
             font.weight: Font.Light
             width: parent.width
-            visible: topActiveBuffers.count > 0
+            visible: repeater.count > 0
         }
         Repeater {
-            model: topActiveBuffers
+            id: repeater
+            model: ActivityModel
             delegate: Label {
                 color: Theme.highlightColor
                 text: model.title

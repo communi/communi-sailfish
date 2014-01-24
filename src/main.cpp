@@ -22,6 +22,7 @@
 
 #include <sailfishapp.h>
 
+#include "activitymodel.h"
 #include "bufferproxymodel.h"
 #include "networksession.h"
 #include "messagestorage.h"
@@ -76,6 +77,10 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 
     BufferProxyModel* model = new BufferProxyModel(app.data());
     viewer->rootContext()->setContextProperty("BufferModel", model);
+
+    ActivityModel* activity = new ActivityModel(app.data());
+    viewer->rootContext()->setContextProperty("ActivityModel", activity);
+    QObject::connect(MessageStorage::instance(), SIGNAL(received(IrcBuffer*,IrcMessage*)), activity, SLOT(receive(IrcBuffer*,IrcMessage*)));
 
     MessageFormatter* formatter = new MessageFormatter(app.data());
     viewer->rootContext()->setContextProperty("MessageFormatter", formatter);

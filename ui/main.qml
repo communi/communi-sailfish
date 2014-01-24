@@ -78,9 +78,7 @@ ApplicationWindow {
     }
 
     initialPage: bufferPage
-    cover: CoverPage {
-        id: appCover
-    }
+    cover: CoverPage { }
 
     Binding {
         target: MessageFormatter
@@ -96,7 +94,6 @@ ApplicationWindow {
 
     Connections {
         target: MessageStorage
-        onReceived: appCover.addActiveBuffer(buffer);
         onHighlighted: {
             if (Qt.application.active) {
                 activeEffect.play();
