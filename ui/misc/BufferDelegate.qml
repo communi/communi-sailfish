@@ -61,7 +61,7 @@ ListItem {
         truncationMode: TruncationMode.Fade
         text: buffer ? buffer.title : text
         verticalAlignment: Qt.AlignVCenter
-        anchors { fill: parent; leftMargin: Theme.paddingLarge; rightMargin: glass.opacity > 0 ? glass.width : 0 }
+        anchors { fill: parent; leftMargin: Theme.paddingMedium; rightMargin: glass.opacity > 0 ? glass.width : Theme.paddingMedium }
         // inactive buffer > highlighted buffer > unread messages buffer > nothing special buffer
         color: (!buffer || !buffer.active) ? Theme.secondaryColor : (storage.activeHighlights > 0 ? window.nickHighlight : (storage.badge > 0 ? Theme.highlightColor : Theme.primaryColor))
     }
@@ -71,8 +71,10 @@ ListItem {
         opacity: buffer === MessageStorage.currentBuffer ? 1.0 : 0.0
         Behavior on opacity { FadeAnimation { } }
         color: Theme.primaryColor
-        falloffRadius: 0.16
-        radius: 0.15
+        falloffRadius: 0.12
+        brightness: 0.8
+        width: Theme.itemSizeSmall
+        height: Theme.itemSizeSmall
         anchors { right: parent.right; verticalCenter: parent.verticalCenter }
     }
 }
