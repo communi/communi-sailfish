@@ -183,13 +183,15 @@ void MessageModel::receive(IrcMessage* message)
                 if (!m_current)
                     setActiveHighlights(m_highlights + 1);
                 if (!m_current || !m_visible)
-                    emit highlighted(message, this->m_buffer);
+                    emit highlighted(message);
             }
             if (!m_current && !data.event) {
                 // TODO: create a setting for this?
                 setBadge(m_badge + 1);
             }
         }
+        if (!data.event)
+            emit received(message);
     }
 }
 

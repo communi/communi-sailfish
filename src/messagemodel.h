@@ -71,7 +71,8 @@ signals:
     void visibleChanged();
     void separatorChanged();
     void activeHighlightsChanged();
-    void highlighted(IrcMessage* message = nullptr, IrcBuffer *buffer = nullptr);
+    void received(IrcMessage* message);
+    void highlighted(IrcMessage* message);
 
 private slots:
     void receive(IrcMessage* message);

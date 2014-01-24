@@ -88,21 +88,15 @@ ApplicationWindow {
         value: Theme.highlightColor // alternatively a bit less prominent Theme.secondaryHighlightColor
     }
 
-    onApplicationActiveChanged: {
-        if (window.applicationActive)
-            notification.close();
-    }
-
     Connections {
         target: Qt.application
-        onAboutToQuit: {
-            // These notifications become useless when the user quits the app, so let's clear them
-            notification.close();
-        }
+        onAboutToQuit: notification.close();
+        onActiveChanged: if (Qt.application.active) notification.close();
     }
 
     Connections {
         target: MessageStorage
+        onReceived: appCover.addActiveBuffer(buffer);
         onHighlighted: {
             if (Qt.application.active) {
                 activeEffect.play();
@@ -111,11 +105,6 @@ ApplicationWindow {
                 notification.previewBody = qsTr("%1: %2").arg(message.nick).arg(message.content);
                 notification.body = qsTr("%1: %2").arg(message.nick).arg(message.content);
                 notification.publish();
-            }
-        }
-        onMessageCountChanged: {
-            if (!window.applicationActive) {
-                appCover.addActiveBuffer(bufferDisplayName);
             }
         }
     }

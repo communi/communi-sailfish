@@ -48,12 +48,12 @@ signals:
     void activeHighlightsChanged();
     void currentBufferChanged(IrcBuffer* buffer);
     void highlighted(IrcBuffer* buffer, IrcMessage* message);
-    void messageCountChanged(QString bufferDisplayName);
+    void received(IrcBuffer* buffer, IrcMessage* message);
 
 private slots:
     void updateActiveHighlights();
+    void onReceived(IrcMessage* message);
     void onHighlighted(IrcMessage* message);
-    void onCountChanged();
 
 private:
     MessageStorage(QObject* parent = 0);

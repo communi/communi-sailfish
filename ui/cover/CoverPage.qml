@@ -35,14 +35,15 @@ CoverBackground {
     anchors.fill: parent
 
     // Adds a new name to display in the top active buffers list
-    function addActiveBuffer(bufferName) {
-        // Check if bufferName is already in the top
+    function addActiveBuffer(buffer) {
+        // Check if buffer is already in the top
         for (var i = 0; i < topActiveBuffers.count; i++) {
             var item = topActiveBuffers.get(i);
-            if (item.bufferName === bufferName) {
-                // If bufferName is found, remove it
-                topActiveBuffers.remove(i, 1);
-                break;
+            if (item.title === buffer.title) {
+                // If buffer is not the first already, promote it to the top
+                if (i > 0)
+                    topActiveBuffers.move(i, 0, 1);
+                return;
             }
         }
         // If the top contains more than 5 items, remove the last
@@ -51,7 +52,7 @@ CoverBackground {
         }
 
         // Insert bufferName into the front
-        topActiveBuffers.insert(0, { bufferName: bufferName });
+        topActiveBuffers.insert(0, { title: buffer.title });
     }
 
     ListModel {
@@ -106,11 +107,19 @@ CoverBackground {
             bottom: parent.bottom
             margins: Theme.paddingLarge
         }
+        Label {
+            text: qsTr("Latest activity:")
+            font.pixelSize: Theme.fontSizeExtraSmall
+            font.family: Theme.fontFamilyHeading
+            font.weight: Font.Light
+            width: parent.width
+            visible: topActiveBuffers.count > 0
+        }
         Repeater {
             model: topActiveBuffers
             delegate: Label {
                 color: Theme.highlightColor
-                text: model.bufferName
+                text: model.title
                 elide: Text.ElideRight
                 width: recentChannels.width
             }
