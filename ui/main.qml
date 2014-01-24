@@ -198,7 +198,7 @@ ApplicationWindow {
 
         width: parent.width
         panelHeight: pageStack.height
-        height: currentPage && currentPage.contentHeight || 0
+        height: currentPage && currentPage.contentHeight || pageStack.height
         visible: (!!currentPage && !!currentPage.__isBufferPage) || !viewer.closed
 
         Binding {
