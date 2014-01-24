@@ -50,6 +50,10 @@ TextField {
     textTopMargin: (implicitHeight - editor.implicitHeight) / 2
     textRightMargin: 0
 
+    IrcCommand {
+        id: ircCommand
+    }
+
     Keys.onReturnPressed: {
         var cmd = parser.parse(text)
         if (cmd) {

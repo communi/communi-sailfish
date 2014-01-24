@@ -238,10 +238,6 @@ ApplicationWindow {
         }
     }
 
-    IrcCommand {
-        id: ircCommand
-    }
-
     Component {
         id: networkDialog
         ConnectDialog {
