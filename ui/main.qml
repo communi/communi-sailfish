@@ -183,11 +183,6 @@ ApplicationWindow {
         }
     }
 
-    Component {
-        id: aboutDialogComponent
-        AboutDialog { }
-    }
-
     PanelView {
         id: viewer
 

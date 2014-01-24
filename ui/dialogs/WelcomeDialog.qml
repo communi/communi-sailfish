@@ -114,7 +114,7 @@ Dialog {
             MenuItem {
                 text: qsTr("About IRC")
                 onClicked: {
-                    pageStack.push(aboutDialogComponent);
+                    pageStack.push(Qt.resolvedUrl("AboutDialog.qml"))
                 }
             }
             MenuItem {

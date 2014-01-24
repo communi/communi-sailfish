@@ -65,7 +65,7 @@ Page {
 
                 MenuItem {
                     text: qsTr("About IRC")
-                    onClicked: pageStack.push(aboutDialogComponent)
+                    onClicked: pageStack.push(Qt.resolvedUrl("dialogs/AboutDialog.qml"))
                 }
                 MenuItem {
                     text: qsTr("Clear messages")
