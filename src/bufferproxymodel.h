@@ -45,6 +45,7 @@ public:
     Q_INVOKABLE void removeConnection(IrcConnection* connection);
 
     QHash<int, QByteArray> roleNames() const;
+    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
 
     Q_INVOKABLE QByteArray saveState() const;
     Q_INVOKABLE bool restoreState(const QByteArray& state);

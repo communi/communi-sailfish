@@ -173,12 +173,23 @@ QHash<int, QByteArray> BufferProxyModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[Qt::DisplayRole] = "display";
+    roles[Qt::UserRole] = "section";
     roles[Irc::BufferRole] = "buffer";
     roles[Irc::ChannelRole] = "channel";
     roles[Irc::NameRole] = "name";
     roles[Irc::PrefixRole] = "prefix";
     roles[Irc::TitleRole] = "title";
     return roles;
+}
+
+QVariant BufferProxyModel::data(const QModelIndex& index, int role) const
+{
+    if (role == Qt::UserRole) {
+        IrcBuffer* buffer = data(index, Irc::BufferRole).value<IrcBuffer*>();
+        if (buffer)
+            return m_connections.indexOf(buffer->connection()); // TODO: optimize
+    }
+    return RowsJoinerProxy::data(index, role);
 }
 
 QByteArray BufferProxyModel::saveState() const
