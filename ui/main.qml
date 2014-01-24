@@ -132,10 +132,8 @@ ApplicationWindow {
             }
         }
         onReseted: {
-            // Hacky instanceof
-            if (String(window.currentPage).indexOf("WelcomeDialog") !== 0) {
+            if (!window.currentPage.__isWelcomeDialog)
                 scheduler.replace(welcomeDialog);
-            }
         }
     }
 
@@ -170,6 +168,7 @@ ApplicationWindow {
     Component {
         id: welcomeDialog
         WelcomeDialog {
+            property bool __isWelcomeDialog: true
             onAccepted: window.openAllConnections();
             Component.onCompleted: NetworkSession.enabled = false
             Component.onDestruction: NetworkSession.enabled = true
