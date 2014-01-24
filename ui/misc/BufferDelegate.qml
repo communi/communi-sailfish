@@ -38,7 +38,7 @@ ListItem {
     property variant storage: MessageStorage.get(buffer)
 
     visible: buffer && !buffer.sticky
-    contentHeight: buffer && !buffer.sticky ? Theme.itemSizeMedium : 0
+    contentHeight: buffer && !buffer.sticky ? Theme.itemSizeSmall : 0
     ListView.onRemove: animateRemoval(root)
 
     menu: Component {

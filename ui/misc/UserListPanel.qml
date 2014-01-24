@@ -47,6 +47,7 @@ Panel {
         }
 
         delegate: ListItem {
+            contentHeight: Theme.itemSizeSmall
             Label {
                 text: title
                 anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge; verticalCenter: parent.verticalCenter }
