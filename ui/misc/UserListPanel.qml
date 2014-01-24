@@ -50,6 +50,7 @@ Panel {
             contentHeight: Theme.itemSizeSmall
             Label {
                 text: title
+                truncationMode: TruncationMode.Fade
                 anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge; verticalCenter: parent.verticalCenter }
             }
             onClicked: panel.clicked(model.user)
