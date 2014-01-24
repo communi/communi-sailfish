@@ -152,20 +152,24 @@ void BufferProxyModel::removeConnection(IrcConnection* connection)
         disconnect(model, SIGNAL(aboutToBeAdded(IrcBuffer*)), this, SIGNAL(bufferAboutToBeAdded(IrcBuffer*)));
         disconnect(model, SIGNAL(aboutToBeRemoved(IrcBuffer*)), this, SIGNAL(bufferAboutToBeRemoved(IrcBuffer*)));
 
-        removeSourceModel(model);
-
         int index = m_connections.indexOf(connection);
         if (index != -1) {
-            m_servers.removeAt(index);
-            delete m_models.takeAt(index);
-            delete m_connections.takeAt(index);
-        }
+            if (QObject* server = m_servers.takeAt(index))
+                server->disconnect(this);
+            if (QObject* model = m_models.takeAt(index))
+                model->deleteLater();
+            if (QObject* connection = m_connections.takeAt(index))
+                connection->deleteLater();
 
-        emit connectionsChanged();
-        emit serversChanged();
-        emit modelsChanged();
-        if (RowsJoinerProxy::models().isEmpty())
-            emit reseted();
+            emit connectionsChanged();
+            emit serversChanged();
+            emit modelsChanged();
+
+            removeSourceModel(model);
+
+            if (m_models.isEmpty())
+                emit reseted();
+        }
     }
 }
 
