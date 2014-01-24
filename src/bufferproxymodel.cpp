@@ -66,10 +66,17 @@ IrcBuffer* BufferProxyModel::get(int index) const
 
 QList<QObject*> BufferProxyModel::models() const
 {
-    QList<QObject*> lst;
-    foreach (QAbstractItemModel* aim, RowsJoinerProxy::models())
-        lst += aim;
-    return lst;
+    return m_models;
+}
+
+QList<QObject*> BufferProxyModel::servers() const
+{
+    return m_servers;
+}
+
+QList<QObject*> BufferProxyModel::connections() const
+{
+    return m_connections;
 }
 
 QObject* BufferProxyModel::model(IrcConnection* connection) const
@@ -79,15 +86,11 @@ QObject* BufferProxyModel::model(IrcConnection* connection) const
     return 0;
 }
 
-QList<QObject*> BufferProxyModel::connections() const
+QObject* BufferProxyModel::server(IrcConnection* connection) const
 {
-    QList<QObject*> lst;
-    foreach (QAbstractItemModel* aim, RowsJoinerProxy::models()) {
-        IrcBufferModel* model = qobject_cast<IrcBufferModel*>(aim);
-        if (model)
-            lst += model->connection();
-    }
-    return lst;
+    if (connection)
+        return connection->findChild<IrcServerBuffer*>();
+    return 0;
 }
 
 void BufferProxyModel::addConnection(IrcConnection* connection)
@@ -129,9 +132,15 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
             model->restoreState(model->property("savedState").toByteArray());
     });
 
-    insertSourceModel(model);
+    m_connections.append(connection);
+    m_servers.append(buffer);
+    m_models.append(model);
+
     emit connectionsChanged();
+    emit serversChanged();
     emit modelsChanged();
+
+    insertSourceModel(model);
 }
 
 void BufferProxyModel::removeConnection(IrcConnection* connection)
@@ -144,7 +153,16 @@ void BufferProxyModel::removeConnection(IrcConnection* connection)
         disconnect(model, SIGNAL(aboutToBeRemoved(IrcBuffer*)), this, SIGNAL(bufferAboutToBeRemoved(IrcBuffer*)));
 
         removeSourceModel(model);
+
+        int index = m_connections.indexOf(connection);
+        if (index != -1) {
+            m_servers.removeAt(index);
+            delete m_models.takeAt(index);
+            delete m_connections.takeAt(index);
+        }
+
         emit connectionsChanged();
+        emit serversChanged();
         emit modelsChanged();
         if (RowsJoinerProxy::models().isEmpty())
             emit reseted();

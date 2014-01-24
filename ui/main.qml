@@ -57,7 +57,7 @@ ApplicationWindow {
                 if (connection.enabled) {
                     connection.open();
                     if (!buffer)
-                        buffer = BufferModel.model(connection).get(0);
+                        buffer = BufferModel.server(connection);
                 }
             }
 
@@ -286,7 +286,7 @@ ApplicationWindow {
                     connection.open();
 
                     if (!currentPage || !currentPage.__isBufferPage) {
-                        var newBuffer = BufferModel.models[BufferModel.models.length - 1].get(0);
+                        var newBuffer = BufferModel.servers[BufferModel.servers.length - 1];
                         scheduler.replace(bufferPage, { buffer: newBuffer });
                     }
                 }
