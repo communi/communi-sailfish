@@ -29,7 +29,6 @@
 import QtQuick 2.1
 import Communi 3.1
 import Sailfish.Silica 1.0
-import "misc"
 
 Page {
     id: page
@@ -179,7 +178,7 @@ Page {
             }
 
             IconButton {
-                icon.source: "images/arrow-up.png"
+                icon.source: "../images/arrow-up.png"
                 opacity: (idle.moving || idle.running) && !idle.menuOpen && !positioner.running ? 1.0 : 0.0
                 Behavior on opacity { FadeAnimation { duration: 400 } }
                 onClicked: {
@@ -190,7 +189,7 @@ Page {
             }
 
             IconButton {
-                icon.source: "images/arrow-down.png"
+                icon.source: "../images/arrow-down.png"
                 opacity: (idle.moving || idle.running) && !idle.menuOpen && !positioner.running ? 1.0 : 0.0
                 Behavior on opacity { FadeAnimation { duration: 400 } }
                 onClicked: {

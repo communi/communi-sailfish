@@ -19,7 +19,7 @@ OTHER_FILES += \
     ui/*.qml \
     ui/cover/*.qml \
     ui/dialogs/*.qml \
-    ui/misc/*.qml \
+    ui/view/*.qml \
     rpm/harbour-communi.spec \
     harbour-communi.desktop \
     harbour-communi.png \

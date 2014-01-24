@@ -11,15 +11,15 @@
         <file>ui/images/arrow-down.png</file>
         <file>ui/images/complete.png</file>
         <file>ui/images/cover.png</file>
-        <file>ui/misc/BufferDelegate.qml</file>
-        <file>ui/misc/BufferListPanel.qml</file>
-        <file>ui/misc/NetworkDelegate.qml</file>
-        <file>ui/misc/PageStackScheduler.qml</file>
-        <file>ui/misc/Panel.qml</file>
-        <file>ui/misc/PanelView.qml</file>
-        <file>ui/misc/TextEntry.qml</file>
-        <file>ui/misc/UserListPanel.qml</file>
-        <file>ui/BufferPage.qml</file>
+        <file>ui/view/BufferDelegate.qml</file>
+        <file>ui/view/BufferListPanel.qml</file>
+        <file>ui/view/BufferPage.qml</file>
+        <file>ui/view/NetworkDelegate.qml</file>
+        <file>ui/view/PageStackScheduler.qml</file>
+        <file>ui/view/Panel.qml</file>
+        <file>ui/view/PanelView.qml</file>
+        <file>ui/view/TextEntry.qml</file>
+        <file>ui/view/UserListPanel.qml</file>
         <file>ui/main.qml</file>
     </qresource>
 </RCC>
