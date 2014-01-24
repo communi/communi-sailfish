@@ -96,7 +96,7 @@ ApplicationWindow {
         target: MessageStorage
         onHighlighted: {
             if (Qt.application.active) {
-                activeEffect.play();
+                feedback.give();
             } else {
                 notification.buffer = buffer;
                 notification.previewBody = qsTr("%1: %2").arg(message.nick).arg(message.content);
@@ -145,8 +145,15 @@ ApplicationWindow {
     }
 
     NonGraphicalFeedback {
-        id: activeEffect
+        id: feedback
         event: "chat_fg"
+        property real previous: 0
+        function give() {
+            var current = new Date().getTime();
+            if (current - previous > 750)
+                play();
+            previous = current;
+        }
     }
 
     Notification {
