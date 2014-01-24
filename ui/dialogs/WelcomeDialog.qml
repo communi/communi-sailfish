@@ -44,7 +44,7 @@ Dialog {
         }
         ViewPlaceholder {
             enabled: BufferModel.connections.length === 0
-            text: qsTr("Pull down to add a network.")
+            text: qsTr("Pull down to add a network")
         }
         model: BufferModel.connections
         delegate: ListItem {
