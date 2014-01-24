@@ -96,7 +96,6 @@ CoverBackground {
             delegate: Label {
                 color: Theme.highlightColor
                 text: model.title
-                elide: Text.ElideRight
                 width: recentChannels.width
             }
         }
