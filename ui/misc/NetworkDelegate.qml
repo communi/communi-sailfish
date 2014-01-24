@@ -48,7 +48,10 @@ ListItem {
         remorse.execute(root, qsTr("Removing"), function() { buffer.close(reason) }, 3000 )
     }
 
-    RemorseItem { id: remorse }
+    RemorseItem {
+        id: remorse
+        z: 1000
+    }
 
     menu: Component {
         ContextMenu {
