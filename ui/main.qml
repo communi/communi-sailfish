@@ -189,13 +189,6 @@ ApplicationWindow {
         height: currentPage && currentPage.contentHeight || pageStack.height
         visible: (!!currentPage && !!currentPage.__isBufferPage) || !viewer.closed
 
-        Binding {
-            target: viewer
-            property: "currentIndex"
-            value: 1
-            when: !!currentPage && !!currentPage.__isBufferPage
-        }
-
         Connections {
             target: pageStack
             onCurrentPageChanged: viewer.hidePanel()

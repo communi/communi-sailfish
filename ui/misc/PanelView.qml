@@ -43,10 +43,12 @@ SilicaListView {
     pressDelay: 0 // important! (makes vertical flicking "stable")
 
     function hidePanel() {
-        if (container.moving)
+        if (container.moving) {
             delayedHide = true
-        else
+        } else if (container.currentIndex !== 1) {
             container.currentIndex = 1
+            shutter.start()
+        }
     }
 
     property bool delayedHide: false
@@ -54,6 +56,18 @@ SilicaListView {
         if (container.delayedHide)
             container.currentIndex = 1
         container.delayedHide = false
+    }
+
+    Timer {
+        id: shutter
+        interval: 10
+        onTriggered: {
+            // a hack for the side panels getting stuck open
+            if (!container.closed && !container.moving && container.currentIndex === 1) {
+                container.currentIndex = 0
+                container.currentIndex = 1
+            }
+        }
     }
 
     currentIndex: 0
