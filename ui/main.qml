@@ -81,20 +81,16 @@ ApplicationWindow {
     cover: CoverPage {
         id: appCover
     }
-    onApplicationActiveChanged: {
-        if (window.applicationActive) {
-            // Clear cover
-            appCover.resetCover();
-
-            // TODO: instead of clearing all notifications here, remove them when the user actually looks at the buffer that created them
-            notification.close();
-        }
-    }
 
     Binding {
         target: MessageFormatter
         property: "baseColor"
         value: Theme.highlightColor // alternatively a bit less prominent Theme.secondaryHighlightColor
+    }
+
+    onApplicationActiveChanged: {
+        if (window.applicationActive)
+            notification.close();
     }
 
     Connections {
@@ -111,9 +107,6 @@ ApplicationWindow {
             if (Qt.application.active) {
                 activeEffect.play();
             } else {
-                // Increase highlight count on cover
-                appCover.unreadHighlights += 1;
-
                 notification.buffer = buffer;
                 notification.previewBody = qsTr("%1: %2").arg(message.nick).arg(message.content);
                 notification.body = qsTr("%1: %2").arg(message.nick).arg(message.content);
@@ -174,7 +167,7 @@ ApplicationWindow {
         id: notification
         property IrcBuffer buffer
         category: "x-nemo.messaging.im"
-        itemCount: appCover.unreadHighlights
+        itemCount: MessageStorage.activeHighlights
         previewSummary: buffer ? buffer.title : ""
         summary: buffer ? qsTr("IRC highlight - %1").arg(buffer.title) : ""
 
@@ -231,7 +224,7 @@ ApplicationWindow {
         leftPanel: BufferListPanel {
             id: leftPanel
             busy: viewer.closed && !!BufferModel.connections && BufferModel.connections.some(function (c) { return c.active && !c.connected; })
-            highlighted: MessageStorage.activeHighlight
+            highlighted: MessageStorage.activeHighlights > 0
             onClicked: {
                 if (buffer !== MessageStorage.currentBuffer)
                     scheduler.replace(bufferPage, {buffer: buffer})

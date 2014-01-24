@@ -34,17 +34,6 @@ CoverBackground {
     id: cover
     anchors.fill: parent
 
-    // Number of unread highlights
-    property int unreadHighlights: 0
-
-    // Resets the cover (called when the app goes to the foreground)
-    function resetCover() {
-        // Clear unread highlights
-        cover.unreadHighlights = 0;
-        // Clear top active buffers
-        topActiveBuffers.clear();
-    }
-
     // Adds a new name to display in the top active buffers list
     function addActiveBuffer(bufferName) {
         // Check if bufferName is already in the top
@@ -78,7 +67,7 @@ CoverBackground {
     }
     Label {
         id: unreadCount
-        text: cover.unreadHighlights
+        text: MessageStorage.activeHighlights
         x: Theme.paddingLarge
         y: Theme.paddingMedium
         font.pixelSize: Theme.fontSizeHuge

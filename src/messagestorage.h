@@ -27,7 +27,7 @@ class MessageStorage : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(IrcBuffer* currentBuffer READ currentBuffer WRITE setCurrentBuffer NOTIFY currentBufferChanged)
-    Q_PROPERTY(bool activeHighlight READ activeHighlight NOTIFY activeHighlightChanged)
+    Q_PROPERTY(int activeHighlights READ activeHighlights NOTIFY activeHighlightsChanged)
 
 public:
     static MessageStorage* instance();
@@ -37,28 +37,28 @@ public:
     IrcBuffer* currentBuffer() const;
     void setCurrentBuffer(IrcBuffer* buffer);
 
-    bool activeHighlight() const;
-    void setActiveHighlight(bool highlight);
+    int activeHighlights() const;
+    void setActiveHighlights(int highlights);
 
 public slots:
     void add(IrcBuffer* buffer);
     void remove(IrcBuffer* buffer);
 
 signals:
-    void activeHighlightChanged();
+    void activeHighlightsChanged();
     void currentBufferChanged(IrcBuffer* buffer);
     void highlighted(IrcBuffer* buffer, IrcMessage* message);
     void messageCountChanged(QString bufferDisplayName);
 
 private slots:
-    void updateActiveHighlight();
+    void updateActiveHighlights();
     void onHighlighted(IrcMessage* message);
     void onCountChanged();
 
 private:
     MessageStorage(QObject* parent = 0);
 
-    bool m_highlight;
+    int m_highlights;
     QPointer<IrcBuffer> m_current;
     QHash<IrcBuffer*, MessageModel*> m_models;
 };

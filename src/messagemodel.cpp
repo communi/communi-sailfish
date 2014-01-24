@@ -28,7 +28,7 @@ enum DataRole {
 
 MessageModel::MessageModel(IrcBuffer* buffer) : QAbstractListModel(buffer),
     m_badge(0), m_current(false), m_visible(false), m_separator(-1),
-    m_highlight(false), m_buffer(buffer), m_formatter(new MessageFormatter(this))
+    m_highlights(0), m_buffer(buffer), m_formatter(new MessageFormatter(this))
 {
     m_formatter->setBuffer(buffer);
     m_formatter->setTimeStampFormat("");
@@ -83,7 +83,7 @@ void MessageModel::setCurrent(bool current)
             setSeparator(m_messages.count() - 1);
         } else {
             setBadge(0);
-            setActiveHighlight(false);
+            setActiveHighlights(0);
             if (m_separator == -1)
                 setSeparator(m_messages.count() - 1);
         }
@@ -104,16 +104,16 @@ void MessageModel::setVisible(bool visible)
     }
 }
 
-bool MessageModel::activeHighlight() const
+int MessageModel::activeHighlights() const
 {
-    return m_highlight;
+    return m_highlights;
 }
 
-void MessageModel::setActiveHighlight(bool highlight)
+void MessageModel::setActiveHighlights(int highlights)
 {
-    if (m_highlight != highlight) {
-        m_highlight = highlight;
-        emit activeHighlightChanged();
+    if (m_highlights != highlights) {
+        m_highlights = highlights;
+        emit activeHighlightsChanged();
     }
 }
 
@@ -181,7 +181,7 @@ void MessageModel::receive(IrcMessage* message)
         if (!m_current || !m_visible) {
             if (data.hilite || message->property("private").toBool()) {
                 if (!m_current)
-                    setActiveHighlight(true);
+                    setActiveHighlights(m_highlights + 1);
                 if (!m_current || !m_visible)
                     emit highlighted(message, this->m_buffer);
             }
@@ -210,6 +210,6 @@ void MessageModel::clear()
     m_messages.clear();
     m_seen.clear();
     endResetModel();
-    setActiveHighlight(false);
+    setActiveHighlights(0);
     setBadge(0);
 }

@@ -16,7 +16,7 @@
 #include "messagemodel.h"
 #include <IrcBuffer>
 
-MessageStorage::MessageStorage(QObject* parent) : QObject(parent), m_highlight(false)
+MessageStorage::MessageStorage(QObject* parent) : QObject(parent), m_highlights(0)
 {
 }
 
@@ -54,16 +54,16 @@ void MessageStorage::setCurrentBuffer(IrcBuffer* buffer)
     }
 }
 
-bool MessageStorage::activeHighlight() const
+int MessageStorage::activeHighlights() const
 {
-    return m_highlight;
+    return m_highlights;
 }
 
-void MessageStorage::setActiveHighlight(bool highlight)
+void MessageStorage::setActiveHighlights(int highlights)
 {
-    if (m_highlight != highlight) {
-        m_highlight = highlight;
-        emit activeHighlightChanged();
+    if (m_highlights != highlights) {
+        m_highlights = highlights;
+        emit activeHighlightsChanged();
     }
 }
 
@@ -72,7 +72,7 @@ void MessageStorage::add(IrcBuffer* buffer)
     if (buffer && !m_models.contains(buffer)) {
         buffer->setPersistent(true);
         MessageModel* model = new MessageModel(buffer);
-        connect(model, SIGNAL(activeHighlightChanged()), this, SLOT(updateActiveHighlight()));
+        connect(model, SIGNAL(activeHighlightsChanged()), this, SLOT(updateActiveHighlights()));
         connect(model, SIGNAL(highlighted(IrcMessage*)), this, SLOT(onHighlighted(IrcMessage*)));
         connect(model, SIGNAL(countChanged()), this, SLOT(onCountChanged()));
         m_models.insert(buffer, model);
@@ -85,21 +85,12 @@ void MessageStorage::remove(IrcBuffer* buffer)
         delete m_models.take(buffer);
 }
 
-void MessageStorage::updateActiveHighlight()
+void MessageStorage::updateActiveHighlights()
 {
-    MessageModel* model = qobject_cast<MessageModel*>(sender());
-    if (model && model->activeHighlight()) {
-        setActiveHighlight(true);
-    } else {
-        bool highlight = false;
-        foreach (MessageModel* model, m_models) {
-            if (model->activeHighlight()) {
-                highlight = true;
-                break;
-            }
-        }
-        setActiveHighlight(highlight);
-    }
+    int highlights = 0;
+    foreach (MessageModel* model, m_models)
+        highlights += model->activeHighlights();
+    setActiveHighlights(highlights);
 }
 
 void MessageStorage::onHighlighted(IrcMessage* message)
