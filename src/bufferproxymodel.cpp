@@ -35,6 +35,27 @@ public slots:
         IrcBuffer::close(reason);
     }
 
+    void processMessage(IrcMessage* message)
+    {
+        // deliver targeted ChanServ notices to the target channel
+        // ":ChanServ!ChanServ@services. NOTICE myself :[#channel] foo bar..."
+        if (message->type() == IrcMessage::Notice && message->prefix() == "ChanServ!ChanServ@services.") {
+            QString content = static_cast<IrcNoticeMessage*>(message)->content();
+            if (content.startsWith("[")) {
+                int i = content.indexOf("]");
+                if (i != -1) {
+                    QString title = content.mid(1, i - 1);
+                    IrcBuffer* buffer = model()->find(title);
+                    if (buffer) {
+                        buffer->receiveMessage(message);
+                        return;
+                    }
+                }
+            }
+        }
+        receiveMessage(message);
+    }
+
 private slots:
     void quit(const QString& reason)
     {
@@ -113,8 +134,7 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
 
     connection->setReconnectDelay(5); // TODO: settings?
     connect(connection, SIGNAL(displayNameChanged(QString)), buffer, SLOT(setName(QString)));
-    // TODO: more fine-grained delivery (WHOIS replies etc. to the current buffer)
-    connect(model, SIGNAL(messageIgnored(IrcMessage*)), buffer, SLOT(receiveMessage(IrcMessage*)));
+    connect(model, SIGNAL(messageIgnored(IrcMessage*)), buffer, SLOT(processMessage(IrcMessage*)));
 
     connect(connection, SIGNAL(enabledChanged(bool)), this, SLOT(onConnectionEnabledChanged(bool)));
     connect(connection, SIGNAL(nickNameReserved(QString*)), this, SLOT(onNickNameReserved()));
