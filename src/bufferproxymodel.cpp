@@ -148,7 +148,15 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
     timer->setInterval(2000);
     connect(connection, SIGNAL(connected()), timer, SLOT(start()));
     QObject::connect(timer, &QTimer::timeout, [=]() -> void {
-        if (model->count() <= 1)
+        bool hasActiveChannels = false;
+        foreach (const QString& name, model->channels()) {
+            IrcBuffer* channel = model->find(name);
+            if (channel && channel->isActive()) {
+                hasActiveChannels = true;
+                break;
+            }
+        }
+        if (!hasActiveChannels)
             model->restoreState(model->property("savedState").toByteArray());
     });
 
