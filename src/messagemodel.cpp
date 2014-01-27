@@ -100,6 +100,10 @@ void MessageModel::setVisible(bool visible)
 {
     if (m_visible != visible) {
         m_visible = visible;
+        if (visible) {
+            setBadge(0);
+            setActiveHighlights(0);
+        }
         emit visibleChanged();
     }
 }
@@ -180,10 +184,8 @@ void MessageModel::receive(IrcMessage* message)
         append(data, seen);
         if (!m_current || !m_visible) {
             if (data.hilite || message->property("private").toBool()) {
-                if (!m_current)
-                    setActiveHighlights(m_highlights + 1);
-                if (!m_current || !m_visible)
-                    emit highlighted(message);
+                setActiveHighlights(m_highlights + 1);
+                emit highlighted(message);
             }
             if (!m_current && !data.event) {
                 // TODO: create a setting for this?
