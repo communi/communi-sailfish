@@ -36,6 +36,7 @@ class MessageModel : public QAbstractListModel
 
 public:
     MessageModel(IrcBuffer* buffer);
+    ~MessageModel();
 
     IrcBuffer* buffer() const;
 

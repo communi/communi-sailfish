@@ -41,6 +41,11 @@ MessageModel::MessageModel(IrcBuffer* buffer) : QAbstractListModel(buffer),
     connect(this, SIGNAL(modelReset()), this, SIGNAL(countChanged()));
 }
 
+MessageModel::~MessageModel()
+{
+    setActiveHighlights(0);
+}
+
 IrcBuffer* MessageModel::buffer() const
 {
     return m_buffer;

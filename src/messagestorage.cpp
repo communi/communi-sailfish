@@ -72,6 +72,7 @@ void MessageStorage::add(IrcBuffer* buffer)
     if (buffer && !m_models.contains(buffer)) {
         buffer->setPersistent(true);
         MessageModel* model = new MessageModel(buffer);
+        connect(buffer, SIGNAL(destroyed(IrcBuffer*)), this, SLOT(remove(IrcBuffer*)));
         connect(model, SIGNAL(activeHighlightsChanged()), this, SLOT(updateActiveHighlights()));
         connect(model, SIGNAL(received(IrcMessage*)), this, SLOT(onReceived(IrcMessage*)));
         connect(model, SIGNAL(highlighted(IrcMessage*)), this, SLOT(onHighlighted(IrcMessage*)));
@@ -81,7 +82,7 @@ void MessageStorage::add(IrcBuffer* buffer)
 
 void MessageStorage::remove(IrcBuffer* buffer)
 {
-    if (buffer && !m_models.contains(buffer))
+    if (buffer && m_models.contains(buffer))
         delete m_models.take(buffer);
 }
 
