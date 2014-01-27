@@ -35,9 +35,6 @@ public:
 public slots:
     void clear();
 
-signals:
-    void countChanged();
-
 private slots:
     void receive(IrcBuffer* buffer, IrcMessage* message);
 
