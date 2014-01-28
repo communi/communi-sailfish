@@ -2,7 +2,7 @@ TEMPLATE = app
 TARGET = harbour-communi
 CONFIG += c++11 sailfishapp
 
-VERSION = 0.1-beta
+VERSION = 0.1-rc
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 !exists(src/shared/shared.pri)|!exists(src/backend/src/src.pri): \
