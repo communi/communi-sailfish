@@ -27,6 +27,7 @@
 */
 
 #include "bufferproxymodel.h"
+#include "simplecrypt.h"
 #include "zncmanager.h"
 #include <QCoreApplication>
 #include <QTimer>
@@ -243,16 +244,18 @@ QByteArray BufferProxyModel::saveState() const
 {
     QVariantList modelStates;
     QVariantList connectionStates;
+    SimpleCrypt crypto(Q_UINT64_C(0xff610ed9de767b09));
+
     foreach (QAbstractItemModel* aim, RowsJoinerProxy::models()) {
         IrcBufferModel* model = qobject_cast<IrcBufferModel*>(aim);
         if (model) {
-            connectionStates += model->connection()->saveState();
+            connectionStates += crypto.encryptToByteArray(model->connection()->saveState());
             // do not save the server buffer - let addConnection() handle it when restoring
             model->remove(model->get(0));
             if (model->connection()->isEnabled())
-                modelStates += model->saveState();
+                modelStates += crypto.encryptToByteArray(model->saveState());
             else
-                modelStates += model->property("savedState");
+                modelStates += crypto.encryptToByteArray(model->property("savedState").toByteArray());
         }
     }
 
@@ -276,13 +279,16 @@ bool BufferProxyModel::restoreState(const QByteArray& data)
 
     QVariantList modelStates = state.value("models").toList();
     QVariantList connectionStates = state.value("connections").toList();
+    SimpleCrypt crypto(Q_UINT64_C(0xff610ed9de767b09));
 
     for (int i = 0; i < connectionStates.length(); ++i) {
         IrcConnection* connection = new IrcConnection(this);
-        connection->restoreState(connectionStates.at(i).toByteArray());
+        QByteArray cs = crypto.decryptToByteArray(connectionStates.at(i).toByteArray());
+        connection->restoreState(!crypto.lastError() ? cs : connectionStates.at(i).toByteArray());
         addConnection(connection);
         IrcBufferModel* model = connection->findChild<IrcBufferModel*>();
-        model->setProperty("savedState", modelStates.value(i));
+        QByteArray ms = crypto.decryptToByteArray(modelStates.value(i).toByteArray());
+        model->setProperty("savedState", !crypto.lastError() ? ms : modelStates.value(i));
     }
     return true;
 }

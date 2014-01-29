@@ -7,6 +7,7 @@ HEADERS += $$PWD/messagemodel.h
 HEADERS += $$PWD/messagestorage.h
 HEADERS += $$PWD/networksession.h
 HEADERS += $$PWD/3rdparty/RowsJoinerProxy.h
+HEADERS += $$PWD/3rdparty/simplecrypt.h
 
 SOURCES += $$PWD/activitymodel.cpp
 SOURCES += $$PWD/bufferproxymodel.cpp
@@ -15,6 +16,7 @@ SOURCES += $$PWD/messagestorage.cpp
 SOURCES += $$PWD/networksession.cpp
 SOURCES += $$PWD/main.cpp
 SOURCES += $$PWD/3rdparty/RowsJoinerProxy.cpp
+SOURCES += $$PWD/3rdparty/simplecrypt.cpp
 
 lessThan(QT_MINOR_VERSION, 2) {
     HEADERS += $$PWD/3rdparty/qqmlsettings_p.h
