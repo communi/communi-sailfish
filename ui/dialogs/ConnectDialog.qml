@@ -50,6 +50,7 @@ Dialog {
             hostField.text = connection.host
             portField.text = connection.port
             secureBox.checked = connection.secure
+            saslBox.checked = !!connection.saslMechanism
             nickNameField.text = connection.nickName
             userNameField.text = connection.userName
             realNameField.text = connection.realName
@@ -65,6 +66,7 @@ Dialog {
         connection.host = hostField.text
         connection.port = portField.text
         connection.secure = secureBox.checked
+        connection.saslMechanism = saslBox.checked ? connection.supportedSaslMechanisms[0]  : ""
         connection.nickName = nickNameField.text
         connection.userName = userNameField.text
         connection.realName = realNameField.text || defaultRealName
@@ -164,6 +166,7 @@ Dialog {
                     EnterKey.highlighted: true
                     EnterKey.onClicked: { pageStack.pop(); focus = false; }
                 }
+
                 TextField {
                     id: userNameField
                     width: parent.width
@@ -190,6 +193,13 @@ Dialog {
                     EnterKey.enabled: !!userNameField.text && !!portField.text
                     EnterKey.highlighted: true
                     EnterKey.onClicked: { pageStack.pop(); focus = false; }
+                }
+
+                TextSwitch {
+                    id: saslBox
+                    anchors { left: parent.left; right: parent.right; rightMargin: Theme.paddingLarge }
+                    description: qsTr("SASL provides a secure, encrypted authentication with the server")
+                    text: qsTr("Use SASL")
                 }
 
                 TextSwitch {
