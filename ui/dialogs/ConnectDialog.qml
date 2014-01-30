@@ -37,7 +37,8 @@ Dialog {
     property IrcConnection connection
 
     property string title: qsTr("Connect")
-    property string defaultPort: secureBox.checked ? "6697" : "6667"
+    property string defaultPort: "6667"
+    property string defaultSslPort: "6697"
     property string defaultNickName: qsTr("Sailor%1").arg(Math.floor(Math.random() * 12345))
     property string defaultUserName: "sailfish"
     property string defaultRealName: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
@@ -207,6 +208,12 @@ Dialog {
                     anchors { left: parent.left; right: parent.right; rightMargin: Theme.paddingLarge }
                     description: qsTr("SSL provides a secure, encrypted connection with the server")
                     text: qsTr("Use SSL")
+                    onCheckedChanged: {
+                        if (checked && portField.text === defaultPort)
+                            portField.text = defaultSslPort
+                        else if (!checked && portField.text === defaultSslPort)
+                            portField.text = defaultPort
+                    }
                 }
 
                 TextField {
