@@ -27,11 +27,13 @@
 */
 
 #include "messagestorage.h"
+#include "messageformatter.h"
 #include "messagemodel.h"
 #include <IrcBuffer>
 
 MessageStorage::MessageStorage(QObject* parent) : QObject(parent), m_highlights(0)
 {
+    m_baseColor = QColor::fromHsl(359, 102, 116);
 }
 
 MessageStorage* MessageStorage::instance()
@@ -81,11 +83,26 @@ void MessageStorage::setActiveHighlights(int highlights)
     }
 }
 
+QColor MessageStorage::baseColor() const
+{
+    return m_baseColor;
+}
+
+void MessageStorage::setBaseColor(const QColor& color)
+{
+    if (m_baseColor != color) {
+        m_baseColor = color;
+        foreach (MessageModel* model, m_models)
+            model->formatter()->setBaseColor(color);
+    }
+}
+
 void MessageStorage::add(IrcBuffer* buffer)
 {
     if (buffer && !m_models.contains(buffer)) {
         buffer->setPersistent(true);
         MessageModel* model = new MessageModel(buffer);
+        model->formatter()->setBaseColor(m_baseColor);
         connect(buffer, SIGNAL(destroyed(IrcBuffer*)), this, SLOT(remove(IrcBuffer*)));
         connect(model, SIGNAL(activeHighlightsChanged()), this, SLOT(updateActiveHighlights()));
         connect(model, SIGNAL(received(IrcMessage*)), this, SLOT(onReceived(IrcMessage*)));

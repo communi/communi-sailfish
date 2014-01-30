@@ -30,6 +30,7 @@
 #define MESSAGESTORAGE_H
 
 #include <QHash>
+#include <QColor>
 #include <QObject>
 #include <QPointer>
 
@@ -42,6 +43,7 @@ class MessageStorage : public QObject
     Q_OBJECT
     Q_PROPERTY(IrcBuffer* currentBuffer READ currentBuffer WRITE setCurrentBuffer NOTIFY currentBufferChanged)
     Q_PROPERTY(int activeHighlights READ activeHighlights NOTIFY activeHighlightsChanged)
+    Q_PROPERTY(QColor baseColor READ baseColor WRITE setBaseColor)
 
 public:
     static MessageStorage* instance();
@@ -53,6 +55,9 @@ public:
 
     int activeHighlights() const;
     void setActiveHighlights(int highlights);
+
+    QColor baseColor() const;
+    void setBaseColor(const QColor& color);
 
 public slots:
     void add(IrcBuffer* buffer);
@@ -73,6 +78,7 @@ private:
     MessageStorage(QObject* parent = 0);
 
     int m_highlights;
+    QColor m_baseColor;
     QPointer<IrcBuffer> m_current;
     QHash<IrcBuffer*, MessageModel*> m_models;
 };

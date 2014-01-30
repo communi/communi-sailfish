@@ -46,12 +46,6 @@ Page {
         value: Qt.application.active && page.status !== PageStatus.Inactive
     }
 
-    Binding {
-        target: storage ? storage.formatter : null
-        property: "baseColor"
-        value: Theme.highlightColor // alternatively a bit less prominent Theme.secondaryHighlightColor
-    }
-
     Column {
         id: column
 

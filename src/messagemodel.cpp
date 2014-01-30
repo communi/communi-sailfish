@@ -69,7 +69,7 @@ IrcBuffer* MessageModel::buffer() const
     return m_buffer;
 }
 
-QObject* MessageModel::formatter() const
+MessageFormatter* MessageModel::formatter() const
 {
     return m_formatter;
 }
