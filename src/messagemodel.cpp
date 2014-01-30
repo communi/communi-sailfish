@@ -50,6 +50,8 @@ MessageModel::MessageModel(IrcBuffer* buffer) : QAbstractListModel(buffer),
     m_formatter->setPrivateMessageNickFormat("%1:");
 
     connect(buffer, SIGNAL(messageReceived(IrcMessage*)), this, SLOT(receive(IrcMessage*)));
+    if (buffer->isSticky() && buffer->connection())
+        connect(buffer->connection(), SIGNAL(socketError(QAbstractSocket::SocketError)), this, SLOT(displaySocketError()));
 
     connect(this, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SIGNAL(countChanged()));
     connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SIGNAL(countChanged()));
@@ -227,6 +229,17 @@ void MessageModel::receive(IrcMessage* message)
         }
         if (!data.event)
             emit received(message);
+    }
+}
+
+void MessageModel::displaySocketError()
+{
+    IrcConnection* connection = m_buffer->connection();
+    QString error = connection->socket()->errorString();
+    if (!error.isEmpty()) {
+        IrcMessage* msg = IrcMessage::fromParameters(connection->host(), QString::number(Irc::ERR_UNKNOWNERROR), QStringList() << connection->nickName() << error, connection);
+        receive(msg);
+        msg->deleteLater();
     }
 }
 
