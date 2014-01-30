@@ -54,12 +54,12 @@ Dialog {
             menu: Component {
                 ContextMenu {
                     MenuItem {
-                        MenuItem {
-                            text: qsTr("Edit")
-                            onClicked: {
-                                pageStack.push(editDialog, { connection: modelData });
-                            }
+                        text: qsTr("Edit")
+                        onClicked: {
+                            pageStack.push(editDialog, { connection: modelData });
                         }
+                    }
+                    MenuItem {
                         text: qsTr("Remove")
                         onClicked: {
                             var m = BufferModel;
