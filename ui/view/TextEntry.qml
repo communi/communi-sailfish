@@ -30,110 +30,102 @@ import QtQuick 2.1
 import Communi 3.1
 import Sailfish.Silica 1.0
 
-TextField {
-    id: field
+Rectangle {
+    id: background
 
     property IrcBuffer buffer
+
     property bool backgroundVisible: false
+    property real backgroundOpacity: backgroundVisible ? 0.8 : 0.0
 
-    enabled: buffer && buffer.connection.connected
+    Behavior on backgroundOpacity { FadeAnimation { } }
+    color: Theme.rgba(Theme.highlightDimmerColor, backgroundOpacity)
 
-    EnterKey.text: qsTr("Send")
-    EnterKey.enabled: !!text.trim()
-    EnterKey.highlighted: true
+    implicitWidth: field.implicitWidth
+    implicitHeight: field.implicitHeight
 
-    placeholderText: buffer ? (buffer.connection.active ? qsTr("Hi, %1").arg(buffer.title) : qsTr("Not connected")) : ""
-    placeholderColor: Theme.secondaryHighlightColor
-    inputMethodHints: Qt.ImhNoAutoUppercase
-    focusOutBehavior: FocusBehavior.ClearPageFocus
-    textLeftMargin: Theme.itemSizeSmall + 2 * Theme.paddingSmall
-    textTopMargin: (implicitHeight - editor.implicitHeight) / 2
-    textRightMargin: 0
+    enabled: buffer && buffer.connection.active
 
-    IrcCommand {
-        id: ircCommand
-    }
+    TextField {
+        id: field
 
-    Keys.onReturnPressed: {
-        var cmd = parser.parse(text)
-        if (cmd) {
-            if (cmd.type === IrcCommand.Custom) {
-                if (cmd.parameters[0] === "CLEAR") {
-                    MessageStorage.get(buffer).clear()
-                } else if (cmd.parameters[0] === "CLOSE") {
-                    pageStack.pop()
-                    buffer.close(qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version))
-                } else if (cmd.parameters[0] === "QUERY" || cmd.parameters[0] === "MSG") {
-                    var query = buffer.model.add(cmd.parameters[1])
-                    pageStack.replace(bufferPage, {buffer: query})
-                    if (cmd.parameters.length > 2) {
-                        var msgCmd = ircCommand.createMessage(query.title, cmd.parameters.slice(2))
-                        query.sendCommand(msgCmd)
-                        query.receiveMessage(msgCmd.toMessage(query.connection.nickName, query.connection))
+        anchors.fill: parent
+
+        EnterKey.text: qsTr("Send")
+        EnterKey.enabled: !!text.trim()
+        EnterKey.highlighted: true
+
+        placeholderText: buffer ? (buffer.connection.active ? qsTr("Hi, %1").arg(buffer.title) : qsTr("Not connected")) : ""
+        placeholderColor: Theme.secondaryHighlightColor
+        inputMethodHints: Qt.ImhNoAutoUppercase
+        focusOutBehavior: FocusBehavior.ClearPageFocus
+
+        property real offset: Theme.fontSizeSmall
+
+        transform: Translate { y: field.offset }
+        textLeftMargin: Theme.itemSizeSmall + 2 * Theme.paddingSmall
+
+        IrcCommand {
+            id: ircCommand
+        }
+
+        Keys.onReturnPressed: {
+            var cmd = parser.parse(text)
+            if (cmd) {
+                if (cmd.type === IrcCommand.Custom) {
+                    if (cmd.parameters[0] === "CLEAR") {
+                        MessageStorage.get(buffer).clear()
+                    } else if (cmd.parameters[0] === "CLOSE") {
+                        pageStack.pop()
+                        buffer.close(qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version))
+                    } else if (cmd.parameters[0] === "QUERY" || cmd.parameters[0] === "MSG") {
+                        var query = buffer.model.add(cmd.parameters[1])
+                        pageStack.replace(bufferPage, {buffer: query})
+                        if (cmd.parameters.length > 2) {
+                            var msgCmd = ircCommand.createMessage(query.title, cmd.parameters.slice(2))
+                            query.sendCommand(msgCmd)
+                            query.receiveMessage(msgCmd.toMessage(query.connection.nickName, query.connection))
+                        }
+                    }
+                } else {
+                    buffer.connection.sendCommand(cmd)
+                    if (cmd.type === IrcCommand.Message
+                            || cmd.type === IrcCommand.CtcpAction
+                            || cmd.type === IrcCommand.Notice) {
+                        var msg = cmd.toMessage(buffer.connection.nickName, buffer.connection)
+                        buffer.receiveMessage(msg)
                     }
                 }
-            } else {
-                buffer.connection.sendCommand(cmd)
-                if (cmd.type === IrcCommand.Message
-                        || cmd.type === IrcCommand.CtcpAction
-                        || cmd.type === IrcCommand.Notice) {
-                    var msg = cmd.toMessage(buffer.connection.nickName, buffer.connection)
-                    buffer.receiveMessage(msg)
-                }
-            }
-            field.text = ""
-        }
-    }
-
-    Keys.onTabPressed: {
-        field.autoComplete();
-    }
-
-    background: Component {
-        Item {
-            anchors.fill: parent
-
-            Rectangle {
-                anchors.fill: parent
-                color: Theme.rgba(Theme.highlightDimmerColor, 0.8)
-                opacity: field.backgroundVisible ? 1.0 : 0.0
-                Behavior on opacity { FadeAnimation { } }
-            }
-
-            IconButton {
-                id: autocompleteButton
-                icon.source: "../images/complete.png"
-                onClicked: {
-                    field.autoComplete();
-                }
-                anchors {
-                    left: parent.left
-                    leftMargin: Theme.paddingSmall
-                    verticalCenter: parent.verticalCenter
-                }
-                highlighted: down || field.editor.activeFocus
-                width: Theme.itemSizeSmall
-                height: Theme.itemSizeSmall
-            }
-
-            Rectangle {
-                height: 1
-                anchors {
-                    left: parent.left
-                    leftMargin: autocompleteButton.width + 2 * Theme.paddingSmall
-                    right: parent.right
-                    rightMargin: Theme.paddingMedium
-                }
-                y: field.textTopMargin + field.editor.height + Theme.paddingSmall
-                color: field.editor.activeFocus ? Theme.highlightColor : Theme.secondaryColor
+                field.text = ""
             }
         }
-    }
 
-    function autoComplete() {
-        field.forceActiveFocus();
-        Qt.inputMethod.commit();
-        completer.complete(field.text, field.cursorPosition);
+        Keys.onTabPressed: {
+            field.autoComplete();
+        }
+
+        IconButton {
+            id: autocompleteButton
+            icon.source: "../images/complete.png"
+            onClicked: {
+                field.autoComplete();
+            }
+            anchors {
+                left: parent.left
+                leftMargin: Theme.paddingSmall - field.textLeftMargin
+                verticalCenter: parent.verticalCenter
+            }
+            transform: Translate { y: -field.offset }
+            highlighted: down || field.editor.activeFocus
+            width: Theme.itemSizeSmall
+            height: Theme.itemSizeSmall
+        }
+
+        function autoComplete() {
+            field.forceActiveFocus();
+            Qt.inputMethod.commit();
+            completer.complete(field.text, field.cursorPosition);
+        }
     }
 
     IrcCommandParser {
@@ -183,7 +175,7 @@ TextField {
 
     IrcCompleter {
         id: completer
-        buffer: field.buffer
+        buffer: background.buffer
         parser: parser
         onCompleted: {
             field.text = text;
