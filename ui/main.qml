@@ -75,12 +75,6 @@ ApplicationWindow {
     initialPage: bufferPage
     cover: CoverPage { }
 
-    Binding {
-        target: MessageFormatter
-        property: "baseColor"
-        value: Theme.highlightColor // alternatively a bit less prominent Theme.secondaryHighlightColor
-    }
-
     Connections {
         target: Qt.application
         onAboutToQuit: notification.close();

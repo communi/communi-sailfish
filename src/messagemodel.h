@@ -41,6 +41,7 @@ class MessageModel : public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(IrcBuffer* buffer READ buffer CONSTANT)
+    Q_PROPERTY(QObject* formatter READ formatter CONSTANT)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(int separator READ separator NOTIFY separatorChanged)
     Q_PROPERTY(bool current READ isCurrent WRITE setCurrent NOTIFY currentChanged)
@@ -53,6 +54,7 @@ public:
     ~MessageModel();
 
     IrcBuffer* buffer() const;
+    QObject* formatter() const;
 
     int count() const;
     int rowCount(const QModelIndex& parent) const;

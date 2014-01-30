@@ -45,9 +45,10 @@ MessageModel::MessageModel(IrcBuffer* buffer) : QAbstractListModel(buffer),
     m_badge(0), m_current(false), m_visible(false), m_separator(-1),
     m_highlights(0), m_buffer(buffer), m_formatter(new MessageFormatter(this))
 {
+    m_formatter->setStripNicks(true);
+    m_formatter->setDetailed(false);
     m_formatter->setBuffer(buffer);
     m_formatter->setTimeStampFormat("");
-    m_formatter->setPrivateMessageNickFormat("%1:");
 
     connect(buffer, SIGNAL(messageReceived(IrcMessage*)), this, SLOT(receive(IrcMessage*)));
     if (buffer->isSticky() && buffer->connection())
@@ -66,6 +67,11 @@ MessageModel::~MessageModel()
 IrcBuffer* MessageModel::buffer() const
 {
     return m_buffer;
+}
+
+QObject* MessageModel::formatter() const
+{
+    return m_formatter;
 }
 
 int MessageModel::count() const

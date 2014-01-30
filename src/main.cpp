@@ -96,9 +96,6 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
     viewer->rootContext()->setContextProperty("ActivityModel", activity);
     QObject::connect(MessageStorage::instance(), SIGNAL(received(IrcBuffer*,IrcMessage*)), activity, SLOT(receive(IrcBuffer*,IrcMessage*)));
 
-    MessageFormatter* formatter = new MessageFormatter(app.data());
-    viewer->rootContext()->setContextProperty("MessageFormatter", formatter);
-
     viewer->rootContext()->setContextProperty("MessageStorage", MessageStorage::instance());
     QObject::connect(model, SIGNAL(bufferAdded(IrcBuffer*)), MessageStorage::instance(), SLOT(add(IrcBuffer*)));
 
