@@ -28,6 +28,7 @@
 
 #include "messagemodel.h"
 #include "messageformatter.h"
+#include <QTextBoundaryFinder>
 #include <IrcConnection>
 #include <IrcMessage>
 #include <IrcBuffer>
@@ -196,8 +197,21 @@ void MessageModel::receive(IrcMessage* message)
     if (!data.plaintext.isEmpty()) {
         data.timestamp = message->timeStamp().toString("hh:mm");
         data.event = (message->type() != IrcMessage::Private && message->type() != IrcMessage::Notice);
-        if (!(message->flags() & IrcMessage::Own))
-            data.hilite = message->property("content").toString().contains(message->connection()->nickName(), Qt::CaseInsensitive);
+        if (!data.event && !(message->flags() & IrcMessage::Own)) {
+            int pos = 0;
+            QString nick = message->connection()->nickName();
+            QString content = message->property("content").toString();
+            while (!data.hilite && (pos = content.indexOf(nick, pos, Qt::CaseInsensitive)) != -1) {
+                // #60: more precise nick alerts
+                QTextBoundaryFinder finder(QTextBoundaryFinder::Word, content);
+                finder.setPosition(pos);
+                if (finder.isAtBoundary()) {
+                    finder.setPosition(pos + nick.length());
+                    data.hilite = finder.isAtBoundary();
+                }
+                pos += nick.length();
+            }
+        }
         data.richtext = m_formatter->formatMessage(message, Qt::RichText);
         bool seen = (m_current && m_visible) || !message->connection()->isConnected();
         append(data, seen);
