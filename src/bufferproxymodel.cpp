@@ -147,7 +147,7 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
     buffer->setSticky(true);
     model->add(buffer);
 
-    connection->setSaslMechanism("PLAIN");
+    // FIXME: #58: connection->setSaslMechanism("PLAIN");
     connection->setReconnectDelay(5); // TODO: settings?
     connect(connection, SIGNAL(displayNameChanged(QString)), buffer, SLOT(setName(QString)));
     connect(model, SIGNAL(messageIgnored(IrcMessage*)), buffer, SLOT(processMessage(IrcMessage*)));
