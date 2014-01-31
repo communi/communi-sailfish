@@ -51,7 +51,8 @@ Dialog {
             portField.text = connection.port
             secureBox.checked = connection.secure
             saslBox.checked = !!connection.saslMechanism
-            nickNameField.text = connection.nickName
+            nickNameField.text = connection.userData['originalNickName'] || connection.nickName
+            alternateNickNameField.text = connection.userData['alternateNickName'] || connection.nickName + "_"
             userNameField.text = connection.userName
             realNameField.text = connection.realName
             passwordField.text = connection.password
@@ -73,6 +74,10 @@ Dialog {
         connection.password = passwordField.text
         if (!!displayNameField.text)
             connection.displayName = displayNameField.text
+        var userData = connection.userData
+        userData['originalNickName'] = nickNameField.text
+        userData['alternateNickName'] = alternateNickNameField.text
+        connection.userData = userData
     }
 
     Component {
@@ -209,6 +214,17 @@ Dialog {
             header: PageHeader { title: qsTr("User details") }
 
             model: VisualItemModel {
+                TextField {
+                    id: alternateNickNameField
+                    width: parent.width
+                    label: qsTr("Alternate nick name")
+                    placeholderText: qsTr("Enter alternate nick name")
+                    text: defaultNickName + "_"
+
+                    EnterKey.iconSource: "image://theme/icon-m-enter-close"
+                    EnterKey.onClicked: Qt.inputMethod.hide()
+                }
+
                 TextField {
                     id: userNameField
                     width: parent.width

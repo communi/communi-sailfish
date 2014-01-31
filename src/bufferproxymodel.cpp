@@ -153,7 +153,7 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
     connect(model, SIGNAL(messageIgnored(IrcMessage*)), buffer, SLOT(processMessage(IrcMessage*)));
 
     connect(connection, SIGNAL(enabledChanged(bool)), this, SLOT(onConnectionEnabledChanged(bool)));
-    connect(connection, SIGNAL(nickNameReserved(QString*)), this, SLOT(onNickNameReserved()));
+    connect(connection, SIGNAL(nickNameRequired(QString,QString*)), this, SLOT(onNickNameRequired(QString)));
     connect(connection, SIGNAL(channelKeyRequired(QString,QString*)), this, SLOT(onChannelKeyRequired(QString)));
 
     // Give bouncers a sec or two to start joining channels after getting connected.
@@ -319,11 +319,11 @@ void BufferProxyModel::onChannelKeyRequired(const QString& channel)
         emit channelKeyRequired(connection, channel);
 }
 
-void BufferProxyModel::onNickNameReserved()
+void BufferProxyModel::onNickNameRequired(const QString& reserved)
 {
     IrcConnection* connection = qobject_cast<IrcConnection*>(sender());
     if (connection)
-        emit nickNameReserved(connection);
+        emit nickNameRequired(connection, reserved);
 }
 
 #include "bufferproxymodel.moc"

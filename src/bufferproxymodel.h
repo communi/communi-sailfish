@@ -74,14 +74,14 @@ signals:
     void bufferAboutToBeAdded(IrcBuffer* buffer);
     void bufferAboutToBeRemoved(IrcBuffer* buffer);
 
-    void nickNameReserved(IrcConnection* connection);
+    void nickNameRequired(IrcConnection* connection, const QString& reserved);
     void channelKeyRequired(IrcConnection* connection, const QString& channel);
 
 private slots:
     void onConnectionEnabledChanged(bool enabled);
     void closeConnection(IrcBuffer* buffer);
     void onChannelKeyRequired(const QString& channel);
-    void onNickNameReserved();
+    void onNickNameRequired(const QString& reserved);
 
 private:
     QList<QObject*> m_models;

@@ -117,8 +117,15 @@ ApplicationWindow {
 
     Connections {
         target: BufferModel
-        onNickNameReserved: {
-            scheduler.push(nickDialog, {nick: connection.nickName, index: BufferModel.connections.indexOf(connection)})
+        onNickNameRequired: {
+            var originalNickName = connection.userData['originalNickName']
+            var alternateNickName = connection.userData['alternateNickName']
+            if (!!alternateNickName && alternateNickName !== connection.nickName && alternateNickName !== reserved)
+                connection.nickName = alternateNickName
+            else if (!!originalNickName && originalNickName !== connection.nickName && originalNickName !== reserved)
+                connection.nickName = originalNickName
+            else
+                scheduler.push(nickDialog, {nick: connection.nickName, index: BufferModel.connections.indexOf(connection)})
         }
         onChannelKeyRequired: {
             scheduler.push(joinDialog, {channel: channel, index: BufferModel.connections.indexOf(connection)})
