@@ -96,10 +96,8 @@ Dialog {
                 placeholderText: qsTr("Enter nick name")
                 text: defaultNickName
 
-                EnterKey.text: dialog.title.split(" ")[0]
-                EnterKey.enabled: dialog.canAccept
-                EnterKey.highlighted: true
-                EnterKey.onClicked: dialog.accept()
+                EnterKey.iconSource: "image://theme/icon-m-enter-close"
+                EnterKey.onClicked: Qt.inputMethod.hide()
             }
 
             TextField {
@@ -109,10 +107,8 @@ Dialog {
                 text: defaultRealName
                 placeholderText: qsTr("Enter real name")
 
-                EnterKey.text: dialog.title.split(" ")[0]
-                EnterKey.enabled: dialog.canAccept
-                EnterKey.highlighted: true
-                EnterKey.onClicked: dialog.accept()
+                EnterKey.iconSource: "image://theme/icon-m-enter-close"
+                EnterKey.onClicked: Qt.inputMethod.hide()
             }
 
             TextField {
@@ -124,10 +120,8 @@ Dialog {
                 placeholderText: qsTr("Enter server address")
                 inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText | Qt.ImhUrlCharactersOnly
 
-                EnterKey.text: dialog.title.split(" ")[0]
-                EnterKey.enabled: dialog.canAccept
-                EnterKey.highlighted: true
-                EnterKey.onClicked: dialog.accept()
+                EnterKey.iconSource: "image://theme/icon-m-enter-close"
+                EnterKey.onClicked: Qt.inputMethod.hide()
             }
 
             SectionHeader { text: qsTr("Advanced") }
@@ -171,10 +165,8 @@ Dialog {
                     label: qsTr("Network name")
                     placeholderText: qsTr("Enter network name")
 
-                    EnterKey.text: qsTr("Ok")
-                    EnterKey.enabled: !!portField.text
-                    EnterKey.highlighted: true
-                    EnterKey.onClicked: { pageStack.pop(); focus = false; }
+                    EnterKey.iconSource: "image://theme/icon-m-enter-close"
+                    EnterKey.onClicked: Qt.inputMethod.hide()
                 }
 
                 TextField {
@@ -186,10 +178,8 @@ Dialog {
                     inputMethodHints: Qt.ImhDigitsOnly
                     placeholderText: qsTr("Enter port")
 
-                    EnterKey.text: qsTr("Ok")
-                    EnterKey.enabled: !!portField.text
-                    EnterKey.highlighted: true
-                    EnterKey.onClicked: { pageStack.pop(); focus = false; }
+                    EnterKey.iconSource: "image://theme/icon-m-enter-close"
+                    EnterKey.onClicked: Qt.inputMethod.hide()
                 }
 
                 TextSwitch {
@@ -228,10 +218,8 @@ Dialog {
                     placeholderText: qsTr("Enter user name")
                     inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
 
-                    EnterKey.text: qsTr("Ok")
-                    EnterKey.enabled: !!userNameField.text
-                    EnterKey.highlighted: true
-                    EnterKey.onClicked: { pageStack.pop(); focus = false; }
+                    EnterKey.iconSource: "image://theme/icon-m-enter-close"
+                    EnterKey.onClicked: Qt.inputMethod.hide()
                 }
 
                 TextField {
@@ -241,10 +229,8 @@ Dialog {
                     placeholderText: qsTr("Enter password")
                     echoMode: TextInput.Password
 
-                    EnterKey.text: qsTr("Ok")
-                    EnterKey.enabled: !!userNameField.text
-                    EnterKey.highlighted: true
-                    EnterKey.onClicked: { pageStack.pop(); focus = false; }
+                    EnterKey.iconSource: "image://theme/icon-m-enter-close"
+                    EnterKey.onClicked: Qt.inputMethod.hide()
                 }
 
                 TextSwitch {
