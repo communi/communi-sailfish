@@ -224,7 +224,7 @@ void MessageModel::receive(IrcMessage* message)
         bool seen = (m_current && m_visible) || !message->connection()->isConnected();
         append(data, seen);
         if (!m_current || !m_visible) {
-            if (data.hilite || message->property("private").toBool()) {
+            if (data.hilite || (message->property("private").toBool() && !message->property("forwarded").toBool())) {
                 setActiveHighlights(m_highlights + 1);
                 emit highlighted(message);
             }

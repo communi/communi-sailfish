@@ -62,6 +62,7 @@ public slots:
                     QString title = content.mid(1, i - 1);
                     IrcBuffer* buffer = model()->find(title);
                     if (buffer) {
+                        message->setProperty("forwarded", true);
                         buffer->receiveMessage(message);
                         return;
                     }
