@@ -51,7 +51,7 @@ Panel {
             Label {
                 text: title
                 truncationMode: TruncationMode.Fade
-                anchors { left: parent.left; right: parent.right; margins: Theme.paddingMedium; verticalCenter: parent.verticalCenter }
+                anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge; verticalCenter: parent.verticalCenter }
             }
             onClicked: panel.clicked(model.user)
         }

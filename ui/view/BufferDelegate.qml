@@ -61,7 +61,7 @@ ListItem {
         truncationMode: TruncationMode.Fade
         text: buffer ? buffer.title : text
         verticalAlignment: Qt.AlignVCenter
-        anchors { fill: parent; leftMargin: Theme.paddingMedium; rightMargin: glass.opacity > 0 ? glass.width : Theme.paddingMedium }
+        anchors { fill: parent; leftMargin: Theme.paddingLarge; rightMargin: glass.opacity > 0 ? glass.width : Theme.paddingLarge }
         // inactive buffer > highlighted buffer > unread messages buffer > nothing special buffer
         color: (!buffer || !buffer.active) ? Theme.secondaryColor : (storage.activeHighlights > 0 ? window.nickHighlight : (storage.badge > 0 ? Theme.highlightColor : Theme.primaryColor))
     }
