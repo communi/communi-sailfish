@@ -29,7 +29,6 @@
 import QtQuick 2.1
 import Communi 3.1
 import Sailfish.Silica 1.0
-import QtGraphicalEffects 1.0
 
 Dialog {
     id: dialog
@@ -87,6 +86,8 @@ Dialog {
         header: DialogHeader { title: dialog.title }
         model: VisualItemModel {
 
+            SectionHeader { text: qsTr("Basic") }
+
             TextField {
                 id: nickNameField
                 width: parent.width
@@ -129,32 +130,40 @@ Dialog {
                 EnterKey.onClicked: dialog.accept()
             }
 
-            Item {
-                width: parent.width
-                height: button.height + 2 * Theme.paddingMedium
+            SectionHeader { text: qsTr("Advanced") }
 
-                Button {
-                    id: button
-                    text: qsTr("Advanced")
-                    anchors.centerIn: parent
-                    onClicked: pageStack.push(details)
+            ListItem {
+                id: userItem
+                Label {
+                    text: qsTr("User details")
+                    color: userItem.down ? Theme.highlightColor : Theme.secondaryColor
+                    anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge; verticalCenter: parent.verticalCenter }
                 }
-                ColorOverlay {
-                    source: button
-                    anchors.fill: button
-                    color: !userNameField.text || !portField.text ? "#ff4d4d" : "transparent"
+                onClicked: pageStack.push(userPage)
+            }
+
+            ListItem {
+                id: networkItem
+                Label {
+                    text: qsTr("Network settings")
+                    color: networkItem.down ? Theme.highlightColor : Theme.secondaryColor
+                    anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge; verticalCenter: parent.verticalCenter }
                 }
+                onClicked: pageStack.push(networkPage)
             }
         }
         VerticalScrollDecorator { }
     }
 
     Page {
-        id: details
+        id: networkPage
+        backNavigation: !!portField.text
         SilicaListView {
             anchors.fill: parent
             spacing: Theme.paddingMedium
-            header: DialogHeader { title: qsTr("Advanced") }
+
+            header: PageHeader { title: qsTr("Network settings") }
+
             model: VisualItemModel {
                 TextField {
                     id: displayNameField
@@ -163,44 +172,24 @@ Dialog {
                     placeholderText: qsTr("Enter network name")
 
                     EnterKey.text: qsTr("Ok")
-                    EnterKey.enabled: !!userNameField.text && !!portField.text
+                    EnterKey.enabled: !!portField.text
                     EnterKey.highlighted: true
                     EnterKey.onClicked: { pageStack.pop(); focus = false; }
                 }
 
                 TextField {
-                    id: userNameField
+                    id: portField
                     width: parent.width
-                    label: qsTr("Username")
-                    text: defaultUserName
+                    label: qsTr("Port")
+                    text: defaultPort
                     errorHighlight: !text
-                    placeholderText: qsTr("Enter user name")
-                    inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
+                    inputMethodHints: Qt.ImhDigitsOnly
+                    placeholderText: qsTr("Enter port")
 
                     EnterKey.text: qsTr("Ok")
-                    EnterKey.enabled: !!userNameField.text && !!portField.text
+                    EnterKey.enabled: !!portField.text
                     EnterKey.highlighted: true
                     EnterKey.onClicked: { pageStack.pop(); focus = false; }
-                }
-
-                TextField {
-                    id: passwordField
-                    width: parent.width
-                    label: qsTr("Password")
-                    placeholderText: qsTr("Enter password")
-                    echoMode: TextInput.Password
-
-                    EnterKey.text: qsTr("Ok")
-                    EnterKey.enabled: !!userNameField.text && !!portField.text
-                    EnterKey.highlighted: true
-                    EnterKey.onClicked: { pageStack.pop(); focus = false; }
-                }
-
-                TextSwitch {
-                    id: saslBox
-                    anchors { left: parent.left; right: parent.right; rightMargin: Theme.paddingLarge }
-                    description: qsTr("SASL provides a secure, encrypted authentication with the server")
-                    text: qsTr("Use SASL")
                 }
 
                 TextSwitch {
@@ -215,20 +204,54 @@ Dialog {
                             portField.text = defaultPort
                     }
                 }
+            }
+            VerticalScrollDecorator { }
+        }
+    }
 
+    Page {
+        id: userPage
+        backNavigation: !!userNameField.text
+        SilicaListView {
+            anchors.fill: parent
+            spacing: Theme.paddingMedium
+
+            header: PageHeader { title: qsTr("User details") }
+
+            model: VisualItemModel {
                 TextField {
-                    id: portField
+                    id: userNameField
                     width: parent.width
-                    label: qsTr("Port")
-                    text: defaultPort
+                    label: qsTr("Username")
+                    text: defaultUserName
                     errorHighlight: !text
-                    inputMethodHints: Qt.ImhDigitsOnly
-                    placeholderText: qsTr("Enter port")
+                    placeholderText: qsTr("Enter user name")
+                    inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
 
                     EnterKey.text: qsTr("Ok")
-                    EnterKey.enabled: !!userNameField.text && !!portField.text
+                    EnterKey.enabled: !!userNameField.text
                     EnterKey.highlighted: true
                     EnterKey.onClicked: { pageStack.pop(); focus = false; }
+                }
+
+                TextField {
+                    id: passwordField
+                    width: parent.width
+                    label: qsTr("Password")
+                    placeholderText: qsTr("Enter password")
+                    echoMode: TextInput.Password
+
+                    EnterKey.text: qsTr("Ok")
+                    EnterKey.enabled: !!userNameField.text
+                    EnterKey.highlighted: true
+                    EnterKey.onClicked: { pageStack.pop(); focus = false; }
+                }
+
+                TextSwitch {
+                    id: saslBox
+                    anchors { left: parent.left; right: parent.right; rightMargin: Theme.paddingLarge }
+                    description: qsTr("SASL provides a secure, encrypted authentication with the server")
+                    text: qsTr("Use SASL")
                 }
             }
             VerticalScrollDecorator { }
