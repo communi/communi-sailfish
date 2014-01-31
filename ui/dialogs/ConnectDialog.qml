@@ -102,7 +102,7 @@ Dialog {
                 text: defaultNickName
 
                 EnterKey.iconSource: "image://theme/icon-m-enter-close"
-                EnterKey.onClicked: Qt.inputMethod.hide()
+                EnterKey.onClicked: { focus = false; Qt.inputMethod.hide() }
             }
 
             TextField {
@@ -113,7 +113,7 @@ Dialog {
                 placeholderText: qsTr("Enter real name")
 
                 EnterKey.iconSource: "image://theme/icon-m-enter-close"
-                EnterKey.onClicked: Qt.inputMethod.hide()
+                EnterKey.onClicked: { focus = false; Qt.inputMethod.hide() }
             }
 
             TextField {
@@ -126,7 +126,7 @@ Dialog {
                 inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText | Qt.ImhUrlCharactersOnly
 
                 EnterKey.iconSource: "image://theme/icon-m-enter-close"
-                EnterKey.onClicked: Qt.inputMethod.hide()
+                EnterKey.onClicked: { focus = false; Qt.inputMethod.hide() }
             }
 
             SectionHeader { text: qsTr("Advanced") }
@@ -171,7 +171,7 @@ Dialog {
                     placeholderText: qsTr("Enter network name")
 
                     EnterKey.iconSource: "image://theme/icon-m-enter-close"
-                    EnterKey.onClicked: Qt.inputMethod.hide()
+                    EnterKey.onClicked: { focus = false; Qt.inputMethod.hide() }
                 }
 
                 TextField {
@@ -184,7 +184,7 @@ Dialog {
                     placeholderText: qsTr("Enter port")
 
                     EnterKey.iconSource: "image://theme/icon-m-enter-close"
-                    EnterKey.onClicked: Qt.inputMethod.hide()
+                    EnterKey.onClicked: { focus = false; Qt.inputMethod.hide() }
                 }
 
                 TextSwitch {
@@ -222,7 +222,7 @@ Dialog {
                     text: defaultNickName + "_"
 
                     EnterKey.iconSource: "image://theme/icon-m-enter-close"
-                    EnterKey.onClicked: Qt.inputMethod.hide()
+                    EnterKey.onClicked: { focus = false; Qt.inputMethod.hide() }
                 }
 
                 TextField {
@@ -235,7 +235,7 @@ Dialog {
                     inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
 
                     EnterKey.iconSource: "image://theme/icon-m-enter-close"
-                    EnterKey.onClicked: Qt.inputMethod.hide()
+                    EnterKey.onClicked: { focus = false; Qt.inputMethod.hide() }
                 }
 
                 TextField {
@@ -246,7 +246,7 @@ Dialog {
                     echoMode: TextInput.Password
 
                     EnterKey.iconSource: "image://theme/icon-m-enter-close"
-                    EnterKey.onClicked: Qt.inputMethod.hide()
+                    EnterKey.onClicked: { focus = false; Qt.inputMethod.hide() }
                 }
 
                 TextSwitch {
