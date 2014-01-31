@@ -44,7 +44,7 @@ Dialog {
     SilicaListView {
         anchors.fill: parent
         spacing: Theme.paddingMedium
-        header: DialogHeader { title: qsTr("Set") }
+        header: DialogHeader { title: qsTr("Nick") }
         model: VisualItemModel {
             ComboBox {
                 id: networkBox
@@ -65,9 +65,9 @@ Dialog {
                 id: nickField
                 width: parent.width
                 text: initialNick
-                label: qsTr("Nick")
+                label: qsTr("Nick name")
                 errorHighlight: !dialog.canAccept
-                placeholderText: qsTr("Enter nick")
+                placeholderText: qsTr("Enter nick name")
 
                 EnterKey.text: qsTr("Set")
                 EnterKey.enabled: dialog.canAccept
