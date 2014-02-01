@@ -39,6 +39,7 @@ ListItem {
 
     property bool active: buffer && buffer.connection.active
     property bool connected: buffer && buffer.connection.connected
+    property bool error: buffer && buffer.connection.status === IrcConnection.Error
 
     z: menuOpen ? 100 : 10
     contentHeight: Theme.itemSizeExtraSmall
@@ -105,19 +106,30 @@ ListItem {
         id: title
         text: buffer ? buffer.title : ""
         truncationMode: TruncationMode.Fade
-        anchors { left: indicator.right; right: parent.right; verticalCenter: parent.verticalCenter; margins: Theme.paddingLarge }
+        anchors { left: loader.right; right: parent.right; verticalCenter: parent.verticalCenter; margins: Theme.paddingLarge }
         color: (!storage || !root.connected) ? Theme.secondaryColor :
                 buffer === MessageStorage.currentBuffer ? Theme.primaryColor :
                (storage.activeHighlights > 0 ? window.nickHighlight :
                (storage.badge > 0 ? Theme.highlightColor : Theme.primaryColor))
     }
 
-    BusyIndicator {
-        id: indicator
-        width: running ? height : 0
-        visible: root.active && !root.connected
-        running: root.active && !root.connected
-        anchors { top: parent.top; left: parent.left; bottom: parent.bottom; margins: Theme.paddingMedium; leftMargin: Theme.paddingLarge }
+    Loader {
+        id: loader
+        width: Theme.itemSizeExtraSmall - 2 * Theme.paddingMedium
+        height: Theme.itemSizeExtraSmall - 2 * Theme.paddingMedium
+        anchors { verticalCenter: parent.verticalCenter; left: parent.left; leftMargin: Theme.paddingLarge }
+
+        sourceComponent: root.active && !root.connected ? busyIndicator : root.error ? errorImage : null
+
+        Component {
+            id: busyIndicator
+            BusyIndicator { running: true }
+        }
+
+        Component {
+            id: errorImage
+            Image { source: "image://theme/icon-status-data-error" }
+        }
     }
 
     Separator {
