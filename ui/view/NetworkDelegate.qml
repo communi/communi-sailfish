@@ -106,7 +106,10 @@ ListItem {
         text: buffer ? buffer.title : ""
         truncationMode: TruncationMode.Fade
         anchors { left: indicator.right; right: parent.right; verticalCenter: parent.verticalCenter; margins: Theme.paddingLarge }
-        color: !root.connected || !storage ? Theme.secondaryColor : (storage.activeHighlights > 0 ? window.nickHighlight : (storage.badge > 0 ? Theme.highlightColor : Theme.primaryColor))
+        color: (!storage || !root.connected) ? Theme.secondaryColor :
+                buffer === MessageStorage.currentBuffer ? Theme.primaryColor :
+               (storage.activeHighlights > 0 ? window.nickHighlight :
+               (storage.badge > 0 ? Theme.highlightColor : Theme.primaryColor))
     }
 
     BusyIndicator {
