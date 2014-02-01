@@ -219,7 +219,7 @@ Dialog {
                     width: parent.width
                     label: qsTr("Alternate nick name")
                     placeholderText: qsTr("Enter alternate nick name")
-                    text: defaultNickName + "_"
+                    text: nickNameField.text.trim() + "_"
 
                     EnterKey.iconSource: "image://theme/icon-m-enter-close"
                     EnterKey.onClicked: { focus = false; Qt.inputMethod.hide() }
