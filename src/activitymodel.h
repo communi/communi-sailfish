@@ -33,7 +33,7 @@
 #include <QAbstractListModel>
 
 class IrcBuffer;
-class IrcMessage;
+class MessageModel;
 
 class ActivityModel : public QAbstractListModel
 {
@@ -47,13 +47,21 @@ public:
     QVariant data(const QModelIndex& index, int role) const;
 
 public slots:
-    void clear();
+    void add(MessageModel* model);
+    void remove(MessageModel* model);
+
+protected slots:
+    void promote(MessageModel* model);
+    void demote(MessageModel* model);
 
 private slots:
-    void receive(IrcBuffer* buffer, IrcMessage* message);
+    void onBadgeChanged();
+    void onActiveHighlightsChanged();
 
 private:
-    QStringList m_buffers;
+    void emitDataChanged(int from);
+
+    QList<MessageModel*> m_models;
 };
 
 #endif // ACTIVITYMODEL_H

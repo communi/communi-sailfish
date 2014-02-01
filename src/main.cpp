@@ -95,7 +95,8 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 
     ActivityModel* activity = new ActivityModel(app.data());
     viewer->rootContext()->setContextProperty("ActivityModel", activity);
-    QObject::connect(MessageStorage::instance(), SIGNAL(received(IrcBuffer*,IrcMessage*)), activity, SLOT(receive(IrcBuffer*,IrcMessage*)));
+    QObject::connect(MessageStorage::instance(), SIGNAL(added(MessageModel*)), activity, SLOT(add(MessageModel*)));
+    QObject::connect(MessageStorage::instance(), SIGNAL(removed(MessageModel*)), activity, SLOT(remove(MessageModel*)));
 
     viewer->rootContext()->setContextProperty("MessageStorage", MessageStorage::instance());
     QObject::connect(model, SIGNAL(bufferAdded(IrcBuffer*)), MessageStorage::instance(), SLOT(add(IrcBuffer*)));

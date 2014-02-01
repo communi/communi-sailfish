@@ -64,14 +64,15 @@ public slots:
     void remove(IrcBuffer* buffer);
 
 signals:
+    void added(MessageModel* model);
+    void removed(MessageModel* model);
+
     void activeHighlightsChanged();
     void currentBufferChanged(IrcBuffer* buffer);
     void highlighted(IrcBuffer* buffer, IrcMessage* message);
-    void received(IrcBuffer* buffer, IrcMessage* message);
 
 private slots:
     void updateActiveHighlights();
-    void onReceived(IrcMessage* message);
     void onHighlighted(IrcMessage* message);
 
 private:

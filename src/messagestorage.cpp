@@ -105,16 +105,21 @@ void MessageStorage::add(IrcBuffer* buffer)
         model->formatter()->setBaseColor(m_baseColor);
         connect(buffer, SIGNAL(destroyed(IrcBuffer*)), this, SLOT(remove(IrcBuffer*)));
         connect(model, SIGNAL(activeHighlightsChanged()), this, SLOT(updateActiveHighlights()));
-        connect(model, SIGNAL(received(IrcMessage*)), this, SLOT(onReceived(IrcMessage*)));
         connect(model, SIGNAL(highlighted(IrcMessage*)), this, SLOT(onHighlighted(IrcMessage*)));
         m_models.insert(buffer, model);
+        emit added(model);
     }
 }
 
 void MessageStorage::remove(IrcBuffer* buffer)
 {
-    if (buffer && m_models.contains(buffer))
-        delete m_models.take(buffer);
+    if (buffer && m_models.contains(buffer)) {
+        MessageModel* model = m_models.take(buffer);
+        if (model) {
+            emit removed(model);
+            delete model;
+        }
+    }
 }
 
 void MessageStorage::updateActiveHighlights()
@@ -123,16 +128,6 @@ void MessageStorage::updateActiveHighlights()
     foreach (MessageModel* model, m_models)
         highlights += model->activeHighlights();
     setActiveHighlights(highlights);
-}
-
-void MessageStorage::onReceived(IrcMessage* message)
-{
-    MessageModel* model = qobject_cast<MessageModel*>(sender());
-    if (model) {
-        IrcBuffer* buffer = model->buffer();
-        if (buffer)
-            emit received(buffer, message);
-    }
 }
 
 void MessageStorage::onHighlighted(IrcMessage* message)

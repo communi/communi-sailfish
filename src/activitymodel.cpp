@@ -27,8 +27,11 @@
 */
 
 #include "activitymodel.h"
+#include "messagemodel.h"
 #include <IrcMessage>
 #include <IrcBuffer>
+
+static const int ROWCOUNT = 5;
 
 ActivityModel::ActivityModel(QObject* parent) : QAbstractListModel(parent)
 {
@@ -37,54 +40,97 @@ ActivityModel::ActivityModel(QObject* parent) : QAbstractListModel(parent)
 QHash<int, QByteArray> ActivityModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles[Qt::DisplayRole] = "title";
+    roles[Qt::UserRole] = "buffer";
     return roles;
 }
 
 int ActivityModel::rowCount(const QModelIndex& parent) const
 {
-    return parent.isValid() ? 0 : m_buffers.count();
+    return parent.isValid() ? 0 : ROWCOUNT;
 }
 
 QVariant ActivityModel::data(const QModelIndex& index, int role) const
 {
     const int row = index.row();
-    if (row < 0 || row >= m_buffers.count() || role != Qt::DisplayRole)
+    if (row < 0 || row >= ROWCOUNT || role != Qt::UserRole)
         return QVariant();
-    return m_buffers.at(row);
+    MessageModel* model = m_models.value(row);
+    if (model)
+        return QVariant::fromValue(model->buffer());
+    return QVariant();
 }
 
-void ActivityModel::clear()
+void ActivityModel::add(MessageModel* model)
 {
-    beginResetModel();
-    m_buffers.clear();
-    endResetModel();
+    if (model && !m_models.contains(model)) {
+        connect(model, SIGNAL(badgeChanged()), this, SLOT(onBadgeChanged()));
+        connect(model, SIGNAL(activeHighlightsChanged()), this, SLOT(onActiveHighlightsChanged()));
+        m_models.prepend(model);
+        emitDataChanged(0);
+    }
 }
 
-void ActivityModel::receive(IrcBuffer* buffer, IrcMessage* message)
+void ActivityModel::remove(MessageModel* model)
 {
-    Q_UNUSED(message);
-    QString title = buffer->title();
-    // Check if buffer is already in the top
-    for (int i = 0; i < m_buffers.count(); ++i) {
-        if (m_buffers.at(i) == title) {
-            // If buffer is not the first already, promote it to the top
-            if (i > 0) {
-                beginMoveRows(QModelIndex(), i, i, QModelIndex(), 0);
-                m_buffers.move(i, 0);
-                endMoveRows();
-            }
-            return;
+    const int row = m_models.indexOf(model);
+    if (row != -1) {
+        disconnect(model, SIGNAL(badgeChanged()), this, SLOT(onBadgeChanged()));
+        disconnect(model, SIGNAL(activeHighlightsChanged()), this, SLOT(onActiveHighlightsChanged()));
+        m_models.removeAt(row);
+        emitDataChanged(row);
+    }
+}
+
+void ActivityModel::promote(MessageModel* model)
+{
+    const int row = m_models.indexOf(model);
+    if (row > 0) {
+        m_models.move(row, 0);
+        emitDataChanged(0);
+    }
+}
+
+void ActivityModel::demote(MessageModel* model)
+{
+    const int from = m_models.indexOf(model);
+    if (from >= 0 && from < m_models.count() - 1) {
+        int to = from + 1;
+        while (to < m_models.count()) {
+            MessageModel* model = m_models.at(to);
+            if (model->badge() == 0 && model->activeHighlights() == 0)
+                break;
+            ++to;
+        }
+        if (to - 1 > from && to < m_models.count()) {
+            m_models.move(from, to - 1);
+            emitDataChanged(from);
         }
     }
+}
 
-    if (m_buffers.count() < 5) {
-        beginInsertRows(QModelIndex(), 0, 0);
-        m_buffers.prepend(title);
-        endInsertRows();
-    } else {
-        m_buffers.prepend(title);
-        m_buffers.removeAt(4);
-        emit dataChanged(index(0), index(4));
+void ActivityModel::onBadgeChanged()
+{
+    MessageModel* model = qobject_cast<MessageModel*>(sender());
+    if (model) {
+        if (model->badge() > 0)
+            promote(model);
+        else
+            demote(model);
     }
+}
+
+void ActivityModel::onActiveHighlightsChanged()
+{
+    MessageModel* model = qobject_cast<MessageModel*>(sender());
+    if (model) {
+        const int highlights = model->activeHighlights();
+        if (highlights > 0)
+            promote(model);
+    }
+}
+
+void ActivityModel::emitDataChanged(int from)
+{
+    if (from < ROWCOUNT)
+        emit dataChanged(index(from), index(qMin(m_models.count(), ROWCOUNT) - 1));
 }

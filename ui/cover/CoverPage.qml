@@ -27,6 +27,7 @@
 */
 
 import QtQuick 2.1
+import Communi 3.1
 import Sailfish.Silica 1.0
 
 CoverBackground {
@@ -94,8 +95,12 @@ CoverBackground {
             id: repeater
             model: ActivityModel
             delegate: Label {
-                color: Theme.highlightColor
-                text: model.title
+                readonly property IrcBuffer buffer: model.buffer || null
+                readonly property var storage: MessageStorage.get(buffer)
+                color: (!storage || !buffer || !buffer.active) ? Theme.secondaryColor :
+                       (storage.activeHighlights > 0 ? window.nickHighlight :
+                       (storage.badge > 0 ? Theme.highlightColor : Theme.primaryColor))
+                text: buffer ? buffer.title : ""
                 width: recentChannels.width
             }
         }
