@@ -16,3 +16,9 @@ Credits
 
 * Stephan Beyerle - Morpog
 * Stanislaw Dac - stsdc
+
+Contact
+-------
+
+* IRC channel: #communi on irc.freenode.net
+* Mailing list: communi-sailfish@googlegroups.com
