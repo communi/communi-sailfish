@@ -65,8 +65,8 @@ void ActivityModel::add(MessageModel* model)
     if (model && !m_models.contains(model)) {
         connect(model, SIGNAL(badgeChanged()), this, SLOT(onBadgeChanged()));
         connect(model, SIGNAL(activeHighlightsChanged()), this, SLOT(onActiveHighlightsChanged()));
-        m_models.prepend(model);
-        emitDataChanged(0);
+        m_models.append(model);
+        emitDataChanged(m_models.count() - 1);
     }
 }
 
@@ -81,26 +81,47 @@ void ActivityModel::remove(MessageModel* model)
     }
 }
 
+static int lastActiveHighlight(const QList<MessageModel*>& models, int from = 0)
+{
+    while (from >= 0 && from < models.count()) {
+        MessageModel* model = models.at(from);
+        if (model->activeHighlights() == 0)
+            return from;
+        ++from;
+    }
+    return from;
+}
+
 void ActivityModel::promote(MessageModel* model)
 {
-    const int row = m_models.indexOf(model);
-    if (row > 0) {
-        m_models.move(row, 0);
-        emitDataChanged(0);
+    const int from = m_models.indexOf(model);
+    if (from > 0) {
+        int to = 0;
+        if (model->activeHighlights() == 0)
+            to = lastActiveHighlight(m_models);
+        if (to >= 0 && to < m_models.count()) {
+            m_models.move(from, to);
+            emitDataChanged(to);
+        }
     }
+}
+
+static int lastBadge(const QList<MessageModel*>& models, int from = 0)
+{
+    while (from >= 0 && from < models.count()) {
+        MessageModel* model = models.at(from);
+        if (model->badge() == 0)
+            return from;
+        ++from;
+    }
+    return from;
 }
 
 void ActivityModel::demote(MessageModel* model)
 {
     const int from = m_models.indexOf(model);
     if (from >= 0 && from < m_models.count() - 1) {
-        int to = from + 1;
-        while (to < m_models.count()) {
-            MessageModel* model = m_models.at(to);
-            if (model->badge() == 0 && model->activeHighlights() == 0)
-                break;
-            ++to;
-        }
+        const int to = lastBadge(m_models, from + 1);
         if (to - 1 > from && to < m_models.count()) {
             m_models.move(from, to - 1);
             emitDataChanged(from);
@@ -122,11 +143,8 @@ void ActivityModel::onBadgeChanged()
 void ActivityModel::onActiveHighlightsChanged()
 {
     MessageModel* model = qobject_cast<MessageModel*>(sender());
-    if (model) {
-        const int highlights = model->activeHighlights();
-        if (highlights > 0)
-            promote(model);
-    }
+    if (model && model->activeHighlights() > 0)
+        promote(model);
 }
 
 void ActivityModel::emitDataChanged(int from)
