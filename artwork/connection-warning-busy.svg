@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="40"
+   height="40"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.2 r9819"
+   sodipodi:docname="connection-warning-busy.svg"
+   inkscape:export-filename="C:\Users\Stephan\Desktop\connection-warning-inside.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#358fff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="4.844822"
+     inkscape:cx="52.804518"
+     inkscape:cy="28.336546"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="1575"
+     inkscape:window-height="1362"
+     inkscape:window-x="9"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:snap-global="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2985"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="34,62"
+       id="guide3798" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1012.3622)">
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot2998"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Open Sans;-inkscape-font-specification:Open Sans"
+       transform="translate(7.1192017,999.83156)"
+       inkscape:export-filename="C:\Users\Stephan\Desktop\image3921.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion3000"><rect
+           id="rect3002"
+           width="51.792511"
+           height="62.375645"
+           x="8.207489"
+           y="10.624355"
+           style="fill:#ffffff;fill-opacity:1" /></flowRegion><flowPara
+         id="flowPara3004"
+         style="font-size:36px;fill:#ffffff;fill-opacity:1;font-family:Sail Sans Pro Light;-inkscape-font-specification:Sail Sans Pro Light">!</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3800"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Open Sans;-inkscape-font-specification:Open Sans"
+       transform="translate(0,1004.3622)"><flowRegion
+         id="flowRegion3802"><rect
+           id="rect3804"
+           width="13.660714"
+           height="14.285714"
+           x="15.892858"
+           y="18.178572" /></flowRegion><flowPara
+         id="flowPara3806"></flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3859"
+       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Open Sans;font-style:normal;font-weight:normal;font-size:10px;line-height:125%;letter-spacing:0px;word-spacing:0px;-inkscape-font-specification:Open Sans;font-stretch:normal;font-variant:normal"><flowRegion
+         id="flowRegion3861"><rect
+           id="rect3863"
+           width="2.2097087"
+           height="12.311234"
+           x="24.433065"
+           y="11.652595" /></flowRegion><flowPara
+         id="flowPara3865"></flowPara></flowRoot>    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:none;opacity:0.1"
+       d="M 20 0 C 8.954305 3.5504007e-015 -3.1066486e-017 8.954305 0 20 C 0 31.045695 8.954305 40 20 40 C 31.045695 40 40 31.045695 40 20 C 40 8.954305 31.045695 -3.5837802e-015 20 0 z M 20 1.25 C 30.355339 1.25 38.75 9.644661 38.75 20 C 38.75 30.355339 30.355339 38.75 20 38.75 C 9.6446609 38.75 1.25 30.355339 1.25 20 C 1.25 9.644661 9.6446609 1.25 20 1.25 z "
+       transform="translate(0,1012.3622)"
+       id="path3891"
+       inkscape:export-filename="C:\Users\Stephan\Desktop\image3921.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+  </g>
+</svg>

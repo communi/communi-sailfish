@@ -24,5 +24,4 @@ OTHER_FILES += \
     rpm/harbour-communi.spec \
     harbour-communi.desktop \
     harbour-communi.png \
-    harbour-communi.svg \
     README.md
