@@ -8,11 +8,11 @@ Credits
 
 ### Development
 
-* J-P Nurmi
-* Robin Burchell
-* Timur Kristóf
+* J-P Nurmi - jpnurmi
+* Timur Kristóf - Venemo
+* Robin Burchell - w00t
 
 ### Artwork
 
-* Stephan Beyerle
-* Stanislaw Dac
+* Stephan Beyerle - Morpog
+* Stanislaw Dac - stsdc

@@ -56,10 +56,13 @@ Dialog {
             }
 
             Label {
+                textFormat: Qt.RichText
                 wrapMode: Text.WordWrap
                 anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
                 font.pixelSize: Theme.fontSizeSmall
-                text: "Robin Burchell\nJ-P Nurmi\nTimur Kristóf"
+                text: "J-P Nurmi &mdash; jpnurmi<br/>
+                       Timur Kristóf &mdash; Venemo<br/>
+                       Robin Burchell &mdash; w00t"
             }
 
             SectionHeader {
@@ -67,12 +70,13 @@ Dialog {
             }
 
             Label {
+                textFormat: Qt.RichText
                 wrapMode: Text.WordWrap
                 anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
                 font.pixelSize: Theme.fontSizeSmall
-                text: "Stephan Beyerle\nStanislaw Dac"
+                text: "Stephan Beyerle &mdash; Morpog<br/>
+                       Stanislaw Dac &mdash; stsdc"
             }
-
         }
 
         VerticalScrollDecorator { }
