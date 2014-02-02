@@ -11,6 +11,7 @@
         <file>ui/images/arrow-down.png</file>
         <file>ui/images/complete.png</file>
         <file>ui/images/cover.png</file>
+        <file>ui/images/warning.png</file>
         <file>ui/view/BufferDelegate.qml</file>
         <file>ui/view/BufferListPanel.qml</file>
         <file>ui/view/BufferPage.qml</file>

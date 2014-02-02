@@ -29,6 +29,7 @@
 import QtQuick 2.1
 import Communi 3.1
 import Sailfish.Silica 1.0
+import QtGraphicalEffects 1.0
 
 ListItem {
     id: root
@@ -128,7 +129,10 @@ ListItem {
 
         Component {
             id: errorImage
-            Image { source: "image://theme/icon-status-data-error" }
+            ColorOverlay {
+                color: Theme.highlightColor
+                source: Image { source: "../images/warning.png" }
+            }
         }
     }
 
