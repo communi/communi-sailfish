@@ -75,7 +75,7 @@ Dialog {
                 anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
                 font.pixelSize: Theme.fontSizeSmall
                 text: "Stephan Beyerle &mdash; Morpog<br/>
-                       Stanislaw Dac &mdash; stsdc"
+                       Stanisław Dac &mdash; stsdc"
             }
         }
 
