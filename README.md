@@ -15,7 +15,7 @@ Credits
 ### Artwork
 
 * Stephan Beyerle - Morpog
-* Stanislaw Dac - stsdc
+* Stanisław Dac - stsdc
 
 Contact
 -------
