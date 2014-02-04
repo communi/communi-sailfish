@@ -14,7 +14,7 @@ URL:        http://communi.github.io/
 Source0:    %{name}-%{version}.tar.gz
 
 Version:    0.1
-Release:    rc
+Release:    1
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
 BuildRequires:  pkgconfig(Qt5Core), pkgconfig(Qt5Qml), pkgconfig(Qt5Quick), pkgconfig(sailfishapp) >= 0.0.10
@@ -40,6 +40,9 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 %attr(644,root,root) %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 
 %changelog
+* Tue Feb 04 2014 J-P Nurmi <jpnurmi@gmail.com> 0.1
+- The first stable public release
+
 * Tue Jan 28 2014 J-P Nurmi <jpnurmi@gmail.com> 0.1-rc
 - A release candidate
 
