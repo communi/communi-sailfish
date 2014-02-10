@@ -42,6 +42,8 @@ ApplicationWindow {
     property Page currentPage: pageStack.currentPage
     property color nickHighlight: "#ff4d4d"
 
+    allowedOrientations: Orientation.Portrait | Orientation.Landscape | Orientation.LandscapeInverted
+
     onCurrentPageChanged: {
         if (currentPage && currentPage.buffer)
             MessageStorage.currentBuffer = currentPage.buffer
@@ -190,10 +192,21 @@ ApplicationWindow {
         // slides partially in) meanwhile typing/scrolling long TextEntry content
         property bool maximumFlickVelocity: false
 
-        width: parent.width
-        panelHeight: pageStack.height
-        height: currentPage && currentPage.contentHeight || pageStack.height
+        width: pageStack.currentPage.width
+        panelWidth: Screen.width / 3 * 2
+        panelHeight: pageStack.currentPage.height
+        height: currentPage && currentPage.contentHeight || pageStack.currentPage.height
         visible: (!!currentPage && !!currentPage.__isBufferPage) || !viewer.closed
+
+        rotation: pageStack.currentPage.rotation
+
+        property int ori: pageStack.currentPage.orientation
+
+        anchors.centerIn: parent
+        anchors.verticalCenterOffset: ori === Orientation.Portrait ? -(panelHeight - height) / 2 :
+                                      ori === Orientation.PortraitInverted ? (panelHeight - height) / 2 : 0
+        anchors.horizontalCenterOffset: ori === Orientation.Landscape ? (panelHeight - height) / 2 :
+                                        ori === Orientation.LandscapeInverted ? -(panelHeight - height) / 2 : 0
 
         Connections {
             target: pageStack

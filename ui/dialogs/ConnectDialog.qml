@@ -43,6 +43,7 @@ Dialog {
     property string defaultRealName: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
 
     canAccept: !!hostField.text && !!nickNameField.text && !!userNameField.text && !!portField.text
+    allowedOrientations: window.allowedOrientations
 
     Component.onCompleted: {
         if (connection) {
@@ -157,6 +158,7 @@ Dialog {
     Page {
         id: networkPage
         backNavigation: !!portField.text
+        allowedOrientations: window.allowedOrientations
         SilicaListView {
             anchors.fill: parent
             spacing: Theme.paddingMedium
@@ -207,6 +209,7 @@ Dialog {
     Page {
         id: userPage
         backNavigation: !!userNameField.text
+        allowedOrientations: window.allowedOrientations
         SilicaListView {
             anchors.fill: parent
             spacing: Theme.paddingMedium

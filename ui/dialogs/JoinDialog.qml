@@ -38,6 +38,7 @@ Dialog {
     readonly property var model: BufferModel.models[networkBox.currentIndex]
 
     canAccept: channel.length > 1
+    allowedOrientations: window.allowedOrientations
 
     Component.onCompleted: {
         if (channel.length > 1) {

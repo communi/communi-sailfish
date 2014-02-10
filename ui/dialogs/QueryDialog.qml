@@ -37,6 +37,7 @@ Dialog {
     readonly property var model: BufferModel.models[networkBox.currentIndex]
 
     canAccept: !!user
+    allowedOrientations: window.allowedOrientations
 
     SilicaListView {
         anchors.fill: parent

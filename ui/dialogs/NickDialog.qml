@@ -37,6 +37,7 @@ Dialog {
     readonly property var model: BufferModel.models[networkBox.currentIndex]
 
     canAccept: !!nick.trim() && nick !== initialNick
+    allowedOrientations: window.allowedOrientations
 
     property string initialNick
     Component.onCompleted: initialNick = nick

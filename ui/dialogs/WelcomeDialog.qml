@@ -34,6 +34,7 @@ Dialog {
     id: welcomePage
 
     canAccept: BufferModel.models.length > 0 && BufferModel.connections.some(function (c) { return c.enabled; })
+    allowedOrientations: window.allowedOrientations
     backNavigation: false
 
     SilicaListView {

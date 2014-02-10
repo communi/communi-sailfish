@@ -38,7 +38,7 @@ Page {
     readonly property alias contentHeight: view.height
     readonly property var storage: MessageStorage.get(buffer)
 
-    anchors.fill: parent
+    allowedOrientations: window.allowedOrientations
 
     Binding {
         target: storage
