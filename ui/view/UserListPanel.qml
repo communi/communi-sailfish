@@ -36,6 +36,7 @@ Panel {
     property IrcBuffer buffer
 
     signal clicked(IrcUser user)
+    signal queried(IrcUser user)
 
     SilicaListView {
         pressDelay: 0
@@ -53,6 +54,33 @@ Panel {
                 truncationMode: TruncationMode.Fade
                 anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge; verticalCenter: parent.verticalCenter }
             }
+            menu: Component {
+                ContextMenu {
+                    MenuItem {
+                        text: qsTr("Query")
+                        onClicked: panel.queried(model.user)
+                    }
+                    MenuItem {
+                        readonly property bool isOp: model.prefix.indexOf("@") !== -1
+                        text: isOp ? qsTr("Deop") : qsTr("Op")
+                        onClicked: buffer.sendCommand(ircCommand.createMode(buffer.title, isOp ? "-o" : "+o", model.name))
+                    }
+                    MenuItem {
+                        readonly property bool isVoice: model.prefix.indexOf("+") !== -1
+                        text: isVoice ? qsTr("Devoice") : qsTr("Voice")
+                        onClicked: buffer.sendCommand(ircCommand.createMode(buffer.title, isVoice ? "-v" : "+v", model.name))
+                    }
+                    MenuItem {
+                        text: qsTr("Kick")
+                        onClicked: buffer.sendCommand(ircCommand.createKick(buffer.title, model.name))
+                    }
+                    MenuItem {
+                        text: qsTr("Ban")
+                        onClicked: buffer.sendCommand(ircCommand.createMode(buffer.title, "+b", model.name + "!*@*"))
+                    }
+                }
+            }
+
             onClicked: panel.clicked(model.user)
         }
 

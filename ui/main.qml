@@ -230,10 +230,18 @@ ApplicationWindow {
             buffer: MessageStorage.currentBuffer
             active: !!buffer && buffer.channel && buffer.active
             onClicked: {
+                currentPage.textEntry.insertName(user.name)
+                viewer.hidePanel()
+            }
+            onQueried: {
                 var buffer = user.channel.model.add(user.name)
                 scheduler.replace(bufferPage, {buffer: buffer})
             }
         }
+    }
+
+    IrcCommand {
+        id: ircCommand
     }
 
     Component {

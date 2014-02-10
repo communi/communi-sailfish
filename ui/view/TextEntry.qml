@@ -37,6 +37,18 @@ FocusScope {
 
     property bool backgroundVisible: false
 
+    function insertName(name) {
+        var txt = field.text
+        if (!!txt) {
+            if (txt[txt.length - 1] !== " ")
+                txt += " "
+            txt += name
+        } else {
+            txt = name + ":" // TODO: IrcCompleter.completionSuffix
+        }
+        field.text = txt + " "
+    }
+
     implicitWidth: field.implicitWidth
     implicitHeight: field.implicitHeight
 
@@ -72,10 +84,6 @@ FocusScope {
         placeholderColor: Theme.secondaryHighlightColor
         inputMethodHints: Qt.ImhNoAutoUppercase
         focusOutBehavior: FocusBehavior.ClearPageFocus
-
-        IrcCommand {
-            id: ircCommand
-        }
 
         Keys.onReturnPressed: {
             var cmd = parser.parse(text)

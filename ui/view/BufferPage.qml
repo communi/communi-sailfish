@@ -35,6 +35,7 @@ Page {
 
     property IrcBuffer buffer
     property alias contentItem: column
+    readonly property alias textEntry: entry
     readonly property alias contentHeight: view.height
     readonly property var storage: MessageStorage.get(buffer)
 
