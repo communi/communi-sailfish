@@ -38,7 +38,7 @@ SilicaListView {
     property real panelWidth: container.width / 5 * 3
     property real panelHeight: container.height
 
-    readonly property bool closed: container.contentX === container.panelWidth
+    readonly property bool closed: container.contentX - container.originX === container.panelWidth
 
     pressDelay: 0 // important! (makes vertical flicking "stable")
 
