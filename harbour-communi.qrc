@@ -11,11 +11,13 @@
         <file>ui/images/arrow-down.png</file>
         <file>ui/images/complete.png</file>
         <file>ui/images/cover.png</file>
+        <file>ui/images/filter.png</file>
         <file>ui/images/warning.png</file>
         <file>ui/settings/settings.qml</file>
         <file>ui/view/BufferDelegate.qml</file>
         <file>ui/view/BufferListPanel.qml</file>
         <file>ui/view/BufferPage.qml</file>
+        <file>ui/view/BufferToolBar.qml</file>
         <file>ui/view/NetworkDelegate.qml</file>
         <file>ui/view/PageStackScheduler.qml</file>
         <file>ui/view/Panel.qml</file>

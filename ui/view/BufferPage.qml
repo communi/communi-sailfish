@@ -215,7 +215,7 @@ Page {
             width: parent.width
 
             backgroundVisible: !positioner.running && !pushUpMenu.active && !view.atYEnd
-            opacity: pullDownMenu.active || pushUpMenu.active ? 0.0 : 1.0
+            opacity: !viewer.closed || pullDownMenu.active || pushUpMenu.active ? 0.0 : 1.0
             Behavior on opacity { FadeAnimation { } }
         }
     }

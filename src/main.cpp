@@ -37,6 +37,7 @@
 #include <sailfishapp.h>
 
 #include "activitymodel.h"
+#include "bufferfiltermodel.h"
 #include "bufferproxymodel.h"
 #include "networksession.h"
 #include "messagestorage.h"
@@ -96,6 +97,10 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 
     BufferProxyModel* model = new BufferProxyModel(app.data());
     viewer->rootContext()->setContextProperty("BufferModel", model);
+
+    BufferFilterModel* filter = new BufferFilterModel(app.data());
+    filter->setSourceModel(model);
+    viewer->rootContext()->setContextProperty("FilterModel", filter);
 
     ActivityModel* activity = new ActivityModel(app.data());
     viewer->rootContext()->setContextProperty("ActivityModel", activity);

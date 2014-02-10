@@ -26,56 +26,63 @@
   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import QtQuick 2.1
-import Communi 3.1
-import Sailfish.Silica 1.0
+#include "bufferfiltermodel.h"
+#include "messagestorage.h"
+#include "messagemodel.h"
+#include <IrcBuffer>
 
-Panel {
-    id: panel
+BufferFilterModel::BufferFilterModel(QObject* parent) : QSortFilterProxyModel(parent), m_status(0)
+{
+    setDynamicSortFilter(true);
+}
 
-    signal clicked(IrcBuffer buffer)
+int BufferFilterModel::filterStatus() const
+{
+    return m_status;
+}
 
-    SilicaListView {
-        pressDelay: 0
-        anchors.fill: parent
-        anchors.bottomMargin: toolbar.height - 2
+void BufferFilterModel::setFilterStatus(int status)
+{
+    if (m_status != status) {
+        m_status = status;
+        emit filterStatusChanged();
+        invalidate();
+    }
+}
 
-        model: FilterModel
+QString BufferFilterModel::filterString() const
+{
+    return m_filter;
+}
 
-        section.property: "section"
-        section.labelPositioning: ViewSection.InlineLabels | ViewSection.CurrentLabelAtStart
+void BufferFilterModel::setFilterString(const QString& filter)
+{
+    if (m_filter != filter) {
+        m_filter = filter;
+        emit filterStringChanged();
+        invalidate();
+    }
+}
 
-        section.delegate: NetworkDelegate {
-            buffer: BufferModel.servers[section] || null
-            onClicked: panel.clicked(buffer)
+bool BufferFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
+{
+    if (m_status == 0 && m_filter.isEmpty())
+        return true;
+
+    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+    IrcBuffer* buffer = index.data(Irc::BufferRole).value<IrcBuffer*>();
+    if (buffer && !buffer->isSticky()) {
+        if (!m_filter.isEmpty() && !buffer->title().contains(m_filter, Qt::CaseInsensitive))
+            return false;
+        if (m_status > 0) {
+            MessageModel* model = MessageStorage::instance()->model(buffer);
+            if (model) {
+                if (m_status == 1 && model->badge() <= 0)
+                    return false;
+                if (m_status == 2 && model->activeHighlights() <= 0)
+                    return false;
+            }
         }
-
-        delegate: BufferDelegate {
-            buffer: model.buffer || null
-            onClicked: panel.clicked(model.buffer)
-        }
-
-        VerticalScrollDecorator {
-            anchors.left: parent.left
-            anchors.right: undefined
-        }
     }
-
-    Binding {
-        target: FilterModel
-        property: "filterStatus"
-        value: toolbar.checked
-    }
-
-    Binding {
-        target: FilterModel
-        property: "filterString"
-        value: toolbar.filter
-    }
-
-    BufferToolBar {
-        id: toolbar
-        width: parent.width
-        anchors.bottom: parent.bottom
-    }
+    return true;
 }

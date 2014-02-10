@@ -42,6 +42,7 @@ ListItem {
     property bool connected: buffer && buffer.connection.connected
     property bool error: buffer && buffer.connection.status === IrcConnection.Error
 
+    enabled: !!buffer
     z: menuOpen ? 100 : 10
     contentHeight: Theme.itemSizeExtraSmall
     ListView.onRemove: animateRemoval(root)
@@ -94,6 +95,7 @@ ListItem {
     Rectangle {
         z: -1
         rotation: 90
+        visible: !!buffer
         width: parent.height
         height: parent.width
         anchors.centerIn: parent
@@ -105,6 +107,7 @@ ListItem {
 
     SectionHeader {
         id: title
+        visible: !!buffer
         text: buffer ? buffer.title : ""
         truncationMode: TruncationMode.Fade
         anchors { left: loader.right; right: parent.right; verticalCenter: parent.verticalCenter; margins: Theme.paddingLarge }
@@ -116,6 +119,7 @@ ListItem {
 
     Loader {
         id: loader
+        visible: !!buffer
         width: Theme.itemSizeExtraSmall - 2 * Theme.paddingMedium
         height: Theme.itemSizeExtraSmall - 2 * Theme.paddingMedium
         anchors { verticalCenter: parent.verticalCenter; left: parent.left; leftMargin: Theme.paddingLarge }
@@ -137,6 +141,7 @@ ListItem {
     }
 
     Separator {
+        visible: !!buffer
         color: Theme.highlightColor
         anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
     }

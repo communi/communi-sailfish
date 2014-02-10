@@ -26,66 +26,36 @@
   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef MESSAGESTORAGE_H
-#define MESSAGESTORAGE_H
+#ifndef BUFFERFILTERMODEL_H
+#define BUFFERFILTERMODEL_H
 
-#include <QHash>
-#include <QColor>
-#include <QObject>
-#include <QPointer>
+#include <QSortFilterProxyModel>
 
-class IrcBuffer;
-class IrcMessage;
-class MessageModel;
-
-class MessageStorage : public QObject
+class BufferFilterModel : public QSortFilterProxyModel
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "com.communi.irc")
-    Q_PROPERTY(IrcBuffer* currentBuffer READ currentBuffer WRITE setCurrentBuffer NOTIFY currentBufferChanged)
-    Q_PROPERTY(int activeHighlights READ activeHighlights NOTIFY activeHighlightsChanged)
-    Q_PROPERTY(QColor baseColor READ baseColor WRITE setBaseColor)
+    Q_PROPERTY(int filterStatus READ filterStatus WRITE setFilterStatus NOTIFY filterStatusChanged)
+    Q_PROPERTY(QString filterString READ filterString WRITE setFilterString NOTIFY filterStringChanged)
 
 public:
-    static MessageStorage* instance();
+    BufferFilterModel(QObject* parent = 0);
 
-    MessageModel* model(IrcBuffer* buffer) const;
-    Q_INVOKABLE QObject* get(IrcBuffer* buffer) const;
+    int filterStatus() const;
+    void setFilterStatus(int status);
 
-    IrcBuffer* currentBuffer() const;
-    void setCurrentBuffer(IrcBuffer* buffer);
-
-    int activeHighlights() const;
-    void setActiveHighlights(int highlights);
-
-    QColor baseColor() const;
-    void setBaseColor(const QColor& color);
-
-public slots:
-    void add(IrcBuffer* buffer);
-    void remove(IrcBuffer* buffer);
+    QString filterString() const;
+    void setFilterString(const QString& filter);
 
 signals:
-    void added(MessageModel* model);
-    void removed(MessageModel* model);
+    void filterStatusChanged();
+    void filterStringChanged();
 
-    void activeHighlightsChanged();
-    void currentBufferChanged(IrcBuffer* buffer);
-    void highlighted(IrcBuffer* buffer, IrcMessage* message);
-
-    Q_SCRIPTABLE void highlightedSimple(QString bufferTitle, QString nick, QString messageContent);
-
-private slots:
-    void updateActiveHighlights();
-    void onHighlighted(IrcMessage* message);
+protected:
+    bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const;
 
 private:
-    MessageStorage(QObject* parent = 0);
-
-    int m_highlights;
-    QColor m_baseColor;
-    QPointer<IrcBuffer> m_current;
-    QHash<IrcBuffer*, MessageModel*> m_models;
+    int m_status;
+    QString m_filter;
 };
 
-#endif // MESSAGESTORAGE_H
+#endif // BUFFERFILTERMODEL_H

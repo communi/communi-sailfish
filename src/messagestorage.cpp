@@ -54,6 +54,11 @@ MessageStorage* MessageStorage::instance()
     return &storage;
 }
 
+MessageModel* MessageStorage::model(IrcBuffer* buffer) const
+{
+    return m_models.value(buffer);
+}
+
 QObject* MessageStorage::get(IrcBuffer* buffer) const
 {
     return m_models.value(buffer);
