@@ -30,11 +30,11 @@
 #define MESSAGEMODEL_H
 
 #include <QAbstractListModel>
+#include <IrcMessage>
 #include <QBitArray>
 #include <QVector>
 
 class IrcBuffer;
-class IrcMessage;
 class MessageFormatter;
 
 class MessageModel : public QAbstractListModel
@@ -96,7 +96,9 @@ private slots:
 
 private:
     struct MessageData {
-        MessageData() : event(false), hilite(false) { }
+        MessageData() : type(IrcMessage::Unknown), own(false), event(false), hilite(false) { }
+        int type;
+        bool own;
         bool event;
         bool hilite;
         QString richtext;

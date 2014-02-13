@@ -123,12 +123,13 @@ Page {
                 }
             }
 
-            model: storage
+            model: MessageFilter {
+                sourceModel: storage
+                showEvents: !!eventsConfig.value
+            }
 
             delegate: ListItem {
-                readonly property bool hidden: event && !eventsConfig.value
-                contentHeight: hidden ? 0 : label.height + (index > 0 && index < view.count - 1 && ListView.isCurrentItem ? Theme.paddingMedium : 0)
-                visible: !hidden
+                contentHeight: label.height + (index > 0 && index < view.count - 1 && ListView.isCurrentItem ? Theme.paddingMedium : 0)
                 Label {
                     id: stamp
                     text: timestamp

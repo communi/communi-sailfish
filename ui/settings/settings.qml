@@ -77,7 +77,7 @@ Page {
             TextSwitch {
                 width: parent.width
                 text: qsTrId("Show events")
-                description: qsTr("Specifies whether joins/parts/quits etc. are shown")
+                description: qsTr("Specifies whether joins/parts/quits are shown")
                 checked: eventsConfig.value
                 onCheckedChanged: eventsConfig.value = checked
             }
