@@ -20,6 +20,7 @@ OTHER_FILES += \
     ui/*.qml \
     ui/cover/*.qml \
     ui/dialogs/*.qml \
+    ui/settings/*.qml \
     ui/view/*.qml \
     rpm/harbour-communi.spec \
     harbour-communi.desktop \
