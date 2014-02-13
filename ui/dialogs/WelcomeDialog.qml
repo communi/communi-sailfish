@@ -118,6 +118,10 @@ Dialog {
                     pageStack.push(Qt.resolvedUrl("AboutDialog.qml"))
                 }
             }
+            MenuItem { // TODO: remove (system app settings)
+                text: qsTr("Settings")
+                onClicked: pageStack.push(Qt.resolvedUrl("../settings/settings.qml"))
+            }
             MenuItem {
                 text: qsTr("Add a network")
                 onClicked: {

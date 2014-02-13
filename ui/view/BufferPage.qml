@@ -67,6 +67,10 @@ Page {
                     text: qsTr("About IRC")
                     onClicked: pageStack.push(Qt.resolvedUrl("../dialogs/AboutDialog.qml"))
                 }
+                MenuItem { // TODO: remove (system app settings)
+                    text: qsTr("Settings")
+                    onClicked: pageStack.push(Qt.resolvedUrl("../settings/settings.qml"))
+                }
                 MenuItem {
                     text: qsTr("Clear messages")
                     visible: storage && storage.count
@@ -122,7 +126,9 @@ Page {
             model: storage
 
             delegate: ListItem {
-                contentHeight: label.height + (index > 0 && index < view.count - 1 && ListView.isCurrentItem ? Theme.paddingMedium : 0)
+                readonly property bool hidden: event && !eventsConfig.value
+                contentHeight: hidden ? 0 : label.height + (index > 0 && index < view.count - 1 && ListView.isCurrentItem ? Theme.paddingMedium : 0)
+                visible: !hidden
                 Label {
                     id: stamp
                     text: timestamp
@@ -137,7 +143,7 @@ Page {
                     wrapMode: Text.Wrap
                     textFormat: Text.RichText
                     linkColor: Theme.highlightColor
-                    font.pixelSize: Theme.fontSizeSmall
+                    font.pixelSize: fontSizeConfig.value
                     onLinkActivated: Qt.openUrlExternally(link)
                     color: highlight ? window.nickHighlight : event ? Theme.secondaryColor : Theme.primaryColor
                 }

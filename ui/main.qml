@@ -32,6 +32,7 @@ import Sailfish.Silica 1.0
 import Qt.labs.settings 1.0
 import org.nemomobile.ngf 1.0
 import org.nemomobile.notifications 1.0
+import org.nemomobile.configuration 1.0
 import "dialogs"
 import "cover"
 import "view"
@@ -146,15 +147,35 @@ ApplicationWindow {
         }
     }
 
+    ConfigurationValue {
+       id: fontSizeConfig
+       key: "/apps/harbour-communi/settings/fontsize"
+       defaultValue: Theme.fontSizeSmall
+    }
+
+    ConfigurationValue {
+       id: eventsConfig
+       key: "/apps/harbour-communi/settings/events"
+       defaultValue: true
+    }
+
+    ConfigurationValue {
+       id: feedbackConfig
+       key: "/apps/harbour-communi/settings/feedback"
+       defaultValue: true
+    }
+
     NonGraphicalFeedback {
         id: feedback
         event: "chat_fg"
         property real previous: 0
         function give() {
-            var current = new Date().getTime();
-            if (current - previous > 750)
-                play();
-            previous = current;
+            if (!!feedbackConfig.value) {
+                var current = new Date().getTime();
+                if (current - previous > 750)
+                    play();
+                previous = current;
+            }
         }
     }
 
