@@ -3,7 +3,7 @@ TARGET = harbour-communi
 CONFIG += c++11 sailfishapp
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x000000
 
-VERSION = 0.1
+VERSION = 0.2
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 !exists(src/shared/shared.pri)|!exists(src/backend/src/src.pri): \

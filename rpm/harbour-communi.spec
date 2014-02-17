@@ -13,7 +13,7 @@ License:    LGPLv2 and BSD
 URL:        http://communi.github.io/
 Source0:    %{name}-%{version}.tar.gz
 
-Version:    0.1
+Version:    0.2
 Release:    1
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
@@ -40,6 +40,12 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 %attr(644,root,root) %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 
 %changelog
+* Mon Feb 17 2014 J-P Nurmi <jpnurmi@gmail.com> 0.2
+- Landscape support
+- User list context menu
+- Performance optimizations
+- Application settings (font size, show/hide events, haptic feedback)
+
 * Tue Feb 04 2014 J-P Nurmi <jpnurmi@gmail.com> 0.1
 - The first stable public release
 
