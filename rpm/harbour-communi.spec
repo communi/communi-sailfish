@@ -17,7 +17,7 @@ Version:    0.2
 Release:    1
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
-BuildRequires:  pkgconfig(Qt5Core), pkgconfig(Qt5Qml), pkgconfig(Qt5Quick), pkgconfig(sailfishapp) >= 0.0.10
+BuildRequires:  pkgconfig(Qt5Core), pkgconfig(Qt5Qml), pkgconfig(Qt5Quick), pkgconfig(Qt5DBus), pkgconfig(sailfishapp) >= 0.0.10
 
 %description
 Internet Relay Chat (IRC) is a protocol for live interactive Internet text messaging (chat) or synchronous conferencing. It is mainly designed for group communication in discussion forums, called channels, but also allows one-to-one communication via private messages.
