@@ -72,7 +72,7 @@ signals:
     void currentBufferChanged(IrcBuffer* buffer);
     void highlighted(IrcBuffer* buffer, IrcMessage* message);
 
-    Q_SCRIPTABLE void highlightedSimple(QString sender, QString messageContent);
+    Q_SCRIPTABLE void highlightedSimple(QString bufferTitle, QString nick, QString messageContent);
 
 private slots:
     void updateActiveHighlights();

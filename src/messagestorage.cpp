@@ -152,7 +152,7 @@ void MessageStorage::onHighlighted(IrcMessage* message)
 
             // Take care of emitting a signal to D-Bus
             if (message->metaObject()->indexOfProperty("content") >= 0) {
-                emit highlightedSimple(buffer->title(), message->property("content").toString());
+                emit highlightedSimple(buffer->title(), message->nick(), message->property("content").toString());
             }
         }
     }
