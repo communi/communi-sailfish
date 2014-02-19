@@ -30,10 +30,22 @@
 #include "messageformatter.h"
 #include "messagemodel.h"
 #include <IrcBuffer>
+#include <QtCore/QDebug>
+#include <QtDBus/QDBusConnection>
+
 
 MessageStorage::MessageStorage(QObject* parent) : QObject(parent), m_highlights(0)
 {
     m_baseColor = QColor::fromHsl(359, 102, 116);
+
+    // Register the app as a D-Bus service
+    if (!QDBusConnection::sessionBus().registerService("com.communi.irc")) {
+        qDebug() << Q_FUNC_INFO << "Couldn't register D-Bus service!";
+    }
+    // Register this MessageStorage instance
+    if (!QDBusConnection::sessionBus().registerObject("/", this, QDBusConnection::ExportScriptableContents)) {
+        qDebug() << Q_FUNC_INFO << "Couldn't register D-Bus object!";
+    }
 }
 
 MessageStorage* MessageStorage::instance()
@@ -135,7 +147,13 @@ void MessageStorage::onHighlighted(IrcMessage* message)
     MessageModel* model = qobject_cast<MessageModel*>(sender());
     if (model) {
         IrcBuffer* buffer = model->buffer();
-        if (buffer)
+        if (buffer) {
             emit highlighted(buffer, message);
+
+            // Take care of emitting a signal to D-Bus
+            if (message->metaObject()->indexOfProperty("content") >= 0) {
+                emit highlightedSimple(buffer->title(), message->property("content").toString());
+            }
+        }
     }
 }

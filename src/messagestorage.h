@@ -41,6 +41,7 @@ class MessageModel;
 class MessageStorage : public QObject
 {
     Q_OBJECT
+    Q_CLASSINFO("D-Bus Interface", "com.communi.irc")
     Q_PROPERTY(IrcBuffer* currentBuffer READ currentBuffer WRITE setCurrentBuffer NOTIFY currentBufferChanged)
     Q_PROPERTY(int activeHighlights READ activeHighlights NOTIFY activeHighlightsChanged)
     Q_PROPERTY(QColor baseColor READ baseColor WRITE setBaseColor)
@@ -70,6 +71,8 @@ signals:
     void activeHighlightsChanged();
     void currentBufferChanged(IrcBuffer* buffer);
     void highlighted(IrcBuffer* buffer, IrcMessage* message);
+
+    Q_SCRIPTABLE void highlightedSimple(QString sender, QString messageContent);
 
 private slots:
     void updateActiveHighlights();
