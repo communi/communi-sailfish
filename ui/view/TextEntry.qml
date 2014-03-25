@@ -44,7 +44,7 @@ FocusScope {
                 txt += " "
             txt += name
         } else {
-            txt = name + ":" // TODO: IrcCompleter.completionSuffix
+            txt = name + completer.suffix
         }
         field.text = txt + " "
     }
