@@ -163,7 +163,7 @@ Page {
                 view.positionViewAtEnd();
             }
             onCountChanged: {
-                if (view.visibleArea.yPosition + view.visibleArea.heightRatio > 0.9) {
+                if (view.atYEnd && !view.dragging && !view.flicking) {
                     positioner.restart();
                 }
             }
