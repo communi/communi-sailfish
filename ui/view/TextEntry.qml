@@ -47,6 +47,7 @@ FocusScope {
             txt = name + completer.suffix
         }
         field.text = txt + " "
+        field.forceActiveFocus()
     }
 
     implicitWidth: field.implicitWidth
