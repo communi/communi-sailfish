@@ -249,10 +249,12 @@ QByteArray BufferProxyModel::saveState() const
     foreach (QAbstractItemModel* aim, RowsJoinerProxy::models()) {
         IrcBufferModel* model = qobject_cast<IrcBufferModel*>(aim);
         if (model) {
-            connectionStates += crypto.encryptToByteArray(model->connection()->saveState());
+            IrcConnection* connection = model->connection();
+            connectionStates += crypto.encryptToByteArray(connection->saveState());
             // do not save the server buffer - let addConnection() handle it when restoring
+            bool wasConnected = connection->isEnabled() && connection->isConnected();
             model->remove(model->get(0));
-            if (model->connection()->isEnabled())
+            if (wasConnected)
                 modelStates += crypto.encryptToByteArray(model->saveState());
             else
                 modelStates += crypto.encryptToByteArray(model->property("savedState").toByteArray());
