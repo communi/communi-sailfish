@@ -43,7 +43,7 @@ class MessageStorage : public QObject
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "com.communi.irc")
     Q_PROPERTY(IrcBuffer* currentBuffer READ currentBuffer WRITE setCurrentBuffer NOTIFY currentBufferChanged)
-    Q_PROPERTY(int activeHighlights READ activeHighlights NOTIFY activeHighlightsChanged)
+    Q_PROPERTY(int activeHighlights READ activeHighlights NOTIFY activeHighlightsChanged SCRIPTABLE true)
     Q_PROPERTY(QColor baseColor READ baseColor WRITE setBaseColor)
 
 public:
