@@ -104,6 +104,7 @@ private:
         QString richtext;
         QString plaintext;
         QString timestamp;
+        QString sender;
     };
 
     void append(const MessageData& data, bool seen);

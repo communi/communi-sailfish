@@ -35,6 +35,7 @@ enum MessageRole {
     SeenRole = Qt::UserRole,
     HighlightRole,
     TimestampRole,
+    SenderRole,
     EventRole,
     TypeRole,
     OwnRole

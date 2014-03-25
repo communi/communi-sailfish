@@ -163,6 +163,7 @@ QHash<int, QByteArray> MessageModel::roleNames() const
     roles[Qt::EditRole] = "plaintext";
     roles[HighlightRole] = "highlight";
     roles[TimestampRole] = "timestamp";
+    roles[SenderRole] = "sender";
     roles[EventRole] = "event";
     roles[SeenRole] = "seen";
     roles[TypeRole] = "type";
@@ -193,6 +194,8 @@ QVariant MessageModel::data(const QModelIndex& index, int role) const
         return m_messages.at(row).richtext;
     case Qt::EditRole:
         return m_messages.at(row).plaintext;
+    case SenderRole:
+        return m_messages.at(row).sender;
     default:
         return QVariant();
     }
@@ -207,6 +210,7 @@ void MessageModel::receive(IrcMessage* message)
         data.type = message->type();
         data.own = message->flags() & IrcMessage::Own;
         data.event = (message->type() != IrcMessage::Private && message->type() != IrcMessage::Notice);
+        data.sender = message->nick();
         if (!data.event && !data.own) {
             int pos = 0;
             QString nick = message->connection()->nickName();
