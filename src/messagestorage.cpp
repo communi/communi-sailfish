@@ -152,13 +152,7 @@ void MessageStorage::onHighlighted(IrcMessage* message)
     MessageModel* model = qobject_cast<MessageModel*>(sender());
     if (model) {
         IrcBuffer* buffer = model->buffer();
-        if (buffer) {
+        if (buffer)
             emit highlighted(buffer, message);
-
-            // Take care of emitting a signal to D-Bus
-            if (message->metaObject()->indexOfProperty("content") >= 0) {
-                emit highlightedSimple(buffer->title(), message->nick(), message->property("content").toString());
-            }
-        }
     }
 }
