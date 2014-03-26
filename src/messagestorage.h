@@ -69,10 +69,10 @@ signals:
     void added(MessageModel* model);
     void removed(MessageModel* model);
 
-    void activeHighlightsChanged();
     void currentBufferChanged(IrcBuffer* buffer);
     void highlighted(IrcBuffer* buffer, IrcMessage* message);
 
+    Q_SCRIPTABLE void activeHighlightsChanged(int highlights);
     Q_SCRIPTABLE void highlightedSimple(QString bufferTitle, QString nick, QString messageContent);
 
 private slots:

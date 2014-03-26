@@ -96,7 +96,7 @@ void MessageStorage::setActiveHighlights(int highlights)
 {
     if (m_highlights != highlights) {
         m_highlights = highlights;
-        emit activeHighlightsChanged();
+        emit activeHighlightsChanged(highlights);
     }
 }
 
