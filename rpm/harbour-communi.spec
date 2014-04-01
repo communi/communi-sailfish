@@ -13,7 +13,7 @@ License:    LGPLv2 and BSD
 URL:        http://communi.github.io/
 Source0:    %{name}-%{version}.tar.gz
 
-Version:    0.2
+Version:    0.3
 Release:    1
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
@@ -40,6 +40,14 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 %attr(644,root,root) %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 
 %changelog
+* Tue Apr 01 2014 J-P Nurmi <jpnurmi@gmail.com> 0.3
+- Added a search/filter toolbar for views
+- Added a context menu entry for replying to channel messages
+- Made auto-scrolling less aggressive
+- Fixed a re-layouting issue upon orientation changes
+- Fixed a state saving issue that lead to losing channels
+- Added support for TOHOLED notifications :)
+
 * Mon Feb 17 2014 J-P Nurmi <jpnurmi@gmail.com> 0.2
 - Landscape support
 - User list context menu
