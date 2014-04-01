@@ -98,12 +98,11 @@ ApplicationWindow {
                 notification.buffer = buffer;
                 notification.previewBody = qsTr("%1: %2").arg(message.nick).arg(message.content);
                 notification.body = qsTr("%1: %2").arg(message.nick).arg(message.content);
+                notification.publish();
             }
         }
         onActiveHighlightsChanged: {
-            if (MessageStorage.activeHighlights)
-                notification.publish()
-            else
+            if (MessageStorage.activeHighlights === 0)
                 notification.close()
         }
     }
