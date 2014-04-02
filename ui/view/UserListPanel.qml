@@ -38,13 +38,20 @@ Panel {
     signal clicked(IrcUser user)
     signal queried(IrcUser user)
 
+    IrcUserModel {
+        id: userModel
+        channel: panel.buffer ? panel.buffer.toChannel() : null
+        sortMethod: Irc.SortByTitle
+    }
+
     SilicaListView {
         pressDelay: 0
         anchors.fill: parent
+        anchors.bottomMargin: toolbar.height - 2
 
-        model: IrcUserModel {
-            channel: panel.buffer ? panel.buffer.toChannel() : null
-            sortMethod: Irc.SortByTitle
+        model: StringFilterModel {
+            filter: toolbar.filter
+            sourceModel: userModel
         }
 
         delegate: ListItem {
@@ -85,5 +92,13 @@ Panel {
         }
 
         VerticalScrollDecorator { }
+    }
+
+    onBufferChanged: toolbar.clear()
+
+    SearchToolBar {
+        id: toolbar
+        width: parent.width
+        anchors.bottom: parent.bottom
     }
 }

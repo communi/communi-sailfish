@@ -26,57 +26,21 @@
   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import QtQuick 2.1
-import Communi 3.1
-import Sailfish.Silica 1.0
+#ifndef STRINGFILTERMODEL_H
+#define STRINGFILTERMODEL_H
 
-Panel {
-    id: panel
+#include <QSortFilterProxyModel>
 
-    signal clicked(IrcBuffer buffer)
+class StringFilterModel : public QSortFilterProxyModel
+{
+    Q_OBJECT
+    Q_PROPERTY(QString filter READ filter WRITE setFilter)
 
-    SilicaListView {
-        pressDelay: 0
-        anchors.fill: parent
-        anchors.bottomMargin: toolbar.height - 2
+public:
+    StringFilterModel(QObject* parent = 0);
 
-        model: FilterModel
+    QString filter() const;
+    void setFilter(const QString& filter);
+};
 
-        section.property: "section"
-        section.labelPositioning: ViewSection.InlineLabels | ViewSection.CurrentLabelAtStart
-
-        section.delegate: NetworkDelegate {
-            buffer: BufferModel.servers[section] || null
-            onClicked: panel.clicked(buffer)
-        }
-
-        delegate: BufferDelegate {
-            buffer: model.buffer || null
-            onClicked: panel.clicked(model.buffer)
-        }
-
-        VerticalScrollDecorator {
-            anchors.left: parent.left
-            anchors.right: undefined
-        }
-    }
-
-    Binding {
-        target: FilterModel
-        property: "filterStatus"
-        value: toolbar.checked
-    }
-
-    Binding {
-        target: FilterModel
-        property: "filterString"
-        value: toolbar.filter
-    }
-
-    SearchToolBar {
-        id: toolbar
-        checkable: true
-        width: parent.width
-        anchors.bottom: parent.bottom
-    }
-}
+#endif // STRINGFILTERMODEL_H

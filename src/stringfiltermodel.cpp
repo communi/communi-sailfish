@@ -26,57 +26,19 @@
   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import QtQuick 2.1
-import Communi 3.1
-import Sailfish.Silica 1.0
+#include "stringfiltermodel.h"
 
-Panel {
-    id: panel
+StringFilterModel::StringFilterModel(QObject* parent) : QSortFilterProxyModel(parent)
+{
+    setDynamicSortFilter(true);
+}
 
-    signal clicked(IrcBuffer buffer)
+QString StringFilterModel::filter() const
+{
+    return filterRegExp().pattern();
+}
 
-    SilicaListView {
-        pressDelay: 0
-        anchors.fill: parent
-        anchors.bottomMargin: toolbar.height - 2
-
-        model: FilterModel
-
-        section.property: "section"
-        section.labelPositioning: ViewSection.InlineLabels | ViewSection.CurrentLabelAtStart
-
-        section.delegate: NetworkDelegate {
-            buffer: BufferModel.servers[section] || null
-            onClicked: panel.clicked(buffer)
-        }
-
-        delegate: BufferDelegate {
-            buffer: model.buffer || null
-            onClicked: panel.clicked(model.buffer)
-        }
-
-        VerticalScrollDecorator {
-            anchors.left: parent.left
-            anchors.right: undefined
-        }
-    }
-
-    Binding {
-        target: FilterModel
-        property: "filterStatus"
-        value: toolbar.checked
-    }
-
-    Binding {
-        target: FilterModel
-        property: "filterString"
-        value: toolbar.filter
-    }
-
-    SearchToolBar {
-        id: toolbar
-        checkable: true
-        width: parent.width
-        anchors.bottom: parent.bottom
-    }
+void StringFilterModel::setFilter(const QString& filter)
+{
+    setFilterWildcard("*" + filter + "*");
 }

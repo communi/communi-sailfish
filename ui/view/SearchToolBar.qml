@@ -33,8 +33,13 @@ import QtGraphicalEffects 1.0
 Rectangle {
     id: root
 
+    property bool checkable: false
     property int checked: Qt.Unchecked
     property alias filter: field.text
+
+    function clear() {
+        field.text = ""
+    }
 
     color: Theme.highlightDimmerColor
     width: parent ? parent.width : 0
@@ -66,7 +71,8 @@ Rectangle {
         onClicked: {
             if (stoleFocus)
                 field.forceActiveFocus()
-            checked = (checked + 1) % (Qt.Checked + 1)
+            if (checkable)
+                checked = (checked + 1) % (Qt.Checked + 1)
         }
 
         ColorOverlay {

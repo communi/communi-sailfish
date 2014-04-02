@@ -42,6 +42,7 @@
 #include "networksession.h"
 #include "messagestorage.h"
 #include "messageformatter.h"
+#include "stringfiltermodel.h"
 #include "messagefilter.h"
 
 #include <IrcCore>
@@ -91,6 +92,7 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 
     qRegisterMetaType<QAbstractItemModel*>();
     qmlRegisterType<MessageFilter>("Communi", 3, 1, "MessageFilter");
+    qmlRegisterType<StringFilterModel>("Communi", 3, 1, "StringFilterModel");
 
     NetworkSession* session = new NetworkSession(app.data());
     viewer->rootContext()->setContextProperty("NetworkSession", session);

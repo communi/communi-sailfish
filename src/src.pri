@@ -9,6 +9,7 @@ HEADERS += $$PWD/messagemodel.h
 HEADERS += $$PWD/messagerole.h
 HEADERS += $$PWD/messagestorage.h
 HEADERS += $$PWD/networksession.h
+HEADERS += $$PWD/stringfiltermodel.h
 HEADERS += $$PWD/3rdparty/RowsJoinerProxy.h
 HEADERS += $$PWD/3rdparty/simplecrypt.h
 
@@ -20,6 +21,7 @@ SOURCES += $$PWD/messagemodel.cpp
 SOURCES += $$PWD/messagestorage.cpp
 SOURCES += $$PWD/networksession.cpp
 SOURCES += $$PWD/main.cpp
+SOURCES += $$PWD/stringfiltermodel.cpp
 SOURCES += $$PWD/3rdparty/RowsJoinerProxy.cpp
 SOURCES += $$PWD/3rdparty/simplecrypt.cpp
 

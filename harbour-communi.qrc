@@ -17,11 +17,11 @@
         <file>ui/view/BufferDelegate.qml</file>
         <file>ui/view/BufferListPanel.qml</file>
         <file>ui/view/BufferPage.qml</file>
-        <file>ui/view/BufferToolBar.qml</file>
         <file>ui/view/NetworkDelegate.qml</file>
         <file>ui/view/PageStackScheduler.qml</file>
         <file>ui/view/Panel.qml</file>
         <file>ui/view/PanelView.qml</file>
+        <file>ui/view/SearchToolBar.qml</file>
         <file>ui/view/TextEntry.qml</file>
         <file>ui/view/UserListPanel.qml</file>
         <file>ui/main.qml</file>
