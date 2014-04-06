@@ -108,6 +108,7 @@ Rectangle {
 
     Separator {
         color: root.highlighted ? window.nickHighlight : Theme.highlightColor
+        primaryColor: root.highlighted ? Theme.rgba(window.nickHighlight, 0.8) : Theme.rgba(Theme.highlightColor, 0.5)
         anchors { top: parent.top; left: parent.left; right: parent.right }
     }
 }

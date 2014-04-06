@@ -144,6 +144,7 @@ ListItem {
     Separator {
         visible: !!buffer
         color: root.highlighted ? window.nickHighlight : Theme.highlightColor
+        primaryColor: root.highlighted ? Theme.rgba(window.nickHighlight, 0.8) : Theme.rgba(Theme.highlightColor, 0.5)
         anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
     }
 }
