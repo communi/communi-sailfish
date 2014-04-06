@@ -47,6 +47,7 @@ public:
     BufferProxyModel(QObject* parent = 0);
 
     Q_INVOKABLE IrcBuffer* get(int index) const;
+    Q_INVOKABLE int indexOf(IrcBuffer* buffer) const;
 
     QList<QObject*> models() const;
     QList<QObject*> servers() const;

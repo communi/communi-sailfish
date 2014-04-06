@@ -101,6 +101,21 @@ IrcBuffer* BufferProxyModel::get(int index) const
     return 0;
 }
 
+int BufferProxyModel::indexOf(IrcBuffer* buffer) const
+{
+    int count = 0;
+    foreach (QAbstractItemModel* aim, RowsJoinerProxy::models()) {
+        IrcBufferModel* model = qobject_cast<IrcBufferModel*>(aim);
+        if (model) {
+            int index = model->indexOf(buffer);
+            if (index != -1)
+                return count + index;
+            count += model->count();
+        }
+    }
+    return -1;
+}
+
 QList<QObject*> BufferProxyModel::models() const
 {
     return m_models;
