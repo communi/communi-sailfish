@@ -55,6 +55,9 @@ Panel {
         anchors.fill: parent
         anchors.bottomMargin: toolbar.height - 2
 
+        // a workaround for missing buffers
+        cacheBuffer: 500 * Theme.itemSizeSmall
+
         model: FilterModel
 
         section.property: "section"
