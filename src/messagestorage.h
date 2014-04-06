@@ -37,6 +37,7 @@
 class IrcBuffer;
 class IrcMessage;
 class MessageModel;
+class BufferProxyModel;
 
 class MessageStorage : public QObject
 {
@@ -47,7 +48,7 @@ class MessageStorage : public QObject
     Q_PROPERTY(QColor baseColor READ baseColor WRITE setBaseColor)
 
 public:
-    static MessageStorage* instance();
+    MessageStorage(BufferProxyModel* proxy);
 
     MessageModel* model(IrcBuffer* buffer) const;
     Q_INVOKABLE QObject* get(IrcBuffer* buffer) const;
@@ -79,10 +80,9 @@ private slots:
     void onHighlighted(IrcMessage* message);
 
 private:
-    MessageStorage(QObject* parent = 0);
-
     int m_highlights;
     QColor m_baseColor;
+    BufferProxyModel* m_proxy;
     QPointer<IrcBuffer> m_current;
     QHash<IrcBuffer*, MessageModel*> m_models;
 };

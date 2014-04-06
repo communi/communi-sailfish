@@ -31,6 +31,8 @@
 
 #include <QSortFilterProxyModel>
 
+class MessageStorage;
+
 class BufferFilterModel : public QSortFilterProxyModel
 {
     Q_OBJECT
@@ -38,7 +40,7 @@ class BufferFilterModel : public QSortFilterProxyModel
     Q_PROPERTY(QString filterString READ filterString WRITE setFilterString NOTIFY filterStringChanged)
 
 public:
-    BufferFilterModel(QObject* parent = 0);
+    BufferFilterModel(MessageStorage* storage);
 
     int filterStatus() const;
     void setFilterStatus(int status);
@@ -56,6 +58,7 @@ protected:
 private:
     int m_status;
     QString m_filter;
+    MessageStorage* m_storage;
 };
 
 #endif // BUFFERFILTERMODEL_H

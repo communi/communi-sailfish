@@ -31,7 +31,8 @@
 #include "messagemodel.h"
 #include <IrcBuffer>
 
-BufferFilterModel::BufferFilterModel(QObject* parent) : QSortFilterProxyModel(parent), m_status(0)
+BufferFilterModel::BufferFilterModel(MessageStorage* storage) :
+    QSortFilterProxyModel(storage), m_status(0), m_storage(storage)
 {
     setDynamicSortFilter(true);
 }
@@ -75,7 +76,7 @@ bool BufferFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex& sourc
         if (!m_filter.isEmpty() && !buffer->title().contains(m_filter, Qt::CaseInsensitive))
             return false;
         if (m_status > 0) {
-            MessageModel* model = MessageStorage::instance()->model(buffer);
+            MessageModel* model = m_storage->model(buffer);
             if (model) {
                 if (m_status == 1 && model->badge() <= 0)
                     return false;

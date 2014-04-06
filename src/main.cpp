@@ -100,17 +100,18 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
     BufferProxyModel* model = new BufferProxyModel(app.data());
     viewer->rootContext()->setContextProperty("BufferModel", model);
 
-    BufferFilterModel* filter = new BufferFilterModel(app.data());
+    MessageStorage* storage = new MessageStorage(model);
+    viewer->rootContext()->setContextProperty("MessageStorage", storage);
+    QObject::connect(model, SIGNAL(bufferAdded(IrcBuffer*)), storage, SLOT(add(IrcBuffer*)));
+
+    BufferFilterModel* filter = new BufferFilterModel(storage);
     filter->setSourceModel(model);
     viewer->rootContext()->setContextProperty("FilterModel", filter);
 
     ActivityModel* activity = new ActivityModel(app.data());
     viewer->rootContext()->setContextProperty("ActivityModel", activity);
-    QObject::connect(MessageStorage::instance(), SIGNAL(added(MessageModel*)), activity, SLOT(add(MessageModel*)));
-    QObject::connect(MessageStorage::instance(), SIGNAL(removed(MessageModel*)), activity, SLOT(remove(MessageModel*)));
-
-    viewer->rootContext()->setContextProperty("MessageStorage", MessageStorage::instance());
-    QObject::connect(model, SIGNAL(bufferAdded(IrcBuffer*)), MessageStorage::instance(), SLOT(add(IrcBuffer*)));
+    QObject::connect(storage, SIGNAL(added(MessageModel*)), activity, SLOT(add(MessageModel*)));
+    QObject::connect(storage, SIGNAL(removed(MessageModel*)), activity, SLOT(remove(MessageModel*)));
 
     viewer->setSource(QUrl("qrc:///ui/main.qml"));
     viewer->showFullScreen();

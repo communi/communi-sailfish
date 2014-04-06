@@ -27,17 +27,16 @@
 */
 
 #include "messagestorage.h"
+#include "bufferproxymodel.h"
 #include "messageformatter.h"
 #include "messagemodel.h"
 #include <IrcBuffer>
 #include <QtCore/QDebug>
 #include <QtDBus/QDBusConnection>
 
-
-MessageStorage::MessageStorage(QObject* parent) : QObject(parent), m_highlights(0)
+MessageStorage::MessageStorage(BufferProxyModel* proxy) : QObject(proxy),
+    m_highlights(0), m_baseColor(QColor::fromHsl(359, 102, 116)), m_proxy(proxy)
 {
-    m_baseColor = QColor::fromHsl(359, 102, 116);
-
     // Register the app as a D-Bus service
     if (!QDBusConnection::sessionBus().registerService("com.communi.irc")) {
         qDebug() << Q_FUNC_INFO << "Couldn't register D-Bus service!";
@@ -46,12 +45,6 @@ MessageStorage::MessageStorage(QObject* parent) : QObject(parent), m_highlights(
     if (!QDBusConnection::sessionBus().registerObject("/", this, QDBusConnection::ExportScriptableContents)) {
         qDebug() << Q_FUNC_INFO << "Couldn't register D-Bus object!";
     }
-}
-
-MessageStorage* MessageStorage::instance()
-{
-    static MessageStorage storage;
-    return &storage;
 }
 
 MessageModel* MessageStorage::model(IrcBuffer* buffer) const
