@@ -85,11 +85,15 @@ signals:
     void firstActiveHighlightChanged();
     void lastActiveHighlightChanged();
 
+protected:
+    void timerEvent(QTimerEvent* event);
+
 private slots:
     void updateActiveHighlights();
     void onHighlighted(IrcMessage* message);
 
 private:
+    int m_dirty;
     int m_highlights;
     int m_firstHiglight;
     int m_lastHighlight;

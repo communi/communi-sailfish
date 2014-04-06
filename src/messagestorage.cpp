@@ -31,10 +31,11 @@
 #include "messageformatter.h"
 #include "messagemodel.h"
 #include <IrcBuffer>
+#include <QTimerEvent>
 #include <QtCore/QDebug>
 #include <QtDBus/QDBusConnection>
 
-MessageStorage::MessageStorage(BufferProxyModel* proxy) : QObject(proxy), m_highlights(0),
+MessageStorage::MessageStorage(BufferProxyModel* proxy) : QObject(proxy), m_dirty(0), m_highlights(0),
     m_firstHiglight(-1), m_lastHighlight(-1), m_baseColor(QColor::fromHsl(359, 102, 116)), m_proxy(proxy)
 {
     // Register the app as a D-Bus service
@@ -144,6 +145,9 @@ void MessageStorage::add(IrcBuffer* buffer)
         connect(model, SIGNAL(highlighted(IrcMessage*)), this, SLOT(onHighlighted(IrcMessage*)));
         m_models.insert(buffer, model);
         emit added(model);
+
+        if (!m_dirty)
+            m_dirty = startTimer(100);
     }
 }
 
@@ -154,7 +158,19 @@ void MessageStorage::remove(IrcBuffer* buffer)
         if (model) {
             emit removed(model);
             delete model;
+
+            if (!m_dirty)
+                m_dirty = startTimer(100);
         }
+    }
+}
+
+void MessageStorage::timerEvent(QTimerEvent* event)
+{
+    if (event->timerId() == m_dirty) {
+        updateActiveHighlights();
+        killTimer(m_dirty);
+        m_dirty = 0;
     }
 }
 
