@@ -42,11 +42,23 @@ Panel {
         property int lastIndex: -1
 
         onContentYChanged: {
-            // the index for section/network items is -1 => retain the previous index
             var first = indexAt(0, contentY + Theme.itemSizeExtraSmall)
+            if (first === -1) {
+                // the first item is a section item (a network delegate)
+                var firstItem = contentItem.childAt(0, contentY + Theme.itemSizeExtraSmall)
+                if (firstItem && firstItem.buffer)
+                    first = BufferModel.indexOf(firstItem.buffer)
+            }
             if (first !== -1)
                 firstIndex = first
+
             var last = indexAt(0, contentY + height)
+            if (last === -1) {
+                // the last item is a section item (a network delegate)
+                var lastItem = contentItem.childAt(0, contentY + height)
+                if (lastItem && lastItem.buffer)
+                    last = BufferModel.indexOf(lastItem.buffer)
+            }
             if (last !== -1)
                 lastIndex = last
         }
