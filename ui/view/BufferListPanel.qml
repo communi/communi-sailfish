@@ -36,6 +36,21 @@ Panel {
     signal clicked(IrcBuffer buffer)
 
     SilicaListView {
+        id: listview
+
+        property int firstIndex: -1
+        property int lastIndex: -1
+
+        onContentYChanged: {
+            // the index for section/network items is -1 => retain the previous index
+            var first = indexAt(0, contentY + Theme.itemSizeExtraSmall)
+            if (first !== -1)
+                firstIndex = first
+            var last = indexAt(0, contentY + height)
+            if (last !== -1)
+                lastIndex = last
+        }
+
         pressDelay: 0
         anchors.fill: parent
         anchors.bottomMargin: toolbar.height - 2
@@ -47,6 +62,9 @@ Panel {
 
         section.delegate: NetworkDelegate {
             buffer: BufferModel.servers[section] || null
+            highlighted: section === listview.currentSection
+                      && MessageStorage.firstActiveHighlight !== -1
+                      && MessageStorage.firstActiveHighlight < listview.firstIndex
             onClicked: panel.clicked(buffer)
         }
 
@@ -77,6 +95,8 @@ Panel {
         id: toolbar
         checkable: true
         width: parent.width
+        highlighted: MessageStorage.lastActiveHighlight !== -1
+                  && MessageStorage.lastActiveHighlight > listview.lastIndex
         anchors.bottom: parent.bottom
     }
 }

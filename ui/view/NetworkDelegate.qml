@@ -38,6 +38,7 @@ ListItem {
     property string reason: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
     property variant storage: MessageStorage.get(buffer)
 
+    property bool highlighted: false
     property bool active: buffer && buffer.connection.active
     property bool connected: buffer && buffer.connection.connected
     property bool error: buffer && buffer.connection.status === IrcConnection.Error
@@ -142,7 +143,7 @@ ListItem {
 
     Separator {
         visible: !!buffer
-        color: Theme.highlightColor
+        color: root.highlighted ? window.nickHighlight : Theme.highlightColor
         anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
     }
 }

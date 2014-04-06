@@ -36,6 +36,7 @@ Rectangle {
     property bool checkable: false
     property int checked: Qt.Unchecked
     property alias filter: field.text
+    property bool highlighted: false
 
     function clear() {
         field.text = ""
@@ -106,7 +107,7 @@ Rectangle {
     }
 
     Separator {
-        color: Theme.highlightColor
+        color: root.highlighted ? window.nickHighlight : Theme.highlightColor
         anchors { top: parent.top; left: parent.left; right: parent.right }
     }
 }
