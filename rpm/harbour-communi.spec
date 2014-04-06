@@ -13,7 +13,7 @@ License:    LGPLv2 and BSD
 URL:        http://communi.github.io/
 Source0:    %{name}-%{version}.tar.gz
 
-Version:    0.3
+Version:    0.4
 Release:    1
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
@@ -40,6 +40,12 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 %attr(644,root,root) %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 
 %changelog
+* Mon Apr 07 2014 J-P Nurmi <jpnurmi@gmail.com> 0.4
+- Added a search toolbar for channel users
+- Added a subtle visualization for highlights above/below the current
+  view list scrolling position
+- Fixed an issue with disappearing channels/queries
+
 * Tue Apr 01 2014 J-P Nurmi <jpnurmi@gmail.com> 0.3
 - Added a search/filter toolbar for views
 - Added a context menu entry for replying to channel messages
