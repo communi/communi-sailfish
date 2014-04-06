@@ -34,8 +34,8 @@
 #include <QtCore/QDebug>
 #include <QtDBus/QDBusConnection>
 
-MessageStorage::MessageStorage(BufferProxyModel* proxy) : QObject(proxy),
-    m_highlights(0), m_baseColor(QColor::fromHsl(359, 102, 116)), m_proxy(proxy)
+MessageStorage::MessageStorage(BufferProxyModel* proxy) : QObject(proxy), m_highlights(0),
+    m_firstHiglight(-1), m_lastHighlight(-1), m_baseColor(QColor::fromHsl(359, 102, 116)), m_proxy(proxy)
 {
     // Register the app as a D-Bus service
     if (!QDBusConnection::sessionBus().registerService("com.communi.irc")) {
@@ -93,6 +93,32 @@ void MessageStorage::setActiveHighlights(int highlights)
     }
 }
 
+int MessageStorage::firstActiveHighlight() const
+{
+    return m_firstHiglight;
+}
+
+void MessageStorage::setFirstActiveHighlight(int highlight)
+{
+    if (m_firstHiglight != highlight) {
+        m_firstHiglight = highlight;
+        emit firstActiveHighlightChanged();
+    }
+}
+
+int MessageStorage::lastActiveHighlight() const
+{
+    return m_lastHighlight;
+}
+
+void MessageStorage::setLastActiveHighlight(int highlight)
+{
+    if (m_lastHighlight != highlight) {
+        m_lastHighlight = highlight;
+        emit lastActiveHighlightChanged();
+    }
+}
+
 QColor MessageStorage::baseColor() const
 {
     return m_baseColor;
@@ -134,10 +160,23 @@ void MessageStorage::remove(IrcBuffer* buffer)
 
 void MessageStorage::updateActiveHighlights()
 {
+    int first = -1;
+    int last = -1;
     int highlights = 0;
-    foreach (MessageModel* model, m_models)
-        highlights += model->activeHighlights();
+    foreach (MessageModel* model, m_models) {
+        const int active = model->activeHighlights();
+        highlights += active;
+        if (active > 0) {
+            const int index = m_proxy->indexOf(model->buffer());
+            if (index != -1) {
+                first = first == -1 ? index : qMin(first, index);
+                last = qMax(last, index);
+            }
+        }
+    }
     setActiveHighlights(highlights);
+    setFirstActiveHighlight(first);
+    setLastActiveHighlight(last);
 }
 
 void MessageStorage::onHighlighted(IrcMessage* message)
