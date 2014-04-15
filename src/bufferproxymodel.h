@@ -82,10 +82,14 @@ signals:
     void bufferAboutToBeRemoved(IrcBuffer* buffer);
     void currentBufferChanged(IrcBuffer* buffer);
 
+    void connected(IrcConnection* connection);
+    void disconnected(IrcConnection* connection);
     void nickNameRequired(IrcConnection* connection, const QString& reserved);
     void channelKeyRequired(IrcConnection* connection, const QString& channel);
 
 private slots:
+    void onConnected();
+    void onDisconnected();
     void onConnectionEnabledChanged(bool enabled);
     void closeConnection(IrcBuffer* buffer);
     void onChannelKeyRequired(const QString& channel);

@@ -158,6 +158,8 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
     connect(connection, SIGNAL(displayNameChanged(QString)), buffer, SLOT(setName(QString)));
     connect(model, SIGNAL(messageIgnored(IrcMessage*)), this, SLOT(processMessage(IrcMessage*)));
 
+    connect(connection, SIGNAL(connected()), this, SLOT(onConnected()));
+    connect(connection, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
     connect(connection, SIGNAL(enabledChanged(bool)), this, SLOT(onConnectionEnabledChanged(bool)));
     connect(connection, SIGNAL(nickNameRequired(QString,QString*)), this, SLOT(onNickNameRequired(QString)));
     connect(connection, SIGNAL(channelKeyRequired(QString,QString*)), this, SLOT(onChannelKeyRequired(QString)));
@@ -195,6 +197,9 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
 
 void BufferProxyModel::removeConnection(IrcConnection* connection)
 {
+    disconnect(connection, SIGNAL(connected()), this, SLOT(onConnected()));
+    disconnect(connection, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
+
     IrcBufferModel* model = connection->findChild<IrcBufferModel*>();
     if (model) {
         disconnect(model, SIGNAL(added(IrcBuffer*)), this, SIGNAL(bufferAdded(IrcBuffer*)));
@@ -299,6 +304,20 @@ bool BufferProxyModel::restoreState(const QByteArray& data)
         model->setProperty("savedState", !crypto.lastError() ? ms : modelStates.value(i));
     }
     return true;
+}
+
+void BufferProxyModel::onConnected()
+{
+    IrcConnection* connection = qobject_cast<IrcConnection*>(sender());
+    if (connection)
+        emit connected(connection);
+}
+
+void BufferProxyModel::onDisconnected()
+{
+    IrcConnection* connection = qobject_cast<IrcConnection*>(sender());
+    if (connection)
+        emit disconnected(connection);
 }
 
 void BufferProxyModel::onConnectionEnabledChanged(bool enabled)
