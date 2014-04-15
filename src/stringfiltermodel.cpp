@@ -30,6 +30,7 @@
 
 StringFilterModel::StringFilterModel(QObject* parent) : QSortFilterProxyModel(parent)
 {
+    setFilterCaseSensitivity(Qt::CaseInsensitive);
     setDynamicSortFilter(true);
 }
 
