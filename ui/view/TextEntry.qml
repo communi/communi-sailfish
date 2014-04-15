@@ -160,6 +160,7 @@ FocusScope {
             parser.addCommand(IrcCommand.Kick, "KICK (<#channel>) <user> (<reason...>)")
             parser.addCommand(IrcCommand.Knock, "KNOCK <#channel> (<message...>)")
             parser.addCommand(IrcCommand.List, "LIST (<channels>) (<server>)")
+            parser.addCommand(IrcCommand.CtcpRequest, "CTCP <target> <command...>")
             parser.addCommand(IrcCommand.CtcpAction, "ME [target] <message...>")
             parser.addCommand(IrcCommand.Mode, "MODE (<channel/user>) (<mode>) (<arg>)")
             parser.addCommand(IrcCommand.Motd, "MOTD (<server>)")
