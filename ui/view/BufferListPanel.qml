@@ -110,6 +110,7 @@ Panel {
         id: toolbar
         checkable: true
         width: parent.width
+        icon: "../images/chanfilter.png"
         highlighted: MessageStorage.lastActiveHighlight !== -1
                   && MessageStorage.lastActiveHighlight > listview.lastIndex
         anchors.bottom: parent.bottom

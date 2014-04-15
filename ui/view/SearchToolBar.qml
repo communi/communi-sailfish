@@ -33,6 +33,7 @@ import QtGraphicalEffects 1.0
 Rectangle {
     id: root
 
+    property alias icon: image.source
     property bool checkable: false
     property int checked: Qt.Unchecked
     property alias filter: field.text
@@ -82,7 +83,7 @@ Rectangle {
             anchors { right: parent.right; verticalCenter: parent.verticalCenter }
             color: checked == Qt.Checked ? window.nickHighlight :
                    checked == Qt.PartiallyChecked ? Theme.highlightColor : Theme.primaryColor
-            source: Image { source: "../images/filter.png" }
+            source: Image { id: image }
         }
     }
 

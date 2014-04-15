@@ -100,5 +100,6 @@ Panel {
         id: toolbar
         width: parent.width
         anchors.bottom: parent.bottom
+        icon: "../images/filter.png"
     }
 }

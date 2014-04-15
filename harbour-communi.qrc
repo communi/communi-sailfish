@@ -9,6 +9,7 @@
         <file>ui/dialogs/WelcomeDialog.qml</file>
         <file>ui/images/arrow-up.png</file>
         <file>ui/images/arrow-down.png</file>
+        <file>ui/images/chanfilter.png</file>
         <file>ui/images/complete.png</file>
         <file>ui/images/cover.png</file>
         <file>ui/images/filter.png</file>
