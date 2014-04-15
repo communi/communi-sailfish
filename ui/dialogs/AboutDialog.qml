@@ -48,7 +48,11 @@ Dialog {
 
             Label {
                 wrapMode: Text.WordWrap
-                anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
+                anchors {
+                    left: parent ? parent.left : undefined
+                    right: parent ? parent.right : undefined
+                    margins: Theme.paddingLarge
+                }
                 font.pixelSize: Theme.fontSizeSmall
                 text: qsTr("Internet Relay Chat (IRC) is a protocol for live interactive Internet text messaging (chat) or synchronous conferencing. It is mainly designed for group communication in discussion forums, called channels, but also allows one-to-one communication via private messages.")
             }
@@ -58,9 +62,13 @@ Dialog {
             }
 
             Label {
-                textFormat: Qt.StyledText
+                textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
-                anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
+                anchors {
+                    left: parent ? parent.left : undefined
+                    right: parent ? parent.right : undefined
+                    margins: Theme.paddingLarge
+                }
                 font.pixelSize: Theme.fontSizeSmall
                 linkColor: Theme.highlightColor
                 text: "IRC: #communi on irc.freenode.net<br/>
@@ -75,7 +83,11 @@ Dialog {
             Label {
                 textFormat: Qt.RichText
                 wrapMode: Text.WordWrap
-                anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
+                anchors {
+                    left: parent ? parent.left : undefined
+                    right: parent ? parent.right : undefined
+                    margins: Theme.paddingLarge
+                }
                 font.pixelSize: Theme.fontSizeSmall
                 text: "J-P Nurmi &mdash; jpnurmi<br/>
                        Timur Kristóf &mdash; Venemo<br/>
@@ -89,7 +101,11 @@ Dialog {
             Label {
                 textFormat: Qt.RichText
                 wrapMode: Text.WordWrap
-                anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
+                anchors {
+                    left: parent ? parent.left : undefined
+                    right: parent ? parent.right : undefined
+                    margins: Theme.paddingLarge
+                }
                 font.pixelSize: Theme.fontSizeSmall
                 text: "Stephan Beyerle &mdash; Morpog<br/>
                        Stanisław Dac &mdash; stsdc"
