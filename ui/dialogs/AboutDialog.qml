@@ -54,6 +54,21 @@ Dialog {
             }
 
             SectionHeader {
+                text: qsTr("Contact")
+            }
+
+            Label {
+                textFormat: Qt.StyledText
+                wrapMode: Text.WordWrap
+                anchors { left: parent.left; right: parent.right; margins: Theme.paddingLarge }
+                font.pixelSize: Theme.fontSizeSmall
+                linkColor: Theme.highlightColor
+                text: "IRC: #communi on irc.freenode.net<br/>
+                       Mail: <a href='mailto:communi-sailfish@googlegroups.com'>communi-sailfish@googlegroups.com</a>"
+                onLinkActivated: Qt.openUrlExternally(link)
+            }
+
+            SectionHeader {
                 text: qsTr("Developers")
             }
 
