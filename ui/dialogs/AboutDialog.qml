@@ -61,19 +61,37 @@ Dialog {
                 text: qsTr("Contact")
             }
 
-            Label {
-                textFormat: Text.StyledText
-                wrapMode: Text.WordWrap
+            Column {
                 anchors {
                     left: parent ? parent.left : undefined
                     right: parent ? parent.right : undefined
                     margins: Theme.paddingLarge
                 }
-                font.pixelSize: Theme.fontSizeSmall
-                linkColor: Theme.highlightColor
-                text: "IRC: #communi on irc.freenode.net<br/>
-                       Mail: <a href='mailto:communi-sailfish@googlegroups.com'>communi-sailfish@googlegroups.com</a>"
-                onLinkActivated: Qt.openUrlExternally(link)
+                Label {
+                    width: parent.width
+                    elide: Text.ElideRight
+                    font.pixelSize: Theme.fontSizeSmall
+                    truncationMode: TruncationMode.Fade
+                    text: "IRC channel: #communi on irc.freenode.net"
+                }
+                Label {
+                    width: parent.width
+                    textFormat: Text.StyledText
+                    linkColor: Theme.highlightColor
+                    font.pixelSize: Theme.fontSizeSmall
+                    truncationMode: TruncationMode.Fade
+                    text: "Mailing list: <a href='mailto:communi-sailfish@googlegroups.com'>communi-sailfish@googlegroups.com</a>"
+                    onLinkActivated: Qt.openUrlExternally(link)
+                }
+                Label {
+                    width: parent.width
+                    textFormat: Text.StyledText
+                    linkColor: Theme.highlightColor
+                    font.pixelSize: Theme.fontSizeSmall
+                    truncationMode: TruncationMode.Fade
+                    text: "Issue tracker: <a href='https://github.com/communi/communi-sailfish/issues'>https://github.com/communi/communi-sailfish/issues</a>"
+                    onLinkActivated: Qt.openUrlExternally(link)
+                }
             }
 
             SectionHeader {

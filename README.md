@@ -22,3 +22,4 @@ Contact
 
 * IRC channel: #communi on irc.freenode.net
 * Mailing list: communi-sailfish@googlegroups.com
+* Issue tracker: https://github.com/communi/communi-sailfish/issues
