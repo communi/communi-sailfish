@@ -34,10 +34,14 @@
 class MessageFilter : public QSortFilterProxyModel
 {
     Q_OBJECT
+    Q_PROPERTY(QObject* source READ source WRITE setSource)
     Q_PROPERTY(bool showEvents READ showEvents WRITE setShowEvents NOTIFY showEventsChanged)
 
 public:
     MessageFilter(QObject* parent = 0);
+
+    QObject* source() const;
+    void setSource(QObject* source);
 
     bool showEvents() const;
     void setShowEvents(bool show);

@@ -35,6 +35,16 @@ MessageFilter::MessageFilter(QObject* parent) : QSortFilterProxyModel(parent), m
     setDynamicSortFilter(true);
 }
 
+QObject* MessageFilter::source() const
+{
+    return QSortFilterProxyModel::sourceModel();
+}
+
+void MessageFilter::setSource(QObject* source)
+{
+    QSortFilterProxyModel::setSourceModel(qobject_cast<QAbstractItemModel*>(source));
+}
+
 bool MessageFilter::showEvents() const
 {
     return m_events;

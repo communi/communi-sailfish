@@ -124,7 +124,7 @@ Page {
             }
 
             model: MessageFilter {
-                sourceModel: storage
+                source: storage
                 showEvents: !!eventsConfig.value
             }
 
