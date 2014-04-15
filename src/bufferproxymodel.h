@@ -30,8 +30,10 @@
 #define BUFFERPROXYMODEL_H
 
 #include "RowsJoinerProxy.h"
+#include <QPointer>
 
 class IrcBuffer;
+class IrcMessage;
 class IrcConnection;
 class IrcBufferModel;
 class IrcServerBuffer;
@@ -42,6 +44,7 @@ class BufferProxyModel : public RowsJoinerProxy
     Q_PROPERTY(QList<QObject*> models READ models NOTIFY modelsChanged)
     Q_PROPERTY(QList<QObject*> servers READ servers NOTIFY serversChanged)
     Q_PROPERTY(QList<QObject*> connections READ connections NOTIFY connectionsChanged)
+    Q_PROPERTY(IrcBuffer* currentBuffer READ currentBuffer WRITE setCurrentBuffer NOTIFY currentBufferChanged)
 
 public:
     BufferProxyModel(QObject* parent = 0);
@@ -52,6 +55,9 @@ public:
     QList<QObject*> models() const;
     QList<QObject*> servers() const;
     QList<QObject*> connections() const;
+
+    IrcBuffer* currentBuffer() const;
+    void setCurrentBuffer(IrcBuffer* buffer);
 
     Q_INVOKABLE QObject* model(IrcConnection* connection) const;
     Q_INVOKABLE QObject* server(IrcConnection* connection) const;
@@ -74,6 +80,7 @@ signals:
     void bufferRemoved(IrcBuffer* buffer);
     void bufferAboutToBeAdded(IrcBuffer* buffer);
     void bufferAboutToBeRemoved(IrcBuffer* buffer);
+    void currentBufferChanged(IrcBuffer* buffer);
 
     void nickNameRequired(IrcConnection* connection, const QString& reserved);
     void channelKeyRequired(IrcConnection* connection, const QString& channel);
@@ -83,11 +90,13 @@ private slots:
     void closeConnection(IrcBuffer* buffer);
     void onChannelKeyRequired(const QString& channel);
     void onNickNameRequired(const QString& reserved);
+    void processMessage(IrcMessage* message);
 
 private:
     QList<QObject*> m_models;
     QList<QObject*> m_servers;
     QList<QObject*> m_connections;
+    QPointer<IrcBuffer> m_current;
 };
 
 #endif // BUFFERPROXYMODEL_H

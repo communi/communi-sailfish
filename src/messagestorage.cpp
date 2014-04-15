@@ -38,6 +38,8 @@
 MessageStorage::MessageStorage(BufferProxyModel* proxy) : QObject(proxy), m_dirty(0), m_highlights(0),
     m_firstHiglight(-1), m_lastHighlight(-1), m_baseColor(QColor::fromHsl(359, 102, 116)), m_proxy(proxy)
 {
+    connect(proxy, SIGNAL(currentBufferChanged(IrcBuffer*)), this, SLOT(onCurrentBufferChanged(IrcBuffer*)));
+
     // Register the app as a D-Bus service
     if (!QDBusConnection::sessionBus().registerService("com.communi.irc")) {
         qDebug() << Q_FUNC_INFO << "Couldn't register D-Bus service!";
@@ -56,29 +58,6 @@ MessageModel* MessageStorage::model(IrcBuffer* buffer) const
 QObject* MessageStorage::get(IrcBuffer* buffer) const
 {
     return m_models.value(buffer);
-}
-
-IrcBuffer* MessageStorage::currentBuffer() const
-{
-    return m_current;
-}
-
-void MessageStorage::setCurrentBuffer(IrcBuffer* buffer)
-{
-    if (m_current != buffer) {
-        if (m_current) {
-            MessageModel* model = m_models.value(m_current);
-            if (model)
-                model->setCurrent(false);
-        }
-        if (buffer) {
-            MessageModel* model = m_models.value(buffer);
-            if (model)
-                model->setCurrent(true);
-        }
-        m_current = buffer;
-        emit currentBufferChanged(buffer);
-    }
 }
 
 int MessageStorage::activeHighlights() const
@@ -202,5 +181,17 @@ void MessageStorage::onHighlighted(IrcMessage* message)
         IrcBuffer* buffer = model->buffer();
         if (buffer)
             emit highlighted(buffer, message);
+    }
+}
+
+void MessageStorage::onCurrentBufferChanged(IrcBuffer* buffer)
+{
+    MessageModel* model = m_models.value(buffer);
+    if (m_current != model) {
+        if (m_current)
+            m_current->setCurrent(false);
+        if (model)
+            model->setCurrent(true);
+        m_current = model;
     }
 }

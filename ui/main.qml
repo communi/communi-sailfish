@@ -47,7 +47,7 @@ ApplicationWindow {
 
     onCurrentPageChanged: {
         if (currentPage && currentPage.buffer)
-            MessageStorage.currentBuffer = currentPage.buffer
+            BufferModel.currentBuffer = currentPage.buffer
     }
 
     // Opens all IRC connections
@@ -137,7 +137,7 @@ ApplicationWindow {
             scheduler.push(joinDialog, {channel: channel, index: BufferModel.connections.indexOf(connection)})
         }
         onBufferAboutToBeRemoved: {
-            if (buffer === MessageStorage.currentBuffer) {
+            if (buffer === BufferModel.currentBuffer) {
                 var idx = buffer.model.indexOf(buffer)
                 var replacement = buffer.model.get(idx + 1) || buffer.model.get(Math.max(0, idx - 1))
                 if (replacement !== buffer)
@@ -191,7 +191,7 @@ ApplicationWindow {
         summary: buffer ? qsTr("IRC highlight - %1").arg(buffer.title) : ""
 
         onClicked: {
-            if (buffer && buffer !== MessageStorage.currentBuffer)
+            if (buffer && buffer !== BufferModel.currentBuffer)
                 scheduler.replace(bufferPage, { buffer: buffer });
             window.activate();
         }
@@ -242,7 +242,7 @@ ApplicationWindow {
             busy: viewer.closed && !!BufferModel.connections && BufferModel.connections.some(function (c) { return c.active && !c.connected; })
             highlighted: MessageStorage.activeHighlights > 0
             onClicked: {
-                if (buffer !== MessageStorage.currentBuffer)
+                if (buffer !== BufferModel.currentBuffer)
                     scheduler.replace(bufferPage, {buffer: buffer})
                 else
                     viewer.hidePanel()
@@ -251,7 +251,7 @@ ApplicationWindow {
 
         rightPanel: UserListPanel {
             id: rightPanel
-            buffer: MessageStorage.currentBuffer
+            buffer: BufferModel.currentBuffer
             active: !!buffer && buffer.channel && buffer.active
             onClicked: {
                 currentPage.textEntry.insertName(user.name)

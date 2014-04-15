@@ -43,7 +43,6 @@ class MessageStorage : public QObject
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "com.communi.irc")
-    Q_PROPERTY(IrcBuffer* currentBuffer READ currentBuffer WRITE setCurrentBuffer NOTIFY currentBufferChanged)
     Q_PROPERTY(int activeHighlights READ activeHighlights NOTIFY activeHighlightsChanged SCRIPTABLE true)
     Q_PROPERTY(int firstActiveHighlight READ firstActiveHighlight NOTIFY firstActiveHighlightChanged)
     Q_PROPERTY(int lastActiveHighlight READ lastActiveHighlight NOTIFY lastActiveHighlightChanged)
@@ -54,9 +53,6 @@ public:
 
     MessageModel* model(IrcBuffer* buffer) const;
     Q_INVOKABLE QObject* get(IrcBuffer* buffer) const;
-
-    IrcBuffer* currentBuffer() const;
-    void setCurrentBuffer(IrcBuffer* buffer);
 
     int activeHighlights() const;
     void setActiveHighlights(int highlights);
@@ -78,7 +74,6 @@ signals:
     void added(MessageModel* model);
     void removed(MessageModel* model);
 
-    void currentBufferChanged(IrcBuffer* buffer);
     void highlighted(IrcBuffer* buffer, IrcMessage* message);
 
     Q_SCRIPTABLE void activeHighlightsChanged(int highlights);
@@ -91,6 +86,7 @@ protected:
 private slots:
     void updateActiveHighlights();
     void onHighlighted(IrcMessage* message);
+    void onCurrentBufferChanged(IrcBuffer* buffer);
 
 private:
     int m_dirty;
@@ -99,7 +95,7 @@ private:
     int m_lastHighlight;
     QColor m_baseColor;
     BufferProxyModel* m_proxy;
-    QPointer<IrcBuffer> m_current;
+    QPointer<MessageModel> m_current;
     QHash<IrcBuffer*, MessageModel*> m_models;
 };
 

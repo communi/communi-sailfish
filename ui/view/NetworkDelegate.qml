@@ -113,7 +113,7 @@ ListItem {
         truncationMode: TruncationMode.Fade
         anchors { left: loader.right; right: parent.right; verticalCenter: parent.verticalCenter; margins: Theme.paddingLarge }
         color: (!storage || !root.connected) ? Theme.secondaryColor :
-                buffer === MessageStorage.currentBuffer ? Theme.primaryColor :
+                buffer === BufferModel.currentBuffer ? Theme.primaryColor :
                (storage.activeHighlights > 0 ? window.nickHighlight :
                (storage.badge > 0 ? Theme.highlightColor : Theme.primaryColor))
     }

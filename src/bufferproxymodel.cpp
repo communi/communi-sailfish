@@ -50,28 +50,6 @@ public slots:
         IrcBuffer::close(reason);
     }
 
-    void processMessage(IrcMessage* message)
-    {
-        // deliver targeted ChanServ notices to the target channel
-        // ":ChanServ!ChanServ@services. NOTICE myself :[#channel] foo bar..."
-        if (message->type() == IrcMessage::Notice && message->prefix() == "ChanServ!ChanServ@services.") {
-            QString content = static_cast<IrcNoticeMessage*>(message)->content();
-            if (content.startsWith("[")) {
-                int i = content.indexOf("]");
-                if (i != -1) {
-                    QString title = content.mid(1, i - 1);
-                    IrcBuffer* buffer = model()->find(title);
-                    if (buffer) {
-                        message->setProperty("forwarded", true);
-                        buffer->receiveMessage(message);
-                        return;
-                    }
-                }
-            }
-        }
-        receiveMessage(message);
-    }
-
 private slots:
     void quit(const QString& reason)
     {
@@ -131,6 +109,19 @@ QList<QObject*> BufferProxyModel::connections() const
     return m_connections;
 }
 
+IrcBuffer* BufferProxyModel::currentBuffer() const
+{
+    return m_current;
+}
+
+void BufferProxyModel::setCurrentBuffer(IrcBuffer* buffer)
+{
+    if (m_current != buffer) {
+        m_current = buffer;
+        emit currentBufferChanged(buffer);
+    }
+}
+
 QObject* BufferProxyModel::model(IrcConnection* connection) const
 {
     if (connection)
@@ -165,7 +156,7 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
 
     connection->setReconnectDelay(5); // TODO: settings?
     connect(connection, SIGNAL(displayNameChanged(QString)), buffer, SLOT(setName(QString)));
-    connect(model, SIGNAL(messageIgnored(IrcMessage*)), buffer, SLOT(processMessage(IrcMessage*)));
+    connect(model, SIGNAL(messageIgnored(IrcMessage*)), this, SLOT(processMessage(IrcMessage*)));
 
     connect(connection, SIGNAL(enabledChanged(bool)), this, SLOT(onConnectionEnabledChanged(bool)));
     connect(connection, SIGNAL(nickNameRequired(QString,QString*)), this, SLOT(onNickNameRequired(QString)));
@@ -341,6 +332,38 @@ void BufferProxyModel::onNickNameRequired(const QString& reserved)
     IrcConnection* connection = qobject_cast<IrcConnection*>(sender());
     if (connection)
         emit nickNameRequired(connection, reserved);
+}
+
+void BufferProxyModel::processMessage(IrcMessage* message)
+{
+    IrcBufferModel* model = message->connection()->findChild<IrcBufferModel*>();
+    if (model) {
+        // deliver targeted ChanServ notices to the target channel
+        // ":ChanServ!ChanServ@services. NOTICE myself :[#channel] foo bar..."
+        if (message->type() == IrcMessage::Notice) {
+            if (message->prefix() == "ChanServ!ChanServ@services.") {
+                QString content = static_cast<IrcNoticeMessage*>(message)->content();
+                if (content.startsWith("[")) {
+                    int i = content.indexOf("]");
+                    if (i != -1) {
+                        QString title = content.mid(1, i - 1);
+                        IrcBuffer* buffer = model->find(title);
+                        if (buffer) {
+                            message->setProperty("forwarded", true);
+                            buffer->receiveMessage(message);
+                            return;
+                        }
+                    }
+                }
+            }
+            if (m_current && m_current->model() == model) {
+                m_current->receiveMessage(message);
+                return;
+            }
+        }
+        if (IrcBuffer* buffer = model->get(0))
+            buffer->receiveMessage(message);
+    }
 }
 
 #include "bufferproxymodel.moc"
