@@ -89,7 +89,7 @@ Dialog {
                     linkColor: Theme.highlightColor
                     font.pixelSize: Theme.fontSizeSmall
                     truncationMode: TruncationMode.Fade
-                    text: "Issue tracker: <a href='https://github.com/communi/communi-sailfish/issues'>https://github.com/communi/communi-sailfish/issues</a>"
+                    text: "Bug reports: <a href='https://github.com/communi/communi-sailfish/issues'>https://github.com/communi/communi-sailfish/issues</a>"
                     onLinkActivated: Qt.openUrlExternally(link)
                 }
             }
