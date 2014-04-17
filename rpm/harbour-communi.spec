@@ -13,7 +13,7 @@ License:    LGPLv2 and BSD
 URL:        http://communi.github.io/
 Source0:    %{name}-%{version}.tar.gz
 
-Version:    0.4
+Version:    0.5
 Release:    1
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
@@ -40,6 +40,15 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 %attr(644,root,root) %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 
 %changelog
+* Thu Apr 17 2014 J-P Nurmi <jpnurmi@gmail.com> 0.5
+- Fixed the user search case sensitivity and the toolbar icon
+- Made the visualization for highlights above/below the current
+  view list scrolling position more accurate
+- Added /CTCP <target> <command...>
+- Made "unhandled" notices to be delivered to the current view instead
+  of the server view
+- Added contact details to the about dialog
+
 * Mon Apr 07 2014 J-P Nurmi <jpnurmi@gmail.com> 0.4
 - Added a search toolbar for channel users
 - Added a subtle visualization for highlights above/below the current
