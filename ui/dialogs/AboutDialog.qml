@@ -128,6 +128,8 @@ Dialog {
                 text: "Stephan Beyerle &mdash; Morpog<br/>
                        Stanisław Dac &mdash; stsdc"
             }
+
+            Item { width: 1; height: 1 }
         }
 
         VerticalScrollDecorator { }
