@@ -49,7 +49,7 @@
 #include <IrcModel>
 #include <IrcUtil>
 
-static void registerIrcTypes(const char* uri, int major = 3, int minor = 1)
+static void registerIrcTypes(const char* uri, int major = 3, int minor = 2)
 {
     // IrcCore
     Irc::registerMetaTypes();
@@ -91,8 +91,8 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 #endif
 
     qRegisterMetaType<QAbstractItemModel*>();
-    qmlRegisterType<MessageFilter>("Communi", 3, 1, "MessageFilter");
-    qmlRegisterType<StringFilterModel>("Communi", 3, 1, "StringFilterModel");
+    qmlRegisterType<MessageFilter>("Communi", 3, 2, "MessageFilter");
+    qmlRegisterType<StringFilterModel>("Communi", 3, 2, "StringFilterModel");
 
     NetworkSession* session = new NetworkSession(app.data());
     viewer->rootContext()->setContextProperty("NetworkSession", session);
