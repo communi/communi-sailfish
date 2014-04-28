@@ -29,6 +29,7 @@
 import QtQuick 2.1
 import Communi 3.2
 import Sailfish.Silica 1.0
+import StringFilterModel 1.0
 
 Panel {
     id: panel

@@ -45,35 +45,6 @@
 #include "stringfiltermodel.h"
 #include "messagefilter.h"
 
-#include <IrcCore>
-#include <IrcModel>
-#include <IrcUtil>
-
-static void registerIrcTypes(const char* uri, int major = 3, int minor = 2)
-{
-    // IrcCore
-    Irc::registerMetaTypes();
-    qmlRegisterType<Irc>(uri, major, minor, "Irc");
-    qmlRegisterType<IrcCommand>(uri, major, minor, "IrcCommand");
-    qmlRegisterType<IrcConnection>(uri, major, minor, "IrcConnection");
-    qmlRegisterUncreatableType<IrcMessage>(uri, major, minor, "IrcMessage", "Cannot create an instance of IrcMessage. Use IrcConnection::messageReceived() signal instead.");
-    qmlRegisterUncreatableType<IrcNetwork>(uri, major, minor, "IrcNetwork", "Cannot create an instance of IrcNetwork. Use IrcConnection::network property instead.");
-
-    // IrcModel
-    qmlRegisterType<IrcBuffer>(uri, major, minor, "IrcBuffer");
-    qmlRegisterType<IrcBufferModel>(uri, major, minor, "IrcBufferModel");
-    qmlRegisterType<IrcChannel>(uri, major, minor, "IrcChannel");
-    qmlRegisterType<IrcUser>(uri, major, minor, "IrcUser");
-    qmlRegisterType<IrcUserModel>(uri, major, minor, "IrcUserModel");
-
-    // IrcUtil
-    qmlRegisterType<IrcCommandParser>(uri, major, minor, "IrcCommandParser");
-    qmlRegisterType<IrcLagTimer>(uri, major, minor, "IrcLagTimer");
-    qmlRegisterType<IrcTextFormat>(uri, major, minor, "IrcTextFormat");
-    qmlRegisterUncreatableType<IrcPalette>(uri, major, minor, "IrcPalette", "Cannot create an instance of IrcPalette. Use IrcTextFormat::palette property instead.");
-    qmlRegisterType<IrcCompleter>(uri, major, minor, "IrcCompleter");
-}
-
 Q_DECL_EXPORT int main(int argc, char* argv[])
 {
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
@@ -83,16 +54,15 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
     QGuiApplication::setApplicationVersion(APP_VERSION);
 
     QScopedPointer<QQuickView> viewer(SailfishApp::createView());
-
-    registerIrcTypes("Communi");
+    viewer->engine()->addImportPath("/usr/share/harbour-communi/qml");
 
 #if QT_VERSION < 0x050200
     qmlRegisterType<QQmlSettings>("Qt.labs.settings", 1, 0, "Settings");
 #endif
 
     qRegisterMetaType<QAbstractItemModel*>();
-    qmlRegisterType<MessageFilter>("Communi", 3, 2, "MessageFilter");
-    qmlRegisterType<StringFilterModel>("Communi", 3, 2, "StringFilterModel");
+    qmlRegisterType<MessageFilter>("MessageFilter", 1, 0, "MessageFilter");
+    qmlRegisterType<StringFilterModel>("StringFilterModel", 1, 0, "StringFilterModel");
 
     NetworkSession* session = new NetworkSession(app.data());
     viewer->rootContext()->setContextProperty("NetworkSession", session);
