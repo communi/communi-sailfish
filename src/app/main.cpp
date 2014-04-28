@@ -83,7 +83,7 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
     QObject::connect(storage, SIGNAL(added(MessageModel*)), activity, SLOT(add(MessageModel*)));
     QObject::connect(storage, SIGNAL(removed(MessageModel*)), activity, SLOT(remove(MessageModel*)));
 
-    viewer->setSource(QUrl("qrc:///ui/main.qml"));
+    viewer->setSource(QUrl("qrc:///qml/main.qml"));
     viewer->showFullScreen();
 
     return app->exec();
