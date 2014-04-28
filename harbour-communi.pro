@@ -1,20 +1,8 @@
-TEMPLATE = app
-TARGET = harbour-communi
-CONFIG += c++11 sailfishapp
-DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x000000
-QT += dbus
-VERSION = 0.5
-DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+TEMPLATE = subdirs
+SUBDIRS += src
 
-!exists(src/shared/shared.pri)|!exists(src/backend/src/src.pri): \
+!exists(src/shared/shared.pri)|!exists(src/backend/src/src.pro): \
     error(A Git submodule is missing. Run \'git submodule update --init\' in the project root.)
-
-include(src/src.pri)
-include(src/shared/shared.pri)
-include(src/backend/src/src.pri)
-
-RESOURCES += \
-    harbour-communi.qrc
 
 OTHER_FILES += \
     ui/*.qml \
@@ -23,6 +11,6 @@ OTHER_FILES += \
     ui/settings/*.qml \
     ui/view/*.qml \
     rpm/harbour-communi.spec \
-    harbour-communi.desktop \
-    harbour-communi.png \
+    src/app/harbour-communi.desktop \
+    src/app/harbour-communi.png \
     README.md

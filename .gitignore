@@ -11,6 +11,7 @@ release
 *.user
 *.user.*
 .qmake.cache
+.qmake.stash
 .make.cache
 .tmp
 moc_*.cpp

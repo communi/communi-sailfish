@@ -36,6 +36,8 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 %files
 %defattr(-,root,root,-)
 %{_bindir}/%{name}
+%{_datadir}/%{name}/lib
+%{_datadir}/%{name}/qml
 %attr(644,root,root) %{_datadir}/applications/%{name}.desktop
 %attr(644,root,root) %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 
