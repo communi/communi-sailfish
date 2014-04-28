@@ -38,6 +38,7 @@ Dialog {
     property string title: qsTr("Connect")
     property string defaultPort: "6667"
     property string defaultSslPort: "6697"
+    property string defaultQuasselPort: "4242"
     property string defaultNickName: qsTr("Sailor%1").arg(Math.floor(Math.random() * 12345))
     property string defaultUserName: "sailfish"
     property string defaultRealName: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
@@ -78,6 +79,7 @@ Dialog {
         var userData = connection.userData
         userData['originalNickName'] = nickNameField.text
         userData['alternateNickName'] = alternateNickNameField.text
+        userData['quassel'] = quasselBox.checked
         connection.userData = userData
     }
 
@@ -199,6 +201,19 @@ Dialog {
                             portField.text = defaultSslPort
                         else if (!checked && portField.text === defaultSslPort)
                             portField.text = defaultPort
+                    }
+                }
+
+                TextSwitch {
+                    id: quasselBox
+                    anchors { left: parent.left; right: parent.right; rightMargin: Theme.paddingLarge }
+                    description: qsTr("The Quassel protocol support is experimental")
+                    text: qsTr("Use Quassel protocol")
+                    onCheckedChanged: {
+                        if (checked && (portField.text === defaultPort || portField.text === defaultSslPort))
+                            portField.text = defaultQuasselPort
+                        else if (!checked && portField.text === defaultQuasselPort)
+                            portField.text = secureBox.checked ? defaultSslPort : defaultPort
                     }
                 }
             }

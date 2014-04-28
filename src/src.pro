@@ -1,3 +1,5 @@
 TEMPLATE = subdirs
-SUBDIRS += backend/src app
-CONFIG += ordered
+backend.file = backend/src/src.pro
+app.depends = backend
+plugins.depends = backend
+SUBDIRS += backend app plugins

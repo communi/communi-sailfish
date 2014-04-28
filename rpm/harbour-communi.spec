@@ -5,7 +5,7 @@
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 %define __provides_exclude_from ^%{_datadir}/.*$
-%define __requires_exclude ^libIrcCore|libIrcModel|libIrcUtil|libcommuniplugin.*$
+%define __requires_exclude ^libIrcCore|libIrcModel|libIrcUtil|libcommuniplugin|libquasselplugin.*$
 # << macros
 
 Name:       harbour-communi
@@ -40,6 +40,7 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 %{_bindir}/%{name}
 %{_datadir}/%{name}/lib
 %{_datadir}/%{name}/qml
+%{_datadir}/%{name}/plugins
 %attr(644,root,root) %{_datadir}/applications/%{name}.desktop
 %attr(644,root,root) %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 
