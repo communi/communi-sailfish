@@ -81,6 +81,8 @@ signals:
     void bufferAboutToBeAdded(IrcBuffer* buffer);
     void bufferAboutToBeRemoved(IrcBuffer* buffer);
     void currentBufferChanged(IrcBuffer* buffer);
+    void connectionAdded(IrcConnection* connection);
+    void connectionRemoved(IrcConnection* connection);
 
     void connected(IrcConnection* connection);
     void disconnected(IrcConnection* connection);

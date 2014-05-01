@@ -188,6 +188,7 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
     m_servers.append(buffer);
     m_models.append(model);
 
+    emit connectionAdded(connection);
     emit connectionsChanged();
     emit serversChanged();
     emit modelsChanged();
@@ -216,6 +217,7 @@ void BufferProxyModel::removeConnection(IrcConnection* connection)
             if (QObject* connection = m_connections.takeAt(index))
                 connection->deleteLater();
 
+            emit connectionRemoved(connection);
             emit connectionsChanged();
             emit serversChanged();
             emit modelsChanged();
