@@ -44,6 +44,7 @@
 #include "messageformatter.h"
 #include "stringfiltermodel.h"
 #include "messagefilter.h"
+#include "pluginloader.h"
 
 #include <IrcCore>
 #include <IrcModel>
@@ -107,6 +108,13 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
     viewer->rootContext()->setContextProperty("ActivityModel", activity);
     QObject::connect(storage, SIGNAL(added(MessageModel*)), activity, SLOT(add(MessageModel*)));
     QObject::connect(storage, SIGNAL(removed(MessageModel*)), activity, SLOT(remove(MessageModel*)));
+
+    PluginLoader loader;
+    loader.setPluginPath("/usr/share/harbour-communi/plugins");
+    if (loader.load()) {
+        QObject::connect(model, SIGNAL(connectionAdded(IrcConnection*)), &loader, SLOT(connectionAdded(IrcConnection*)));
+        QObject::connect(model, SIGNAL(connectionRemoved(IrcConnection*)), &loader, SLOT(connectionRemoved(IrcConnection*)));
+    }
 
     viewer->setSource(QUrl("qrc:///qml/main.qml"));
     viewer->showFullScreen();

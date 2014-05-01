@@ -11,6 +11,9 @@ INCLUDEPATH += ../backend/include/IrcModel
 INCLUDEPATH += ../backend/include/IrcUtil
 LIBS += -L ../backend/lib -lIrcCore -lIrcModel -lIrcUtil
 
+INCLUDEPATH += ../plugins
+DEPENDPATH += ../plugins
+
 HEADERS += $$PWD/activitymodel.h
 HEADERS += $$PWD/bufferfiltermodel.h
 HEADERS += $$PWD/bufferproxymodel.h
@@ -18,6 +21,7 @@ HEADERS += $$PWD/messagefilter.h
 HEADERS += $$PWD/messagemodel.h
 HEADERS += $$PWD/messagerole.h
 HEADERS += $$PWD/messagestorage.h
+HEADERS += $$PWD/pluginloader.h
 HEADERS += $$PWD/stringfiltermodel.h
 
 SOURCES += $$PWD/activitymodel.cpp
@@ -27,6 +31,7 @@ SOURCES += $$PWD/messagefilter.cpp
 SOURCES += $$PWD/messagemodel.cpp
 SOURCES += $$PWD/messagestorage.cpp
 SOURCES += $$PWD/main.cpp
+SOURCES += $$PWD/pluginloader.cpp
 SOURCES += $$PWD/stringfiltermodel.cpp
 
 include(../3rdparty/3rdparty.pri)
