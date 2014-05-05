@@ -18,7 +18,6 @@ HEADERS += $$PWD/messagefilter.h
 HEADERS += $$PWD/messagemodel.h
 HEADERS += $$PWD/messagerole.h
 HEADERS += $$PWD/messagestorage.h
-HEADERS += $$PWD/networksession.h
 HEADERS += $$PWD/stringfiltermodel.h
 
 SOURCES += $$PWD/activitymodel.cpp
@@ -27,7 +26,6 @@ SOURCES += $$PWD/bufferproxymodel.cpp
 SOURCES += $$PWD/messagefilter.cpp
 SOURCES += $$PWD/messagemodel.cpp
 SOURCES += $$PWD/messagestorage.cpp
-SOURCES += $$PWD/networksession.cpp
 SOURCES += $$PWD/main.cpp
 SOURCES += $$PWD/stringfiltermodel.cpp
 
