@@ -30,8 +30,9 @@
 #define COMMUNIPLUGIN_H
 
 #include <QtPlugin>
+#include <IrcGlobal>
 
-class IrcConnection;
+IRC_FORWARD_DECLARE_CLASS(IrcConnection)
 
 class CommuniPlugin
 {

@@ -29,10 +29,11 @@
 #ifndef PLUGINLOADER_H
 #define PLUGINLOADER_H
 
+#include <IrcGlobal>
 #include <QPluginLoader>
 
-class IrcConnection;
 class CommuniPlugin;
+IRC_FORWARD_DECLARE_CLASS(IrcConnection)
 
 class PluginLoader : public QObject
 {
