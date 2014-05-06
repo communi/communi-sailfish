@@ -45,6 +45,29 @@
 #include "stringfiltermodel.h"
 #include "messagefilter.h"
 
+#include <IrcCore>
+#include <IrcModel>
+#include <IrcUtil>
+
+IRC_USE_NAMESPACE
+
+static void registerCommuniTypes()
+{
+    Irc::registerMetaTypes();
+
+    qRegisterMetaType<IrcBuffer*>("IrcBuffer*");
+    qRegisterMetaType<IrcBufferModel*>("IrcBufferModel*");
+    qRegisterMetaType<IrcChannel*>("IrcChannel*");
+    qRegisterMetaType<IrcUser*>("IrcUser*");
+    qRegisterMetaType<IrcUserModel*>("IrcUserModel*");
+
+    qRegisterMetaType<IrcCommandParser*>("IrcCommandParser*");
+    qRegisterMetaType<IrcCompleter*>("IrcCompleter*");
+    qRegisterMetaType<IrcLagTimer*>("IrcLagTimer*");
+    qRegisterMetaType<IrcPalette*>("IrcPalette*");
+    qRegisterMetaType<IrcTextFormat*>("IrcTextFormat*");
+}
+
 Q_DECL_EXPORT int main(int argc, char* argv[])
 {
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
@@ -59,6 +82,8 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 #if QT_VERSION < 0x050200
     qmlRegisterType<QQmlSettings>("Qt.labs.settings", 1, 0, "Settings");
 #endif
+
+    registerCommuniTypes();
 
     qRegisterMetaType<QAbstractItemModel*>();
     qmlRegisterType<MessageFilter>("MessageFilter", 1, 0, "MessageFilter");

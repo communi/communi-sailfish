@@ -35,6 +35,8 @@
 #include <IrcConnection>
 #include <IrcBuffer>
 
+IRC_USE_NAMESPACE
+
 class IrcServerBuffer : public IrcBuffer
 {
     Q_OBJECT

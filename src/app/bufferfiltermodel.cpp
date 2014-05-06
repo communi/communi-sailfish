@@ -31,6 +31,8 @@
 #include "messagemodel.h"
 #include <IrcBuffer>
 
+IRC_USE_NAMESPACE
+
 BufferFilterModel::BufferFilterModel(MessageStorage* storage) :
     QSortFilterProxyModel(storage), m_status(0), m_storage(storage)
 {

@@ -32,7 +32,6 @@
 #include <QStringList>
 #include <QAbstractListModel>
 
-class IrcBuffer;
 class MessageModel;
 
 class ActivityModel : public QAbstractListModel

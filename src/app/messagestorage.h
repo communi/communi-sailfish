@@ -33,11 +33,13 @@
 #include <QColor>
 #include <QObject>
 #include <QPointer>
+#include <IrcGlobal>
 
-class IrcBuffer;
-class IrcMessage;
 class MessageModel;
 class BufferProxyModel;
+
+IRC_FORWARD_DECLARE_CLASS(IrcBuffer)
+IRC_FORWARD_DECLARE_CLASS(IrcMessage)
 
 class MessageStorage : public QObject
 {

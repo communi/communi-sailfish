@@ -31,12 +31,11 @@
 
 #include "RowsJoinerProxy.h"
 #include <QPointer>
+#include <IrcGlobal>
 
-class IrcBuffer;
-class IrcMessage;
-class IrcConnection;
-class IrcBufferModel;
-class IrcServerBuffer;
+IRC_FORWARD_DECLARE_CLASS(IrcBuffer)
+IRC_FORWARD_DECLARE_CLASS(IrcMessage)
+IRC_FORWARD_DECLARE_CLASS(IrcConnection)
 
 class BufferProxyModel : public RowsJoinerProxy
 {

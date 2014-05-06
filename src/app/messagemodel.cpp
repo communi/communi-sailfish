@@ -35,6 +35,8 @@
 #include <IrcBuffer>
 #include <QDateTime>
 
+IRC_USE_NAMESPACE
+
 MessageModel::MessageModel(IrcBuffer* buffer) : QAbstractListModel(buffer),
     m_badge(0), m_current(false), m_visible(false), m_separator(-1),
     m_highlights(0), m_buffer(buffer), m_formatter(new MessageFormatter(this))

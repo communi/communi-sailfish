@@ -34,8 +34,9 @@
 #include <QBitArray>
 #include <QVector>
 
-class IrcBuffer;
 class MessageFormatter;
+IRC_FORWARD_DECLARE_CLASS(IrcBuffer)
+IRC_FORWARD_DECLARE_CLASS(IrcMessage)
 
 class MessageModel : public QAbstractListModel
 {

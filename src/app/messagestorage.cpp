@@ -35,6 +35,8 @@
 #include <QtCore/QDebug>
 #include <QtDBus/QDBusConnection>
 
+IRC_USE_NAMESPACE
+
 MessageStorage::MessageStorage(BufferProxyModel* proxy) : QObject(proxy), m_dirty(0), m_highlights(0),
     m_firstHiglight(-1), m_lastHighlight(-1), m_baseColor(QColor::fromHsl(359, 102, 116)), m_proxy(proxy)
 {

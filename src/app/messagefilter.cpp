@@ -30,6 +30,8 @@
 #include "messagerole.h"
 #include <IrcMessage>
 
+IRC_USE_NAMESPACE
+
 MessageFilter::MessageFilter(QObject* parent) : QSortFilterProxyModel(parent), m_events(true)
 {
     setDynamicSortFilter(true);
