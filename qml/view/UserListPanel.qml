@@ -29,6 +29,7 @@
 import QtQuick 2.1
 import Communi 3.2
 import Sailfish.Silica 1.0
+import SortedUserModel 1.0
 import StringFilterModel 1.0
 
 Panel {
@@ -39,10 +40,11 @@ Panel {
     signal clicked(IrcUser user)
     signal queried(IrcUser user)
 
-    IrcUserModel {
+    SortedUserModel {
         id: userModel
         channel: panel.buffer ? panel.buffer.toChannel() : null
-        sortMethod: Irc.SortByTitle
+        // Error: Cannot assign int to IRC_PREPEND_NAMESPACE(Irc::SortMethod
+        // sortMethod: Irc.SortByTitle
     }
 
     SilicaListView {

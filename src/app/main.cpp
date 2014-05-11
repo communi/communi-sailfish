@@ -50,6 +50,15 @@
 #include <IrcModel>
 #include <IrcUtil>
 
+class SortedUserModel : public IRC_PREPEND_NAMESPACE(IrcUserModel)
+{
+public:
+    SortedUserModel(QObject* parent = 0) : IRC_PREPEND_NAMESPACE(IrcUserModel)(parent)
+    {
+        setSortMethod(IRC_PREPEND_NAMESPACE(Irc)::SortByTitle);
+    }
+};
+
 IRC_USE_NAMESPACE
 
 static void registerCommuniTypes()
@@ -88,6 +97,7 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 
     qRegisterMetaType<QAbstractItemModel*>();
     qmlRegisterType<MessageFilter>("MessageFilter", 1, 0, "MessageFilter");
+    qmlRegisterType<SortedUserModel>("SortedUserModel", 1, 0, "SortedUserModel");
     qmlRegisterType<StringFilterModel>("StringFilterModel", 1, 0, "StringFilterModel");
 
     NetworkSession* session = new NetworkSession(app.data());
