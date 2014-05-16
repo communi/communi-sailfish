@@ -33,7 +33,7 @@ import Sailfish.Silica 1.0
 Dialog {
     id: welcomePage
 
-    canAccept: BufferModel.models.length > 0 && BufferModel.connections.some(function (c) { return c.enabled; })
+    canAccept: BufferModel.models.length > 0 && BufferModel.connections.some(function (c) { return c.enabled })
     allowedOrientations: window.allowedOrientations
     backNavigation: false
 
@@ -56,25 +56,19 @@ Dialog {
                 ContextMenu {
                     MenuItem {
                         text: qsTr("Edit")
-                        onClicked: {
-                            pageStack.push(editDialog, { connection: modelData });
-                        }
+                        onClicked: pageStack.push(editDialog, { connection: modelData })
                     }
                     MenuItem {
                         text: qsTr("Remove")
                         onClicked: {
-                            var m = BufferModel;
-                            var conn = modelData;
-
-                            listItem.remorseAction(qsTr("Removing"), function() {
-                                m.removeConnection(conn);
-                            }, 3000);
+                            var m = BufferModel
+                            var conn = modelData
+                            listItem.remorseAction(qsTr("Removing"), function() { m.removeConnection(conn) }, 3000)
                         }
                     }
                 }
             }
 
-            // Switch to select which network you want to connect to
             TextSwitch {
                 // This is for preventing a binding loop
                 property bool bindNow: false
@@ -100,13 +94,11 @@ Dialog {
             // This is a hack to allow single tap to toggle the switch AND press-and-hold to show the menu
             MouseArea {
                 anchors.fill: connectionSwitch
-                onPressAndHold: {
-                    listItem.showMenu();
-                }
+                onPressAndHold: listItem.showMenu()
                 onClicked: {
-                    connectionSwitch.bindNow = true;
-                    connectionSwitch.checked = !connectionSwitch.checked;
-                    connectionSwitch.bindNow = false;
+                    connectionSwitch.bindNow = true
+                    connectionSwitch.checked = !connectionSwitch.checked
+                    connectionSwitch.bindNow = false
                 }
             }
         }
@@ -124,9 +116,7 @@ Dialog {
             }
             MenuItem {
                 text: qsTr("Add a network")
-                onClicked: {
-                    pageStack.push(networkDialog);
-                }
+                onClicked: pageStack.push(networkDialog)
             }
         }
 

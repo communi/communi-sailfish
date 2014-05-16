@@ -74,7 +74,7 @@ FocusScope {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: Theme.paddingLarge // implicitHeight / 2 // Theme.fontSizeSmall
+        anchors.verticalCenterOffset: Theme.paddingLarge
         textLeftMargin: Theme.itemSizeSmall + 2 * Theme.paddingSmall
 
         EnterKey.text: qsTr("Send")
@@ -117,14 +117,12 @@ FocusScope {
             }
         }
 
-        Keys.onTabPressed: {
-            field.autoComplete();
-        }
+        Keys.onTabPressed: field.autoComplete()
 
         function autoComplete() {
-            field.forceActiveFocus();
-            Qt.inputMethod.commit();
-            completer.complete(field.text, field.cursorPosition);
+            field.forceActiveFocus()
+            Qt.inputMethod.commit()
+            completer.complete(field.text, field.cursorPosition)
         }
     }
 
@@ -193,8 +191,8 @@ FocusScope {
         buffer: entry.buffer
         parser: parser
         onCompleted: {
-            field.text = text;
-            field.cursorPosition = cursor;
+            field.text = text
+            field.cursorPosition = cursor
         }
     }
 }

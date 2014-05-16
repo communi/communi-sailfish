@@ -50,24 +50,23 @@ ApplicationWindow {
             BufferModel.currentBuffer = currentPage.buffer
     }
 
-    // Opens all IRC connections
-    function openAllConnections() {
+    function openConnections() {
         if (NetworkSession.open()) {
-            var buffer = null;
+            var buffer = null
             for (var i = 0; i < BufferModel.connections.length; i++) {
-                var connection = BufferModel.connections[i];
+                var connection = BufferModel.connections[i]
                 if (connection.enabled) {
-                    connection.open();
+                    connection.open()
                     if (!buffer)
-                        buffer = BufferModel.server(connection);
+                        buffer = BufferModel.server(connection)
                 }
             }
 
-            var prev = pageStack.previousPage();
+            var prev = pageStack.previousPage()
             if (prev && prev.buffer === null)
-                prev.buffer = buffer;
+                prev.buffer = buffer
             else
-                scheduler.replace(bufferPage, { buffer: buffer });
+                scheduler.replace(bufferPage, { buffer: buffer })
         }
     }
 
@@ -86,19 +85,19 @@ ApplicationWindow {
 
     Connections {
         target: Qt.application
-        onAboutToQuit: notification.close();
+        onAboutToQuit: notification.close()
     }
 
     Connections {
         target: MessageStorage
         onHighlighted: {
             if (Qt.application.active) {
-                feedback.give();
+                feedback.give()
             } else {
-                notification.buffer = buffer;
-                notification.previewBody = qsTr("%1: %2").arg(message.nick).arg(message.content);
-                notification.body = qsTr("%1: %2").arg(message.nick).arg(message.content);
-                notification.publish();
+                notification.buffer = buffer
+                notification.previewBody = qsTr("%1: %2").arg(message.nick).arg(message.content)
+                notification.body = qsTr("%1: %2").arg(message.nick).arg(message.content)
+                notification.publish()
             }
         }
         onActiveHighlightsChanged: {
@@ -111,13 +110,13 @@ ApplicationWindow {
         target: NetworkSession
         onOnlineStateChanged: {
             if (NetworkSession.online && NetworkSession.open())
-                BufferModel.connections.forEach(function(c) { c.open(); })
+                BufferModel.connections.forEach(function(c) { c.open() })
             else
-                BufferModel.connections.forEach(function(c) { c.close(); })
+                BufferModel.connections.forEach(function(c) { c.close() })
         }
         onConnectionChanged: {
             if (NetworkSession.open())
-                BufferModel.connections.forEach(function(c) { c.close(); c.open(); })
+                BufferModel.connections.forEach(function(c) { c.close(); c.open() })
         }
     }
 
@@ -146,7 +145,7 @@ ApplicationWindow {
         }
         onReseted: {
             if (!window.currentPage.__isWelcomeDialog)
-                scheduler.replace(welcomeDialog);
+                scheduler.replace(welcomeDialog)
         }
     }
 
@@ -174,10 +173,10 @@ ApplicationWindow {
         property real previous: 0
         function give() {
             if (!!feedbackConfig.value) {
-                var current = new Date().getTime();
+                var current = new Date().getTime()
                 if (current - previous > 750)
-                    play();
-                previous = current;
+                    play()
+                previous = current
             }
         }
     }
@@ -192,8 +191,8 @@ ApplicationWindow {
 
         onClicked: {
             if (buffer && buffer !== BufferModel.currentBuffer)
-                scheduler.replace(bufferPage, { buffer: buffer });
-            window.activate();
+                scheduler.replace(bufferPage, { buffer: buffer })
+            window.activate()
         }
         onClosed: buffer = null
     }
@@ -202,7 +201,7 @@ ApplicationWindow {
         id: welcomeDialog
         WelcomeDialog {
             property bool __isWelcomeDialog: true
-            onAccepted: window.openAllConnections();
+            onAccepted: window.openConnections()
             Component.onCompleted: NetworkSession.enabled = false
             Component.onDestruction: NetworkSession.enabled = true
         }
@@ -239,7 +238,7 @@ ApplicationWindow {
 
         leftPanel: BufferListPanel {
             id: leftPanel
-            busy: viewer.closed && !!BufferModel.connections && BufferModel.connections.some(function (c) { return c.active && !c.connected; })
+            busy: viewer.closed && !!BufferModel.connections && BufferModel.connections.some(function (c) { return c.active && !c.connected })
             highlighted: MessageStorage.activeHighlights > 0
             onClicked: {
                 if (buffer !== BufferModel.currentBuffer)
@@ -288,8 +287,8 @@ ApplicationWindow {
             id: dialog
             title: qsTr("Add network")
             onAccepted: {
-                var connection = dialog.connection;
-                BufferModel.addConnection(connection);
+                var connection = dialog.connection
+                BufferModel.addConnection(connection)
             }
         }
     }
@@ -306,15 +305,15 @@ ApplicationWindow {
         ConnectDialog {
             id: dialog
             onAccepted: {
-                var connection = dialog.connection;
-                BufferModel.addConnection(connection);
+                var connection = dialog.connection
+                BufferModel.addConnection(connection)
 
                 if (NetworkSession.open()) {
-                    connection.open();
+                    connection.open()
 
                     if (!currentPage || !currentPage.__isBufferPage) {
-                        var newBuffer = BufferModel.servers[BufferModel.servers.length - 1];
-                        scheduler.replace(bufferPage, { buffer: newBuffer });
+                        var newBuffer = BufferModel.servers[BufferModel.servers.length - 1]
+                        scheduler.replace(bufferPage, { buffer: newBuffer })
                     }
                 }
             }
@@ -359,8 +358,7 @@ ApplicationWindow {
 
     Component.onCompleted: {
         BufferModel.restoreState(settings.state)
-        // TODO: check "connect automatically" setting and call window.openAllConnections if true
-        pageStack.push(welcomeDialog);
+        pageStack.push(welcomeDialog)
     }
 
     Component.onDestruction: settings.state = BufferModel.saveState()
