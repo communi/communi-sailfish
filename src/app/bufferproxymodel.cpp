@@ -184,6 +184,7 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
         }
         if (!hasActiveChannels)
             model->restoreState(model->property("savedState").toByteArray());
+        connect(model, SIGNAL(buffersChanged(QList<IrcBuffer*>)), this, SLOT(onModelBuffersChanged()));
     });
 
     m_connections.append(connection);
@@ -322,6 +323,18 @@ void BufferProxyModel::onDisconnected()
     IrcConnection* connection = qobject_cast<IrcConnection*>(sender());
     if (connection)
         emit disconnected(connection);
+}
+
+void BufferProxyModel::onModelBuffersChanged()
+{
+    IrcBufferModel* model = qobject_cast<IrcBufferModel*>(sender());
+    if (model) {
+        IrcConnection* connection = model->connection();
+        if (connection && connection->isConnected()) {
+            qDebug() << "### SAVE" << connection;
+            model->setProperty("savedState", model->saveState());
+        }
+    }
 }
 
 void BufferProxyModel::onConnectionEnabledChanged(bool enabled)

@@ -91,6 +91,7 @@ signals:
 private slots:
     void onConnected();
     void onDisconnected();
+    void onModelBuffersChanged();
     void onConnectionEnabledChanged(bool enabled);
     void closeConnection(IrcBuffer* buffer);
     void onChannelKeyRequired(const QString& channel);
