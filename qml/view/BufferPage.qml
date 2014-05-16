@@ -130,7 +130,26 @@ Page {
             }
 
             delegate: ListItem {
+                id: delegate
                 contentHeight: label.height + (index > 0 && index < view.count - 1 && ListView.isCurrentItem ? Theme.paddingMedium : 0)
+                MouseArea {
+                    anchors.fill: parent
+                    onPressed: pressTimer.start()
+                    onReleased: {
+                        pressTimer.stop()
+                        delegate.down = false
+                    }
+                    onCanceled: {
+                        pressTimer.stop()
+                        delegate.down = false
+                    }
+                    onPressAndHold: delegate.showMenu()
+                    Timer {
+                        id: pressTimer
+                        interval: 100
+                        onTriggered: delegate.down = true
+                    }
+                }
                 Label {
                     id: stamp
                     text: timestamp
