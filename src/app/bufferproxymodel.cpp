@@ -330,10 +330,8 @@ void BufferProxyModel::onModelBuffersChanged()
     IrcBufferModel* model = qobject_cast<IrcBufferModel*>(sender());
     if (model) {
         IrcConnection* connection = model->connection();
-        if (connection && connection->isConnected()) {
-            qDebug() << "### SAVE" << connection;
+        if (connection && connection->isConnected())
             model->setProperty("savedState", model->saveState());
-        }
     }
 }
 
