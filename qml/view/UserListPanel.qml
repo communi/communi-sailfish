@@ -68,7 +68,13 @@ Panel {
                 ContextMenu {
                     MenuItem {
                         text: qsTr("Query")
-                        onClicked: panel.queried(model.user)
+                        // #86 Querying certain users from right-pulley will cause unhandled page fault
+                        onClicked: queryTimer.start()
+                        Timer {
+                            id: queryTimer
+                            interval: 200
+                            onTriggered: panel.queried(model.user)
+                        }
                     }
                     MenuItem {
                         readonly property bool isOp: model.prefix.indexOf("@") !== -1
