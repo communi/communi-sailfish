@@ -354,12 +354,17 @@ ApplicationWindow {
     Settings {
         id: settings
         property var state
+        property var ignores
     }
 
     Component.onCompleted: {
+        IgnoreManager.ignores = settings.ignores || []
         BufferModel.restoreState(settings.state)
         pageStack.push(welcomeDialog)
     }
 
-    Component.onDestruction: settings.state = BufferModel.saveState()
+    Component.onDestruction: {
+        settings.ignores = IgnoreManager.ignores
+        settings.state = BufferModel.saveState()
+    }
 }

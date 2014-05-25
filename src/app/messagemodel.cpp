@@ -273,3 +273,13 @@ void MessageModel::clear()
     setActiveHighlights(0);
     setBadge(0);
 }
+
+void MessageModel::info(const QString& line)
+{
+    MessageData data;
+    data.event = true;
+    data.richtext = line;
+    data.plaintext = line;
+    data.timestamp = QDateTime::currentDateTime().toString("hh:mm");
+    append(data, true);
+}

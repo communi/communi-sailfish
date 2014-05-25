@@ -43,6 +43,7 @@
 #include "messagestorage.h"
 #include "messageformatter.h"
 #include "stringfiltermodel.h"
+#include "ignoremanager.h"
 #include "messagefilter.h"
 #include "pluginloader.h"
 
@@ -118,6 +119,11 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
     viewer->rootContext()->setContextProperty("ActivityModel", activity);
     QObject::connect(storage, SIGNAL(added(MessageModel*)), activity, SLOT(add(MessageModel*)));
     QObject::connect(storage, SIGNAL(removed(MessageModel*)), activity, SLOT(remove(MessageModel*)));
+
+    IgnoreManager* ignore = IgnoreManager::instance();;
+    viewer->rootContext()->setContextProperty("IgnoreManager", ignore);
+    QObject::connect(model, SIGNAL(connectionAdded(IrcConnection*)), ignore, SLOT(addConnection(IrcConnection*)));
+    QObject::connect(model, SIGNAL(connectionRemoved(IrcConnection*)), ignore, SLOT(removeConnection(IrcConnection*)));
 
     PluginLoader loader;
     loader.setPluginPath("/usr/share/harbour-communi/plugins");

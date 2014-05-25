@@ -81,6 +81,7 @@ public:
 
 public slots:
     void clear();
+    void info(const QString& line);
 
 signals:
     void countChanged();

@@ -104,6 +104,23 @@ FocusScope {
                                 query.sendCommand(msgCmd)
                                 query.receiveMessage(msgCmd.toMessage(query.connection.nickName, query.connection))
                             }
+                        } else if (cmd.parameters[0] === "IGNORE") {
+                            var imask = cmd.parameters[1]
+                            if (!imask) {
+                                if (IgnoreManager.ignores.length) {
+                                    MessageStorage.get(buffer).info(qsTr("Ignores:"))
+                                    for (var j = 0; j < IgnoreManager.ignores.length; ++j)
+                                        MessageStorage.get(buffer).info(IgnoreManager.ignores[j])
+                                } else {
+                                    MessageStorage.get(buffer).info(qsTr("No ignores"))
+                                }
+                            } else {
+                                imask = IgnoreManager.addIgnore(imask)
+                                MessageStorage.get(buffer).info(qsTr("Ignored: %1").arg(imask))
+                            }
+                        } else if (cmd.parameters[0] === "UNIGNORE") {
+                            var umask = IgnoreManager.removeIgnore(cmd.parameters[1])
+                            MessageStorage.get(buffer).info(qsTr("Unignored: %1").arg(umask))
                         }
                     } else {
                         buffer.connection.sendCommand(cmd)
@@ -193,6 +210,8 @@ FocusScope {
             parser.addCommand(IrcCommand.Custom, "CLOSE")
             parser.addCommand(IrcCommand.Custom, "QUERY <user> (<message...>)")
             parser.addCommand(IrcCommand.Custom, "MSG <user/channel> <message...>")
+            parser.addCommand(IrcCommand.Custom, "IGNORE (<mask>)");
+            parser.addCommand(IrcCommand.Custom, "UNIGNORE <mask>");
         }
     }
 
