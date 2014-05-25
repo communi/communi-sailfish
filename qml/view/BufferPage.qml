@@ -61,6 +61,10 @@ Page {
             width: parent.width
             height: parent.height - entry.height
 
+            RemorsePopup {
+                id: remorse
+            }
+
             PullDownMenu {
                 id: pullDownMenu
 

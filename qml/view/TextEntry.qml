@@ -121,7 +121,10 @@ FocusScope {
 
         Keys.onReturnPressed: {
             var lines = text.split(/\r?\n/)
-            sendLines(lines)
+            if (lines.length > 2)
+                remorse.execute(qsTr("Warning: sending %1 lines").arg(lines.length), function() { field.sendLines(lines)})
+            else
+                sendLines(lines)
         }
 
         Keys.onTabPressed: field.autoComplete()
