@@ -86,35 +86,42 @@ FocusScope {
         inputMethodHints: Qt.ImhNoAutoUppercase
         focusOutBehavior: FocusBehavior.ClearPageFocus
 
-        Keys.onReturnPressed: {
-            var cmd = parser.parse(text)
-            if (cmd) {
-                if (cmd.type === IrcCommand.Custom) {
-                    if (cmd.parameters[0] === "CLEAR") {
-                        MessageStorage.get(buffer).clear()
-                    } else if (cmd.parameters[0] === "CLOSE") {
-                        pageStack.pop()
-                        buffer.close(qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version))
-                    } else if (cmd.parameters[0] === "QUERY" || cmd.parameters[0] === "MSG") {
-                        var query = buffer.model.add(cmd.parameters[1])
-                        pageStack.replace(bufferPage, {buffer: query})
-                        if (cmd.parameters.length > 2) {
-                            var msgCmd = ircCommand.createMessage(query.title, cmd.parameters.slice(2))
-                            query.sendCommand(msgCmd)
-                            query.receiveMessage(msgCmd.toMessage(query.connection.nickName, query.connection))
+        function sendLines(lines) {
+            for (var i = 0; i < lines.length; ++i) {
+                var cmd = parser.parse(lines[i])
+                if (cmd) {
+                    if (cmd.type === IrcCommand.Custom) {
+                        if (cmd.parameters[0] === "CLEAR") {
+                            MessageStorage.get(buffer).clear()
+                        } else if (cmd.parameters[0] === "CLOSE") {
+                            pageStack.pop()
+                            buffer.close(qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version))
+                        } else if (cmd.parameters[0] === "QUERY" || cmd.parameters[0] === "MSG") {
+                            var query = buffer.model.add(cmd.parameters[1])
+                            pageStack.replace(bufferPage, {buffer: query})
+                            if (cmd.parameters.length > 2) {
+                                var msgCmd = ircCommand.createMessage(query.title, cmd.parameters.slice(2))
+                                query.sendCommand(msgCmd)
+                                query.receiveMessage(msgCmd.toMessage(query.connection.nickName, query.connection))
+                            }
+                        }
+                    } else {
+                        buffer.connection.sendCommand(cmd)
+                        if (cmd.type === IrcCommand.Message
+                                || cmd.type === IrcCommand.CtcpAction
+                                || cmd.type === IrcCommand.Notice) {
+                            var msg = cmd.toMessage(buffer.connection.nickName, buffer.connection)
+                            buffer.receiveMessage(msg)
                         }
                     }
-                } else {
-                    buffer.connection.sendCommand(cmd)
-                    if (cmd.type === IrcCommand.Message
-                            || cmd.type === IrcCommand.CtcpAction
-                            || cmd.type === IrcCommand.Notice) {
-                        var msg = cmd.toMessage(buffer.connection.nickName, buffer.connection)
-                        buffer.receiveMessage(msg)
-                    }
+                    field.text = ""
                 }
-                field.text = ""
             }
+        }
+
+        Keys.onReturnPressed: {
+            var lines = text.split(/\r?\n/)
+            sendLines(lines)
         }
 
         Keys.onTabPressed: field.autoComplete()
