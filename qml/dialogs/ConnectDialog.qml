@@ -59,6 +59,7 @@ Dialog {
             realNameField.text = connection.realName
             passwordField.text = connection.password
             displayNameField.text = connection.displayName
+            quasselBox.checked = !!connection.userData['quassel']
         }
     }
 
