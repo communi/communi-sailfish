@@ -201,36 +201,6 @@ Page {
             // </workaround>
 
             VerticalScrollDecorator { }
-
-            Timer {
-                id: idle
-                property bool moving: view.moving || view.dragging || view.flicking
-                property bool menuOpen: pullDownMenu.active || pushUpMenu.active
-                onMovingChanged: if (!moving && !menuOpen) restart()
-                interval: view.atYBeginning || view.atYEnd ? 300 : 2000
-            }
-
-            IconButton {
-                icon.source: "../images/arrow-up.png"
-                opacity: (idle.moving || idle.running) && !idle.menuOpen && !positioner.running ? 1.0 : 0.0
-                Behavior on opacity { FadeAnimation { duration: 400 } }
-                onClicked: {
-                    view.cancelFlick()
-                    view.positionViewAtBeginning()
-                }
-                anchors { top: parent.top; right: parent.right; margins: Theme.paddingLarge }
-            }
-
-            IconButton {
-                icon.source: "../images/arrow-down.png"
-                opacity: (idle.moving || idle.running) && !idle.menuOpen && !positioner.running ? 1.0 : 0.0
-                Behavior on opacity { FadeAnimation { duration: 400 } }
-                onClicked: {
-                    view.cancelFlick()
-                    view.positionViewAtEnd()
-                }
-                anchors { bottom: parent.bottom; right: parent.right; margins: Theme.paddingLarge }
-            }
         }
 
         TextEntry {
