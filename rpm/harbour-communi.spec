@@ -15,7 +15,7 @@ License:    LGPLv2 and BSD
 URL:        http://communi.github.io/
 Source0:    %{name}-%{version}.tar.gz
 
-Version:    0.5
+Version:    0.6
 Release:    1
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
@@ -45,6 +45,15 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 %attr(644,root,root) %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 
 %changelog
+* Thu Jun 19 2014 J-P Nurmi <jpnurmi@gmail.com> 0.6
+- Fixed newly added channels not begin rejoined after network interruption
+- Added a short press effect delay for messages
+- Fixed a crash that occurred when opening a query from the context menu
+  opened from the bottom of the user list
+- Added a warning when sending more than two lines
+- Added /IGNORE and /UNIGNORE commands
+- Removed the custom fast-scroll buttons
+
 * Thu Apr 17 2014 J-P Nurmi <jpnurmi@gmail.com> 0.5
 - Fixed the user search case sensitivity and the toolbar icon
 - Made the visualization for highlights above/below the current
