@@ -46,7 +46,7 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 
 %changelog
 * Thu Jun 19 2014 J-P Nurmi <jpnurmi@gmail.com> 0.6
-- Fixed newly added channels not begin rejoined after network interruption
+- Fixed newly added channels not being rejoined after network interruption
 - Added a short press effect delay for messages
 - Fixed a crash that occurred when opening a query from the context menu
   opened from the bottom of the user list
