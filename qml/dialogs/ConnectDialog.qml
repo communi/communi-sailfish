@@ -207,6 +207,7 @@ Dialog {
 
                 TextSwitch {
                     id: quasselBox
+                    visible: false
                     anchors { left: parent.left; right: parent.right; rightMargin: Theme.paddingLarge }
                     description: qsTr("The Quassel protocol support is experimental")
                     text: qsTr("Use Quassel protocol")
