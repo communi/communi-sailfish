@@ -76,7 +76,7 @@ Page {
 
             TextSwitch {
                 width: parent.width
-                text: qsTrId("Show events")
+                text: qsTr("Show events")
                 description: qsTr("Specifies whether joins/parts/quits are shown")
                 checked: eventsConfig.value
                 onCheckedChanged: eventsConfig.value = checked
@@ -84,7 +84,7 @@ Page {
 
             TextSwitch {
                 width: parent.width
-                text: qsTrId("Use haptic feedback")
+                text: qsTr("Use haptic feedback")
                 description: qsTr("Specifies whether haptic feedback is used for highlighted messages")
                 checked: feedbackConfig.value
                 onCheckedChanged: feedbackConfig.value = checked
