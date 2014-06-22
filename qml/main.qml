@@ -162,6 +162,12 @@ ApplicationWindow {
     }
 
     ConfigurationValue {
+       id: eventsLimitConfig
+       key: "/apps/harbour-communi/settings/eventslimit"
+       defaultValue: 150
+    }
+
+    ConfigurationValue {
        id: feedbackConfig
        key: "/apps/harbour-communi/settings/feedback"
        defaultValue: true

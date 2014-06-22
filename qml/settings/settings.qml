@@ -49,6 +49,12 @@ Page {
     }
 
     ConfigurationValue {
+       id: eventsLimitConfig
+       key: "/apps/harbour-communi/settings/eventslimit"
+       defaultValue: 150
+    }
+
+    ConfigurationValue {
        id: feedbackConfig
        key: "/apps/harbour-communi/settings/feedback"
        defaultValue: true
@@ -77,9 +83,21 @@ Page {
             TextSwitch {
                 width: parent.width
                 text: qsTr("Show events")
-                description: qsTr("Specifies whether joins/parts/quits are shown")
+                description: qsTr("Specifies whether joins/parts/quits are shown when the amount of user on the channel is less than:")
                 checked: eventsConfig.value
                 onCheckedChanged: eventsConfig.value = checked
+            }
+
+            Slider {
+                width: parent.width
+                stepSize: 50
+                minimumValue: 0
+                maximumValue: 500
+                enabled: eventsConfig.value
+                opacity: enabled ? 1.0 : 0.4
+                value: eventsLimitConfig.value
+                onValueChanged: eventsLimitConfig.value = value
+                valueText: value === 0 ? qsTr("Unlimited") : qsTr("%1 users").arg(value)
             }
 
             TextSwitch {

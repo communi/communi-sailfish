@@ -128,9 +128,14 @@ Page {
                 }
             }
 
+            IrcUserModel {
+                id: userModel
+                channel: buffer ? buffer.toChannel() : null
+            }
+
             model: MessageFilter {
                 source: storage
-                showEvents: !!eventsConfig.value
+                showEvents: !!eventsConfig.value && (!eventsLimitConfig.value || userModel.count < eventsLimitConfig.value)
             }
 
             delegate: ListItem {
