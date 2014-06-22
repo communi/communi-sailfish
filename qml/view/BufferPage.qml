@@ -128,6 +128,9 @@ Page {
                 }
             }
 
+            section.property: "date"
+            section.delegate: SectionHeader { text: section }
+
             IrcUserModel {
                 id: userModel
                 channel: buffer ? buffer.toChannel() : null
