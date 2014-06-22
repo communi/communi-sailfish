@@ -15,7 +15,7 @@ License:    LGPLv2 and BSD
 URL:        http://communi.github.io/
 Source0:    %{name}-%{version}.tar.gz
 
-Version:    0.6
+Version:    0.7
 Release:    1
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
@@ -45,6 +45,12 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 %attr(644,root,root) %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 
 %changelog
+* Sun Jun 22 2014 J-P Nurmi <jpnurmi@gmail.com> 0.7
+- Added a day separator
+- Added support for performing commands on connect
+- Added a user count limit setting for showing joins/parts/quits
+- Added a press effect for the welcome dialog connection items
+
 * Thu Jun 19 2014 J-P Nurmi <jpnurmi@gmail.com> 0.6
 - Fixed newly added channels not being rejoined after network interruption
 - Added a short press effect delay for messages
