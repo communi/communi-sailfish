@@ -122,6 +122,21 @@ ApplicationWindow {
 
     Connections {
         target: BufferModel
+        onConnected: {
+            var commands = connection.userData['commands']
+            var server = BufferModel.server(connection)
+            if (commands) {
+                var cmds = []
+                commands.split(/\r?\n/).forEach(function(cmd) {
+                    if (cmd) {
+                        if (cmd[0] !== "/")
+                            cmd = "/" + cmd
+                        cmds.push(cmd)
+                    }
+                })
+                currentPage.textEntry.sendLines(server, cmds)
+            }
+        }
         onNickNameRequired: {
             var originalNickName = connection.userData['originalNickName']
             var alternateNickName = connection.userData['alternateNickName']

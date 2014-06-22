@@ -50,6 +50,56 @@ FocusScope {
         field.forceActiveFocus()
     }
 
+    function sendLines(buffer, lines) {
+        for (var i = 0; i < lines.length; ++i) {
+            var cmd = parser.parse(lines[i])
+            if (cmd) {
+                if (cmd.type === IrcCommand.Custom) {
+                    if (cmd.parameters[0] === "CLEAR") {
+                        MessageStorage.get(buffer).clear()
+                    } else if (cmd.parameters[0] === "CLOSE") {
+                        pageStack.pop()
+                        buffer.close(qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version))
+                    } else if (cmd.parameters[0] === "QUERY" || cmd.parameters[0] === "MSG") {
+                        var query = buffer.model.add(cmd.parameters[1])
+                        pageStack.replace(bufferPage, {buffer: query})
+                        if (cmd.parameters.length > 2) {
+                            var msgCmd = ircCommand.createMessage(query.title, cmd.parameters.slice(2))
+                            query.sendCommand(msgCmd)
+                            query.receiveMessage(msgCmd.toMessage(query.connection.nickName, query.connection))
+                        }
+                    } else if (cmd.parameters[0] === "IGNORE") {
+                        var imask = cmd.parameters[1]
+                        if (!imask) {
+                            if (IgnoreManager.ignores.length) {
+                                MessageStorage.get(buffer).info(qsTr("Ignores:"))
+                                for (var j = 0; j < IgnoreManager.ignores.length; ++j)
+                                    MessageStorage.get(buffer).info(IgnoreManager.ignores[j])
+                            } else {
+                                MessageStorage.get(buffer).info(qsTr("No ignores"))
+                            }
+                        } else {
+                            imask = IgnoreManager.addIgnore(imask)
+                            MessageStorage.get(buffer).info(qsTr("Ignored: %1").arg(imask))
+                        }
+                    } else if (cmd.parameters[0] === "UNIGNORE") {
+                        var umask = IgnoreManager.removeIgnore(cmd.parameters[1])
+                        MessageStorage.get(buffer).info(qsTr("Unignored: %1").arg(umask))
+                    }
+                } else {
+                    buffer.connection.sendCommand(cmd)
+                    if (cmd.type === IrcCommand.Message
+                            || cmd.type === IrcCommand.CtcpAction
+                            || cmd.type === IrcCommand.Notice) {
+                        var msg = cmd.toMessage(buffer.connection.nickName, buffer.connection)
+                        buffer.receiveMessage(msg)
+                    }
+                }
+                field.text = ""
+            }
+        }
+    }
+
     implicitWidth: field.implicitWidth
     implicitHeight: field.implicitHeight
 
@@ -86,62 +136,12 @@ FocusScope {
         inputMethodHints: Qt.ImhNoAutoUppercase
         focusOutBehavior: FocusBehavior.ClearPageFocus
 
-        function sendLines(lines) {
-            for (var i = 0; i < lines.length; ++i) {
-                var cmd = parser.parse(lines[i])
-                if (cmd) {
-                    if (cmd.type === IrcCommand.Custom) {
-                        if (cmd.parameters[0] === "CLEAR") {
-                            MessageStorage.get(buffer).clear()
-                        } else if (cmd.parameters[0] === "CLOSE") {
-                            pageStack.pop()
-                            buffer.close(qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version))
-                        } else if (cmd.parameters[0] === "QUERY" || cmd.parameters[0] === "MSG") {
-                            var query = buffer.model.add(cmd.parameters[1])
-                            pageStack.replace(bufferPage, {buffer: query})
-                            if (cmd.parameters.length > 2) {
-                                var msgCmd = ircCommand.createMessage(query.title, cmd.parameters.slice(2))
-                                query.sendCommand(msgCmd)
-                                query.receiveMessage(msgCmd.toMessage(query.connection.nickName, query.connection))
-                            }
-                        } else if (cmd.parameters[0] === "IGNORE") {
-                            var imask = cmd.parameters[1]
-                            if (!imask) {
-                                if (IgnoreManager.ignores.length) {
-                                    MessageStorage.get(buffer).info(qsTr("Ignores:"))
-                                    for (var j = 0; j < IgnoreManager.ignores.length; ++j)
-                                        MessageStorage.get(buffer).info(IgnoreManager.ignores[j])
-                                } else {
-                                    MessageStorage.get(buffer).info(qsTr("No ignores"))
-                                }
-                            } else {
-                                imask = IgnoreManager.addIgnore(imask)
-                                MessageStorage.get(buffer).info(qsTr("Ignored: %1").arg(imask))
-                            }
-                        } else if (cmd.parameters[0] === "UNIGNORE") {
-                            var umask = IgnoreManager.removeIgnore(cmd.parameters[1])
-                            MessageStorage.get(buffer).info(qsTr("Unignored: %1").arg(umask))
-                        }
-                    } else {
-                        buffer.connection.sendCommand(cmd)
-                        if (cmd.type === IrcCommand.Message
-                                || cmd.type === IrcCommand.CtcpAction
-                                || cmd.type === IrcCommand.Notice) {
-                            var msg = cmd.toMessage(buffer.connection.nickName, buffer.connection)
-                            buffer.receiveMessage(msg)
-                        }
-                    }
-                    field.text = ""
-                }
-            }
-        }
-
         Keys.onReturnPressed: {
             var lines = text.split(/\r?\n/)
             if (lines.length > 2)
-                remorse.execute(qsTr("Warning: sending %1 lines").arg(lines.length), function() { field.sendLines(lines)})
+                remorse.execute(qsTr("Warning: sending %1 lines").arg(lines.length), function() { entry.sendLines(entry.buffer, lines)})
             else
-                sendLines(lines)
+                entry.sendLines(entry.buffer, lines)
         }
 
         Keys.onTabPressed: field.autoComplete()
