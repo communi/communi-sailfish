@@ -50,6 +50,7 @@ Dialog {
         model: BufferModel.connections
         delegate: ListItem {
             id: listItem
+            down: connectionMouse.pressed && connectionMouse.containsMouse
             showMenuOnPressAndHold: false
             contentHeight: connectionSwitch.height + Theme.paddingMedium
             menu: Component {
@@ -93,6 +94,7 @@ Dialog {
 
             // This is a hack to allow single tap to toggle the switch AND press-and-hold to show the menu
             MouseArea {
+                id: connectionMouse
                 anchors.fill: connectionSwitch
                 onPressAndHold: listItem.showMenu()
                 onClicked: {
