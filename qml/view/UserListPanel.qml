@@ -54,7 +54,7 @@ Panel {
 
         model: StringFilterModel {
             filter: toolbar.filter
-            sourceModel: userModel
+            source: userModel
         }
 
         delegate: ListItem {

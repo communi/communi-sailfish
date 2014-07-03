@@ -35,12 +35,16 @@ class StringFilterModel : public QSortFilterProxyModel
 {
     Q_OBJECT
     Q_PROPERTY(QString filter READ filter WRITE setFilter)
+    Q_PROPERTY(QObject* source READ source WRITE setSource)
 
 public:
     StringFilterModel(QObject* parent = 0);
 
     QString filter() const;
     void setFilter(const QString& filter);
+
+    QObject* source() const;
+    void setSource(QObject* source);
 };
 
 #endif // STRINGFILTERMODEL_H

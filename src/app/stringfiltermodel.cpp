@@ -43,3 +43,13 @@ void StringFilterModel::setFilter(const QString& filter)
 {
     setFilterWildcard("*" + filter + "*");
 }
+
+QObject* StringFilterModel::source() const
+{
+    return sourceModel();
+}
+
+void StringFilterModel::setSource(QObject* source)
+{
+    setSourceModel(qobject_cast<QAbstractItemModel*>(source));
+}
