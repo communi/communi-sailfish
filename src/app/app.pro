@@ -37,5 +37,10 @@ SOURCES += $$PWD/stringfiltermodel.cpp
 include(../3rdparty/3rdparty.pri)
 include(../shared/shared.pri)
 
-RESOURCES += \
-    ../../harbour-communi.qrc
+!no_resources {
+    RESOURCES += ../../harbour-communi.qrc
+} else {
+    qmlfiles.files = ../../qml/*
+    qmlfiles.path = /usr/share/$${TARGET}/qml
+    INSTALLS += qmlfiles
+}
