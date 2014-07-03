@@ -16,7 +16,7 @@ URL:        http://communi.github.io/
 Source0:    %{name}-%{version}.tar.gz
 
 Version:    0.7
-Release:    1
+Release:    2
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
 BuildRequires:  pkgconfig(Qt5Core), pkgconfig(Qt5Qml), pkgconfig(Qt5Quick), pkgconfig(Qt5DBus), pkgconfig(sailfishapp) >= 0.0.10
