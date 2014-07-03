@@ -132,7 +132,11 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
         QObject::connect(model, SIGNAL(connectionRemoved(IrcConnection*)), &loader, SLOT(connectionRemoved(IrcConnection*)));
     }
 
+#ifndef NO_RESOURCES
     viewer->setSource(QUrl("qrc:///qml/main.qml"));
+#else
+    viewer->setSource(SailfishApp::pathTo("qml/main.qml"));
+#endif
     viewer->showFullScreen();
 
     return app->exec();
