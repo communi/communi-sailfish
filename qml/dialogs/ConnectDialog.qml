@@ -59,7 +59,7 @@ Dialog {
             realNameField.text = connection.realName
             passwordField.text = connection.password
             displayNameField.text = connection.displayName
-            //quasselBox.checked = !!connection.userData['quassel']
+            quasselBox.checked = !!connection.userData['quassel']
             commandField.text = connection.userData['commands'] || ""
         }
     }
@@ -81,7 +81,7 @@ Dialog {
         var userData = connection.userData
         userData['originalNickName'] = nickNameField.text
         userData['alternateNickName'] = alternateNickNameField.text
-        //userData['quassel'] = quasselBox.checked
+        userData['quassel'] = quasselBox.checked
         userData['commands'] = commandField.text
         connection.userData = userData
     }
@@ -207,19 +207,18 @@ Dialog {
                     }
                 }
 
-//                TextSwitch {
-//                    id: quasselBox
-//                    visible: false
-//                    anchors { left: parent.left; right: parent.right; rightMargin: Theme.paddingLarge }
-//                    description: qsTr("The Quassel protocol support is experimental")
-//                    text: qsTr("Use Quassel protocol")
-//                    onCheckedChanged: {
-//                        if (checked && (portField.text === defaultPort || portField.text === defaultSslPort))
-//                            portField.text = defaultQuasselPort
-//                        else if (!checked && portField.text === defaultQuasselPort)
-//                            portField.text = secureBox.checked ? defaultSslPort : defaultPort
-//                    }
-//                }
+                TextSwitch {
+                    id: quasselBox
+                    anchors { left: parent.left; right: parent.right; rightMargin: Theme.paddingLarge }
+                    description: qsTr("The Quassel protocol support is experimental")
+                    text: qsTr("Use Quassel protocol")
+                    onCheckedChanged: {
+                        if (checked && (portField.text === defaultPort || portField.text === defaultSslPort))
+                            portField.text = defaultQuasselPort
+                        else if (!checked && portField.text === defaultQuasselPort)
+                            portField.text = secureBox.checked ? defaultSslPort : defaultPort
+                    }
+                }
 
                 TextArea {
                     id: commandField
