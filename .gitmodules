@@ -6,7 +6,7 @@
 	url = git://github.com/communi/communi-shared.git
 [submodule "src/3rdparty/quassel"]
 	path = src/3rdparty/quassel
-	url = git://github.com/jpnurmi/quassel.git
+	url = git://github.com/quassel/quassel.git
 [submodule "src/plugins/quassel/protocol"]
 	path = src/plugins/quassel/protocol
 	url = git://github.com/communi/communi-quassel.git
