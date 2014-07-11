@@ -93,6 +93,7 @@ signals:
     void highlighted(IrcMessage* message);
 
 private slots:
+    void displaySecureError();
     void displaySocketError();
     void receive(IrcMessage* message);
 
