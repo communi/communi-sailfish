@@ -183,6 +183,9 @@ Page {
                 }
                 menu: Component {
                     ContextMenu {
+                        id: menu
+                        readonly property var urls: model.urls
+                        readonly property var rawurls: model.rawurls
                         MenuItem {
                             text: qsTr("Copy")
                             onClicked: Clipboard.text = plaintext
@@ -191,6 +194,15 @@ Page {
                             text: qsTr("Reply")
                             visible: !model.own && !model.event && buffer.channel
                             onClicked: entry.insertName(sender)
+                        }
+                        Repeater {
+                            model: menu.urls
+                            MenuItem {
+                                width: delegate.width
+                                elide: Text.ElideMiddle
+                                text: qsTr("Open %1").arg(menu.urls[index])
+                                onClicked: Qt.openUrlExternally(menu.rawurls[index])
+                            }
                         }
                     }
                 }

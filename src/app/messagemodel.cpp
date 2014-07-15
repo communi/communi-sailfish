@@ -31,6 +31,7 @@
 #include "messageformatter.h"
 #include <QTextBoundaryFinder>
 #include <IrcConnection>
+#include <IrcTextFormat>
 #include <IrcMessage>
 #include <IrcBuffer>
 #include <QDateTime>
@@ -170,6 +171,8 @@ QHash<int, QByteArray> MessageModel::roleNames() const
     roles[SeenRole] = "seen";
     roles[DateRole] = "date";
     roles[TypeRole] = "type";
+    roles[UrlsRole] = "urls";
+    roles[RawUrlsRole] = "rawurls";
     roles[OwnRole] = "own";
     return roles;
 }
@@ -189,6 +192,10 @@ QVariant MessageModel::data(const QModelIndex& index, int role) const
         return m_messages.at(row).event;
     case TypeRole:
         return m_messages.at(row).type;
+    case RawUrlsRole:
+        return m_messages.at(row).rawUrls;
+    case UrlsRole:
+        return m_messages.at(row).urls;
     case OwnRole:
         return m_messages.at(row).own;
     case SeenRole:
@@ -233,6 +240,13 @@ void MessageModel::receive(IrcMessage* message)
             }
         }
         data.richtext = m_formatter->formatMessage(message, Qt::RichText);
+        foreach (const QUrl& url, m_formatter->textFormat()->urls()) {
+            data.rawUrls += url.toString();
+            QString pretty = url.toString(QUrl::PrettyDecoded | QUrl::RemoveScheme | QUrl::StripTrailingSlash);
+            while (pretty.startsWith("/"))
+                pretty.remove(0, 1);
+            data.urls += pretty;
+        }
         bool seen = (m_current && m_visible) || !message->connection()->isConnected();
         append(data, seen);
         if (!m_current || !m_visible) {

@@ -33,6 +33,7 @@
 #include <IrcMessage>
 #include <QBitArray>
 #include <QVector>
+#include <QUrl>
 
 class MessageFormatter;
 IRC_FORWARD_DECLARE_CLASS(IrcBuffer)
@@ -106,6 +107,8 @@ private:
         QString richtext;
         QString plaintext;
         QString timestamp;
+        QStringList rawUrls;
+        QStringList urls;
         QString sender;
         QDate date;
     };
