@@ -91,7 +91,8 @@ signals:
     void visibleChanged();
     void separatorChanged();
     void activeHighlightsChanged();
-    void highlighted(IrcMessage* message);
+    void messageMissed(const QString& message);
+    void messageHighlighted(const QString& sender, const QString& message);
 
 private slots:
     void displaySocketError();

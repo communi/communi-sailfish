@@ -76,7 +76,11 @@ signals:
     void added(MessageModel* model);
     void removed(MessageModel* model);
 
-    void highlighted(IrcBuffer* buffer, IrcMessage* message);
+    void missed(IrcBuffer* buffer, const QString& message);
+    void highlighted(IrcBuffer* buffer, const QString& sender, const QString& message);
+
+    Q_SCRIPTABLE void messageMissed(const QString& sender, const QString& message);
+    Q_SCRIPTABLE void messageHighlighted(const QString& buffer, const QString& sender, const QString& message);
 
     Q_SCRIPTABLE void activeHighlightsChanged(int highlights);
     void firstActiveHighlightChanged();
@@ -87,7 +91,8 @@ protected:
 
 private slots:
     void updateActiveHighlights();
-    void onHighlighted(IrcMessage* message);
+    void onMessageMissed(const QString& message);
+    void onMessageHighlighted(const QString& sender, const QString& message);
     void onCurrentBufferChanged(IrcBuffer* buffer);
 
 private:

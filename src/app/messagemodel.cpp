@@ -250,9 +250,13 @@ void MessageModel::receive(IrcMessage* message)
         bool seen = (m_current && m_visible) || !message->connection()->isConnected();
         append(data, seen);
         if (!m_current || !m_visible) {
-            if (data.hilite || (message->property("private").toBool() && !message->property("forwarded").toBool())) {
+            bool priv = message->property("private").toBool() && !message->property("forwarded").toBool();
+            if (data.hilite || priv) {
                 setActiveHighlights(m_highlights + 1);
-                emit highlighted(message);
+                if (priv)
+                    emit messageMissed(data.plaintext);
+                else
+                    emit messageHighlighted(data.sender, data.plaintext);
             }
             if (!data.event) // TODO: create a setting for this?
                 setBadge(m_badge + 1);
