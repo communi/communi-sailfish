@@ -196,7 +196,7 @@ Page {
                             onClicked: entry.insertName(sender)
                         }
                         Repeater {
-                            model: menu.urls
+                            model: Math.min(menu.urls.length, 3)
                             MenuItem {
                                 width: delegate.width
                                 elide: Text.ElideMiddle
