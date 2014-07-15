@@ -15,8 +15,8 @@ License:    LGPLv2 and BSD
 URL:        http://communi.github.io/
 Source0:    %{name}-%{version}.tar.gz
 
-Version:    0.7
-Release:    2
+Version:    0.8
+Release:    1
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
 BuildRequires:  pkgconfig(Qt5Core), pkgconfig(Qt5Qml), pkgconfig(Qt5Quick), pkgconfig(Qt5DBus), pkgconfig(sailfishapp) >= 0.0.10
@@ -45,6 +45,12 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 %attr(644,root,root) %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 
 %changelog
+* Tue Jul 15 2014 J-P Nurmi <jpnurmi@gmail.com> 0.8
+- Added context menu items for opening links in messages
+- Tweaked wording in notifications & removed IRC formatting
+- Exposed D-Bus signals for missed & highlighted messages
+- Fixed copying of plain message content without formatting
+
 * Sun Jun 22 2014 J-P Nurmi <jpnurmi@gmail.com> 0.7
 - Added a day separator
 - Added support for performing commands on connect

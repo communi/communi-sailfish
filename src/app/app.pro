@@ -3,7 +3,7 @@ TARGET = harbour-communi
 CONFIG += c++11 sailfishapp
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x000000
 QT += dbus
-VERSION = 0.7
+VERSION = 0.8
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 INCLUDEPATH += ../backend/include/IrcCore
