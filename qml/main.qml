@@ -95,8 +95,22 @@ ApplicationWindow {
                 feedback.give()
             } else {
                 notification.buffer = buffer
-                notification.previewBody = qsTr("%1: %2").arg(message.nick).arg(message.content)
-                notification.body = qsTr("%1: %2").arg(message.nick).arg(message.content)
+                notification.summary = qsTr("IRC: highlight on %1").arg(buffer.title)
+                notification.previewSummary = qsTr("%1 on %2:").arg(sender).arg(buffer.title)
+                notification.previewBody = message
+                notification.body = message
+                notification.publish()
+            }
+        }
+        onMissed: {
+            if (Qt.application.active) {
+                feedback.give()
+            } else {
+                notification.buffer = buffer
+                notification.summary = qsTr("IRC: message from %1").arg(buffer.title)
+                notification.previewSummary = qsTr("%1 in private:").arg(buffer.title)
+                notification.previewBody = message
+                notification.body = message
                 notification.publish()
             }
         }
@@ -207,8 +221,6 @@ ApplicationWindow {
         property IrcBuffer buffer
         category: "x-nemo.messaging.im"
         itemCount: MessageStorage.activeHighlights
-        previewSummary: buffer ? buffer.title : ""
-        summary: buffer ? qsTr("IRC highlight - %1").arg(buffer.title) : ""
 
         onClicked: {
             if (buffer && buffer !== BufferModel.currentBuffer)
