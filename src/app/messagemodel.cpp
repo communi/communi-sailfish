@@ -241,11 +241,13 @@ void MessageModel::receive(IrcMessage* message)
         }
         data.richtext = m_formatter->formatMessage(message, Qt::RichText);
         foreach (const QUrl& url, m_formatter->textFormat()->urls()) {
-            data.rawUrls += url.toString();
             QString pretty = url.toString(QUrl::PrettyDecoded | QUrl::RemoveScheme | QUrl::StripTrailingSlash);
             while (pretty.startsWith("/"))
                 pretty.remove(0, 1);
-            data.urls += pretty;
+            if (!data.urls.contains(pretty)) {
+                data.urls += pretty;
+                data.rawUrls += url.toString();
+            }
         }
         bool seen = (m_current && m_visible) || !message->connection()->isConnected();
         append(data, seen);
