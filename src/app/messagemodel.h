@@ -33,6 +33,7 @@
 #include <IrcMessage>
 #include <QBitArray>
 #include <QVector>
+#include <QUrl>
 
 class MessageFormatter;
 IRC_FORWARD_DECLARE_CLASS(IrcBuffer)
@@ -90,7 +91,8 @@ signals:
     void visibleChanged();
     void separatorChanged();
     void activeHighlightsChanged();
-    void highlighted(IrcMessage* message);
+    void messageMissed(const QString& message);
+    void messageHighlighted(const QString& sender, const QString& message);
 
 private slots:
     void displaySecureError();
@@ -107,6 +109,8 @@ private:
         QString richtext;
         QString plaintext;
         QString timestamp;
+        QStringList rawUrls;
+        QStringList urls;
         QString sender;
         QDate date;
     };

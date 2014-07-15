@@ -39,6 +39,8 @@ enum MessageRole {
     EventRole,
     DateRole,
     TypeRole,
+    UrlsRole,
+    RawUrlsRole,
     OwnRole
 };
 

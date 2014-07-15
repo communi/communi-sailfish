@@ -123,7 +123,8 @@ void MessageStorage::add(IrcBuffer* buffer)
         model->formatter()->setBaseColor(m_baseColor);
         connect(buffer, SIGNAL(destroyed(IrcBuffer*)), this, SLOT(remove(IrcBuffer*)));
         connect(model, SIGNAL(activeHighlightsChanged()), this, SLOT(updateActiveHighlights()));
-        connect(model, SIGNAL(highlighted(IrcMessage*)), this, SLOT(onHighlighted(IrcMessage*)));
+        connect(model, SIGNAL(messageMissed(QString)), this, SLOT(onMessageMissed(QString)));
+        connect(model, SIGNAL(messageHighlighted(QString,QString)), this, SLOT(onMessageHighlighted(QString,QString)));
         m_models.insert(buffer, model);
         emit added(model);
 
@@ -176,13 +177,27 @@ void MessageStorage::updateActiveHighlights()
     setLastActiveHighlight(last);
 }
 
-void MessageStorage::onHighlighted(IrcMessage* message)
+void MessageStorage::onMessageMissed(const QString& message)
 {
     MessageModel* model = qobject_cast<MessageModel*>(sender());
     if (model) {
         IrcBuffer* buffer = model->buffer();
-        if (buffer)
-            emit highlighted(buffer, message);
+        if (buffer) {
+            emit missed(buffer, message);
+            emit messageMissed(buffer->title(), message);
+        }
+    }
+}
+
+void MessageStorage::onMessageHighlighted(const QString& sender, const QString& message)
+{
+    MessageModel* model = qobject_cast<MessageModel*>(QObject::sender());
+    if (model) {
+        IrcBuffer* buffer = model->buffer();
+        if (buffer) {
+            emit highlighted(buffer, sender, message);
+            emit messageHighlighted(buffer->title(), sender, message);
+        }
     }
 }
 
