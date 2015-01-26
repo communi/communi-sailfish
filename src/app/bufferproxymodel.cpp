@@ -31,6 +31,7 @@
 #include "zncmanager.h"
 #include <QCoreApplication>
 #include <QTimer>
+#include <IrcCommandQueue>
 #include <IrcBufferModel>
 #include <IrcConnection>
 #include <IrcBuffer>
@@ -149,6 +150,9 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
 
     ZncManager* znc = new ZncManager(model);
     znc->setModel(model);
+
+    IrcCommandQueue* queue = new IrcCommandQueue(connection);
+    queue->setConnection(connection);
 
     IrcServerBuffer* buffer = new IrcServerBuffer(model);
     connect(buffer, SIGNAL(destroyed(IrcBuffer*)), this, SLOT(closeConnection(IrcBuffer*)));
