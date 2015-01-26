@@ -156,7 +156,7 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
     buffer->setSticky(true);
     model->add(buffer);
 
-    connection->setReconnectDelay(5); // TODO: settings?
+    connection->setReconnectDelay(15); // TODO: settings?
     connect(connection, SIGNAL(displayNameChanged(QString)), buffer, SLOT(setName(QString)));
     connect(model, SIGNAL(messageIgnored(IrcMessage*)), this, SLOT(processMessage(IrcMessage*)));
 
