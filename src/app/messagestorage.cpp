@@ -33,8 +33,8 @@
 #include <IrcBufferModel>
 #include <IrcBuffer>
 #include <QTimerEvent>
-#include <QtCore/QDebug>
-#include <QtDBus/QDBusConnection>
+#include <QDebug>
+#include <QDBusConnection>
 
 IRC_USE_NAMESPACE
 
