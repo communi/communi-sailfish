@@ -43,6 +43,12 @@ Page {
     }
 
     ConfigurationValue {
+       id: fontStyleConfig
+       key: "/apps/harbour-communi/settings/fontstyle"
+       defaultValue: false
+    }
+
+    ConfigurationValue {
        id: eventsConfig
        key: "/apps/harbour-communi/settings/events"
        defaultValue: true
@@ -78,6 +84,14 @@ Page {
                 }
                 currentIndex: page.fontSizes.indexOf(fontSizeConfig.value)
                 onCurrentIndexChanged: fontSizeConfig.value = page.fontSizes[currentIndex]
+            }
+
+            TextSwitch {
+                width: parent.width
+                text: qsTr("Fixed-width font")
+                description: qsTr("Specifies whether a monospaced font is used for messages")
+                checked: fontStyleConfig.value
+                onCheckedChanged: fontStyleConfig.value = checked
             }
 
             TextSwitch {

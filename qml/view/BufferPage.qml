@@ -177,6 +177,7 @@ Page {
                     textFormat: Text.RichText
                     linkColor: Theme.highlightColor
                     font.pixelSize: fontSizeConfig.value
+                    font.family: fontStyleConfig.value ? "Monospace" : stamp.font.family
                     onLinkActivated: Qt.openUrlExternally(link)
                     color: highlight ? window.nickHighlight : event ? Theme.secondaryColor : Theme.primaryColor
                     onWidthChanged: doLayout()

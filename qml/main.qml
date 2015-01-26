@@ -185,6 +185,12 @@ ApplicationWindow {
     }
 
     ConfigurationValue {
+       id: fontStyleConfig
+       key: "/apps/harbour-communi/settings/fontstyle"
+       defaultValue: false
+    }
+
+    ConfigurationValue {
        id: eventsConfig
        key: "/apps/harbour-communi/settings/events"
        defaultValue: true
