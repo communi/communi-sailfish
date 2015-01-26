@@ -60,6 +60,10 @@ Dialog {
                         onClicked: pageStack.push(editDialog, { connection: modelData })
                     }
                     MenuItem {
+                        text: qsTr("Clone")
+                        onClicked: BufferModel.insertConnection(index + 1, modelData.clone(BufferModel))
+                    }
+                    MenuItem {
                         text: qsTr("Remove")
                         onClicked: {
                             var m = BufferModel

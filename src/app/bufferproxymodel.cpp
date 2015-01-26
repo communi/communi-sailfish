@@ -141,6 +141,11 @@ QObject* BufferProxyModel::server(IrcConnection* connection) const
 
 void BufferProxyModel::addConnection(IrcConnection* connection)
 {
+    insertConnection(m_models.size(), connection);
+}
+
+void BufferProxyModel::insertConnection(int index, IrcConnection* connection)
+{
     IrcBufferModel* model = new IrcBufferModel(connection);
     model->setSortMethod(static_cast<Irc::SortMethod>(m_method));
     connect(model, SIGNAL(added(IrcBuffer*)), this, SIGNAL(bufferAdded(IrcBuffer*)));
@@ -191,16 +196,16 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
         connect(model, SIGNAL(buffersChanged(QList<IrcBuffer*>)), this, SLOT(onModelBuffersChanged()));
     });
 
-    m_connections.append(connection);
-    m_servers.append(buffer);
-    m_models.append(model);
+    m_connections.insert(index, connection);
+    m_servers.insert(index, buffer);
+    m_models.insert(index, model);
 
     emit connectionAdded(connection);
     emit connectionsChanged();
     emit serversChanged();
     emit modelsChanged();
 
-    insertSourceModel(model);
+    insertSourceModel(model, index);
 }
 
 void BufferProxyModel::removeConnection(IrcConnection* connection)

@@ -63,6 +63,7 @@ public:
     Q_INVOKABLE QObject* server(IrcConnection* connection) const;
 
     Q_INVOKABLE void addConnection(IrcConnection* connection);
+    Q_INVOKABLE void insertConnection(int index, IrcConnection* connection);
     Q_INVOKABLE void removeConnection(IrcConnection* connection);
 
     QHash<int, QByteArray> roleNames() const;
