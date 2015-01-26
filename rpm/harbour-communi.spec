@@ -15,7 +15,7 @@ License:    LGPLv2 and BSD
 URL:        http://communi.github.io/
 Source0:    %{name}-%{version}.tar.gz
 
-Version:    0.8
+Version:    0.9
 Release:    1
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
