@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2013-2014 The Communi Project
+  Copyright (C) 2013-2015 The Communi Project
 
   You may use this file under the terms of BSD license as follows:
 
@@ -31,6 +31,7 @@
 #include "zncmanager.h"
 #include <QCoreApplication>
 #include <QTimer>
+#include <IrcCommandQueue>
 #include <IrcBufferModel>
 #include <IrcConnection>
 #include <IrcBuffer>
@@ -63,7 +64,7 @@ private slots:
     }
 };
 
-BufferProxyModel::BufferProxyModel(QObject* parent) : RowsJoinerProxy(parent)
+BufferProxyModel::BufferProxyModel(QObject* parent) : RowsJoinerProxy(parent), m_method(Irc::SortByTitle)
 {
 }
 
@@ -140,8 +141,13 @@ QObject* BufferProxyModel::server(IrcConnection* connection) const
 
 void BufferProxyModel::addConnection(IrcConnection* connection)
 {
+    insertConnection(m_models.size(), connection);
+}
+
+void BufferProxyModel::insertConnection(int index, IrcConnection* connection)
+{
     IrcBufferModel* model = new IrcBufferModel(connection);
-    model->setSortMethod(Irc::SortByTitle);
+    model->setSortMethod(static_cast<Irc::SortMethod>(m_method));
     connect(model, SIGNAL(added(IrcBuffer*)), this, SIGNAL(bufferAdded(IrcBuffer*)));
     connect(model, SIGNAL(removed(IrcBuffer*)), this, SIGNAL(bufferRemoved(IrcBuffer*)));
     connect(model, SIGNAL(aboutToBeAdded(IrcBuffer*)), this, SIGNAL(bufferAboutToBeAdded(IrcBuffer*)));
@@ -150,13 +156,16 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
     ZncManager* znc = new ZncManager(model);
     znc->setModel(model);
 
+    IrcCommandQueue* queue = new IrcCommandQueue(connection);
+    queue->setConnection(connection);
+
     IrcServerBuffer* buffer = new IrcServerBuffer(model);
     connect(buffer, SIGNAL(destroyed(IrcBuffer*)), this, SLOT(closeConnection(IrcBuffer*)));
     buffer->setName(connection->displayName());
     buffer->setSticky(true);
     model->add(buffer);
 
-    connection->setReconnectDelay(5); // TODO: settings?
+    connection->setReconnectDelay(15); // TODO: settings?
     connect(connection, SIGNAL(displayNameChanged(QString)), buffer, SLOT(setName(QString)));
     connect(model, SIGNAL(messageIgnored(IrcMessage*)), this, SLOT(processMessage(IrcMessage*)));
 
@@ -187,16 +196,16 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
         connect(model, SIGNAL(buffersChanged(QList<IrcBuffer*>)), this, SLOT(onModelBuffersChanged()));
     });
 
-    m_connections.append(connection);
-    m_servers.append(buffer);
-    m_models.append(model);
+    m_connections.insert(index, connection);
+    m_servers.insert(index, buffer);
+    m_models.insert(index, model);
 
     emit connectionAdded(connection);
     emit connectionsChanged();
     emit serversChanged();
     emit modelsChanged();
 
-    insertSourceModel(model);
+    insertSourceModel(model, index);
 }
 
 void BufferProxyModel::removeConnection(IrcConnection* connection)
@@ -309,6 +318,23 @@ bool BufferProxyModel::restoreState(const QByteArray& data)
         model->setProperty("savedState", !crypto.lastError() ? ms : modelStates.value(i));
     }
     return true;
+}
+
+int BufferProxyModel::sortMethod() const
+{
+    return m_method;
+}
+
+void BufferProxyModel::setSortMethod(int method)
+{
+    if (m_method != method) {
+        m_method = method;
+        foreach (QAbstractItemModel* aim, RowsJoinerProxy::models()) {
+            IrcBufferModel* model = qobject_cast<IrcBufferModel*>(aim);
+            if (model)
+                model->setSortMethod(static_cast<Irc::SortMethod>(method));
+        }
+    }
 }
 
 void BufferProxyModel::onConnected()

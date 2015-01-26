@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2013-2014 The Communi Project
+  Copyright (C) 2013-2015 The Communi Project
 
   You may use this file under the terms of BSD license as follows:
 
@@ -36,6 +36,7 @@
 #include <IrcGlobal>
 
 class MessageModel;
+class MessageService;
 class BufferProxyModel;
 
 IRC_FORWARD_DECLARE_CLASS(IrcBuffer)
@@ -44,7 +45,6 @@ IRC_FORWARD_DECLARE_CLASS(IrcMessage)
 class MessageStorage : public QObject
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "com.communi.irc")
     Q_PROPERTY(int activeHighlights READ activeHighlights NOTIFY activeHighlightsChanged SCRIPTABLE true)
     Q_PROPERTY(int firstActiveHighlight READ firstActiveHighlight NOTIFY firstActiveHighlightChanged)
     Q_PROPERTY(int lastActiveHighlight READ lastActiveHighlight NOTIFY lastActiveHighlightChanged)
@@ -79,10 +79,7 @@ signals:
     void missed(IrcBuffer* buffer, const QString& message);
     void highlighted(IrcBuffer* buffer, const QString& sender, const QString& message);
 
-    Q_SCRIPTABLE void messageMissed(const QString& sender, const QString& message);
-    Q_SCRIPTABLE void messageHighlighted(const QString& buffer, const QString& sender, const QString& message);
-
-    Q_SCRIPTABLE void activeHighlightsChanged(int highlights);
+    void activeHighlightsChanged(int highlights);
     void firstActiveHighlightChanged();
     void lastActiveHighlightChanged();
 
@@ -91,6 +88,7 @@ protected:
 
 private slots:
     void updateActiveHighlights();
+    void invalidateActiveHighlights();
     void onMessageMissed(const QString& message);
     void onMessageHighlighted(const QString& sender, const QString& message);
     void onCurrentBufferChanged(IrcBuffer* buffer);
@@ -101,6 +99,7 @@ private:
     int m_firstHiglight;
     int m_lastHighlight;
     QColor m_baseColor;
+    MessageService* m_service;
     BufferProxyModel* m_proxy;
     QPointer<MessageModel> m_current;
     QHash<IrcBuffer*, MessageModel*> m_models;

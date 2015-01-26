@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2013-2014 The Communi Project
+  Copyright (C) 2013-2015 The Communi Project
 
   You may use this file under the terms of BSD license as follows:
 
@@ -59,7 +59,7 @@ ListItem {
     Label {
         id: title
         truncationMode: TruncationMode.Fade
-        text: buffer ? buffer.title : text
+        text: buffer ? buffer.title : ""
         verticalAlignment: Qt.AlignVCenter
         anchors { fill: parent; leftMargin: Theme.paddingLarge; rightMargin: glass.opacity > 0 ? glass.width : Theme.paddingLarge }
         // inactive buffer > highlighted buffer > unread messages buffer > nothing special buffer

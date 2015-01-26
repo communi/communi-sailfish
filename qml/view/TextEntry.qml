@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2013-2014 The Communi Project
+  Copyright (C) 2013-2015 The Communi Project
 
   You may use this file under the terms of BSD license as follows:
 
@@ -60,14 +60,26 @@ FocusScope {
                     } else if (cmd.parameters[0] === "CLOSE") {
                         pageStack.pop()
                         buffer.close(qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version))
-                    } else if (cmd.parameters[0] === "QUERY" || cmd.parameters[0] === "MSG") {
+                    } else if (cmd.parameters[0] === "QUERY") {
                         var query = buffer.model.add(cmd.parameters[1])
                         pageStack.replace(bufferPage, {buffer: query})
                         if (cmd.parameters.length > 2) {
-                            var msgCmd = ircCommand.createMessage(query.title, cmd.parameters.slice(2))
-                            query.sendCommand(msgCmd)
-                            query.receiveMessage(msgCmd.toMessage(query.connection.nickName, query.connection))
+                            var queryCmd = ircCommand.createMessage(query.title, cmd.parameters.slice(2))
+                            query.sendCommand(queryCmd)
+                            if (!buffer.network.isCapable("znc.in/echo-message"))
+                                query.receiveMessage(queryCmd.toMessage(query.connection.nickName, query.connection))
                         }
+                    } else if (cmd.parameters[0] === "MSG") {
+                        var msgCmd = ircCommand.createMessage(cmd.parameters[1], cmd.parameters.slice(2))
+                        buffer.sendCommand(msgCmd)
+                        var msgMsg = msgCmd.toMessage(buffer.connection.nickName, buffer.connection)
+                        var msgBuf = buffer.model.add(msgMsg.target)
+                        if (msgBuf !== buffer)
+                            pageStack.replace(bufferPage, {buffer: msgBuf})
+                        if (!buffer.network.isCapable("znc.in/echo-message"))
+                            msgBuf.receiveMessage(msgMsg)
+                        else
+                            msgMsg.destroy()
                     } else if (cmd.parameters[0] === "IGNORE") {
                         var imask = cmd.parameters[1]
                         if (!imask) {
@@ -91,8 +103,10 @@ FocusScope {
                     if (cmd.type === IrcCommand.Message
                             || cmd.type === IrcCommand.CtcpAction
                             || cmd.type === IrcCommand.Notice) {
-                        var msg = cmd.toMessage(buffer.connection.nickName, buffer.connection)
-                        buffer.receiveMessage(msg)
+                        if (!buffer.network.isCapable("znc.in/echo-message")) {
+                            var msg = cmd.toMessage(buffer.connection.nickName, buffer.connection)
+                            buffer.receiveMessage(msg)
+                        }
                     }
                 }
                 field.text = ""

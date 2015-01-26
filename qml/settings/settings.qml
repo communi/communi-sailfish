@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2013-2014 The Communi Project
+  Copyright (C) 2013-2015 The Communi Project
 
   You may use this file under the terms of BSD license as follows:
 
@@ -35,11 +35,24 @@ Page {
 
     property var fontSizes: [Theme.fontSizeTiny, Theme.fontSizeExtraSmall,
                              Theme.fontSizeSmall, Theme.fontSizeMedium]
+    property var sortMethods: [2 /* Irc.SortByTitle */, 3 /* Irc.SortByActivity*/ ]
 
     ConfigurationValue {
        id: fontSizeConfig
        key: "/apps/harbour-communi/settings/fontsize"
        defaultValue: Theme.fontSizeSmall
+    }
+
+    ConfigurationValue {
+       id: fontStyleConfig
+       key: "/apps/harbour-communi/settings/fontstyle"
+       defaultValue: false
+    }
+
+    ConfigurationValue {
+        id: sortMethodConfig
+        key: "/apps/harbour-communi/settings/sortmethod"
+        defaultValue: sortMethods[0]
     }
 
     ConfigurationValue {
@@ -53,6 +66,7 @@ Page {
        key: "/apps/harbour-communi/settings/eventslimit"
        defaultValue: 150
     }
+
 
     ConfigurationValue {
        id: feedbackConfig
@@ -78,6 +92,26 @@ Page {
                 }
                 currentIndex: page.fontSizes.indexOf(fontSizeConfig.value)
                 onCurrentIndexChanged: fontSizeConfig.value = page.fontSizes[currentIndex]
+            }
+
+            TextSwitch {
+                width: parent.width
+                text: qsTr("Fixed-width font")
+                description: qsTr("Specifies whether a monospaced font is used for messages")
+                checked: fontStyleConfig.value
+                onCheckedChanged: fontStyleConfig.value = checked
+            }
+
+            ComboBox {
+                id: sortOrderBox
+                width: parent.width
+                label: qsTr("Sort views:")
+                menu: ContextMenu {
+                    MenuItem { text: qsTr("Alphabetically") }
+                    MenuItem { text: qsTr("By activity") }
+                }
+                currentIndex: page.sortMethods.indexOf(sortMethodConfig.value)
+                onCurrentIndexChanged: sortMethodConfig.value = page.sortMethods[currentIndex]
             }
 
             TextSwitch {

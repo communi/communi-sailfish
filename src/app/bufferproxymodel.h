@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2013-2014 The Communi Project
+  Copyright (C) 2013-2015 The Communi Project
 
   You may use this file under the terms of BSD license as follows:
 
@@ -44,6 +44,7 @@ class BufferProxyModel : public RowsJoinerProxy
     Q_PROPERTY(QList<QObject*> servers READ servers NOTIFY serversChanged)
     Q_PROPERTY(QList<QObject*> connections READ connections NOTIFY connectionsChanged)
     Q_PROPERTY(IrcBuffer* currentBuffer READ currentBuffer WRITE setCurrentBuffer NOTIFY currentBufferChanged)
+    Q_PROPERTY(int sortMethod READ sortMethod WRITE setSortMethod)
 
 public:
     BufferProxyModel(QObject* parent = 0);
@@ -62,6 +63,7 @@ public:
     Q_INVOKABLE QObject* server(IrcConnection* connection) const;
 
     Q_INVOKABLE void addConnection(IrcConnection* connection);
+    Q_INVOKABLE void insertConnection(int index, IrcConnection* connection);
     Q_INVOKABLE void removeConnection(IrcConnection* connection);
 
     QHash<int, QByteArray> roleNames() const;
@@ -69,6 +71,9 @@ public:
 
     Q_INVOKABLE QByteArray saveState() const;
     Q_INVOKABLE bool restoreState(const QByteArray& state);
+
+    int sortMethod() const;
+    void setSortMethod(int method);
 
 signals:
     void reseted();
@@ -99,6 +104,7 @@ private slots:
     void processMessage(IrcMessage* message);
 
 private:
+    int m_method;
     QList<QObject*> m_models;
     QList<QObject*> m_servers;
     QList<QObject*> m_connections;

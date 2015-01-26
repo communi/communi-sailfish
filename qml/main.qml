@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2013-2014 The Communi Project
+  Copyright (C) 2013-2015 The Communi Project
 
   You may use this file under the terms of BSD license as follows:
 
@@ -81,6 +81,12 @@ ApplicationWindow {
         target: MessageStorage
         property: "baseColor"
         value: Theme.highlightColor // alternatively a bit less prominent Theme.secondaryHighlightColor
+    }
+
+    Binding {
+        target: BufferModel
+        property: "sortMethod"
+        value: sortMethodConfig.value
     }
 
     Connections {
@@ -182,6 +188,18 @@ ApplicationWindow {
        id: fontSizeConfig
        key: "/apps/harbour-communi/settings/fontsize"
        defaultValue: Theme.fontSizeSmall
+    }
+
+    ConfigurationValue {
+       id: fontStyleConfig
+       key: "/apps/harbour-communi/settings/fontstyle"
+       defaultValue: false
+    }
+
+    ConfigurationValue {
+        id: sortMethodConfig
+        key: "/apps/harbour-communi/settings/sortmethod"
+        defaultValue: Irc.SortByTitle
     }
 
     ConfigurationValue {

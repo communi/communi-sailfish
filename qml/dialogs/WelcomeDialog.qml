@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2013-2014 The Communi Project
+  Copyright (C) 2013-2015 The Communi Project
 
   You may use this file under the terms of BSD license as follows:
 
@@ -58,6 +58,10 @@ Dialog {
                     MenuItem {
                         text: qsTr("Edit")
                         onClicked: pageStack.push(editDialog, { connection: modelData })
+                    }
+                    MenuItem {
+                        text: qsTr("Clone")
+                        onClicked: BufferModel.insertConnection(index + 1, modelData.clone(BufferModel))
                     }
                     MenuItem {
                         text: qsTr("Remove")

@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2013-2014 The Communi Project
+  Copyright (C) 2013-2015 The Communi Project
 
   You may use this file under the terms of BSD license as follows:
 
@@ -30,9 +30,9 @@
 #include <QQuickView>
 #include <QtQml>
 
-#if QT_VERSION < 0x050200
+//#if QT_VERSION < 0x050200
 #include "qqmlsettings_p.h"
-#endif
+//#endif
 
 #include <sailfishapp.h>
 
@@ -90,9 +90,9 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
     QScopedPointer<QQuickView> viewer(SailfishApp::createView());
     viewer->engine()->addImportPath("/usr/share/harbour-communi/qml");
 
-#if QT_VERSION < 0x050200
+//#if QT_VERSION < 0x050200
     qmlRegisterType<QQmlSettings>("Qt.labs.settings", 1, 0, "Settings");
-#endif
+//#endif
 
     registerCommuniTypes();
 

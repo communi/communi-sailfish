@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2013-2014 The Communi Project
+  Copyright (C) 2013-2015 The Communi Project
 
   You may use this file under the terms of BSD license as follows:
 
@@ -177,6 +177,7 @@ Page {
                     textFormat: Text.RichText
                     linkColor: Theme.highlightColor
                     font.pixelSize: fontSizeConfig.value
+                    font.family: fontStyleConfig.value ? "Monospace" : stamp.font.family
                     onLinkActivated: Qt.openUrlExternally(link)
                     color: highlight ? window.nickHighlight : event ? Theme.secondaryColor : Theme.primaryColor
                     onWidthChanged: doLayout()
