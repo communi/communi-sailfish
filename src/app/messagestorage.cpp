@@ -37,19 +37,34 @@
 
 IRC_USE_NAMESPACE
 
+class MessageService : public QObject
+{
+    Q_OBJECT
+    Q_CLASSINFO("D-Bus Interface", "com.communi.irc")
+
+public:
+    MessageService(QObject* parent = 0) : QObject(parent)
+    {
+        if (!QDBusConnection::sessionBus().registerService("com.communi.irc"))
+            qWarning() << "MessageService: failed to register com.communi.irc D-Bus service";
+        if (!QDBusConnection::sessionBus().registerObject("/", this, QDBusConnection::ExportAllSignals))
+            qWarning() << "MessageService: failed to register com.communi.irc D-Bus object";
+    }
+
+signals:
+    void activeHighlightsChanged(int highlights);
+    void messageMissed(const QString& sender, const QString& message);
+    void messageHighlighted(const QString& buffer, const QString& sender, const QString& message);
+
+private:
+    friend class MessageStorage;
+};
+
 MessageStorage::MessageStorage(BufferProxyModel* proxy) : QObject(proxy), m_dirty(0), m_highlights(0),
-    m_firstHiglight(-1), m_lastHighlight(-1), m_baseColor(QColor::fromHsl(359, 102, 116)), m_proxy(proxy)
+    m_firstHiglight(-1), m_lastHighlight(-1), m_baseColor(QColor::fromHsl(359, 102, 116)),
+    m_service(new MessageService(this)), m_proxy(proxy)
 {
     connect(proxy, SIGNAL(currentBufferChanged(IrcBuffer*)), this, SLOT(onCurrentBufferChanged(IrcBuffer*)));
-
-    // Register the app as a D-Bus service
-    if (!QDBusConnection::sessionBus().registerService("com.communi.irc")) {
-        qDebug() << Q_FUNC_INFO << "Couldn't register D-Bus service!";
-    }
-    // Register this MessageStorage instance
-    if (!QDBusConnection::sessionBus().registerObject("/", this, QDBusConnection::ExportScriptableContents)) {
-        qDebug() << Q_FUNC_INFO << "Couldn't register D-Bus object!";
-    }
 }
 
 MessageModel* MessageStorage::model(IrcBuffer* buffer) const
@@ -72,6 +87,7 @@ void MessageStorage::setActiveHighlights(int highlights)
     if (m_highlights != highlights) {
         m_highlights = highlights;
         emit activeHighlightsChanged(highlights);
+        emit m_service->activeHighlightsChanged(highlights);
     }
 }
 
@@ -184,7 +200,7 @@ void MessageStorage::onMessageMissed(const QString& message)
         IrcBuffer* buffer = model->buffer();
         if (buffer) {
             emit missed(buffer, message);
-            emit messageMissed(buffer->title(), message);
+            emit m_service->messageMissed(buffer->title(), message);
         }
     }
 }
@@ -196,7 +212,7 @@ void MessageStorage::onMessageHighlighted(const QString& sender, const QString& 
         IrcBuffer* buffer = model->buffer();
         if (buffer) {
             emit highlighted(buffer, sender, message);
-            emit messageHighlighted(buffer->title(), sender, message);
+            emit m_service->messageHighlighted(buffer->title(), sender, message);
         }
     }
 }
@@ -212,3 +228,5 @@ void MessageStorage::onCurrentBufferChanged(IrcBuffer* buffer)
         m_current = model;
     }
 }
+
+#include "messagestorage.moc"
