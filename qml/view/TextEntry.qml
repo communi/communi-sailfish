@@ -91,8 +91,10 @@ FocusScope {
                     if (cmd.type === IrcCommand.Message
                             || cmd.type === IrcCommand.CtcpAction
                             || cmd.type === IrcCommand.Notice) {
-                        var msg = cmd.toMessage(buffer.connection.nickName, buffer.connection)
-                        buffer.receiveMessage(msg)
+                        if (!buffer.network.isCapable("znc.in/echo-message")) {
+                            var msg = cmd.toMessage(buffer.connection.nickName, buffer.connection)
+                            buffer.receiveMessage(msg)
+                        }
                     }
                 }
                 field.text = ""
