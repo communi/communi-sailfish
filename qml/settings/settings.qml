@@ -35,6 +35,7 @@ Page {
 
     property var fontSizes: [Theme.fontSizeTiny, Theme.fontSizeExtraSmall,
                              Theme.fontSizeSmall, Theme.fontSizeMedium]
+    property var sortMethods: [2 /* Irc.SortByTitle */, 3 /* Irc.SortByActivity*/ ]
 
     ConfigurationValue {
        id: fontSizeConfig
@@ -49,6 +50,12 @@ Page {
     }
 
     ConfigurationValue {
+        id: sortMethodConfig
+        key: "/apps/harbour-communi/settings/sortmethod"
+        defaultValue: sortMethods[0]
+    }
+
+    ConfigurationValue {
        id: eventsConfig
        key: "/apps/harbour-communi/settings/events"
        defaultValue: true
@@ -59,6 +66,7 @@ Page {
        key: "/apps/harbour-communi/settings/eventslimit"
        defaultValue: 150
     }
+
 
     ConfigurationValue {
        id: feedbackConfig
@@ -92,6 +100,18 @@ Page {
                 description: qsTr("Specifies whether a monospaced font is used for messages")
                 checked: fontStyleConfig.value
                 onCheckedChanged: fontStyleConfig.value = checked
+            }
+
+            ComboBox {
+                id: sortOrderBox
+                width: parent.width
+                label: qsTr("Sort views:")
+                menu: ContextMenu {
+                    MenuItem { text: qsTr("Alphabetically") }
+                    MenuItem { text: qsTr("By activity") }
+                }
+                currentIndex: page.sortMethods.indexOf(sortMethodConfig.value)
+                onCurrentIndexChanged: sortMethodConfig.value = page.sortMethods[currentIndex]
             }
 
             TextSwitch {

@@ -64,7 +64,7 @@ private slots:
     }
 };
 
-BufferProxyModel::BufferProxyModel(QObject* parent) : RowsJoinerProxy(parent)
+BufferProxyModel::BufferProxyModel(QObject* parent) : RowsJoinerProxy(parent), m_method(Irc::SortByTitle)
 {
 }
 
@@ -142,7 +142,7 @@ QObject* BufferProxyModel::server(IrcConnection* connection) const
 void BufferProxyModel::addConnection(IrcConnection* connection)
 {
     IrcBufferModel* model = new IrcBufferModel(connection);
-    model->setSortMethod(Irc::SortByTitle);
+    model->setSortMethod(static_cast<Irc::SortMethod>(m_method));
     connect(model, SIGNAL(added(IrcBuffer*)), this, SIGNAL(bufferAdded(IrcBuffer*)));
     connect(model, SIGNAL(removed(IrcBuffer*)), this, SIGNAL(bufferRemoved(IrcBuffer*)));
     connect(model, SIGNAL(aboutToBeAdded(IrcBuffer*)), this, SIGNAL(bufferAboutToBeAdded(IrcBuffer*)));
@@ -313,6 +313,23 @@ bool BufferProxyModel::restoreState(const QByteArray& data)
         model->setProperty("savedState", !crypto.lastError() ? ms : modelStates.value(i));
     }
     return true;
+}
+
+int BufferProxyModel::sortMethod() const
+{
+    return m_method;
+}
+
+void BufferProxyModel::setSortMethod(int method)
+{
+    if (m_method != method) {
+        m_method = method;
+        foreach (QAbstractItemModel* aim, RowsJoinerProxy::models()) {
+            IrcBufferModel* model = qobject_cast<IrcBufferModel*>(aim);
+            if (model)
+                model->setSortMethod(static_cast<Irc::SortMethod>(method));
+        }
+    }
 }
 
 void BufferProxyModel::onConnected()

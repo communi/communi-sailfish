@@ -88,6 +88,7 @@ protected:
 
 private slots:
     void updateActiveHighlights();
+    void invalidateActiveHighlights();
     void onMessageMissed(const QString& message);
     void onMessageHighlighted(const QString& sender, const QString& message);
     void onCurrentBufferChanged(IrcBuffer* buffer);

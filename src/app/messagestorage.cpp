@@ -30,6 +30,7 @@
 #include "bufferproxymodel.h"
 #include "messageformatter.h"
 #include "messagemodel.h"
+#include <IrcBufferModel>
 #include <IrcBuffer>
 #include <QTimerEvent>
 #include <QtCore/QDebug>
@@ -134,6 +135,8 @@ void MessageStorage::setBaseColor(const QColor& color)
 void MessageStorage::add(IrcBuffer* buffer)
 {
     if (buffer && !m_models.contains(buffer)) {
+        if (buffer->isSticky())
+            connect(buffer->model(), SIGNAL(buffersChanged(QList<IrcBuffer*>)), this, SLOT(invalidateActiveHighlights()));
         buffer->setPersistent(true);
         MessageModel* model = new MessageModel(buffer);
         model->formatter()->setBaseColor(m_baseColor);
@@ -143,9 +146,7 @@ void MessageStorage::add(IrcBuffer* buffer)
         connect(model, SIGNAL(messageHighlighted(QString,QString)), this, SLOT(onMessageHighlighted(QString,QString)));
         m_models.insert(buffer, model);
         emit added(model);
-
-        if (!m_dirty)
-            m_dirty = startTimer(100);
+        invalidateActiveHighlights();
     }
 }
 
@@ -156,9 +157,7 @@ void MessageStorage::remove(IrcBuffer* buffer)
         if (model) {
             emit removed(model);
             delete model;
-
-            if (!m_dirty)
-                m_dirty = startTimer(100);
+            invalidateActiveHighlights();
         }
     }
 }
@@ -191,6 +190,12 @@ void MessageStorage::updateActiveHighlights()
     setActiveHighlights(highlights);
     setFirstActiveHighlight(first);
     setLastActiveHighlight(last);
+}
+
+void MessageStorage::invalidateActiveHighlights()
+{
+    if (!m_dirty)
+        m_dirty = startTimer(100);
 }
 
 void MessageStorage::onMessageMissed(const QString& message)

@@ -83,6 +83,12 @@ ApplicationWindow {
         value: Theme.highlightColor // alternatively a bit less prominent Theme.secondaryHighlightColor
     }
 
+    Binding {
+        target: BufferModel
+        property: "sortMethod"
+        value: sortMethodConfig.value
+    }
+
     Connections {
         target: Qt.application
         onAboutToQuit: notification.close()
@@ -188,6 +194,12 @@ ApplicationWindow {
        id: fontStyleConfig
        key: "/apps/harbour-communi/settings/fontstyle"
        defaultValue: false
+    }
+
+    ConfigurationValue {
+        id: sortMethodConfig
+        key: "/apps/harbour-communi/settings/sortmethod"
+        defaultValue: Irc.SortByTitle
     }
 
     ConfigurationValue {
