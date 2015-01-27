@@ -144,32 +144,14 @@ Page {
             delegate: ListItem {
                 id: delegate
                 contentHeight: label.height + (index > 0 && index < view.count - 1 && ListView.isCurrentItem ? Theme.paddingMedium : 0)
-                MouseArea {
-                    anchors.fill: parent
-                    onPressed: pressTimer.start()
-                    onReleased: {
-                        pressTimer.stop()
-                        delegate.down = false
-                    }
-                    onCanceled: {
-                        pressTimer.stop()
-                        delegate.down = false
-                    }
-                    onPressAndHold: delegate.showMenu()
-                    Timer {
-                        id: pressTimer
-                        interval: 100
-                        onTriggered: delegate.down = true
-                    }
-                }
-                Label {
+                Text {
                     id: stamp
                     text: timestamp
                     font.pixelSize: Theme.fontSizeTiny
                     color: seen ? Theme.secondaryColor : Theme.primaryColor
                     anchors { baseline: label.baseline; left: parent.left; leftMargin: Theme.paddingLarge }
                 }
-                Label {
+                Text {
                     id: label
                     anchors { left: stamp.right; right: parent.right; leftMargin: Theme.paddingSmall; rightMargin: Theme.paddingLarge }
                     text: richtext
@@ -177,7 +159,7 @@ Page {
                     textFormat: Text.RichText
                     linkColor: Theme.highlightColor
                     font.pixelSize: fontSizeConfig.value
-                    font.family: fontStyleConfig.value ? "Monospace" : stamp.font.family
+                    font.family: fontStyleConfig.value ? "Monospace" : Theme.fontFamily
                     onLinkActivated: Qt.openUrlExternally(link)
                     color: highlight ? window.nickHighlight : event ? Theme.secondaryColor : Theme.primaryColor
                     onWidthChanged: doLayout()
