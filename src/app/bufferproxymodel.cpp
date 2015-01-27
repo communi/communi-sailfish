@@ -166,35 +166,17 @@ void BufferProxyModel::insertConnection(int index, IrcConnection* connection)
     model->add(buffer);
 
     connection->setReconnectDelay(15); // TODO: settings?
+    // give bouncers 2 seconds to start joining channels, otherwise a
+    // non-bouncer connection is assumed and model state is restored
+    model->setJoinDelay(2);
+
     connect(connection, SIGNAL(displayNameChanged(QString)), buffer, SLOT(setName(QString)));
     connect(model, SIGNAL(messageIgnored(IrcMessage*)), this, SLOT(processMessage(IrcMessage*)));
 
     connect(connection, SIGNAL(connected()), this, SLOT(onConnected()));
     connect(connection, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
-    connect(connection, SIGNAL(enabledChanged(bool)), this, SLOT(onConnectionEnabledChanged(bool)));
     connect(connection, SIGNAL(nickNameRequired(QString,QString*)), this, SLOT(onNickNameRequired(QString)));
     connect(connection, SIGNAL(channelKeyRequired(QString,QString*)), this, SLOT(onChannelKeyRequired(QString)));
-
-    // Give bouncers a sec or two to start joining channels after getting connected.
-    // If that happens, the saved buffers shouldn't be restored to avoid restoring
-    // a buffer that was closed using another client meanwhile.
-    QTimer* timer = new QTimer(connection);
-    timer->setSingleShot(true);
-    timer->setInterval(2000);
-    connect(connection, SIGNAL(connected()), timer, SLOT(start()));
-    QObject::connect(timer, &QTimer::timeout, [=]() -> void {
-        bool hasActiveChannels = false;
-        foreach (const QString& name, model->channels()) {
-            IrcBuffer* channel = model->find(name);
-            if (channel && channel->isActive()) {
-                hasActiveChannels = true;
-                break;
-            }
-        }
-        if (!hasActiveChannels)
-            model->restoreState(model->property("savedState").toByteArray());
-        connect(model, SIGNAL(buffersChanged(QList<IrcBuffer*>)), this, SLOT(onModelBuffersChanged()));
-    });
 
     m_connections.insert(index, connection);
     m_servers.insert(index, buffer);
@@ -277,12 +259,8 @@ QByteArray BufferProxyModel::saveState() const
             IrcConnection* connection = model->connection();
             connectionStates += crypto.encryptToByteArray(connection->saveState());
             // do not save the server buffer - let addConnection() handle it when restoring
-            bool wasConnected = connection->isEnabled() && connection->isConnected();
             model->remove(model->get(0));
-            if (wasConnected)
-                modelStates += crypto.encryptToByteArray(model->saveState());
-            else
-                modelStates += crypto.encryptToByteArray(model->property("savedState").toByteArray());
+            modelStates += crypto.encryptToByteArray(model->saveState());
         }
     }
 
@@ -315,7 +293,7 @@ bool BufferProxyModel::restoreState(const QByteArray& data)
         addConnection(connection);
         IrcBufferModel* model = connection->findChild<IrcBufferModel*>();
         QByteArray ms = crypto.decryptToByteArray(modelStates.value(i).toByteArray());
-        model->setProperty("savedState", !crypto.lastError() ? ms : modelStates.value(i));
+        model->restoreState(!crypto.lastError() ? ms : modelStates.value(i).toByteArray());
     }
     return true;
 }
@@ -349,30 +327,6 @@ void BufferProxyModel::onDisconnected()
     IrcConnection* connection = qobject_cast<IrcConnection*>(sender());
     if (connection)
         emit disconnected(connection);
-}
-
-void BufferProxyModel::onModelBuffersChanged()
-{
-    IrcBufferModel* model = qobject_cast<IrcBufferModel*>(sender());
-    if (model) {
-        IrcConnection* connection = model->connection();
-        if (connection && connection->isConnected())
-            model->setProperty("savedState", model->saveState());
-    }
-}
-
-void BufferProxyModel::onConnectionEnabledChanged(bool enabled)
-{
-    // store the model state when a connection is disabled
-    // see #25: Don't save/restore buffers for disabled connections
-    if (!enabled) {
-        IrcConnection* connection = qobject_cast<IrcConnection*>(sender());
-        if (connection) {
-            IrcBufferModel* model = connection->findChild<IrcBufferModel*>();
-            if (model && model->count() > 1)
-                model->setProperty("savedState", model->saveState());
-        }
-    }
 }
 
 void BufferProxyModel::closeConnection(IrcBuffer* buffer)
