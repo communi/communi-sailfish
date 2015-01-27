@@ -277,9 +277,12 @@ QString MessageFormatter::formatNoticeMessage(IrcNoticeMessage* message, Qt::Tex
 
     const QString sender = formatNick(message->nick(), format, message->isOwn());
     const QString msg = formatContent(message->content(), format);
-    if (format == Qt::RichText)
-        return QCoreApplication::translate("MessageFormatter", "[%1] %2").arg(sender, msg);
-    return msg;
+    if (format == Qt::PlainText)
+        return msg;
+    QString pfx = message->statusPrefix();
+    if (!pfx.isEmpty())
+        pfx.append(" ");
+    return QCoreApplication::translate("MessageFormatter", "%1[%2] %3").arg(pfx, sender, msg);
 }
 
 #define P_(x) message->parameters().value(x)
@@ -388,9 +391,12 @@ QString MessageFormatter::formatPrivateMessage(IrcPrivateMessage* message, Qt::T
         return QCoreApplication::translate("MessageFormatter", "%1 %2").arg(message->nick(), msg);
     else if (message->isRequest())
         return QCoreApplication::translate("MessageFormatter", "%1 requested %2").arg(sender, msg.split(" ").value(0).toLower());
-    else if (format == Qt::RichText)
-        return QCoreApplication::translate("MessageFormatter", "%1: %2").arg(sender, msg);
-    return msg;
+    else if (format == Qt::PlainText)
+        return msg;
+    QString pfx = message->statusPrefix();
+    if (!pfx.isEmpty())
+        pfx.append(" ");
+    return QCoreApplication::translate("MessageFormatter", "%1%2: %3").arg(pfx, sender, msg);
 }
 
 QString MessageFormatter::formatQuitMessage(IrcQuitMessage* message, Qt::TextFormat format) const
