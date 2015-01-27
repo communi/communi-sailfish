@@ -38,7 +38,6 @@ Dialog {
     property string title: qsTr("Connect")
     property string defaultPort: "6667"
     property string defaultSslPort: "6697"
-    property string defaultQuasselPort: "4242"
     property string defaultNickName: qsTr("Sailor%1").arg(Math.floor(Math.random() * 12345))
     property string defaultUserName: "sailfish"
     property string defaultRealName: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
@@ -59,7 +58,6 @@ Dialog {
             realNameField.text = connection.realName
             passwordField.text = connection.password
             displayNameField.text = connection.displayName
-            //quasselBox.checked = !!connection.userData['quassel']
             commandField.text = connection.userData['commands'] || ""
         }
     }
@@ -81,7 +79,6 @@ Dialog {
         var userData = connection.userData
         userData['originalNickName'] = nickNameField.text
         userData['alternateNickName'] = alternateNickNameField.text
-        //userData['quassel'] = quasselBox.checked
         userData['commands'] = commandField.text
         connection.userData = userData
     }
@@ -206,20 +203,6 @@ Dialog {
                             portField.text = defaultPort
                     }
                 }
-
-//                TextSwitch {
-//                    id: quasselBox
-//                    visible: false
-//                    anchors { left: parent.left; right: parent.right; rightMargin: Theme.paddingLarge }
-//                    description: qsTr("The Quassel protocol support is experimental")
-//                    text: qsTr("Use Quassel protocol")
-//                    onCheckedChanged: {
-//                        if (checked && (portField.text === defaultPort || portField.text === defaultSslPort))
-//                            portField.text = defaultQuasselPort
-//                        else if (!checked && portField.text === defaultQuasselPort)
-//                            portField.text = secureBox.checked ? defaultSslPort : defaultPort
-//                    }
-//                }
 
                 TextArea {
                     id: commandField

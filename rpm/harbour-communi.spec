@@ -5,7 +5,7 @@
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 %define __provides_exclude_from ^%{_datadir}/.*$
-%define __requires_exclude ^libIrcCore|libIrcModel|libIrcUtil|libcommuniplugin|libquasselplugin.*$
+%define __requires_exclude ^libIrcCore|libIrcModel|libIrcUtil|libcommuniplugin.*$
 # << macros
 
 Name:       harbour-communi
