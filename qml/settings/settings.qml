@@ -67,6 +67,11 @@ Page {
        defaultValue: 150
     }
 
+    ConfigurationValue {
+       id: notifyConfig
+       key: "/apps/harbour-communi/settings/notify"
+       defaultValue: true
+    }
 
     ConfigurationValue {
        id: feedbackConfig
@@ -132,6 +137,14 @@ Page {
                 value: eventsLimitConfig.value
                 onValueChanged: eventsLimitConfig.value = value
                 valueText: value === 0 ? qsTr("Unlimited") : qsTr("%1 users").arg(value)
+            }
+
+            TextSwitch {
+                width: parent.width
+                text: qsTr("Use notification sounds")
+                description: qsTr("Specifies whether notification sounds are used for highlighted messages")
+                checked: notifyConfig.value
+                onCheckedChanged: notifyConfig.value = checked
             }
 
             TextSwitch {
