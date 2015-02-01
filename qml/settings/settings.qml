@@ -86,28 +86,6 @@ Page {
 
         model: VisualItemModel {
             ComboBox {
-                id: fontSizeBox
-                width: parent.width
-                label: qsTr("Font size:")
-                menu: ContextMenu {
-                    MenuItem { text: qsTr("Tiny") }
-                    MenuItem { text: qsTr("Small") }
-                    MenuItem { text: qsTr("Medium") }
-                    MenuItem { text: qsTr("Large") }
-                }
-                currentIndex: page.fontSizes.indexOf(fontSizeConfig.value)
-                onCurrentIndexChanged: fontSizeConfig.value = page.fontSizes[currentIndex]
-            }
-
-            TextSwitch {
-                width: parent.width
-                text: qsTr("Fixed-width font")
-                description: qsTr("Specifies whether a monospaced font is used for messages")
-                checked: fontStyleConfig.value
-                onCheckedChanged: fontStyleConfig.value = checked
-            }
-
-            ComboBox {
                 id: sortOrderBox
                 width: parent.width
                 label: qsTr("Sort views:")
@@ -138,6 +116,32 @@ Page {
                 onValueChanged: eventsLimitConfig.value = value
                 valueText: value === 0 ? qsTr("Unlimited") : qsTr("%1 users").arg(value)
             }
+
+            SectionHeader { text: qsTr("Font") }
+
+            ComboBox {
+                id: fontSizeBox
+                width: parent.width
+                label: qsTr("Size:")
+                menu: ContextMenu {
+                    MenuItem { text: qsTr("Tiny") }
+                    MenuItem { text: qsTr("Small") }
+                    MenuItem { text: qsTr("Medium") }
+                    MenuItem { text: qsTr("Large") }
+                }
+                currentIndex: page.fontSizes.indexOf(fontSizeConfig.value)
+                onCurrentIndexChanged: fontSizeConfig.value = page.fontSizes[currentIndex]
+            }
+
+            TextSwitch {
+                width: parent.width
+                text: qsTr("Fixed-width")
+                description: qsTr("Specifies whether a monospaced font is used for messages")
+                checked: fontStyleConfig.value
+                onCheckedChanged: fontStyleConfig.value = checked
+            }
+
+            SectionHeader { text: qsTr("Notifications") }
 
             TextSwitch {
                 width: parent.width
