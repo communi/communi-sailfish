@@ -67,6 +67,11 @@ Page {
        defaultValue: 150
     }
 
+    ConfigurationValue {
+       id: notifyConfig
+       key: "/apps/harbour-communi/settings/notify"
+       defaultValue: true
+    }
 
     ConfigurationValue {
        id: feedbackConfig
@@ -80,28 +85,6 @@ Page {
         header: PageHeader { title: qsTr("Settings") } // TODO: "IRC" (system app settings)
 
         model: VisualItemModel {
-            ComboBox {
-                id: fontSizeBox
-                width: parent.width
-                label: qsTr("Font size:")
-                menu: ContextMenu {
-                    MenuItem { text: qsTr("Tiny") }
-                    MenuItem { text: qsTr("Small") }
-                    MenuItem { text: qsTr("Medium") }
-                    MenuItem { text: qsTr("Large") }
-                }
-                currentIndex: page.fontSizes.indexOf(fontSizeConfig.value)
-                onCurrentIndexChanged: fontSizeConfig.value = page.fontSizes[currentIndex]
-            }
-
-            TextSwitch {
-                width: parent.width
-                text: qsTr("Fixed-width font")
-                description: qsTr("Specifies whether a monospaced font is used for messages")
-                checked: fontStyleConfig.value
-                onCheckedChanged: fontStyleConfig.value = checked
-            }
-
             ComboBox {
                 id: sortOrderBox
                 width: parent.width
@@ -132,6 +115,40 @@ Page {
                 value: eventsLimitConfig.value
                 onValueChanged: eventsLimitConfig.value = value
                 valueText: value === 0 ? qsTr("Unlimited") : qsTr("%1 users").arg(value)
+            }
+
+            SectionHeader { text: qsTr("Font") }
+
+            ComboBox {
+                id: fontSizeBox
+                width: parent.width
+                label: qsTr("Size:")
+                menu: ContextMenu {
+                    MenuItem { text: qsTr("Tiny") }
+                    MenuItem { text: qsTr("Small") }
+                    MenuItem { text: qsTr("Medium") }
+                    MenuItem { text: qsTr("Large") }
+                }
+                currentIndex: page.fontSizes.indexOf(fontSizeConfig.value)
+                onCurrentIndexChanged: fontSizeConfig.value = page.fontSizes[currentIndex]
+            }
+
+            TextSwitch {
+                width: parent.width
+                text: qsTr("Fixed-width")
+                description: qsTr("Specifies whether a monospaced font is used for messages")
+                checked: fontStyleConfig.value
+                onCheckedChanged: fontStyleConfig.value = checked
+            }
+
+            SectionHeader { text: qsTr("Notifications") }
+
+            TextSwitch {
+                width: parent.width
+                text: qsTr("Use notification sounds")
+                description: qsTr("Specifies whether notification sounds are used for highlighted messages")
+                checked: notifyConfig.value
+                onCheckedChanged: notifyConfig.value = checked
             }
 
             TextSwitch {

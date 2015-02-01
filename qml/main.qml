@@ -215,6 +215,12 @@ ApplicationWindow {
     }
 
     ConfigurationValue {
+       id: notifyConfig
+       key: "/apps/harbour-communi/settings/notify"
+       defaultValue: true
+    }
+
+    ConfigurationValue {
        id: feedbackConfig
        key: "/apps/harbour-communi/settings/feedback"
        defaultValue: true
@@ -237,7 +243,7 @@ ApplicationWindow {
     Notification {
         id: notification
         property IrcBuffer buffer
-        category: "x-nemo.messaging.im"
+        category: notifyConfig.value ? "x-nemo.messaging.im" : ""
         itemCount: MessageStorage.activeHighlights
 
         onClicked: {

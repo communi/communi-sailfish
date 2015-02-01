@@ -45,6 +45,17 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 %attr(644,root,root) %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 
 %changelog
+* Sun Feb 01 2015 J-P Nurmi <jpnurmi@gmail.com> 0.9
+- Improved state saving and restoring once again
+- Implemented a command queue for flood protection
+- Added a setting for fixed-width font (#94)
+- Allow cloning networks (#97)
+- Fixed STATUSMSG handling (#100)
+- Added a setting for sorting views alphabetically vs. by activity (#101)
+- Clarified CTCP requests and replies (#103)
+- Added a setting for disabling notification sounds
+- Reorganized the settings page
+
 * Tue Jul 15 2014 J-P Nurmi <jpnurmi@gmail.com> 0.8
 - Added context menu items for opening links in messages
 - Tweaked wording in notifications & removed IRC formatting
