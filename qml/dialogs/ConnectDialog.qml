@@ -38,7 +38,7 @@ Dialog {
     property string title: qsTr("Connect")
     property string defaultPort: "6667"
     property string defaultSslPort: "6697"
-    property string defaultQuasselPort: "4242"
+   // property string defaultQuasselPort: "4242"
     property string defaultNickName: qsTr("Sailor%1").arg(Math.floor(Math.random() * 12345))
     property string defaultUserName: "sailfish"
     property string defaultRealName: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
@@ -59,7 +59,7 @@ Dialog {
             realNameField.text = connection.realName
             passwordField.text = connection.password
             displayNameField.text = connection.displayName
-            quasselBox.checked = !!connection.userData['quassel']
+         //   quasselBox.checked = !!connection.userData['quassel']
             commandField.text = connection.userData['commands'] || ""
         }
     }
@@ -207,7 +207,7 @@ Dialog {
                     }
                 }
 
-                TextSwitch {
+         /*       TextSwitch {
                     id: quasselBox
                     anchors { left: parent.left; right: parent.right; rightMargin: Theme.paddingLarge }
                     description: qsTr("The Quassel protocol support is experimental")
@@ -219,6 +219,7 @@ Dialog {
                             portField.text = secureBox.checked ? defaultSslPort : defaultPort
                     }
                 }
+*/
 
                 TextArea {
                     id: commandField
