@@ -32,6 +32,7 @@
 #include <QHash>
 #include <QColor>
 #include <QDateTime>
+#include <QObject>
 #include <IrcGlobal>
 
 IRC_FORWARD_DECLARE_CLASS(IrcBuffer)
