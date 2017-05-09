@@ -258,9 +258,23 @@ ApplicationWindow {
         id: welcomeDialog
         WelcomeDialog {
             property bool __isWelcomeDialog: true
-            onAccepted: window.openConnections()
+            onAccepted: openConnectionsTimer.start()
             Component.onCompleted: NetworkSession.enabled = false
             Component.onDestruction: NetworkSession.enabled = true
+        }
+    }
+
+    Timer {
+        // If connection gets connected faster than page is loading
+        // command sending will fail. So we wait a bit.
+        id: openConnectionsTimer
+        interval: 100
+        onTriggered: {
+            if (typeof currentPage.textEntry === "undefined") {
+                openConnectionsTimer.start()
+            } else {
+                window.openConnections()
+            }
         }
     }
 
