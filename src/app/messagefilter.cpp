@@ -28,11 +28,16 @@
 
 #include "messagefilter.h"
 #include "messagerole.h"
+#include "messagemodel.h"
 #include <IrcMessage>
+#include <IrcBuffer>
 
 IRC_USE_NAMESPACE
 
-MessageFilter::MessageFilter(QObject* parent) : QSortFilterProxyModel(parent), m_events(true)
+MessageFilter::MessageFilter(QObject* parent) :
+    QSortFilterProxyModel(parent),
+    m_events(true),
+    m_topicMessages(true)
 {
     setDynamicSortFilter(true);
 }
@@ -61,15 +66,33 @@ void MessageFilter::setShowEvents(bool show)
     }
 }
 
+bool MessageFilter::showTopicMessages() const
+{
+    return m_topicMessages;
+}
+
+void MessageFilter::setShowTopicMessages(bool show)
+{
+    if (m_topicMessages != show) {
+        m_topicMessages = show;
+        emit showTopicMessagesChanged();
+        invalidateFilter();
+    }
+}
+
 bool MessageFilter::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
 {
-    if (!m_events) {
+    if (!m_events || !m_topicMessages) {
         const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
         switch (index.data(TypeRole).toInt()) {
         case IrcMessage::Join:
         case IrcMessage::Part:
         case IrcMessage::Quit:
             return index.data(OwnRole).toBool();
+        case IrcMessage::Topic:
+        case IrcMessage::Numeric:
+        case IrcMessage::Names:
+            return m_topicMessages || !dynamic_cast<const MessageModel*>(sourceModel())->buffer()->isChannel();
         default:
             return true;
         }
