@@ -215,6 +215,12 @@ ApplicationWindow {
     }
 
     ConfigurationValue {
+       id: topicMessagesConfig
+       key: "/apps/harbour-communi/settings/topicmessages"
+       defaultValue: true
+    }
+
+    ConfigurationValue {
        id: notifyConfig
        key: "/apps/harbour-communi/settings/notify"
        defaultValue: true
