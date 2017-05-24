@@ -68,6 +68,12 @@ Page {
     }
 
     ConfigurationValue {
+       id: topicMessagesConfig
+       key: "/apps/harbour-communi/settings/topicmessages"
+       defaultValue: true
+    }
+
+    ConfigurationValue {
        id: notifyConfig
        key: "/apps/harbour-communi/settings/notify"
        defaultValue: true
@@ -115,6 +121,14 @@ Page {
                 value: eventsLimitConfig.value
                 onValueChanged: eventsLimitConfig.value = value
                 valueText: value === 0 ? qsTr("Unlimited") : qsTr("%1 users").arg(value)
+            }
+
+            TextSwitch {
+                width: parent.width
+                text: qsTr("Show topic messages")
+                description: qsTr("Specifies whether channel topic messages are shown when entering a channel.")
+                checked: topicMessagesConfig.value
+                onCheckedChanged: topicMessagesConfig.value = checked
             }
 
             SectionHeader { text: qsTr("Font") }
