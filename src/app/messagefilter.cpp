@@ -88,7 +88,7 @@ bool MessageFilter::filterAcceptsRow(int sourceRow, const QModelIndex& sourcePar
         case IrcMessage::Join:
         case IrcMessage::Part:
         case IrcMessage::Quit:
-            return index.data(OwnRole).toBool();
+            return m_events;
         case IrcMessage::Topic:
         case IrcMessage::Numeric:
         case IrcMessage::Names:
