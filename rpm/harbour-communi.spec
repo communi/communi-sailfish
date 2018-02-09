@@ -45,6 +45,14 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 %attr(644,root,root) %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 
 %changelog
+* Fri Feb 09 2018 Björn Bidar <theodorstormgrade@gmail.com> 0.9+lyro_merge
+- Added fixes from upstream to build with Sailfish OS >= 2.1.0.11
+- Removed/disabled quassel support
+- Added features from lyro_merge:
+- Add Filter for topic and info messages in channels
+- Add settings option to hide channel topic messages
+- Hide rejoin messages
+
 * Sun Feb 01 2015 J-P Nurmi <jpnurmi@gmail.com> 0.9
 - Improved state saving and restoring once again
 - Implemented a command queue for flood protection
