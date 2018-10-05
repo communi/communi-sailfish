@@ -66,7 +66,7 @@ FocusScope {
                         if (cmd.parameters.length > 2) {
                             var queryCmd = ircCommand.createMessage(query.title, cmd.parameters.slice(2))
                             query.sendCommand(queryCmd)
-                            if (!buffer.network.isCapable("znc.in/echo-message"))
+                            if (!buffer.network.isCapable("echo-message"))
                                 query.receiveMessage(queryCmd.toMessage(query.connection.nickName, query.connection))
                         }
                     } else if (cmd.parameters[0] === "MSG") {
@@ -76,7 +76,7 @@ FocusScope {
                         var msgBuf = buffer.model.add(msgMsg.target)
                         if (msgBuf !== buffer)
                             pageStack.replace(bufferPage, {buffer: msgBuf})
-                        if (!buffer.network.isCapable("znc.in/echo-message"))
+                        if (!buffer.network.isCapable("echo-message"))
                             msgBuf.receiveMessage(msgMsg)
                         else
                             msgMsg.destroy()
@@ -103,7 +103,7 @@ FocusScope {
                     if (cmd.type === IrcCommand.Message
                             || cmd.type === IrcCommand.CtcpAction
                             || cmd.type === IrcCommand.Notice) {
-                        if (!buffer.network.isCapable("znc.in/echo-message")) {
+                        if (!buffer.network.isCapable("echo-message")) {
                             var msg = cmd.toMessage(buffer.connection.nickName, buffer.connection)
                             buffer.receiveMessage(msg)
                         }
