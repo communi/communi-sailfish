@@ -220,6 +220,15 @@ QVariant MessageModel::data(const QModelIndex& index, int role) const
 
 void MessageModel::receive(IrcMessage* message)
 {
+    if (message->type () == IrcMessage::Batch) {
+        IrcBatchMessage* batch = static_cast<IrcBatchMessage*>(message);
+        foreach (IrcMessage* msg, batch->messages ()) {
+            receive (msg);
+        }
+
+        return;
+    }
+
     MessageData data;
     data.plaintext = m_formatter->formatMessage(message, Qt::PlainText);
     if (!data.plaintext.isEmpty()) {
