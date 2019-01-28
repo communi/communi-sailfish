@@ -172,6 +172,15 @@ Page {
                 checked: feedbackConfig.value
                 onCheckedChanged: feedbackConfig.value = checked
             }
+
+            TextSwitch {
+                visible: feedbackConfig.value
+                width: parent.width
+                text: qsTr("Use haptic feedback in background")
+                description: qsTr("Specifies whether haptic feedback is enabled when not having the app in foreground")
+                checked: feedbackBgConfig.value
+                onCheckedChanged: feedbackBgConfig.value = checked
+            }
         }
         VerticalScrollDecorator { }
     }
