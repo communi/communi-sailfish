@@ -15,7 +15,7 @@ License:    LGPLv2 and BSD
 URL:        http://communi.github.io/
 Source0:    %{name}-%{version}.tar.gz
 
-Version:    1.0
+Version:    0.10+lyro_merge
 Release:    alpha
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
