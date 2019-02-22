@@ -1,3 +1,9 @@
+* Fri Feb 22 2019 Björn Bidar <theodorstormgrade@gmail.com> 0.10+lyro_merge
+- Move changelog to changes file as listed in Packaging Guidelines
+- Fix regression intruded by updating communi-shared (also fixes #115)
+- Process batch messages (thanks razarcampagne)
+- Add option for background haptic feedback
+
 * Fri Feb 09 2018 Björn Bidar <theodorstormgrade@gmail.com> 0.9+lyro_merge
 - Added fixes from upstream to build with Sailfish OS >= 2.1.0.11
 - Removed/disabled quassel support
