@@ -27,6 +27,7 @@
 */
 
 #include <QGuiApplication>
+#include <QTranslator>
 #include <QQuickView>
 #include <QtQml>
 #include <QFileInfo>
@@ -122,6 +123,15 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 
     QScopedPointer<QQuickView> viewer(SailfishApp::createView());
     viewer->engine()->addImportPath(AppDataLocationReadOnly + "/qml");
+
+    QTranslator translator;
+
+    if (translator.load(QLocale(),
+                        QCoreApplication::applicationName(),
+                        QLatin1String("_"),
+                        QStandardPaths::locate(QStandardPaths::AppDataLocation,
+                                               "translations")))
+        QCoreApplication::installTranslator(&translator);
 
 
     registerCommuniTypes();
