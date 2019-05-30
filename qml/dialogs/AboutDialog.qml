@@ -72,7 +72,7 @@ Dialog {
                     elide: Text.ElideRight
                     font.pixelSize: Theme.fontSizeSmall
                     truncationMode: TruncationMode.Fade
-                    text: "IRC channel: #communi on irc.freenode.net"
+                    text: qsTr("IRC channel: %1 on %2").arg("#communi").arg("irc.freenode.net")
                 }
                 Label {
                     width: parent.width
@@ -80,7 +80,7 @@ Dialog {
                     linkColor: Theme.highlightColor
                     font.pixelSize: Theme.fontSizeSmall
                     truncationMode: TruncationMode.Fade
-                    text: "Mailing list: <a href='mailto:communi-sailfish@googlegroups.com'>communi-sailfish@googlegroups.com</a>"
+                    text: qsTr("Mailing list")+": <a href='mailto:communi-sailfish@googlegroups.com'>communi-sailfish@googlegroups.com</a>"
                     onLinkActivated: Qt.openUrlExternally(link)
                 }
                 Label {
@@ -89,7 +89,7 @@ Dialog {
                     linkColor: Theme.highlightColor
                     font.pixelSize: Theme.fontSizeSmall
                     truncationMode: TruncationMode.Fade
-                    text: "Bug reports: <a href='https://github.com/communi/communi-sailfish/issues'>https://github.com/communi/communi-sailfish/issues</a>"
+                    text: qsTr("Bug reports")+": <a href='https://github.com/communi/communi-sailfish/issues'>https://github.com/communi/communi-sailfish/issues</a>"
                     onLinkActivated: Qt.openUrlExternally(link)
                 }
             }
