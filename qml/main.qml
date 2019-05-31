@@ -100,6 +100,8 @@ ApplicationWindow {
             if (Qt.application.active) {
                 feedback.give()
             } else {
+                if (feedbackBgConfig.value)
+                    feedback.give()
                 notification.buffer = buffer
                 notification.summary = qsTr("IRC: highlight on %1").arg(buffer.title)
                 notification.previewSummary = qsTr("%1 on %2:").arg(sender).arg(buffer.title)
@@ -112,6 +114,8 @@ ApplicationWindow {
             if (Qt.application.active) {
                 feedback.give()
             } else {
+                if (feedbackBgConfig.value)
+                    feedback.give()
                 notification.buffer = buffer
                 notification.summary = qsTr("IRC: message from %1").arg(buffer.title)
                 notification.previewSummary = qsTr("%1 in private:").arg(buffer.title)
@@ -215,6 +219,12 @@ ApplicationWindow {
     }
 
     ConfigurationValue {
+       id: topicMessagesConfig
+       key: "/apps/harbour-communi/settings/topicmessages"
+       defaultValue: true
+    }
+
+    ConfigurationValue {
        id: notifyConfig
        key: "/apps/harbour-communi/settings/notify"
        defaultValue: true
@@ -224,6 +234,12 @@ ApplicationWindow {
        id: feedbackConfig
        key: "/apps/harbour-communi/settings/feedback"
        defaultValue: true
+    }
+
+    ConfigurationValue {
+       id: feedbackBgConfig
+       key: "/apps/harbour-communi/settings/feedbackbg"
+       defaultValue: false
     }
 
     NonGraphicalFeedback {

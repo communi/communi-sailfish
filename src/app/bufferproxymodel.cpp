@@ -30,6 +30,7 @@
 #include "simplecrypt.h"
 #include "zncmanager.h"
 #include <QCoreApplication>
+#include <QDataStream>
 #include <QTimer>
 #include <IrcCommandQueue>
 #include <IrcBufferModel>

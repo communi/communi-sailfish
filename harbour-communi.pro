@@ -2,7 +2,7 @@ TEMPLATE = subdirs
 SUBDIRS += src
 
 !no_submodules {
-    !exists(src/shared/shared.pri)|!exists(src/backend/src/src.pro)|!exists(src/3rdparty/quassel/src): \
+    !exists(src/shared/shared.pri)|!exists(src/backend/src/src.pro)): \
         error(A Git submodule is missing. Run \'git submodule update --init\' in the project root.)
 }
 

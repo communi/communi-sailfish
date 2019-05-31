@@ -139,6 +139,7 @@ Page {
             model: MessageFilter {
                 source: storage
                 showEvents: !!eventsConfig.value && (!eventsLimitConfig.value || userModel.count < eventsLimitConfig.value)
+                showTopicMessages: !!topicMessagesConfig.value
             }
 
             delegate: ListItem {

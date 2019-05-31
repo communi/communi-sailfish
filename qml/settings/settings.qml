@@ -68,6 +68,12 @@ Page {
     }
 
     ConfigurationValue {
+       id: topicMessagesConfig
+       key: "/apps/harbour-communi/settings/topicmessages"
+       defaultValue: true
+    }
+
+    ConfigurationValue {
        id: notifyConfig
        key: "/apps/harbour-communi/settings/notify"
        defaultValue: true
@@ -117,6 +123,14 @@ Page {
                 valueText: value === 0 ? qsTr("Unlimited") : qsTr("%1 users").arg(value)
             }
 
+            TextSwitch {
+                width: parent.width
+                text: qsTr("Show topic messages")
+                description: qsTr("Specifies whether channel topic messages are shown when entering a channel.")
+                checked: topicMessagesConfig.value
+                onCheckedChanged: topicMessagesConfig.value = checked
+            }
+
             SectionHeader { text: qsTr("Font") }
 
             ComboBox {
@@ -157,6 +171,15 @@ Page {
                 description: qsTr("Specifies whether haptic feedback is used for highlighted messages")
                 checked: feedbackConfig.value
                 onCheckedChanged: feedbackConfig.value = checked
+            }
+
+            TextSwitch {
+                visible: feedbackConfig.value
+                width: parent.width
+                text: qsTr("Use haptic feedback in background")
+                description: qsTr("Specifies whether haptic feedback is enabled when not having the app in foreground")
+                checked: feedbackBgConfig.value
+                onCheckedChanged: feedbackBgConfig.value = checked
             }
         }
         VerticalScrollDecorator { }

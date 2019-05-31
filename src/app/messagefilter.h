@@ -36,6 +36,7 @@ class MessageFilter : public QSortFilterProxyModel
     Q_OBJECT
     Q_PROPERTY(QObject* source READ source WRITE setSource)
     Q_PROPERTY(bool showEvents READ showEvents WRITE setShowEvents NOTIFY showEventsChanged)
+    Q_PROPERTY(bool showTopicMessages READ showTopicMessages WRITE setShowTopicMessages NOTIFY showTopicMessagesChanged)
 
 public:
     MessageFilter(QObject* parent = 0);
@@ -46,14 +47,19 @@ public:
     bool showEvents() const;
     void setShowEvents(bool show);
 
+    bool showTopicMessages() const;
+    void setShowTopicMessages(bool show);
+
 signals:
     void showEventsChanged();
+    void showTopicMessagesChanged();
 
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const;
 
 private:
     bool m_events;
+    bool m_topicMessages;
 };
 
 #endif // MESSAGEFILTER_H
