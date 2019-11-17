@@ -37,6 +37,8 @@ Page {
                              Theme.fontSizeSmall, Theme.fontSizeMedium]
     property var sortMethods: [2 /* Irc.SortByTitle */, 3 /* Irc.SortByActivity*/ ]
 
+    allowedOrientations: Orientation.Portrait | Orientation.Landscape | Orientation.LandscapeInverted
+
     ConfigurationValue {
        id: fontSizeConfig
        key: "/apps/harbour-communi/settings/fontsize"
