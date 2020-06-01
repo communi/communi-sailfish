@@ -49,7 +49,10 @@ QObject* MessageFilter::source() const
 
 void MessageFilter::setSource(QObject* source)
 {
-    QSortFilterProxyModel::setSourceModel(qobject_cast<QAbstractItemModel*>(source));
+    MessageModel* messageModel = static_cast<MessageModel*>(source);
+    QSortFilterProxyModel::setSourceModel(messageModel);
+    // Check if messageModel is initialized
+    m_buffer = messageModel ? messageModel->buffer() : nullptr;
 }
 
 bool MessageFilter::showEvents() const
