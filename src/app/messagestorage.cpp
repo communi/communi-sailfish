@@ -65,7 +65,7 @@ MessageStorage::MessageStorage(BufferProxyModel* proxy) : QObject(proxy), m_dirt
     m_firstHiglight(-1), m_lastHighlight(-1), m_baseColor(QColor::fromHsl(359, 102, 116)),
     m_service(new MessageService(this)), m_proxy(proxy)
 {
-    connect(proxy, SIGNAL(currentBufferChanged(IrcBuffer*)), this, SLOT(onCurrentBufferChanged(IrcBuffer*)));
+    connect(proxy, &BufferProxyModel::currentBufferChanged, this, &MessageStorage::onCurrentBufferChanged);
 }
 
 MessageModel* MessageStorage::model(IrcBuffer* buffer) const
@@ -136,14 +136,14 @@ void MessageStorage::add(IrcBuffer* buffer)
 {
     if (buffer && !m_models.contains(buffer)) {
         if (buffer->isSticky())
-            connect(buffer->model(), SIGNAL(buffersChanged(QList<IrcBuffer*>)), this, SLOT(invalidateActiveHighlights()));
+            connect(buffer->model(), &IrcBufferModel::buffersChanged, this, &MessageStorage::invalidateActiveHighlights);
         buffer->setPersistent(true);
         MessageModel* model = new MessageModel(buffer);
         model->formatter()->setBaseColor(m_baseColor);
-        connect(buffer, SIGNAL(destroyed(IrcBuffer*)), this, SLOT(remove(IrcBuffer*)));
-        connect(model, SIGNAL(activeHighlightsChanged()), this, SLOT(updateActiveHighlights()));
-        connect(model, SIGNAL(messageMissed(QString)), this, SLOT(onMessageMissed(QString)));
-        connect(model, SIGNAL(messageHighlighted(QString,QString)), this, SLOT(onMessageHighlighted(QString,QString)));
+        connect(buffer, &IrcBuffer::destroyed, this, &MessageStorage::remove);
+        connect(model, &MessageModel::activeHighlightsChanged, this, &MessageStorage::updateActiveHighlights);
+        connect(model, &MessageModel::messageMissed, this, &MessageStorage::onMessageMissed);
+        connect(model, &MessageModel::messageHighlighted, this, &MessageStorage::onMessageHighlighted);
         m_models.insert(buffer, model);
         emit added(model);
         invalidateActiveHighlights();
