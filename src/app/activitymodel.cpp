@@ -63,8 +63,8 @@ QVariant ActivityModel::data(const QModelIndex& index, int role) const
 void ActivityModel::add(MessageModel* model)
 {
     if (model && !m_models.contains(model)) {
-        connect(model, SIGNAL(badgeChanged()), this, SLOT(onBadgeChanged()));
-        connect(model, SIGNAL(activeHighlightsChanged()), this, SLOT(onActiveHighlightsChanged()));
+        connect(model, &MessageModel::badgeChanged, this, &ActivityModel::onBadgeChanged);
+        connect(model, &MessageModel::activeHighlightsChanged, this, &ActivityModel::onActiveHighlightsChanged);
         m_models.append(model);
         emitDataChanged(m_models.count() - 1);
     }
@@ -74,8 +74,8 @@ void ActivityModel::remove(MessageModel* model)
 {
     const int row = m_models.indexOf(model);
     if (row != -1) {
-        disconnect(model, SIGNAL(badgeChanged()), this, SLOT(onBadgeChanged()));
-        disconnect(model, SIGNAL(activeHighlightsChanged()), this, SLOT(onActiveHighlightsChanged()));
+        disconnect(model, &MessageModel::badgeChanged, this, &ActivityModel::onBadgeChanged);
+        disconnect(model, &MessageModel::activeHighlightsChanged, this, &ActivityModel::onActiveHighlightsChanged);
         m_models.removeAt(row);
         emitDataChanged(row);
     }
