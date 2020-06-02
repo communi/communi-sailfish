@@ -31,6 +31,7 @@
 #include "messagemodel.h"
 #include <IrcMessage>
 #include <IrcBuffer>
+#include <IrcConnection>
 
 IRC_USE_NAMESPACE
 
@@ -49,7 +50,10 @@ QObject* MessageFilter::source() const
 
 void MessageFilter::setSource(QObject* source)
 {
-    QSortFilterProxyModel::setSourceModel(qobject_cast<QAbstractItemModel*>(source));
+    MessageModel* messageModel = static_cast<MessageModel*>(source);
+    QSortFilterProxyModel::setSourceModel(messageModel);
+    // Check if messageModel is initialized
+    m_buffer = messageModel ? messageModel->buffer() : nullptr;
 }
 
 bool MessageFilter::showEvents() const
@@ -68,7 +72,10 @@ void MessageFilter::setShowEvents(bool show)
 
 bool MessageFilter::showTopicMessages() const
 {
-    return m_topicMessages;
+    if (!m_buffer || !m_buffer->isChannel())
+        return true;
+
+    return m_topicMessages && m_buffer->connection()->connectionCount() <= 1;
 }
 
 void MessageFilter::setShowTopicMessages(bool show)
@@ -92,7 +99,7 @@ bool MessageFilter::filterAcceptsRow(int sourceRow, const QModelIndex& sourcePar
         case IrcMessage::Topic:
         case IrcMessage::Numeric:
         case IrcMessage::Names:
-            return m_topicMessages || !dynamic_cast<const MessageModel*>(sourceModel())->buffer()->isChannel();
+            return showTopicMessages();
         default:
             return true;
         }

@@ -28,8 +28,11 @@
 
 #ifndef MESSAGEFILTER_H
 #define MESSAGEFILTER_H
+#include <IrcGlobal>
 
 #include <QSortFilterProxyModel>
+
+IRC_FORWARD_DECLARE_CLASS(IrcBuffer)
 
 class MessageFilter : public QSortFilterProxyModel
 {
@@ -60,6 +63,7 @@ protected:
 private:
     bool m_events;
     bool m_topicMessages;
+    IrcBuffer* m_buffer = nullptr;
 };
 
 #endif // MESSAGEFILTER_H
