@@ -40,6 +40,10 @@
 #include "bufferfiltermodel.h"
 #include "bufferproxymodel.h"
 #include "networksession.h"
+
+// Needed to connect MessageStorage
+#include "messagemodel.h"
+
 #include "messagestorage.h"
 #include "messageformatter.h"
 #include "stringfiltermodel.h"
@@ -109,7 +113,7 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 
     MessageStorage* storage = new MessageStorage(model);
     viewer->rootContext()->setContextProperty("MessageStorage", storage);
-    QObject::connect(model, SIGNAL(bufferAdded(IrcBuffer*)), storage, SLOT(add(IrcBuffer*)));
+    QObject::connect(model, &BufferProxyModel::bufferAdded, storage,  &MessageStorage::add);
 
     BufferFilterModel* filter = new BufferFilterModel(storage);
     filter->setSourceModel(model);
@@ -117,19 +121,19 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 
     ActivityModel* activity = new ActivityModel(app.data());
     viewer->rootContext()->setContextProperty("ActivityModel", activity);
-    QObject::connect(storage, SIGNAL(added(MessageModel*)), activity, SLOT(add(MessageModel*)));
-    QObject::connect(storage, SIGNAL(removed(MessageModel*)), activity, SLOT(remove(MessageModel*)));
+    QObject::connect(storage, &MessageStorage::added, activity, &ActivityModel::add);
+    QObject::connect(storage, &MessageStorage::removed, activity, &ActivityModel::remove);
 
     IgnoreManager* ignore = IgnoreManager::instance();;
     viewer->rootContext()->setContextProperty("IgnoreManager", ignore);
-    QObject::connect(model, SIGNAL(connectionAdded(IrcConnection*)), ignore, SLOT(addConnection(IrcConnection*)));
-    QObject::connect(model, SIGNAL(connectionRemoved(IrcConnection*)), ignore, SLOT(removeConnection(IrcConnection*)));
+    QObject::connect(model, &BufferProxyModel::connectionAdded, ignore, &IgnoreManager::addConnection);
+    QObject::connect(model, &BufferProxyModel::connectionRemoved, ignore, &IgnoreManager::removeConnection);
 
     PluginLoader loader;
     loader.setPluginPath("/usr/share/harbour-communi/plugins");
     if (loader.load()) {
-        QObject::connect(model, SIGNAL(connectionAdded(IrcConnection*)), &loader, SLOT(connectionAdded(IrcConnection*)));
-        QObject::connect(model, SIGNAL(connectionRemoved(IrcConnection*)), &loader, SLOT(connectionRemoved(IrcConnection*)));
+        QObject::connect(model, &BufferProxyModel::connectionAdded, &loader, &PluginLoader::connectionAdded);
+        QObject::connect(model, &BufferProxyModel::connectionRemoved, &loader, &PluginLoader::connectionRemoved);
     }
 
 #ifndef NO_RESOURCES

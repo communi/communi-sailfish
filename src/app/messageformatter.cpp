@@ -53,7 +53,7 @@ MessageFormatter::MessageFormatter(QObject* parent) : QObject(parent)
     d.baseColor = QColor::fromHsl(359, 102, 134);
 
     d.userModel = new IrcUserModel(this);
-    connect(d.userModel, SIGNAL(namesChanged(QStringList)), this, SLOT(setNames(QStringList)));
+    connect(d.userModel, &IrcUserModel::namesChanged, this, &MessageFormatter::setNames);
 }
 
 IrcBuffer* MessageFormatter::buffer() const

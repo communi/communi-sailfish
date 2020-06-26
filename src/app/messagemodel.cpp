@@ -47,18 +47,18 @@ MessageModel::MessageModel(IrcBuffer* buffer) : QAbstractListModel(buffer),
     m_formatter->setBuffer(buffer);
     m_formatter->setTimeStampFormat("");
 
-    connect(buffer, SIGNAL(messageReceived(IrcMessage*)), this, SLOT(receive(IrcMessage*)));
+    connect(buffer, &IrcBuffer::messageReceived, this, &MessageModel::receive);
     if (buffer->isSticky()) {
         IrcConnection* connection = buffer->connection();
         if (connection) {
-            connect(connection, SIGNAL(secureError()), this, SLOT(displaySecureError()));
-            connect(connection, SIGNAL(socketError(QAbstractSocket::SocketError)), this, SLOT(displaySocketError()));
+            connect(connection, &IrcConnection::secureError, this, &MessageModel::displaySecureError);
+            connect(connection, &IrcConnection::socketError, this, &MessageModel::displaySocketError);
         }
     }
 
-    connect(this, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SIGNAL(countChanged()));
-    connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SIGNAL(countChanged()));
-    connect(this, SIGNAL(modelReset()), this, SIGNAL(countChanged()));
+    connect(this, &MessageModel::rowsInserted, this, &MessageModel::countChanged);
+    connect(this, &MessageModel::rowsRemoved, this, &MessageModel::countChanged);
+    connect(this, &MessageModel::modelReset, this, &MessageModel::countChanged);
 }
 
 MessageModel::~MessageModel()

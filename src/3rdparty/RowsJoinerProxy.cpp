@@ -68,28 +68,28 @@ void RowsJoinerProxy::insertSourceModel(QAbstractItemModel * m, int idx)
         d->models.append(m);
     else d->models.insert(idx, m);
 
-    connect(m,  SIGNAL(rowsAboutToBeInserted(QModelIndex, int, int)),
-            this, SLOT(s_rowsAboutToBeInserted(QModelIndex, int, int)));
-    connect(m,  SIGNAL(rowsInserted(QModelIndex, int, int)),
-            this, SLOT(s_rowsInserted(QModelIndex, int, int)));
+    connect(m,  &QAbstractItemModel::rowsAboutToBeInserted,
+            this, &RowsJoinerProxy::s_rowsAboutToBeInserted);
+    connect(m,  &QAbstractItemModel::rowsInserted,
+            this, &RowsJoinerProxy::s_rowsInserted);
 
-    connect(m,  SIGNAL(rowsAboutToBeRemoved(QModelIndex, int, int)),
-            this, SLOT(s_rowsAboutToBeRemoved(QModelIndex, int, int)));
-    connect(m,  SIGNAL(rowsRemoved(QModelIndex, int, int)),
-            this, SLOT(s_rowsRemoved(QModelIndex, int, int)));
+    connect(m,  &QAbstractItemModel::rowsAboutToBeRemoved,
+            this, &RowsJoinerProxy::s_rowsAboutToBeRemoved);
+    connect(m,  &QAbstractItemModel::rowsRemoved,
+            this, &RowsJoinerProxy::s_rowsRemoved);
 
-    connect(m,  SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-            this, SLOT(s_dataChanged(QModelIndex,QModelIndex)));
-    connect(m,  SIGNAL(modelReset()),
-            this, SLOT(s_modelReset()));
+    connect(m,  &QAbstractItemModel::dataChanged,
+            this, &RowsJoinerProxy::s_dataChanged);
+    connect(m,  &QAbstractItemModel::modelReset,
+            this, &RowsJoinerProxy::s_modelReset);
 
-    connect(m,    SIGNAL(layoutAboutToBeChanged()),
-            this, SIGNAL(layoutAboutToBeChanged()));
-    connect(m,    SIGNAL(layoutChanged()),
-            this, SIGNAL(layoutChanged()));
+    connect(m,  &QAbstractItemModel::layoutAboutToBeChanged,
+            this, &RowsJoinerProxy::layoutAboutToBeChanged);
+    connect(m,    &QAbstractItemModel::layoutChanged,
+            this, &RowsJoinerProxy::layoutChanged);
 
-    connect(m,  SIGNAL(destroyed(QObject *)),
-            this, SLOT(s_destroyed(QObject *)));
+    connect(m,  &QAbstractItemModel::destroyed,
+            this, &RowsJoinerProxy::s_destroyed);
 
     d->columnCount = -1;
     d->rowCount = -1;
@@ -103,28 +103,28 @@ void RowsJoinerProxy::removeSourceModel(QAbstractItemModel * m)
         return;
 
     beginResetModel();
-    disconnect(m,  SIGNAL(rowsAboutToBeInserted(QModelIndex, int, int)),
-               this, SLOT(s_rowsAboutToBeInserted(QModelIndex, int, int)));
-    disconnect(m,  SIGNAL(rowsInserted(QModelIndex, int, int)),
-               this, SLOT(s_rowsInserted(QModelIndex, int, int)));
+    disconnect(m,  &QAbstractItemModel::rowsAboutToBeInserted,
+               this, &RowsJoinerProxy::s_rowsAboutToBeInserted);
+    disconnect(m,  &QAbstractItemModel::rowsInserted,
+               this, &RowsJoinerProxy::s_rowsInserted);
 
-    disconnect(m,  SIGNAL(rowsAboutToBeRemoved(QModelIndex, int, int)),
-               this, SLOT(s_rowsAboutToBeRemoved(QModelIndex, int, int)));
-    disconnect(m,  SIGNAL(rowsRemoved(QModelIndex, int, int)),
-               this, SLOT(s_rowsRemoved(QModelIndex, int, int)));
+    disconnect(m,  &QAbstractItemModel::rowsAboutToBeRemoved,
+               this, &RowsJoinerProxy::s_rowsAboutToBeRemoved);
+    disconnect(m,  &QAbstractItemModel::rowsRemoved,
+               this, &RowsJoinerProxy::s_rowsRemoved);
 
-    disconnect(m,  SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-               this, SLOT(s_dataChanged(QModelIndex,QModelIndex)));
-    disconnect(m,  SIGNAL(modelReset()),
-               this, SLOT(s_modelReset()));
+    disconnect(m,  &QAbstractItemModel::dataChanged,
+               this, &RowsJoinerProxy::s_dataChanged);
+    disconnect(m,  &QAbstractItemModel::modelReset,
+               this, &RowsJoinerProxy::s_modelReset);
 
-    disconnect(m,    SIGNAL(layoutAboutToBeChanged()),
-               this, SIGNAL(layoutAboutToBeChanged()));
-    disconnect(m,    SIGNAL(layoutChanged()),
-               this, SIGNAL(layoutChanged()));
+    disconnect(m,    &QAbstractItemModel::layoutAboutToBeChanged,
+               this, &RowsJoinerProxy::layoutAboutToBeChanged);
+    disconnect(m,    &QAbstractItemModel::layoutChanged,
+               this, &RowsJoinerProxy::layoutChanged);
 
-    disconnect(m,  SIGNAL(destroyed(QObject *)),
-               this, SLOT(s_destroyed(QObject *)));
+    disconnect(m,  &QAbstractItemModel::destroyed,
+               this, &RowsJoinerProxy::s_destroyed);
 
     d->models.removeAll(m);
     d->columnCount = -1;

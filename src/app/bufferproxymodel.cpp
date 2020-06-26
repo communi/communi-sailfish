@@ -149,10 +149,10 @@ void BufferProxyModel::insertConnection(int index, IrcConnection* connection)
 {
     IrcBufferModel* model = new IrcBufferModel(connection);
     model->setSortMethod(static_cast<Irc::SortMethod>(m_method));
-    connect(model, SIGNAL(added(IrcBuffer*)), this, SIGNAL(bufferAdded(IrcBuffer*)));
-    connect(model, SIGNAL(removed(IrcBuffer*)), this, SIGNAL(bufferRemoved(IrcBuffer*)));
-    connect(model, SIGNAL(aboutToBeAdded(IrcBuffer*)), this, SIGNAL(bufferAboutToBeAdded(IrcBuffer*)));
-    connect(model, SIGNAL(aboutToBeRemoved(IrcBuffer*)), this, SIGNAL(bufferAboutToBeRemoved(IrcBuffer*)));
+    connect(model, &IrcBufferModel::added, this, &BufferProxyModel::bufferAdded);
+    connect(model, &IrcBufferModel::removed, this, &BufferProxyModel::bufferRemoved);
+    connect(model, &IrcBufferModel::aboutToBeAdded, this, &BufferProxyModel::bufferAboutToBeAdded);
+    connect(model, &IrcBufferModel::aboutToBeRemoved, this, &BufferProxyModel::bufferAboutToBeRemoved);
 
     ZncManager* znc = new ZncManager(model);
     znc->setModel(model);
@@ -161,7 +161,7 @@ void BufferProxyModel::insertConnection(int index, IrcConnection* connection)
     queue->setConnection(connection);
 
     IrcServerBuffer* buffer = new IrcServerBuffer(model);
-    connect(buffer, SIGNAL(destroyed(IrcBuffer*)), this, SLOT(closeConnection(IrcBuffer*)));
+    connect(buffer, &IrcServerBuffer::destroyed, this, &BufferProxyModel::closeConnection);
     buffer->setName(connection->displayName());
     buffer->setSticky(true);
     model->add(buffer);
@@ -171,13 +171,13 @@ void BufferProxyModel::insertConnection(int index, IrcConnection* connection)
     // non-bouncer connection is assumed and model state is restored
     model->setJoinDelay(2);
 
-    connect(connection, SIGNAL(displayNameChanged(QString)), buffer, SLOT(setName(QString)));
-    connect(model, SIGNAL(messageIgnored(IrcMessage*)), this, SLOT(processMessage(IrcMessage*)));
+    connect(connection, &IrcConnection::displayNameChanged, buffer, &IrcServerBuffer::setName);
+    connect(model, &IrcBufferModel::messageIgnored, this, &BufferProxyModel::processMessage);
 
-    connect(connection, SIGNAL(connected()), this, SLOT(onConnected()));
-    connect(connection, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
-    connect(connection, SIGNAL(nickNameRequired(QString,QString*)), this, SLOT(onNickNameRequired(QString)));
-    connect(connection, SIGNAL(channelKeyRequired(QString,QString*)), this, SLOT(onChannelKeyRequired(QString)));
+    connect(connection, &IrcConnection::connected, this, &BufferProxyModel::onConnected);
+    connect(connection, &IrcConnection::disconnected, this, &BufferProxyModel::onDisconnected);
+    connect(connection, &IrcConnection::nickNameRequired, this, &BufferProxyModel::onNickNameRequired);
+    connect(connection, &IrcConnection::channelKeyRequired, this, &BufferProxyModel::onChannelKeyRequired);
 
     m_connections.insert(index, connection);
     m_servers.insert(index, buffer);
@@ -193,15 +193,15 @@ void BufferProxyModel::insertConnection(int index, IrcConnection* connection)
 
 void BufferProxyModel::removeConnection(IrcConnection* connection)
 {
-    disconnect(connection, SIGNAL(connected()), this, SLOT(onConnected()));
-    disconnect(connection, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
+    disconnect(connection, &IrcConnection::connected, this, &BufferProxyModel::onConnected);
+    disconnect(connection, &IrcConnection::disconnected, this, &BufferProxyModel::onDisconnected);
 
     IrcBufferModel* model = connection->findChild<IrcBufferModel*>();
     if (model) {
-        disconnect(model, SIGNAL(added(IrcBuffer*)), this, SIGNAL(bufferAdded(IrcBuffer*)));
-        disconnect(model, SIGNAL(removed(IrcBuffer*)), this, SIGNAL(bufferRemoved(IrcBuffer*)));
-        disconnect(model, SIGNAL(aboutToBeAdded(IrcBuffer*)), this, SIGNAL(bufferAboutToBeAdded(IrcBuffer*)));
-        disconnect(model, SIGNAL(aboutToBeRemoved(IrcBuffer*)), this, SIGNAL(bufferAboutToBeRemoved(IrcBuffer*)));
+        disconnect(model, &IrcBufferModel::added, this, &BufferProxyModel::bufferAdded);
+        disconnect(model, &IrcBufferModel::removed, this, &BufferProxyModel::bufferRemoved);
+        disconnect(model, &IrcBufferModel::aboutToBeAdded, this, &BufferProxyModel::bufferAboutToBeAdded);
+        disconnect(model, &IrcBufferModel::aboutToBeRemoved, this, &BufferProxyModel::bufferAboutToBeRemoved);
 
         int index = m_connections.indexOf(connection);
         if (index != -1) {
