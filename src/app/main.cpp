@@ -29,6 +29,8 @@
 #include <QGuiApplication>
 #include <QQuickView>
 #include <QtQml>
+#include <QFileInfo>
+#include <QDir>
 
 //#if QT_VERSION < 0x050200
 #include "qqmlsettings_p.h"
@@ -68,6 +70,24 @@ public:
 };
 
 IRC_USE_NAMESPACE
+
+
+static void migrateConfig()
+{
+    const QString oldConfig = "harbour-communi/IRC for Sailfish.conf";
+    QString xdgConfigHome = QString::fromLocal8Bit(qgetenv("XDG_CONFIG_HOME"));
+
+    if (xdgConfigHome == nullptr)
+        xdgConfigHome = QString::fromLocal8Bit(qgetenv("HOME")) + "/.config";
+    QString oldConfigFileStr = xdgConfigHome + "/" + oldConfig;
+    QString newConfigFileStr = xdgConfigHome + "/" + ApplicationName + ".conf";
+
+    if((!QFileInfo(newConfigFileStr).exists() && !QDir(newConfigFileStr).exists()) &&
+        (QFileInfo(oldConfigFileStr).exists() && !QDir(oldConfigFileStr).exists())) {
+        QFile::rename(oldConfigFileStr, newConfigFileStr);
+    }
+}
+
 
 static void registerCommuniTypes()
 {
