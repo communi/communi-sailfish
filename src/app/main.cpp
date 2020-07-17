@@ -55,6 +55,9 @@
 #include <IrcModel>
 #include <IrcUtil>
 
+const QString ApplicationName = "harbour-communi";
+const QString OrganizationNameName = "harbour-communi";
+
 class SortedUserModel : public IRC_PREPEND_NAMESPACE(IrcUserModel)
 {
 public:
@@ -87,8 +90,9 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 {
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
 
-    QGuiApplication::setApplicationName("IRC for Sailfish");
-    QGuiApplication::setOrganizationName("harbour-communi");
+    migrateConfig();
+
+    QGuiApplication::setApplicationName(ApplicationName);
     QGuiApplication::setApplicationVersion(APP_VERSION);
 
     QScopedPointer<QQuickView> viewer(SailfishApp::createView());
