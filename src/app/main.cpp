@@ -33,9 +33,6 @@
 #include <QDir>
 #include <QStandardPaths>
 
-//#if QT_VERSION < 0x050200
-#include "qqmlsettings_p.h"
-//#endif
 
 #include <sailfishapp.h>
 
@@ -53,6 +50,7 @@
 #include "ignoremanager.h"
 #include "messagefilter.h"
 #include "pluginloader.h"
+#include "settingsproxy.h"
 
 #include <IrcCore>
 #include <IrcModel>
@@ -125,9 +123,6 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
     QScopedPointer<QQuickView> viewer(SailfishApp::createView());
     viewer->engine()->addImportPath(AppDataLocationReadOnly + "/qml");
 
-//#if QT_VERSION < 0x050200
-    qmlRegisterType<QQmlSettings>("Qt.labs.settings", 1, 0, "Settings");
-//#endif
 
     registerCommuniTypes();
 
@@ -166,6 +161,13 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
         QObject::connect(model, &BufferProxyModel::connectionAdded, &loader, &PluginLoader::connectionAdded);
         QObject::connect(model, &BufferProxyModel::connectionRemoved, &loader, &PluginLoader::connectionRemoved);
     }
+
+    SettingsProxy settingsProxy(model, ignore, app.data());
+
+    viewer->rootContext()->setContextProperty("settingsProxy", &settingsProxy);
+
+    QObject::connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit,
+                     &settingsProxy, &SettingsProxy::saveSettings );
 
 #ifndef NO_RESOURCES
     viewer->setSource(QUrl("qrc:///qml/main.qml"));

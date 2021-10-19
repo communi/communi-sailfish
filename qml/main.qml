@@ -29,7 +29,6 @@
 import QtQuick 2.1
 import Communi 3.2
 import Sailfish.Silica 1.0
-import Qt.labs.settings 1.0
 import org.nemomobile.ngf 1.0
 import org.nemomobile.notifications 1.0
 import org.nemomobile.configuration 1.0
@@ -424,20 +423,10 @@ ApplicationWindow {
         }
     }
 
-    Settings {
-        id: settings
-        property var state
-        property var ignores
-    }
-
     Component.onCompleted: {
-        IgnoreManager.ignores = settings.ignores || []
-        BufferModel.restoreState(settings.state)
         pageStack.push(welcomeDialog)
     }
 
     Component.onDestruction: {
-        settings.ignores = IgnoreManager.ignores
-        settings.state = BufferModel.saveState()
     }
 }
