@@ -80,7 +80,6 @@ Dialog {
         var userData = connection.userData
         userData['originalNickName'] = nickNameField.text
         userData['alternateNickName'] = alternateNickNameField.text
-        userData['quassel'] = quasselBox.checked
         userData['commands'] = commandField.text
         connection.userData = userData
     }
