@@ -100,7 +100,7 @@ Dialog {
             MouseArea {
                 id: connectionMouse
                 anchors.fill: connectionSwitch
-                onPressAndHold: listItem.showMenu()
+                onPressAndHold: listItem.openMenu()
                 onClicked: {
                     connectionSwitch.bindNow = true
                     connectionSwitch.checked = !connectionSwitch.checked
