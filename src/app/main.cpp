@@ -29,10 +29,10 @@
 #include <QGuiApplication>
 #include <QQuickView>
 #include <QtQml>
+#include <QFileInfo>
+#include <QDir>
+#include <QStandardPaths>
 
-//#if QT_VERSION < 0x050200
-#include "qqmlsettings_p.h"
-//#endif
 
 #include <sailfishapp.h>
 
@@ -50,10 +50,14 @@
 #include "ignoremanager.h"
 #include "messagefilter.h"
 #include "pluginloader.h"
+#include "settingsproxy.h"
 
 #include <IrcCore>
 #include <IrcModel>
 #include <IrcUtil>
+
+const QString ApplicationName = "harbour-communi";
+const QString OrganizationNameName = "harbour-communi";
 
 class SortedUserModel : public IRC_PREPEND_NAMESPACE(IrcUserModel)
 {
@@ -65,6 +69,25 @@ public:
 };
 
 IRC_USE_NAMESPACE
+
+
+static void migrateConfig()
+{
+    const QString oldConfig = "harbour-communi/IRC for Sailfish.conf";
+    QString xdgConfigHome = QString::fromLocal8Bit(qgetenv("XDG_CONFIG_HOME"));
+
+    if (xdgConfigHome == nullptr)
+        xdgConfigHome = QString::fromLocal8Bit(qgetenv("HOME")) + "/.config";
+    QString oldConfigFileStr = xdgConfigHome + "/" + oldConfig;
+    QString newConfigFileStr = xdgConfigHome + "/" + ApplicationName + "/" +
+        ApplicationName + ".conf";
+
+    if((!QFileInfo(newConfigFileStr).exists() && !QDir(newConfigFileStr).exists()) &&
+        (QFileInfo(oldConfigFileStr).exists() && !QDir(oldConfigFileStr).exists())) {
+        QFile::rename(oldConfigFileStr, newConfigFileStr);
+    }
+}
+
 
 static void registerCommuniTypes()
 {
@@ -87,16 +110,19 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 {
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
 
-    QGuiApplication::setApplicationName("IRC for Sailfish");
-    QGuiApplication::setOrganizationName("harbour-communi");
+    migrateConfig();
+
+    QGuiApplication::setApplicationName(ApplicationName);
     QGuiApplication::setApplicationVersion(APP_VERSION);
+    QGuiApplication::setOrganizationName(QString());
+    QGuiApplication::setOrganizationDomain(QString());
+
+    QString AppDataLocationReadOnly =
+        QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation).last();
 
     QScopedPointer<QQuickView> viewer(SailfishApp::createView());
-    viewer->engine()->addImportPath("/usr/share/harbour-communi/qml");
+    viewer->engine()->addImportPath(AppDataLocationReadOnly + "/qml");
 
-//#if QT_VERSION < 0x050200
-    qmlRegisterType<QQmlSettings>("Qt.labs.settings", 1, 0, "Settings");
-//#endif
 
     registerCommuniTypes();
 
@@ -130,11 +156,18 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
     QObject::connect(model, &BufferProxyModel::connectionRemoved, ignore, &IgnoreManager::removeConnection);
 
     PluginLoader loader;
-    loader.setPluginPath("/usr/share/harbour-communi/plugins");
+    loader.setPluginPath(AppDataLocationReadOnly + "/plugins");
     if (loader.load()) {
         QObject::connect(model, &BufferProxyModel::connectionAdded, &loader, &PluginLoader::connectionAdded);
         QObject::connect(model, &BufferProxyModel::connectionRemoved, &loader, &PluginLoader::connectionRemoved);
     }
+
+    SettingsProxy settingsProxy(model, ignore, app.data());
+
+    viewer->rootContext()->setContextProperty("settingsProxy", &settingsProxy);
+
+    QObject::connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit,
+                     &settingsProxy, &SettingsProxy::saveSettings );
 
 #ifndef NO_RESOURCES
     viewer->setSource(QUrl("qrc:///qml/main.qml"));

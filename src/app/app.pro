@@ -24,6 +24,7 @@ HEADERS += $$PWD/messagerole.h
 HEADERS += $$PWD/messagestorage.h
 HEADERS += $$PWD/pluginloader.h
 HEADERS += $$PWD/stringfiltermodel.h
+HEADERS += $$PWD/settingsproxy.h
 
 SOURCES += $$PWD/activitymodel.cpp
 SOURCES += $$PWD/bufferfiltermodel.cpp
@@ -35,6 +36,7 @@ SOURCES += $$PWD/messagestorage.cpp
 SOURCES += $$PWD/main.cpp
 SOURCES += $$PWD/pluginloader.cpp
 SOURCES += $$PWD/stringfiltermodel.cpp
+SOURCES += $$PWD/settingsproxy.cpp
 
 include(../3rdparty/3rdparty.pri)
 include(../shared/shared.pri)
