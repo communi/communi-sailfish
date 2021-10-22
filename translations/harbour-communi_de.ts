@@ -5,58 +5,45 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../qml/dialogs/AboutDialog.qml" line="40"/>
-        <location filename="../qml/dialogs/AboutDialog.qml" line="40"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/AboutDialog.qml" line="46"/>
         <location filename="../qml/dialogs/AboutDialog.qml" line="46"/>
         <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/dialogs/AboutDialog.qml" line="57"/>
-        <location filename="../qml/dialogs/AboutDialog.qml" line="57"/>
         <source>Internet Relay Chat (IRC) is a protocol for live interactive Internet text messaging (chat) or synchronous conferencing. It is mainly designed for group communication in discussion forums, called channels, but also allows one-to-one communication via private messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/dialogs/AboutDialog.qml" line="61"/>
-        <location filename="../qml/dialogs/AboutDialog.qml" line="61"/>
         <source>Contact</source>
         <translation type="unfinished"></translation>
     </message>
-    <message numerus="yes">
-        <location filename="../qml/dialogs/AboutDialog.qml" line="75"/>
+    <message>
         <location filename="../qml/dialogs/AboutDialog.qml" line="75"/>
         <source>IRC channel: %1 on %2</source>
-        <comment>#communi</comment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/AboutDialog.qml" line="83"/>
         <location filename="../qml/dialogs/AboutDialog.qml" line="83"/>
         <source>Mailing list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/dialogs/AboutDialog.qml" line="92"/>
-        <location filename="../qml/dialogs/AboutDialog.qml" line="92"/>
         <source>Bug reports</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/dialogs/AboutDialog.qml" line="98"/>
-        <location filename="../qml/dialogs/AboutDialog.qml" line="98"/>
         <source>Developers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/AboutDialog.qml" line="116"/>
         <location filename="../qml/dialogs/AboutDialog.qml" line="116"/>
         <source>Artwork</source>
         <translation type="unfinished"></translation>
@@ -66,24 +53,20 @@
     <name>BufferDelegate</name>
     <message>
         <location filename="../qml/view/BufferDelegate.qml" line="37"/>
-        <location filename="../qml/view/BufferDelegate.qml" line="37"/>
         <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/view/BufferDelegate.qml" line="49"/>
         <location filename="../qml/view/BufferDelegate.qml" line="49"/>
         <source>Part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/view/BufferDelegate.qml" line="49"/>
-        <location filename="../qml/view/BufferDelegate.qml" line="49"/>
         <source>Join</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/view/BufferDelegate.qml" line="53"/>
         <location filename="../qml/view/BufferDelegate.qml" line="53"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
@@ -93,54 +76,45 @@
     <name>BufferPage</name>
     <message>
         <location filename="../qml/view/BufferPage.qml" line="72"/>
-        <location filename="../qml/view/BufferPage.qml" line="72"/>
         <source>About IRC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/view/BufferPage.qml" line="76"/>
         <location filename="../qml/view/BufferPage.qml" line="76"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/view/BufferPage.qml" line="80"/>
-        <location filename="../qml/view/BufferPage.qml" line="80"/>
         <source>Clear messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/view/BufferPage.qml" line="94"/>
         <location filename="../qml/view/BufferPage.qml" line="94"/>
         <source>Join a channel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/view/BufferPage.qml" line="99"/>
-        <location filename="../qml/view/BufferPage.qml" line="99"/>
         <source>Open a query</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/view/BufferPage.qml" line="104"/>
         <location filename="../qml/view/BufferPage.qml" line="104"/>
         <source>Connect a network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/view/BufferPage.qml" line="174"/>
-        <location filename="../qml/view/BufferPage.qml" line="174"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/view/BufferPage.qml" line="178"/>
-        <location filename="../qml/view/BufferPage.qml" line="178"/>
         <source>Reply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/view/BufferPage.qml" line="187"/>
         <location filename="../qml/view/BufferPage.qml" line="187"/>
         <source>Open %1</source>
         <translation type="unfinished"></translation>
@@ -150,185 +124,153 @@
     <name>ConnectDialog</name>
     <message>
         <location filename="../qml/dialogs/ConnectDialog.qml" line="38"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="38"/>
         <source>Connect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="42"/>
         <location filename="../qml/dialogs/ConnectDialog.qml" line="42"/>
         <source>Sailor%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/dialogs/ConnectDialog.qml" line="44"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="44"/>
         <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/dialogs/ConnectDialog.qml" line="51"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="51"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="99"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="99"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="98"/>
         <source>Basic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="104"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="104"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="103"/>
         <source>Nick name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="106"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="106"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="105"/>
         <source>Enter nick name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="116"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="116"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="115"/>
         <source>Real name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="118"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="118"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="117"/>
         <source>Enter real name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="127"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="127"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="126"/>
         <source>Server address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="130"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="130"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="129"/>
         <source>Enter server address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="137"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="137"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="136"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="142"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="228"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="142"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="228"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="141"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="227"/>
         <source>User details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="152"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="170"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="152"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="170"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="151"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="169"/>
         <source>Network settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="176"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="176"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="175"/>
         <source>Network name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="177"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="177"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="176"/>
         <source>Enter network name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="186"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="186"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="185"/>
         <source>Port</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="190"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="190"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="189"/>
         <source>Enter port</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="199"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="199"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="198"/>
         <source>SSL provides a secure, encrypted connection with the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="200"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="200"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="199"/>
         <source>Use SSL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="212"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="212"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="211"/>
         <source>Perform commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="213"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="213"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="212"/>
         <source>Commands to perform on connect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="234"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="234"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="233"/>
         <source>Alternate nick name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="235"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="235"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="234"/>
         <source>Enter alternate nick name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="245"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="245"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="244"/>
         <source>Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="248"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="248"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="247"/>
         <source>Enter user name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="258"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="258"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="257"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="259"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="259"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="258"/>
         <source>Enter password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="269"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="269"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="268"/>
         <source>SASL provides a secure, encrypted authentication with the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="270"/>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="270"/>
+        <location filename="../qml/dialogs/ConnectDialog.qml" line="269"/>
         <source>Use SASL</source>
         <translation type="unfinished"></translation>
     </message>
@@ -337,13 +279,11 @@
     <name>CoverPage</name>
     <message>
         <location filename="../qml/cover/CoverPage.qml" line="56"/>
-        <location filename="../qml/cover/CoverPage.qml" line="56"/>
         <source>Unread
 highlights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/cover/CoverPage.qml" line="87"/>
         <location filename="../qml/cover/CoverPage.qml" line="87"/>
         <source>Latest activity:</source>
         <translation type="unfinished"></translation>
@@ -363,44 +303,35 @@ highlights</source>
         <location filename="../qml/dialogs/JoinDialog.qml" line="53"/>
         <location filename="../qml/dialogs/JoinDialog.qml" line="78"/>
         <location filename="../qml/dialogs/JoinDialog.qml" line="91"/>
-        <location filename="../qml/dialogs/JoinDialog.qml" line="53"/>
-        <location filename="../qml/dialogs/JoinDialog.qml" line="78"/>
-        <location filename="../qml/dialogs/JoinDialog.qml" line="91"/>
         <source>Join</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/JoinDialog.qml" line="58"/>
         <location filename="../qml/dialogs/JoinDialog.qml" line="58"/>
         <source>Network:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/dialogs/JoinDialog.qml" line="73"/>
-        <location filename="../qml/dialogs/JoinDialog.qml" line="73"/>
         <source>Channel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/JoinDialog.qml" line="74"/>
         <location filename="../qml/dialogs/JoinDialog.qml" line="74"/>
         <source>#</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/dialogs/JoinDialog.qml" line="76"/>
-        <location filename="../qml/dialogs/JoinDialog.qml" line="76"/>
         <source>Enter channel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/dialogs/JoinDialog.qml" line="87"/>
-        <location filename="../qml/dialogs/JoinDialog.qml" line="87"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/JoinDialog.qml" line="88"/>
         <location filename="../qml/dialogs/JoinDialog.qml" line="88"/>
         <source>Enter password</source>
         <translation type="unfinished"></translation>
@@ -408,22 +339,6 @@ highlights</source>
 </context>
 <context>
     <name>MessageFormatter</name>
-    <message>
-        <location filename="../src/app/messageformatter.cpp" line="196"/>
-        <source>&lt;span class=&apos;%1&apos;&gt;%2&lt;/span&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/app/messageformatter.cpp" line="201"/>
-        <source>&lt;font size=&apos;2&apos;&gt;%1&lt;/font&gt; %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/app/messageformatter.cpp" line="203"/>
-        <location filename="../src/app/messageformatter.cpp" line="394"/>
-        <source>%1 %2</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../src/app/messageformatter.cpp" line="212"/>
         <source>%1 invited to %3</source>
@@ -475,18 +390,8 @@ highlights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/app/messageformatter.cpp" line="275"/>
-        <source>%1s</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/app/messageformatter.cpp" line="278"/>
         <source>%1 replied CTCP %2: %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/app/messageformatter.cpp" line="288"/>
-        <source>%1[%2] %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -575,11 +480,6 @@ highlights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/app/messageformatter.cpp" line="402"/>
-        <source>%1%2: %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/app/messageformatter.cpp" line="410"/>
         <source>%1 has quit (%2)</source>
         <translation type="unfinished"></translation>
@@ -620,11 +520,6 @@ highlights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/app/messageformatter.cpp" line="438"/>
-        <source>%1 %2 %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/app/messageformatter.cpp" line="448"/>
         <source>%1 replied in %2s</source>
         <translation type="unfinished"></translation>
@@ -650,19 +545,6 @@ highlights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/app/messageformatter.cpp" line="564"/>
-        <source>*</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/app/messageformatter.cpp" line="566"/>
-        <location filename="../src/app/messageformatter.cpp" line="572"/>
-        <location filename="../src/app/messageformatter.cpp" line="608"/>
-        <location filename="../src/app/messageformatter.cpp" line="616"/>
-        <source>!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/app/messageformatter.cpp" line="577"/>
         <source>[INFO]</source>
         <translation type="unfinished"></translation>
@@ -675,16 +557,6 @@ highlights</source>
     <message>
         <location filename="../src/app/messageformatter.cpp" line="583"/>
         <source>[MOTD]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/app/messageformatter.cpp" line="612"/>
-        <source>[%1]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/app/messageformatter.cpp" line="614"/>
-        <source>?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -700,36 +572,30 @@ highlights</source>
     <name>NetworkDelegate</name>
     <message>
         <location filename="../qml/view/NetworkDelegate.qml" line="38"/>
-        <location filename="../qml/view/NetworkDelegate.qml" line="38"/>
         <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/view/NetworkDelegate.qml" line="52"/>
         <location filename="../qml/view/NetworkDelegate.qml" line="52"/>
         <source>Removing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/view/NetworkDelegate.qml" line="64"/>
-        <location filename="../qml/view/NetworkDelegate.qml" line="64"/>
         <source>Disconnect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/view/NetworkDelegate.qml" line="64"/>
         <location filename="../qml/view/NetworkDelegate.qml" line="64"/>
         <source>Connect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/view/NetworkDelegate.qml" line="77"/>
-        <location filename="../qml/view/NetworkDelegate.qml" line="77"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/view/NetworkDelegate.qml" line="81"/>
         <location filename="../qml/view/NetworkDelegate.qml" line="81"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
@@ -739,30 +605,25 @@ highlights</source>
     <name>NickDialog</name>
     <message>
         <location filename="../qml/dialogs/NickDialog.qml" line="48"/>
-        <location filename="../qml/dialogs/NickDialog.qml" line="48"/>
         <source>Nick</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/NickDialog.qml" line="53"/>
         <location filename="../qml/dialogs/NickDialog.qml" line="53"/>
         <source>Network:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/dialogs/NickDialog.qml" line="69"/>
-        <location filename="../qml/dialogs/NickDialog.qml" line="69"/>
         <source>Nick name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/dialogs/NickDialog.qml" line="71"/>
-        <location filename="../qml/dialogs/NickDialog.qml" line="71"/>
         <source>Enter nick name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/NickDialog.qml" line="73"/>
         <location filename="../qml/dialogs/NickDialog.qml" line="73"/>
         <source>Set</source>
         <translation type="unfinished"></translation>
@@ -773,25 +634,20 @@ highlights</source>
     <message>
         <location filename="../qml/dialogs/QueryDialog.qml" line="45"/>
         <location filename="../qml/dialogs/QueryDialog.qml" line="69"/>
-        <location filename="../qml/dialogs/QueryDialog.qml" line="45"/>
-        <location filename="../qml/dialogs/QueryDialog.qml" line="69"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/QueryDialog.qml" line="50"/>
         <location filename="../qml/dialogs/QueryDialog.qml" line="50"/>
         <source>Network:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/dialogs/QueryDialog.qml" line="65"/>
-        <location filename="../qml/dialogs/QueryDialog.qml" line="65"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/QueryDialog.qml" line="67"/>
         <location filename="../qml/dialogs/QueryDialog.qml" line="67"/>
         <source>Enter name</source>
         <translation type="unfinished"></translation>
@@ -801,54 +657,45 @@ highlights</source>
     <name>TextEntry</name>
     <message>
         <location filename="../qml/view/TextEntry.qml" line="62"/>
-        <location filename="../qml/view/TextEntry.qml" line="62"/>
         <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/view/TextEntry.qml" line="87"/>
         <location filename="../qml/view/TextEntry.qml" line="87"/>
         <source>Ignores:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/view/TextEntry.qml" line="91"/>
-        <location filename="../qml/view/TextEntry.qml" line="91"/>
         <source>No ignores</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/view/TextEntry.qml" line="95"/>
         <location filename="../qml/view/TextEntry.qml" line="95"/>
         <source>Ignored: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/view/TextEntry.qml" line="99"/>
-        <location filename="../qml/view/TextEntry.qml" line="99"/>
         <source>Unignored: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/view/TextEntry.qml" line="144"/>
         <location filename="../qml/view/TextEntry.qml" line="144"/>
         <source>Send</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/view/TextEntry.qml" line="148"/>
-        <location filename="../qml/view/TextEntry.qml" line="148"/>
         <source>Hi, %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/view/TextEntry.qml" line="148"/>
-        <location filename="../qml/view/TextEntry.qml" line="148"/>
         <source>Not connected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/view/TextEntry.qml" line="156"/>
         <location filename="../qml/view/TextEntry.qml" line="156"/>
         <source>Warning: sending %1 lines</source>
         <translation type="unfinished"></translation>
@@ -858,42 +705,35 @@ highlights</source>
     <name>UserListPanel</name>
     <message>
         <location filename="../qml/view/UserListPanel.qml" line="70"/>
-        <location filename="../qml/view/UserListPanel.qml" line="70"/>
         <source>Query</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/view/UserListPanel.qml" line="81"/>
         <location filename="../qml/view/UserListPanel.qml" line="81"/>
         <source>Deop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/view/UserListPanel.qml" line="81"/>
-        <location filename="../qml/view/UserListPanel.qml" line="81"/>
         <source>Op</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/view/UserListPanel.qml" line="86"/>
         <location filename="../qml/view/UserListPanel.qml" line="86"/>
         <source>Devoice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/view/UserListPanel.qml" line="86"/>
-        <location filename="../qml/view/UserListPanel.qml" line="86"/>
         <source>Voice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/view/UserListPanel.qml" line="90"/>
-        <location filename="../qml/view/UserListPanel.qml" line="90"/>
         <source>Kick</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/view/UserListPanel.qml" line="94"/>
         <location filename="../qml/view/UserListPanel.qml" line="94"/>
         <source>Ban</source>
         <translation type="unfinished"></translation>
@@ -903,60 +743,50 @@ highlights</source>
     <name>WelcomeDialog</name>
     <message>
         <location filename="../qml/dialogs/WelcomeDialog.qml" line="44"/>
-        <location filename="../qml/dialogs/WelcomeDialog.qml" line="44"/>
         <source>Connect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/WelcomeDialog.qml" line="44"/>
         <location filename="../qml/dialogs/WelcomeDialog.qml" line="44"/>
         <source>Welcome to IRC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/dialogs/WelcomeDialog.qml" line="48"/>
-        <location filename="../qml/dialogs/WelcomeDialog.qml" line="48"/>
         <source>Pull down to add a network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/WelcomeDialog.qml" line="59"/>
         <location filename="../qml/dialogs/WelcomeDialog.qml" line="59"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/dialogs/WelcomeDialog.qml" line="63"/>
-        <location filename="../qml/dialogs/WelcomeDialog.qml" line="63"/>
         <source>Clone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/WelcomeDialog.qml" line="67"/>
         <location filename="../qml/dialogs/WelcomeDialog.qml" line="67"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/dialogs/WelcomeDialog.qml" line="71"/>
-        <location filename="../qml/dialogs/WelcomeDialog.qml" line="71"/>
         <source>Removing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/WelcomeDialog.qml" line="114"/>
         <location filename="../qml/dialogs/WelcomeDialog.qml" line="114"/>
         <source>About IRC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/dialogs/WelcomeDialog.qml" line="120"/>
-        <location filename="../qml/dialogs/WelcomeDialog.qml" line="120"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/WelcomeDialog.qml" line="124"/>
         <location filename="../qml/dialogs/WelcomeDialog.qml" line="124"/>
         <source>Add a network</source>
         <translation type="unfinished"></translation>
@@ -965,38 +795,32 @@ highlights</source>
 <context>
     <name>main</name>
     <message>
-        <location filename="../qml/main.qml" line="106"/>
-        <location filename="../qml/main.qml" line="106"/>
+        <location filename="../qml/main.qml" line="105"/>
         <source>IRC: highlight on %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="107"/>
-        <location filename="../qml/main.qml" line="107"/>
+        <location filename="../qml/main.qml" line="106"/>
         <source>%1 on %2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="120"/>
-        <location filename="../qml/main.qml" line="120"/>
+        <location filename="../qml/main.qml" line="119"/>
         <source>IRC: message from %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="121"/>
-        <location filename="../qml/main.qml" line="121"/>
+        <location filename="../qml/main.qml" line="120"/>
         <source>%1 in private:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="361"/>
-        <location filename="../qml/main.qml" line="361"/>
+        <location filename="../qml/main.qml" line="360"/>
         <source>Add network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="372"/>
-        <location filename="../qml/main.qml" line="372"/>
+        <location filename="../qml/main.qml" line="371"/>
         <source>Edit network</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1004,152 +828,127 @@ highlights</source>
 <context>
     <name>settings</name>
     <message>
-        <location filename="../qml/settings/settings.qml" line="91"/>
-        <location filename="../qml/settings/settings.qml" line="91"/>
+        <location filename="../qml/settings/settings.qml" line="93"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="97"/>
-        <location filename="../qml/settings/settings.qml" line="97"/>
+        <location filename="../qml/settings/settings.qml" line="99"/>
         <source>Sort views:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="99"/>
-        <location filename="../qml/settings/settings.qml" line="99"/>
+        <location filename="../qml/settings/settings.qml" line="101"/>
         <source>Alphabetically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="100"/>
-        <location filename="../qml/settings/settings.qml" line="100"/>
+        <location filename="../qml/settings/settings.qml" line="102"/>
         <source>By activity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="108"/>
-        <location filename="../qml/settings/settings.qml" line="108"/>
+        <location filename="../qml/settings/settings.qml" line="110"/>
         <source>Show events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="109"/>
-        <location filename="../qml/settings/settings.qml" line="109"/>
+        <location filename="../qml/settings/settings.qml" line="111"/>
         <source>Specifies whether joins/parts/quits are shown when the amount of user on the channel is less than:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="123"/>
-        <location filename="../qml/settings/settings.qml" line="123"/>
+        <location filename="../qml/settings/settings.qml" line="125"/>
         <source>Unlimited</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="123"/>
-        <location filename="../qml/settings/settings.qml" line="123"/>
+        <location filename="../qml/settings/settings.qml" line="125"/>
         <source>%1 users</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="128"/>
-        <location filename="../qml/settings/settings.qml" line="128"/>
+        <location filename="../qml/settings/settings.qml" line="130"/>
         <source>Show topic messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="129"/>
-        <location filename="../qml/settings/settings.qml" line="129"/>
+        <location filename="../qml/settings/settings.qml" line="131"/>
         <source>Specifies whether channel topic messages are shown when entering a channel.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="134"/>
-        <location filename="../qml/settings/settings.qml" line="134"/>
+        <location filename="../qml/settings/settings.qml" line="136"/>
         <source>Font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="139"/>
-        <location filename="../qml/settings/settings.qml" line="139"/>
+        <location filename="../qml/settings/settings.qml" line="141"/>
         <source>Size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="141"/>
-        <location filename="../qml/settings/settings.qml" line="141"/>
+        <location filename="../qml/settings/settings.qml" line="143"/>
         <source>Tiny</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="142"/>
-        <location filename="../qml/settings/settings.qml" line="142"/>
+        <location filename="../qml/settings/settings.qml" line="144"/>
         <source>Small</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="143"/>
-        <location filename="../qml/settings/settings.qml" line="143"/>
+        <location filename="../qml/settings/settings.qml" line="145"/>
         <source>Medium</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="144"/>
-        <location filename="../qml/settings/settings.qml" line="144"/>
+        <location filename="../qml/settings/settings.qml" line="146"/>
         <source>Large</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="152"/>
-        <location filename="../qml/settings/settings.qml" line="152"/>
+        <location filename="../qml/settings/settings.qml" line="154"/>
         <source>Fixed-width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="153"/>
-        <location filename="../qml/settings/settings.qml" line="153"/>
+        <location filename="../qml/settings/settings.qml" line="155"/>
         <source>Specifies whether a monospaced font is used for messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="158"/>
-        <location filename="../qml/settings/settings.qml" line="158"/>
+        <location filename="../qml/settings/settings.qml" line="160"/>
         <source>Notifications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="162"/>
-        <location filename="../qml/settings/settings.qml" line="162"/>
+        <location filename="../qml/settings/settings.qml" line="164"/>
         <source>Use notification sounds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="163"/>
-        <location filename="../qml/settings/settings.qml" line="163"/>
+        <location filename="../qml/settings/settings.qml" line="165"/>
         <source>Specifies whether notification sounds are used for highlighted messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="170"/>
-        <location filename="../qml/settings/settings.qml" line="170"/>
+        <location filename="../qml/settings/settings.qml" line="172"/>
         <source>Use haptic feedback</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="171"/>
-        <location filename="../qml/settings/settings.qml" line="171"/>
+        <location filename="../qml/settings/settings.qml" line="173"/>
         <source>Specifies whether haptic feedback is used for highlighted messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="179"/>
-        <location filename="../qml/settings/settings.qml" line="179"/>
+        <location filename="../qml/settings/settings.qml" line="181"/>
         <source>Use haptic feedback in background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/settings/settings.qml" line="180"/>
-        <location filename="../qml/settings/settings.qml" line="180"/>
+        <location filename="../qml/settings/settings.qml" line="182"/>
         <source>Specifies whether haptic feedback is enabled when not having the app in foreground</source>
         <translation type="unfinished"></translation>
     </message>
