@@ -193,14 +193,14 @@ QString MessageFormatter::formatLine(const QString& message, const QDateTime& ti
         }
         // inject link color for sailfish
         formatted.replace("<a href=", QString("<a style='color:%1' href=").arg(d.baseColor.name()));
-        formatted = QCoreApplication::translate("MessageFormatter", "<span class='%1'>%2</span>").arg(cls, formatted);
+        formatted = QStringLiteral("<span class='%1'>%2</span>").arg(cls, formatted);
     }
 
     if (!d.timeStampFormat.isEmpty()) {
         if (format == Qt::RichText)
-            formatted = QCoreApplication::translate("MessageFormatter", "<font size='2'>%1</font> %3").arg(timeStamp.time().toString(d.timeStampFormat), formatted);
+            formatted = QStringLiteral("<font size='2'>%1</font> %3").arg(timeStamp.time().toString(d.timeStampFormat), formatted);
         else
-            formatted = QCoreApplication::translate("MessageFormatter", "%1 %2").arg(timeStamp.time().toString(d.timeStampFormat), formatted);
+            formatted = QStringLiteral("%1 %2").arg(timeStamp.time().toString(d.timeStampFormat), formatted);
     }
 
     return formatted;
@@ -272,7 +272,7 @@ QString MessageFormatter::formatNoticeMessage(IrcNoticeMessage* message, Qt::Tex
             int seconds = arg.toInt(&ok);
             if (ok) {
                 QDateTime time = QDateTime::fromTime_t(seconds);
-                arg = QCoreApplication::translate("MessageFormatter", "%1s").arg(time.secsTo(QDateTime::currentDateTime()));
+                arg = QStringLiteral("%1s").arg(time.secsTo(QDateTime::currentDateTime()));
             }
         }
         return QCoreApplication::translate("MessageFormatter", "%1 replied CTCP %2: %3").arg(formatNick(message->nick(), format), cmd, QStringList(params.mid(1)).join(" "));
@@ -285,7 +285,7 @@ QString MessageFormatter::formatNoticeMessage(IrcNoticeMessage* message, Qt::Tex
     QString pfx = message->statusPrefix();
     if (!pfx.isEmpty())
         pfx.append(" ");
-    return QCoreApplication::translate("MessageFormatter", "%1[%2] %3").arg(pfx, sender, msg);
+    return QStringLiteral("%1[%2] %3").arg(pfx, sender, msg);
 }
 
 #define P_(x) message->parameters().value(x)
@@ -391,7 +391,7 @@ QString MessageFormatter::formatPrivateMessage(IrcPrivateMessage* message, Qt::T
     const QString sender = formatNick(message->nick(), format, message->isOwn());
     const QString msg = formatContent(message->content(), format);
     if (message->isAction())
-        return QCoreApplication::translate("MessageFormatter", "%1 %2").arg(message->nick(), msg);
+        return QStringLiteral("%1 %2").arg(message->nick(), msg);
     else if (message->isRequest())
         return QCoreApplication::translate("MessageFormatter", "%1 requested CTCP %2").arg(sender, msg.split(" ").value(0).toLower());
     else if (format == Qt::PlainText)
@@ -399,7 +399,7 @@ QString MessageFormatter::formatPrivateMessage(IrcPrivateMessage* message, Qt::T
     QString pfx = message->statusPrefix();
     if (!pfx.isEmpty())
         pfx.append(" ");
-    return QCoreApplication::translate("MessageFormatter", "%1%2: %3").arg(pfx, sender, msg);
+    return QStringLiteral("%1%2: %3").arg(pfx, sender, msg);
 }
 
 QString MessageFormatter::formatQuitMessage(IrcQuitMessage* message, Qt::TextFormat format) const
@@ -435,7 +435,7 @@ QString MessageFormatter::formatTopicMessage(IrcTopicMessage* message, Qt::TextF
 QString MessageFormatter::formatUnknownMessage(IrcMessage* message, Qt::TextFormat format) const
 {
     const QString sender = formatNick(message->nick(), format);
-    return QCoreApplication::translate("MessageFormatter", "%1 %2 %3").arg(sender, message->command(), message->parameters().join(" "));
+    return QStringLiteral("%1 %2 %3").arg(sender, message->command(), message->parameters().join(" "));
 }
 
 QString MessageFormatter::formatPingReply(const QString& nick, const QString& arg, Qt::TextFormat format) const
@@ -561,15 +561,15 @@ QString MessageFormatter::messagePrefix(IrcMessage* message) const
         case IrcMessage::Private:
             if (IrcPrivateMessage* priv = static_cast<IrcPrivateMessage*>(message)) {
                 if (priv->isAction())
-                    return tr("*");
+                    return QStringLiteral("*");
                 if (priv->isRequest())
-                    return tr("!");
+                    return QStringLiteral("!");
             }
             return QString();
         case IrcMessage::Notice:
             if (IrcNoticeMessage* notice = static_cast<IrcNoticeMessage*>(message)) {
                 if (notice->isReply())
-                    return tr("!");
+                    return QStringLiteral("!");
             }
             return QString();
         case IrcMessage::Numeric:
@@ -605,15 +605,15 @@ QString MessageFormatter::messagePrefix(IrcMessage* message) const
                 case Irc::RPL_TIME:
                 case Irc::RPL_UNAWAY:
                 case Irc::RPL_NOWAWAY:
-                    return tr("!");
+                    return QStringLiteral("!");
                 default:
                     break;
             }
-            return tr("[%1]").arg(static_cast<IrcNumericMessage*>(message)->code());
+            return QStringLiteral("[%1]").arg(static_cast<IrcNumericMessage*>(message)->code());
         case IrcMessage::Unknown:
-            return tr("?");
+            return QStringLiteral("?");
         default:
-            return tr("!");
+            return QStringLiteral("!");
     }
 }
 
