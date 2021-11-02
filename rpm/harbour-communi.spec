@@ -9,14 +9,12 @@
 # << macros
 
 Name:       harbour-communi
+Version:    0.10+lyro_merge
 Summary:    The IRC client for Sailfish OS
 License:    LGPLv2 and BSD
 URL:        http://communi.github.io/
 Source0:    %{name}-%{version}.tar.gz
-
-Version:    0.10+lyro_merge
-Release:    alpha
-
+Release:    1
 Requires:   sailfishsilica-qt5 >= 0.10.9
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
@@ -26,10 +24,10 @@ BuildRequires:  pkgconfig(sailfishapp) >= 0.0.10
 BuildRequires:  qt5-qttools-linguist
 
 %description
-Internet Relay Chat (IRC) is a protocol for live interactive Internet text messaging (chat) or synchronous conferencing. It is mainly designed for group communication in discussion forums, called channels, but also allows one-to-one communication via private messages.
+A simple and elegant IRC client for Sailfish OS, based on Qt and the Communi IRC framework.
 
 %prep
-%setup -q
+%autosetup
 
 %build
 %qtc_qmake5
