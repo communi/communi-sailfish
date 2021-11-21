@@ -55,7 +55,7 @@ Page {
                     margins: Theme.paddingLarge
                 }
                 font.pixelSize: Theme.fontSizeSmall
-                text: qsTr("Internet Relay Chat (IRC) is a protocol for live interactive Internet text messaging (chat) or synchronous conferencing. It is mainly designed for group communication in discussion forums, called channels, but also allows one-to-one communication via private messages.")
+                text: AboutData.description
             }
 
             SectionHeader {
