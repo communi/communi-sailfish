@@ -28,4 +28,6 @@ public:
     static QString description();
     static QString version();
     static QString url();
+
+    void setApplicationData() const;
 };

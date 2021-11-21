@@ -6,6 +6,11 @@
 
 #include \"aboutdata.h\"
 
+#include <QDebug>
+#include <QCoreApplication>
+#include <QFile>
+#include <QStandardPaths>
+#include <QRegularExpression>
 
 
 AboutData::AboutData(QObject* parent) : QObject(parent)
@@ -41,4 +46,19 @@ QString AboutData::version()
 QString AboutData::url()
 {
     return QStringLiteral("$$RPM_URL");
+}
+
+void AboutData::setApplicationData() const
+{
+    QCoreApplication *app = QCoreApplication::instance();
+    if (app) {
+        // Remove git appendix name from user facing version
+        app->setApplicationVersion(version().remove(QRegularExpression(\"\\\+.*\")));
+        app->setApplicationName(applicationName());
+        //app->setOrganizationDomain(aboutData.organizationDomain());
+        app->setProperty(\"applicationDisplayName\", displayName());
+        // app->setProperty("desktopFileName", aboutData.desktopFileName());
+    } else {
+        qWarning() << \"Could not initialize the equivalent properties of Q*Application: no instance (yet) existing.\";
+    }
 }

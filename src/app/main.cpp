@@ -115,8 +115,8 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 
     migrateConfig();
 
-    QGuiApplication::setApplicationName(ApplicationName);
-    QGuiApplication::setApplicationVersion(APP_VERSION);
+    aboutData.setApplicationData();
+
     QGuiApplication::setOrganizationName(QString());
     QGuiApplication::setOrganizationDomain(QString());
 
