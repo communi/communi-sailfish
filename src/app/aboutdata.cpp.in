@@ -1,0 +1,44 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+  Copyright (C) 2008-2021 The Communi Project
+*/
+
+
+#include \"aboutdata.h\"
+
+
+
+AboutData::AboutData(QObject* parent) : QObject(parent)
+{
+    return;
+}
+
+QString AboutData::applicationName()
+{
+    return QStringLiteral("$$RPM_NAME");
+}
+QString AboutData::applicationIcon()
+{
+    return QString(applicationName() + \".png\");
+}
+
+QString AboutData::displayName()
+{
+    QString applicationNamewHarbour = applicationName().remove(QStringLiteral(\"harbour-\"));
+    return applicationNamewHarbour.left(1).toUpper()+applicationNamewHarbour.mid(1);
+}
+
+QString AboutData::description()
+{
+    return tr("$$RPM_DESCRIPTION");
+}
+
+QString AboutData::version()
+{
+    return QStringLiteral("$$RPM_VERSION");
+}
+
+QString AboutData::url()
+{
+    return QStringLiteral("$$RPM_URL");
+}

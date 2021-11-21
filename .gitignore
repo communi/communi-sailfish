@@ -15,3 +15,4 @@ release
 .make.cache
 .tmp
 moc_*.cpp
+aboutdata.cpp
