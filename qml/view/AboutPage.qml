@@ -42,6 +42,27 @@ Page {
 
         model: VisualItemModel {
 
+
+            Image {
+                id: communiImage
+                source: "image://theme/" + AboutData.applicationName
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    margins: Theme.paddingLarge
+                }
+
+                fillMode: Image.PreserveAspectFit
+                width: 2/3 * parent.width
+                height: 1/3 * parent.width
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            Qt.openUrlExternally(AboutData.url)
+                        }
+                    }
+            }
+
             PageHeader {
                 title: qsTr("%1 %2").arg(
                     AboutData.displayName).arg(Qt.application.version)
