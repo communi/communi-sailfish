@@ -43,7 +43,8 @@ Page {
         model: VisualItemModel {
 
             PageHeader {
-                title: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
+                title: qsTr("%1 %2").arg(
+                    AboutData.displayName).arg(Qt.application.version)
             }
 
             Label {

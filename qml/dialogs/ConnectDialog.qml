@@ -41,7 +41,7 @@ Dialog {
    // property string defaultQuasselPort: "4242"
     property string defaultNickName: qsTr("Sailor%1").arg(Math.floor(Math.random() * 12345))
     property string defaultUserName: "sailfish"
-    property string defaultRealName: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
+    property string defaultRealName: ("%1 %2").arg(AboutData.displayName).arg(Qt.application.version)
 
     canAccept: !!hostField.text && !!nickNameField.text && !!userNameField.text && !!portField.text
     allowedOrientations: window.allowedOrientations
