@@ -63,9 +63,13 @@ Page {
                     }
             }
 
-            PageHeader {
-                title: qsTr("%1 %2").arg(
-                    AboutData.displayName).arg(Qt.application.version)
+            Label {
+                text: AboutData.displayName + " " + Qt.application.version
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: Theme.fontSizeExtraLarge
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                }
             }
 
             Label {
