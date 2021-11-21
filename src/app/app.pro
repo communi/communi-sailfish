@@ -38,8 +38,8 @@ SOURCES += $$PWD/pluginloader.cpp
 SOURCES += $$PWD/stringfiltermodel.cpp
 SOURCES += $$PWD/settingsproxy.cpp
 
-include(../3rdparty/3rdparty.pri)
-include(../shared/shared.pri)
+include($$top_srcdir/src/3rdparty/3rdparty.pri)
+include($$top_srcdir/src/shared/shared.pri)
 
 !no_resources {
     RESOURCES += ../../harbour-communi.qrc
