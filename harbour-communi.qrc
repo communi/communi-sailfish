@@ -1,7 +1,7 @@
+<!-- -*- xml -*- -->
 <RCC>
     <qresource prefix="/">
         <file>qml/cover/CoverPage.qml</file>
-        <file>qml/dialogs/AboutDialog.qml</file>
         <file>qml/dialogs/ConnectDialog.qml</file>
         <file>qml/dialogs/JoinDialog.qml</file>
         <file>qml/dialogs/NickDialog.qml</file>
@@ -13,6 +13,7 @@
         <file>qml/images/filter.png</file>
         <file>qml/images/warning.png</file>
         <file>qml/settings/settings.qml</file>
+        <file>qml/view/AboutPage.qml</file>
         <file>qml/view/BufferDelegate.qml</file>
         <file>qml/view/BufferListPanel.qml</file>
         <file>qml/view/BufferPage.qml</file>
