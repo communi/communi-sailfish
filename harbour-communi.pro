@@ -15,7 +15,13 @@ OTHER_FILES += \
     rpm/harbour-communi.spec \
     src/app/harbour-communi.desktop \
     src/app/harbour-communi.png \
+    CONTRIBUTORS \
     README.org
+
+misc.files = README.md \
+           CONTRIBUTORS
+misc.path = /usr/share/$${TARGET}
+INSTALLS += misc
 
 TRANSLATIONS = translations/harbour-communi_de.ts \
                translations/harbour-communi_en.ts

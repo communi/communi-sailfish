@@ -18,6 +18,7 @@ class AboutData : public QObject
     Q_PROPERTY(QString description READ description CONSTANT)
     Q_PROPERTY(QString version READ version CONSTANT)
     Q_PROPERTY(QString url READ url CONSTANT)
+    Q_PROPERTY(QString contributors READ contributors CONSTANT)
 
 public:
     AboutData(QObject* parent = nullptr);
@@ -29,5 +30,6 @@ public:
     static QString version();
     static QString url();
 
+    QString contributors() const;
     void setApplicationData() const;
 };

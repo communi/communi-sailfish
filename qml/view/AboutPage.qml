@@ -121,7 +121,7 @@ Page {
             }
 
             SectionHeader {
-                text: qsTr("Developers")
+                text: qsTr("Contributors")
             }
 
             Label {
@@ -133,26 +133,7 @@ Page {
                     margins: Theme.paddingLarge
                 }
                 font.pixelSize: Theme.fontSizeSmall
-                text: "J-P Nurmi &mdash; jpnurmi<br/>
-                       Timur Kristóf &mdash; Venemo<br/>
-                       Robin Burchell &mdash; w00t"
-            }
-
-            SectionHeader {
-                text: qsTr("Artwork")
-            }
-
-            Label {
-                textFormat: Qt.RichText
-                wrapMode: Text.WordWrap
-                anchors {
-                    left: parent ? parent.left : undefined
-                    right: parent ? parent.right : undefined
-                    margins: Theme.paddingLarge
-                }
-                font.pixelSize: Theme.fontSizeSmall
-                text: "Stephan Beyerle &mdash; Morpog<br/>
-                       Stanisław Dac &mdash; stsdc"
+                text: AboutData.contributors
             }
 
             Item { width: 1; height: 1 }
