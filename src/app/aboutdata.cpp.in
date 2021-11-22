@@ -1,0 +1,86 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+  Copyright (C) 2008-2021 The Communi Project
+*/
+
+
+#include \"aboutdata.h\"
+
+#include <QDebug>
+#include <QCoreApplication>
+#include <QFile>
+#include <QStandardPaths>
+#include <QRegularExpression>
+
+
+AboutData::AboutData(QObject* parent) : QObject(parent)
+{
+    return;
+}
+
+QString AboutData::applicationName()
+{
+    return QStringLiteral("$$RPM_NAME");
+}
+QString AboutData::applicationIcon()
+{
+    return QString(applicationName() + \".png\");
+}
+
+QString AboutData::displayName()
+{
+    QString applicationNamewHarbour = applicationName().remove(QStringLiteral(\"harbour-\"));
+    return applicationNamewHarbour.left(1).toUpper()+applicationNamewHarbour.mid(1);
+}
+
+QString AboutData::description()
+{
+    return tr("$$RPM_DESCRIPTION");
+}
+
+QString AboutData::version()
+{
+    return QStringLiteral("$$RPM_VERSION");
+}
+
+QString AboutData::url()
+{
+    return QStringLiteral("$$RPM_URL");
+}
+
+void AboutData::setApplicationData() const
+{
+    QCoreApplication *app = QCoreApplication::instance();
+    if (app) {
+        // Remove git appendix name from user facing version
+        app->setApplicationVersion(version().remove(QRegularExpression(\"\\\+.*\")));
+        app->setApplicationName(applicationName());
+        //app->setOrganizationDomain(aboutData.organizationDomain());
+        app->setProperty(\"applicationDisplayName\", displayName());
+        // app->setProperty("desktopFileName", aboutData.desktopFileName());
+    } else {
+        qWarning() << \"Could not initialize the equivalent properties of Q*Application: no instance (yet) existing.\";
+    }
+}
+
+QString AboutData::contributors() const
+{
+    QString AppDataLocationReadOnly =
+        QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation).last();
+    QString ret;
+
+    QFile file(AppDataLocationReadOnly+\"/CONTRIBUTORS\");
+    if(!file.open(QIODevice::ReadOnly))
+        return ret;
+
+    QTextStream in(&file);
+    while(!in.atEnd()) {
+        QString line = in.readLine();
+        if(!line.startsWith(QStringLiteral(\"#\"))) {
+            ret.append(line + \"<br>\" + \"\\n\");
+        }
+    }
+    file.close();
+
+    return ret;
+}

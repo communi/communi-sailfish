@@ -52,6 +52,7 @@
 #include "messagefilter.h"
 #include "pluginloader.h"
 #include "settingsproxy.h"
+#include "aboutdata.h"
 
 #include <IrcCore>
 #include <IrcModel>
@@ -110,11 +111,12 @@ static void registerCommuniTypes()
 Q_DECL_EXPORT int main(int argc, char* argv[])
 {
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
+    AboutData aboutData(QCoreApplication::instance());
 
     migrateConfig();
 
-    QGuiApplication::setApplicationName(ApplicationName);
-    QGuiApplication::setApplicationVersion(APP_VERSION);
+    aboutData.setApplicationData();
+
     QGuiApplication::setOrganizationName(QString());
     QGuiApplication::setOrganizationDomain(QString());
 
@@ -123,6 +125,7 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 
     QScopedPointer<QQuickView> viewer(SailfishApp::createView());
     viewer->engine()->addImportPath(AppDataLocationReadOnly + "/qml");
+    viewer->rootContext()->setContextProperty("AboutData", &aboutData);
 
     QTranslator translator;
 

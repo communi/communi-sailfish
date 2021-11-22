@@ -1,0 +1,9 @@
+#+TITLE: IRC for Sailfish
+
+The first and foremost IRC client for Sailfish, based on the Communi IRC framework.
+
+* Contact
+
++ IRC channel: #communi on irc.freenode.net
++ Mailing list: communi-sailfish@googlegroups.com
++ Bug reports: https://github.com/communi/communi-sailfish/issues

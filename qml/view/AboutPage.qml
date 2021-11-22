@@ -29,21 +29,47 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
 
-Dialog {
+Page {
     allowedOrientations: window.allowedOrientations
 
     SilicaListView {
         anchors.fill: parent
         spacing: Theme.paddingLarge
 
-        header: DialogHeader {
+        header: PageHeader {
             title: qsTr("About")
         }
 
         model: VisualItemModel {
 
-            PageHeader {
-                title: qsTr("%1 %2").arg(Qt.application.name).arg(Qt.application.version)
+
+            Image {
+                id: communiImage
+                source: "image://theme/" + AboutData.applicationName
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    margins: Theme.paddingLarge
+                }
+
+                fillMode: Image.PreserveAspectFit
+                width: 2/3 * parent.width
+                height: 1/3 * parent.width
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            Qt.openUrlExternally(AboutData.url)
+                        }
+                    }
+            }
+
+            Label {
+                text: AboutData.displayName + " " + Qt.application.version
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: Theme.fontSizeExtraLarge
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                }
             }
 
             Label {
@@ -54,7 +80,7 @@ Dialog {
                     margins: Theme.paddingLarge
                 }
                 font.pixelSize: Theme.fontSizeSmall
-                text: qsTr("Internet Relay Chat (IRC) is a protocol for live interactive Internet text messaging (chat) or synchronous conferencing. It is mainly designed for group communication in discussion forums, called channels, but also allows one-to-one communication via private messages.")
+                text: AboutData.description
             }
 
             SectionHeader {
@@ -95,7 +121,7 @@ Dialog {
             }
 
             SectionHeader {
-                text: qsTr("Developers")
+                text: qsTr("Contributors")
             }
 
             Label {
@@ -107,26 +133,7 @@ Dialog {
                     margins: Theme.paddingLarge
                 }
                 font.pixelSize: Theme.fontSizeSmall
-                text: "J-P Nurmi &mdash; jpnurmi<br/>
-                       Timur Kristóf &mdash; Venemo<br/>
-                       Robin Burchell &mdash; w00t"
-            }
-
-            SectionHeader {
-                text: qsTr("Artwork")
-            }
-
-            Label {
-                textFormat: Qt.RichText
-                wrapMode: Text.WordWrap
-                anchors {
-                    left: parent ? parent.left : undefined
-                    right: parent ? parent.right : undefined
-                    margins: Theme.paddingLarge
-                }
-                font.pixelSize: Theme.fontSizeSmall
-                text: "Stephan Beyerle &mdash; Morpog<br/>
-                       Stanisław Dac &mdash; stsdc"
+                text: AboutData.contributors
             }
 
             Item { width: 1; height: 1 }

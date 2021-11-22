@@ -113,7 +113,7 @@ Dialog {
             MenuItem {
                 text: qsTr("About IRC")
                 onClicked: {
-                    pageStack.push(Qt.resolvedUrl("AboutDialog.qml"))
+                    pageStack.push(Qt.resolvedUrl("../view/AboutPage.qml"))
                 }
             }
             MenuItem { // TODO: remove (system app settings)

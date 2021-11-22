@@ -15,6 +15,7 @@ INCLUDEPATH += ../plugins
 DEPENDPATH += ../plugins
 
 HEADERS += $$PWD/activitymodel.h
+HEADERS += $$PWD/aboutdata.h
 HEADERS += $$PWD/bufferfiltermodel.h
 HEADERS += $$PWD/bufferproxymodel.h
 HEADERS += $$PWD/messagefilter.h
@@ -27,6 +28,7 @@ HEADERS += $$PWD/stringfiltermodel.h
 HEADERS += $$PWD/settingsproxy.h
 
 SOURCES += $$PWD/activitymodel.cpp
+SOURCES += $$PWD/aboutdata.cpp
 SOURCES += $$PWD/bufferfiltermodel.cpp
 SOURCES += $$PWD/bufferproxymodel.cpp
 SOURCES += $$PWD/messagefilter.cpp
@@ -38,8 +40,9 @@ SOURCES += $$PWD/pluginloader.cpp
 SOURCES += $$PWD/stringfiltermodel.cpp
 SOURCES += $$PWD/settingsproxy.cpp
 
-include(../3rdparty/3rdparty.pri)
-include(../shared/shared.pri)
+include($$top_srcdir/src/3rdparty/3rdparty.pri)
+include($$top_srcdir/src/shared/shared.pri)
+include($$top_srcdir/rpmquery.pri)
 
 !no_resources {
     RESOURCES += ../../harbour-communi.qrc
@@ -49,3 +52,10 @@ include(../shared/shared.pri)
     qmlfiles.path = /usr/share/$${TARGET}/qml
     INSTALLS += qmlfiles
 }
+
+QMAKE_SUBSTITUTES = $$PWD/aboutdata.cpp.in
+
+RPM_DESCRIPTION = $$rpmquery_appspec("Description")
+RPM_NAME = $$rpmquery_appspec("Name")
+RPM_VERSION = $$rpmquery_appspec("Version")
+RPM_URL = $$rpmquery_appspec("URL")
