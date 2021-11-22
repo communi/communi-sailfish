@@ -9,7 +9,7 @@
 # << macros
 
 Name:       harbour-communi
-Version:    0.10+lyro_merge
+Version:    0.10
 Summary:    The IRC client for Sailfish OS
 License:    LGPLv2 and BSD
 URL:        http://communi.github.io/
