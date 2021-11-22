@@ -27,7 +27,7 @@
 */
 
 import QtQuick 2.1
-import Communi 3.2
+import Communi 3.5
 import Sailfish.Silica 1.0
 
 FocusScope {
