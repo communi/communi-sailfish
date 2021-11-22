@@ -15,7 +15,7 @@ OTHER_FILES += \
     rpm/harbour-communi.spec \
     src/app/harbour-communi.desktop \
     src/app/harbour-communi.png \
-    README.md
+    README.org
 
 TRANSLATIONS = translations/harbour-communi_de.ts \
                translations/harbour-communi_en.ts
