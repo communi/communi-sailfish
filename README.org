@@ -1,4 +1,4 @@
-#+TITLE: IRC for Sailfish
+#+TITLE: Communi for Sailfish
 
 The first and foremost IRC client for Sailfish, based on the Communi IRC framework.
 
