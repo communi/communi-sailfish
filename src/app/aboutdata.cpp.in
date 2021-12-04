@@ -77,7 +77,7 @@ QString AboutData::contributors() const
     while(!in.atEnd()) {
         QString line = in.readLine();
         if(!line.startsWith(QStringLiteral(\"#\"))) {
-            ret.append(line + \"<br>\" + \"\\n\");
+            ret.append(line.toHtmlEscaped() + \"<br>\" + \"\\n\");
         }
     }
     file.close();
