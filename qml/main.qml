@@ -260,13 +260,21 @@ ApplicationWindow {
         property IrcBuffer buffer
         category: notifyConfig.value ? "x-nemo.messaging.im" : ""
         itemCount: MessageStorage.activeHighlights
+        remoteActions: [
+            {
+                "name": "default"
+            }
+        ]
 
         onClicked: {
-            if (buffer && buffer !== BufferModel.currentBuffer)
+            if (buffer && buffer !== BufferModel.currentBuffer) {
                 scheduler.replace(bufferPage, { buffer: buffer })
+            }
             window.activate()
         }
-        onClosed: buffer = null
+        onClosed: {
+            buffer = null
+        }
     }
 
     Component {
