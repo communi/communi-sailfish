@@ -98,7 +98,7 @@ Page {
                     elide: Text.ElideRight
                     font.pixelSize: Theme.fontSizeSmall
                     truncationMode: TruncationMode.Fade
-                    text: qsTr("IRC channel: %1 on %2").arg("#communi").arg("irc.freenode.net")
+                    text: qsTr("IRC channel: %1 on %2").arg("#communi").arg("irc.libera.chat")
                 }
                 Label {
                     width: parent.width
