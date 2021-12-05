@@ -4,6 +4,6 @@ The first and foremost IRC client for Sailfish, based on the Communi IRC framewo
 
 * Contact
 
-+ IRC channel: #communi on irc.freenode.net
++ IRC channel: #communi on [[ircs://irc.libera.chat/communi][irc.libera.chat]]
 + Mailing list: communi-sailfish@googlegroups.com
 + Bug reports: https://github.com/communi/communi-sailfish/issues
