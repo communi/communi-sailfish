@@ -2,50 +2,43 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
-    <name>AboutDialog</name>
+    <name>AboutData</name>
     <message>
-        <location filename="../qml/dialogs/AboutDialog.qml" line="40"/>
+        <location filename="../src/app/aboutdata.cpp" line="38"/>
+        <source>A simple and elegant IRC client for Sailfish OS, based on Qt and the Communi IRC framework.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AboutPage</name>
+    <message>
+        <location filename="../qml/view/AboutPage.qml" line="40"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/AboutDialog.qml" line="46"/>
-        <source>%1 %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/dialogs/AboutDialog.qml" line="57"/>
-        <source>Internet Relay Chat (IRC) is a protocol for live interactive Internet text messaging (chat) or synchronous conferencing. It is mainly designed for group communication in discussion forums, called channels, but also allows one-to-one communication via private messages.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/dialogs/AboutDialog.qml" line="61"/>
+        <location filename="../qml/view/AboutPage.qml" line="87"/>
         <source>Contact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/AboutDialog.qml" line="75"/>
+        <location filename="../qml/view/AboutPage.qml" line="101"/>
         <source>IRC channel: %1 on %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/AboutDialog.qml" line="83"/>
+        <location filename="../qml/view/AboutPage.qml" line="109"/>
         <source>Mailing list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/AboutDialog.qml" line="92"/>
+        <location filename="../qml/view/AboutPage.qml" line="118"/>
         <source>Bug reports</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/dialogs/AboutDialog.qml" line="98"/>
-        <source>Developers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/dialogs/AboutDialog.qml" line="116"/>
-        <source>Artwork</source>
+        <location filename="../qml/view/AboutPage.qml" line="124"/>
+        <source>Contributors</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -130,11 +123,6 @@
     <message>
         <location filename="../qml/dialogs/ConnectDialog.qml" line="42"/>
         <source>Sailor%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/dialogs/ConnectDialog.qml" line="44"/>
-        <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -778,7 +766,7 @@ highlights</source>
     </message>
     <message>
         <location filename="../qml/dialogs/WelcomeDialog.qml" line="114"/>
-        <source>About IRC</source>
+        <source>About %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -815,12 +803,12 @@ highlights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="360"/>
+        <location filename="../qml/main.qml" line="368"/>
         <source>Add network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="371"/>
+        <location filename="../qml/main.qml" line="379"/>
         <source>Edit network</source>
         <translation type="unfinished"></translation>
     </message>
