@@ -125,7 +125,7 @@ Dialog {
                 width: parent.width
                 label: qsTr("Server address")
                 errorHighlight: !text
-                text: "irc.freenode.net"
+                text: "irc.libera.chat"
                 placeholderText: qsTr("Enter server address")
                 inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText | Qt.ImhUrlCharactersOnly
 
