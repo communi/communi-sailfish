@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
-SUBDIRS += src
+SUBDIRS += src data
 
 !no_submodules {
     !exists(src/shared/shared.pri)|!exists(src/backend/src/src.pro)): \

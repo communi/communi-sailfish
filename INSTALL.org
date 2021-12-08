@@ -4,6 +4,13 @@
 Before you can anything else you should first [[https://docs.sailfishos.org/Tools/Sailfish_SDK/Installation/][install]][fn:1] the Sailfish SDK (or Platform SDK) and have
 read the Sailfish Wiki about building [[https://docs.sailfishos.org/Tools/Sailfish_SDK/Building_packages][packages]][fn:2].
 
+
+** Python-CairoSVG
+
+To build the app need to have python-cairosvg available in your target.
+One source for that is for example [[https://github.com/sailfishos-chum/main][SailfishOS-CHUM]], to add it read the SailfishOS wiki
+under [[https://docs.sailfishos.org/Tools/Sailfish_SDK/Deploying_packages/#deploying-from-repository][Deploying_packages/#deploying-from-repository]].
+
 * Building
 
 Building Communi-Sailish is not different to any Sailfish App.
