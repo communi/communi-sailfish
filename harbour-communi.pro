@@ -27,4 +27,4 @@ TRANSLATIONS = translations/harbour-communi_de.ts \
                translations/harbour-communi_en.ts
                # add new translations here
 
-include(./translate.pri)
+include($$top_srcdir/QMakeFiles/translate.pri)

@@ -42,7 +42,7 @@ SOURCES += $$PWD/settingsproxy.cpp
 
 include($$top_srcdir/src/3rdparty/3rdparty.pri)
 include($$top_srcdir/src/shared/shared.pri)
-include($$top_srcdir/rpmquery.pri)
+include($$top_srcdir/QMakeFiles/rpmquery.pri)
 
 !no_resources {
     RESOURCES += ../../harbour-communi.qrc
