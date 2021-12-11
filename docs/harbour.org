@@ -1,7 +1,7 @@
 #+TITLE: Harbour description
 
 * Title
-IRC
+Communi
 
 * Details in language X
 Details in the language below.
@@ -10,24 +10,16 @@ Can be extended by adding another heading and translating from English.
 ** English
 
 *** Description
-Internet Relay Chat (IRC) is a protocol for live interactive Internet text messaging (chat)
-or synchronous conferencing. It is mainly designed for group communication
-in discussion forums, called channels, but also allows one-to-one communication
-via private messages.
+A simple and elegant IRC client for Sailfish OS, based on Qt and the Communi IRC framework.
+
+If you want report a bug or create a feature request please create report here:
+https://github.com/communi/communi-sailfish/issues/new/choose
 
 *** Summary
-The first and foremost IRC client for Sailfish.
+The first and foremost IRC client for Sailfish OS.
 
 *** Recent changes
-- Improved state saving and restoring once again
-- Implemented a command queue for flood protection
-- Added a setting for fixed-width font (#94)
-- Allow cloning networks (#97)
-- Fixed STATUSMSG handling (#100)
-- Added a setting for sorting views alphabetically vs. by activity (#101)
-- Clarified CTCP requests and replies (#103)
-- Added a setting for disabling notification sounds
-- Reorganized the settings page
+Paste from latest release
 
 * Categorization
 + Category :: Internet
@@ -60,7 +52,7 @@ The first and foremost IRC client for Sailfish.
 
 
 * Contact details
-+ Website :: https://github.com/communi/communi-sailfish/releases
++ Website :: http://communi.github.io
 + Email :: communi-sailfish@googlegroups.com
 + Privacy policy :: ?
 + Open source project URL :: https://github.com/communi/communi-sailfish
