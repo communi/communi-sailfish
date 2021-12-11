@@ -2,6 +2,10 @@
 
 The first and foremost IRC client for Sailfish, based on the Communi IRC framework.
 
+* Building
+
+Please read [[./INSTALL.org]]
+
 * Contact
 
 + IRC channel: #communi on [[ircs://irc.libera.chat/communi][irc.libera.chat]]
