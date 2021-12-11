@@ -1,0 +1,61 @@
+name: Bug Report
+description: File a bug report
+title: "[BUG]: "
+labels: ["BUG", "TRIAGE"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Tell us what happened.
+    validations:
+      required: true
+  - type: textarea
+    id: what-should-happen
+    attributes:
+      label: What did you expect to happen.
+  - type: textarea
+    attributes:
+      label: How reproduce the issue
+      description: Please describe how exactly reproduce the issue step by step.
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: conditions
+    attributes:
+      label: Conditions
+      description: Please describe the conditions for the bug if any
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: |
+        What version of our Communi-Sailfish are you running?
+
+        You can find that out by pulling down the pulley menu and selecting `About Communi`.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Environment
+      description: |
+        Please describe which Sailfish OS version and device you are using.
+        examples:
+          - **OS**: Sailfish OS 4.3 Suomenlinna
+          - **Device**: Sony Xperia 1
+      value: |
+        - OS:
+        - Device:
+      render: markdown
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Attachments or other information
+      description: |
+        Please attach any helpful information's such as screenshots or log files by drag and dropping them into here.
+        If there is anything else provide such as links to other sources you can also write them down here.
