@@ -1,0 +1,30 @@
+name: Feature Request
+description: Create a feature request
+title: "[REQUEST]: "
+labels: ["REQUEST", "TRIAGE", "Enhancement"]
+body:
+  - type: textarea
+    id: what-to-do
+    attributes:
+      label: Problem to solve
+      description: |
+        What are you trying to achieve or which problem are you trying to solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: |
+        How are you going to solve the problem or achieve the goal you describe?
+        Try to define the who/what/why of the opportunity as a user story.
+      placeholder: |
+        As a (who), I want (what), so I can (why/value).
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Futher Details
+      description: |
+        Please provide any further information such as use cases, goals or anything else
+        helps us to understand you better.
