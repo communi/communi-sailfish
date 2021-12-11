@@ -1,0 +1,32 @@
+#+TITLE: Building and installing Communi-Sailfish
+* Prerequisites
+
+Before you can anything else you should first [[https://docs.sailfishos.org/Tools/Sailfish_SDK/Installation/][install]][fn:1] the Sailfish SDK (or Platform SDK) and have
+read the Sailfish Wiki about building [[https://docs.sailfishos.org/Tools/Sailfish_SDK/Building_packages][packages]][fn:2].
+
+* Building
+
+Building Communi-Sailish is not different to any Sailfish App.
+
+To build the app you just run sfkdk (Sailfish SDK):
+
+#+begin_src sh
+sfkdk build
+#+end_src
+
+Or mb2 (Platform SDK):
+
+#+begin_src sh
+mb2 build
+#+end_src
+
+
+* Installing
+
+Follow: https://docs.sailfishos.org/Tools/Sailfish_SDK/Deploying_packages/
+
+* Footnotes
+
+[fn:1] https://docs.sailfishos.org/Tools/Sailfish_SDK/Installation/
+
+[fn:2] https://docs.sailfishos.org/Tools/Sailfish_SDK/Building_packages
