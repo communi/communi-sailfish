@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = harbour-communi
-CONFIG += c++11 sailfishapp
+CONFIG += c++11 sailfishapp_nodata
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x000000
 QT += dbus
 VERSION = 1.0-alpha
@@ -42,7 +42,7 @@ SOURCES += $$PWD/settingsproxy.cpp
 
 include($$top_srcdir/src/3rdparty/3rdparty.pri)
 include($$top_srcdir/src/shared/shared.pri)
-include($$top_srcdir/rpmquery.pri)
+include($$top_srcdir/QMakeFiles/rpmquery.pri)
 
 !no_resources {
     RESOURCES += ../../harbour-communi.qrc

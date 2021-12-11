@@ -22,6 +22,7 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(sailfishapp) >= 0.0.10
 BuildRequires:  qt5-qttools-linguist
+BuildRequires:  python3-cairosvg
 
 %description
 A simple and elegant IRC client for Sailfish OS, based on Qt and the Communi IRC framework.
@@ -41,4 +42,4 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 %{_bindir}/%{name}
 %{_datadir}/%{name}/*
 %attr(644,root,root) %{_datadir}/applications/%{name}.desktop
-%attr(644,root,root) %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
+%attr(644,root,root) %{_datadir}/icons/hicolor/*/apps/%{name}{.png,.svg}
