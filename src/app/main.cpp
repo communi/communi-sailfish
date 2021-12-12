@@ -30,8 +30,6 @@
 #include <QTranslator>
 #include <QQuickView>
 #include <QtQml>
-#include <QFileInfo>
-#include <QDir>
 #include <QStandardPaths>
 
 
@@ -58,9 +56,6 @@
 #include <IrcModel>
 #include <IrcUtil>
 
-const QString ApplicationName = "harbour-communi";
-const QString OrganizationNameName = "harbour-communi";
-
 class SortedUserModel : public IRC_PREPEND_NAMESPACE(IrcUserModel)
 {
 public:
@@ -73,22 +68,6 @@ public:
 IRC_USE_NAMESPACE
 
 
-static void migrateConfig()
-{
-    const QString oldConfig = "harbour-communi/IRC for Sailfish.conf";
-    QString xdgConfigHome = QString::fromLocal8Bit(qgetenv("XDG_CONFIG_HOME"));
-
-    if (xdgConfigHome == nullptr)
-        xdgConfigHome = QString::fromLocal8Bit(qgetenv("HOME")) + "/.config";
-    QString oldConfigFileStr = xdgConfigHome + "/" + oldConfig;
-    QString newConfigFileStr = xdgConfigHome + "/" + ApplicationName + "/" +
-        ApplicationName + ".conf";
-
-    if((!QFileInfo(newConfigFileStr).exists() && !QDir(newConfigFileStr).exists()) &&
-        (QFileInfo(oldConfigFileStr).exists() && !QDir(oldConfigFileStr).exists())) {
-        QFile::rename(oldConfigFileStr, newConfigFileStr);
-    }
-}
 
 
 static void registerCommuniTypes()
@@ -112,8 +91,6 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 {
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     AboutData aboutData(QCoreApplication::instance());
-
-    migrateConfig();
 
     aboutData.setApplicationData();
 

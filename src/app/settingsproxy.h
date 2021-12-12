@@ -29,4 +29,6 @@ private:
     QSettings *m_settings;
     IgnoreManager *m_ignoreManager;
     BufferProxyModel *m_bufferModel;
+
+    static void migrateSettings();
 };
