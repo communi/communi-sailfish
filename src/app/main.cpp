@@ -94,11 +94,9 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 
     aboutData.setApplicationData();
 
-    QGuiApplication::setOrganizationName(QString());
-    QGuiApplication::setOrganizationDomain(QString());
-
     QString AppDataLocationReadOnly =
-        QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation).last();
+        QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation).last().
+        remove("/" + QGuiApplication::organizationDomain());
 
     QScopedPointer<QQuickView> viewer(SailfishApp::createView());
     viewer->engine()->addImportPath(AppDataLocationReadOnly + "/qml");
@@ -109,8 +107,8 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
     if (translator.load(QLocale(),
                         QCoreApplication::applicationName(),
                         QLatin1String("_"),
-                        QStandardPaths::locate(QStandardPaths::AppDataLocation,
-                                               "translations")))
+                        AppDataLocationReadOnly +
+                        "/translations"))
         QCoreApplication::installTranslator(&translator);
 
 
