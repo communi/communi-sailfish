@@ -12,6 +12,7 @@
 #include <QStandardPaths>
 #include <QRegularExpression>
 
+#include <MDesktopEntry>
 
 AboutData::AboutData(QObject* parent) : QObject(parent)
 {
@@ -43,6 +44,14 @@ QString AboutData::version()
     return QStringLiteral("$$RPM_VERSION");
 }
 
+QString AboutData::organizationDomain() const
+{
+    MDesktopEntry entry(QStandardPaths::locate(
+                QStandardPaths::ApplicationsLocation, applicationName() + \".desktop\"));
+    const auto section = QStringLiteral(\"X-Sailjail\");
+    return entry.value(section, \"OrganizationName\");
+}
+
 QString AboutData::url()
 {
     return QStringLiteral("$$RPM_URL");
@@ -55,7 +64,7 @@ void AboutData::setApplicationData() const
         // Remove git appendix name from user facing version
         app->setApplicationVersion(version().remove(QRegularExpression(\"\\\+.*\")));
         app->setApplicationName(applicationName());
-        //app->setOrganizationDomain(aboutData.organizationDomain());
+        app->setOrganizationName(organizationDomain());
         app->setProperty(\"applicationDisplayName\", displayName());
         // app->setProperty("desktopFileName", aboutData.desktopFileName());
     } else {
