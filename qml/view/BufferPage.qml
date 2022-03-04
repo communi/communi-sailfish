@@ -69,7 +69,7 @@ Page {
                 id: pullDownMenu
 
                 MenuItem {
-                    text: qsTr("About IRC")
+                    text: qsTr("About %1").arg(AboutData.displayName)
                     onClicked: pageStack.push(Qt.resolvedUrl("../view/AboutPage.qml"))
                 }
                 MenuItem { // TODO: remove (system app settings)
