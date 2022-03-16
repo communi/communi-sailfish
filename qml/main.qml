@@ -257,8 +257,10 @@ ApplicationWindow {
 
     Notification {
         id: notification
+        appName: AboutData.displayName
         property IrcBuffer buffer
         category: notifyConfig.value ? "x-nemo.messaging.im" : ""
+        appIcon: "image://theme/" + AboutData.applicationName
         itemCount: MessageStorage.activeHighlights
         remoteActions: [
             {
