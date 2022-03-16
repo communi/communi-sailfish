@@ -4,3 +4,8 @@ X-Nemo-Application-Type=silica-qt5
 Name=Communi
 Icon=harbour-communi
 Exec=harbour-communi
+
+[X-Sailjail]
+ApplicationName=harbour-communi
+OrganizationName=chat.communi
+Permissions=Internet;

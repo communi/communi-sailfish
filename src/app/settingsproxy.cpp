@@ -7,17 +7,41 @@
 
 #include <QStringList>
 #include <QCoreApplication>
+#include <QFileInfo>
+#include <QDir>
+#include <QStandardPaths>
 
 
 SettingsProxy::SettingsProxy(BufferProxyModel *bufferModel,
                    IgnoreManager* ignore, QObject* parent)
 {
-    m_settings = new QSettings(QCoreApplication::applicationName(),
-                               QCoreApplication::applicationName(), parent);
+
+    this->migrateSettings();
+
+    m_settings = new QSettings(
+        QStandardPaths::standardLocations(QStandardPaths::AppConfigLocation).first() +
+        "/" + QCoreApplication::applicationName() + ".conf",
+        QSettings::IniFormat,
+        parent);
 
     m_ignoreManager = ignore;
     m_bufferModel = bufferModel;
     this->restoreSettings();
+}
+
+void SettingsProxy::migrateSettings()
+{
+    QString oldConfigFileStr =
+        QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() +
+        "/" + "harbour-communi/IRC for Sailfish.conf";
+    QString newConfigFileStr =
+        QStandardPaths::standardLocations(QStandardPaths::AppConfigLocation).first() +
+        "/" + QCoreApplication::applicationName() + ".conf";
+
+    if((!QFileInfo(newConfigFileStr).exists() && !QDir(newConfigFileStr).exists()) &&
+        (QFileInfo(oldConfigFileStr).exists() && !QDir(oldConfigFileStr).exists())) {
+        QFile::rename(oldConfigFileStr, newConfigFileStr);
+    }
 }
 
 void SettingsProxy::restoreSettings()

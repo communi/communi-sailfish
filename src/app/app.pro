@@ -54,6 +54,7 @@ include($$top_srcdir/QMakeFiles/rpmquery.pri)
 }
 
 QMAKE_SUBSTITUTES = $$PWD/aboutdata.cpp.in
+PKGCONFIG += mlite5
 
 RPM_DESCRIPTION = $$rpmquery_appspec("Description")
 RPM_NAME = $$rpmquery_appspec("Name")
