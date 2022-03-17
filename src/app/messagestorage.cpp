@@ -35,21 +35,30 @@
 #include <QTimerEvent>
 #include <QDebug>
 #include <QDBusConnection>
+#include <QCoreApplication>
 
 IRC_USE_NAMESPACE
 
 class MessageService : public QObject
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "com.communi.irc")
+    Q_CLASSINFO("D-Bus Interface", "chat.communi")
 
 public:
-    MessageService(QObject* parent = 0) : QObject(parent)
+    MessageService(QObject* parent = nullptr) : QObject(parent)
     {
-        if (!QDBusConnection::sessionBus().registerService("com.communi.irc"))
-            qWarning() << "MessageService: failed to register com.communi.irc D-Bus service";
+        if (!QDBusConnection::sessionBus().registerService(
+                QCoreApplication::organizationName() + "."
+                + QCoreApplication::applicationName()))
+            qWarning() << "MessageService: failed to register "
+                       << (QCoreApplication::organizationName() + "."
+                           + QCoreApplication::applicationName())
+                       << " D-Bus object";
         if (!QDBusConnection::sessionBus().registerObject("/", this, QDBusConnection::ExportAllSignals))
-            qWarning() << "MessageService: failed to register com.communi.irc D-Bus object";
+            qWarning() << "MessageService: failed to register "
+                       << (QCoreApplication::organizationName() + "."
+                           + QCoreApplication::applicationName())
+                       << " D-Bus object";
     }
 
 signals:
