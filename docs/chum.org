@@ -1,0 +1,11 @@
+#+TITLE: Chum
+
+* Intro
+
+  This document contains notes regarding the release process of this app to chum.
+
+* Testing-Nightly
+
+  We release communi as a nightly into chum testing.
+  Make sure to have /git/ and /osc/ installed first.
+  After run ~./scripts/release_nightly.sh~ to create a release and push it.
