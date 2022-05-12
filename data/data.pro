@@ -26,6 +26,7 @@ for(size, SIZES) {
     icon$${size}x$${size}.files = \
         $$top_builddir/data/icons/$${size}x$${size}/$${TARGET}.png
     icon$${size}x$${size}.path = /usr/share/icons/hicolor/$${size}x$${size}/apps
+    icon$${size}x$${size}.CONFIG += no_check_exist
     INSTALLS += icon$${size}x$${size}
 }
 
