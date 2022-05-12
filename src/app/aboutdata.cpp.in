@@ -75,7 +75,8 @@ void AboutData::setApplicationData() const
 QString AboutData::contributors() const
 {
     QString AppDataLocationReadOnly =
-        QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation).last();
+        QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation).last().
+        remove(\"/\" + QCoreApplication::organizationDomain());
     QString ret;
 
     QFile file(AppDataLocationReadOnly+\"/CONTRIBUTORS\");
