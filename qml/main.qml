@@ -105,6 +105,7 @@ ApplicationWindow {
                 notification.summary = buffer.title
                 notification.previewBody = message
                 notification.body = ("%1: %2").arg(sender).arg(message)
+                notification.timestamp = timestamp
                 notification.publish()
             }
         }
@@ -120,6 +121,7 @@ ApplicationWindow {
                 notification.previewBody = message
                 notification.body = message
                 notification.publish()
+                notification.timestamp = timestamp
             }
         }
         onActiveHighlightsChanged: {
