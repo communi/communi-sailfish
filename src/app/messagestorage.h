@@ -33,6 +33,7 @@
 #include <QColor>
 #include <QObject>
 #include <QPointer>
+#include <QDateTime>
 #include <IrcGlobal>
 
 class MessageModel;
@@ -76,8 +77,9 @@ signals:
     void added(MessageModel* model);
     void removed(MessageModel* model);
 
-    void missed(IrcBuffer* buffer, const QString& message);
-    void highlighted(IrcBuffer* buffer, const QString& sender, const QString& message);
+    void missed(IrcBuffer* buffer, const QString& message, QDateTime timestamp);
+    void highlighted(IrcBuffer* buffer, const QString& sender, const QString& message,
+                     QDateTime timestamp);
 
     void activeHighlightsChanged(int highlights);
     void firstActiveHighlightChanged();
@@ -89,8 +91,9 @@ protected:
 private slots:
     void updateActiveHighlights();
     void invalidateActiveHighlights();
-    void onMessageMissed(const QString& message);
-    void onMessageHighlighted(const QString& sender, const QString& message);
+    void onMessageMissed(const QString& message, QDateTime timestamp);
+    void onMessageHighlighted(const QString& sender, const QString& message,
+                              QDateTime timestamp);
     void onCurrentBufferChanged(IrcBuffer* buffer);
 
 private:

@@ -63,8 +63,9 @@ public:
 
 signals:
     void activeHighlightsChanged(int highlights);
-    void messageMissed(const QString& sender, const QString& message);
-    void messageHighlighted(const QString& buffer, const QString& sender, const QString& message);
+    void messageMissed(const QString& sender, const QString& message, QDateTime timestamp);
+    void messageHighlighted(const QString& buffer, const QString& sender,
+                            const QString& message, QDateTime timestamp);
 
 private:
     friend class MessageStorage;
@@ -207,26 +208,27 @@ void MessageStorage::invalidateActiveHighlights()
         m_dirty = startTimer(100);
 }
 
-void MessageStorage::onMessageMissed(const QString& message)
+void MessageStorage::onMessageMissed(const QString& message, QDateTime timestamp)
 {
     MessageModel* model = qobject_cast<MessageModel*>(sender());
     if (model) {
         IrcBuffer* buffer = model->buffer();
         if (buffer) {
-            emit missed(buffer, message);
-            emit m_service->messageMissed(buffer->title(), message);
+            emit missed(buffer, message, timestamp);
+            emit m_service->messageMissed(buffer->title(), message, timestamp);
         }
     }
 }
 
-void MessageStorage::onMessageHighlighted(const QString& sender, const QString& message)
+void MessageStorage::onMessageHighlighted(const QString& sender, const QString& message,
+                                          QDateTime timestamp)
 {
     MessageModel* model = qobject_cast<MessageModel*>(QObject::sender());
     if (model) {
         IrcBuffer* buffer = model->buffer();
         if (buffer) {
-            emit highlighted(buffer, sender, message);
-            emit m_service->messageHighlighted(buffer->title(), sender, message);
+            emit highlighted(buffer, sender, message, timestamp);
+            emit m_service->messageHighlighted(buffer->title(), sender, message, timestamp);
         }
     }
 }
