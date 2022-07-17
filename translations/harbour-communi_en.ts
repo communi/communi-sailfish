@@ -4,7 +4,7 @@
 <context>
     <name>AboutData</name>
     <message>
-        <location filename="../src/app/aboutdata.cpp" line="38"/>
+        <location filename="../src/app/aboutdata.cpp" line="39"/>
         <source>A simple and elegant IRC client for Sailfish OS, based on Qt and the Communi IRC framework.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -69,7 +69,7 @@
     <name>BufferPage</name>
     <message>
         <location filename="../qml/view/BufferPage.qml" line="72"/>
-        <source>About IRC</source>
+        <source>About %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -551,7 +551,7 @@ highlights</source>
 <context>
     <name>MessageModel</name>
     <message>
-        <location filename="../src/app/messagemodel.cpp" line="286"/>
+        <location filename="../src/app/messagemodel.cpp" line="287"/>
         <source>Unable to establish a secure connection.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -783,32 +783,12 @@ highlights</source>
 <context>
     <name>main</name>
     <message>
-        <location filename="../qml/main.qml" line="105"/>
-        <source>IRC: highlight on %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/main.qml" line="106"/>
-        <source>%1 on %2:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/main.qml" line="119"/>
-        <source>IRC: message from %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/main.qml" line="120"/>
-        <source>%1 in private:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/main.qml" line="368"/>
+        <location filename="../qml/main.qml" line="371"/>
         <source>Add network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="379"/>
+        <location filename="../qml/main.qml" line="382"/>
         <source>Edit network</source>
         <translation type="unfinished"></translation>
     </message>
