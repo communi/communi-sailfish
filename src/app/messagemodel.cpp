@@ -270,9 +270,10 @@ void MessageModel::receive(IrcMessage* message)
             if (data.hilite || priv) {
                 setActiveHighlights(m_highlights + 1);
                 if (priv)
-                    emit messageMissed(data.plaintext);
+                    emit messageMissed(data.plaintext, message->timeStamp());
                 else
-                    emit messageHighlighted(data.sender, data.plaintext);
+                    emit messageHighlighted(data.sender, data.plaintext,
+                                            message->timeStamp());
             }
             if (!data.event) // TODO: create a setting for this?
                 setBadge(m_badge + 1);

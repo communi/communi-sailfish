@@ -35,27 +35,37 @@
 #include <QTimerEvent>
 #include <QDebug>
 #include <QDBusConnection>
+#include <QCoreApplication>
 
 IRC_USE_NAMESPACE
 
 class MessageService : public QObject
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "com.communi.irc")
+    Q_CLASSINFO("D-Bus Interface", "chat.communi")
 
 public:
-    MessageService(QObject* parent = 0) : QObject(parent)
+    MessageService(QObject* parent = nullptr) : QObject(parent)
     {
-        if (!QDBusConnection::sessionBus().registerService("com.communi.irc"))
-            qWarning() << "MessageService: failed to register com.communi.irc D-Bus service";
+        if (!QDBusConnection::sessionBus().registerService(
+                QCoreApplication::organizationName() + "."
+                + QCoreApplication::applicationName()))
+            qWarning() << "MessageService: failed to register "
+                       << (QCoreApplication::organizationName() + "."
+                           + QCoreApplication::applicationName())
+                       << " D-Bus object";
         if (!QDBusConnection::sessionBus().registerObject("/", this, QDBusConnection::ExportAllSignals))
-            qWarning() << "MessageService: failed to register com.communi.irc D-Bus object";
+            qWarning() << "MessageService: failed to register "
+                       << (QCoreApplication::organizationName() + "."
+                           + QCoreApplication::applicationName())
+                       << " D-Bus object";
     }
 
 signals:
     void activeHighlightsChanged(int highlights);
-    void messageMissed(const QString& sender, const QString& message);
-    void messageHighlighted(const QString& buffer, const QString& sender, const QString& message);
+    void messageMissed(const QString& sender, const QString& message, QDateTime timestamp);
+    void messageHighlighted(const QString& buffer, const QString& sender,
+                            const QString& message, QDateTime timestamp);
 
 private:
     friend class MessageStorage;
@@ -198,26 +208,27 @@ void MessageStorage::invalidateActiveHighlights()
         m_dirty = startTimer(100);
 }
 
-void MessageStorage::onMessageMissed(const QString& message)
+void MessageStorage::onMessageMissed(const QString& message, QDateTime timestamp)
 {
     MessageModel* model = qobject_cast<MessageModel*>(sender());
     if (model) {
         IrcBuffer* buffer = model->buffer();
         if (buffer) {
-            emit missed(buffer, message);
-            emit m_service->messageMissed(buffer->title(), message);
+            emit missed(buffer, message, timestamp);
+            emit m_service->messageMissed(buffer->title(), message, timestamp);
         }
     }
 }
 
-void MessageStorage::onMessageHighlighted(const QString& sender, const QString& message)
+void MessageStorage::onMessageHighlighted(const QString& sender, const QString& message,
+                                          QDateTime timestamp)
 {
     MessageModel* model = qobject_cast<MessageModel*>(QObject::sender());
     if (model) {
         IrcBuffer* buffer = model->buffer();
         if (buffer) {
-            emit highlighted(buffer, sender, message);
-            emit m_service->messageHighlighted(buffer->title(), sender, message);
+            emit highlighted(buffer, sender, message, timestamp);
+            emit m_service->messageHighlighted(buffer->title(), sender, message, timestamp);
         }
     }
 }

@@ -102,10 +102,10 @@ ApplicationWindow {
                 if (feedbackBgConfig.value)
                     feedback.give()
                 notification.buffer = buffer
-                notification.summary = qsTr("IRC: highlight on %1").arg(buffer.title)
-                notification.previewSummary = qsTr("%1 on %2:").arg(sender).arg(buffer.title)
+                notification.summary = buffer.title
                 notification.previewBody = message
-                notification.body = message
+                notification.body = ("%1: %2").arg(sender).arg(message)
+                notification.timestamp = timestamp
                 notification.publish()
             }
         }
@@ -116,11 +116,12 @@ ApplicationWindow {
                 if (feedbackBgConfig.value)
                     feedback.give()
                 notification.buffer = buffer
-                notification.summary = qsTr("IRC: message from %1").arg(buffer.title)
-                notification.previewSummary = qsTr("%1 in private:").arg(buffer.title)
+                notification.summary = buffer.title
+                notification.previewSummary = buffer.title
                 notification.previewBody = message
                 notification.body = message
                 notification.publish()
+                notification.timestamp = timestamp
             }
         }
         onActiveHighlightsChanged: {
@@ -257,8 +258,10 @@ ApplicationWindow {
 
     Notification {
         id: notification
+        appName: AboutData.displayName
         property IrcBuffer buffer
         category: notifyConfig.value ? "x-nemo.messaging.im" : ""
+        appIcon: "image://theme/" + AboutData.applicationName
         itemCount: MessageStorage.activeHighlights
         remoteActions: [
             {
