@@ -30,9 +30,9 @@ for(size, SIZES) {
     INSTALLS += icon$${size}x$${size}
 }
 
-icon_svg.files = $$PWD/artwork/$${TARGET}.svg
-icon_svg.path = /usr/share/icons/hicolor/scalable/apps
-INSTALLS += icon_svg
+#icon_svg.files = $$PWD/artwork/$${TARGET}.svg
+#icon_svg.path = /usr/share/icons/hicolor/scalable/apps
+#INSTALLS += icon_svg
 
 desktop.files = $$PWD/$${TARGET}.desktop
 desktop.path = /usr/share/applications
