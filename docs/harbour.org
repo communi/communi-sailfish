@@ -1,0 +1,58 @@
+#+TITLE: Harbour description
+
+* Title
+Communi
+
+* Details in language X
+Details in the language below.
+Can be extended by adding another heading and translating from English.
+
+** English
+
+*** Description
+A simple and elegant IRC client for Sailfish OS, based on Qt and the Communi IRC framework.
+
+If you want report a bug or create a feature request please create report here:
+https://github.com/communi/communi-sailfish/issues/new/choose
+
+*** Summary
+The first and foremost IRC client for Sailfish OS.
+
+*** Recent changes
+Paste from latest release
+
+* Categorization
++ Category :: Internet
+
+* Visual assets
+** Icon
+
+  [[./../data/artwork/harbour-communi.svg]]
+
+** Screenshots
+
+*** Channel View
+    [[./../data/artwork/harbour_screeshot_1.png]]
+
+*** BufferList
+    [[./../data/artwork/harbour_screeshot_2.png]]
+
+*** Connect Ui
+    [[./../data/artwork/harbour_screeshot_3.png]]
+
+
+** Cover image
+  [[./../data/artwork/harbour-cover.psd]]
+
+** Youtube
+  http://www.youtube.com/watch?v=VJs3599Nj20
+
+** Youku
+
+
+
+* Contact details
++ Website :: http://communi.github.io
++ Email :: communi-sailfish@googlegroups.com
++ Privacy policy :: ?
++ Open source project URL :: https://github.com/communi/communi-sailfish
