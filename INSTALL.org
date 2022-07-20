@@ -43,6 +43,7 @@
 *** Python-CairoSVG
 
  To build the app need to have python-cairosvg available in your target.
+
  One source for that is for example [[https://github.com/sailfishos-chum/main][SailfishOS-CHUM]], to add it read the SailfishOS wiki
  under [[https://docs.sailfishos.org/Tools/Sailfish_SDK/Deploying_packages/#deploying-from-repository][Deploying_packages/#deploying-from-repository]].
 
@@ -50,18 +51,7 @@
 
  Building Communi-Sailish is not different to any Sailfish App.
 
- To build the app you just run sfkdk (Sailfish SDK):
-
- #+begin_src sh
- sfkdk build
- #+end_src
-
- Or mb2 (Platform SDK):
-
- #+begin_src sh
- mb2 build
- #+end_src
-
+ To build the app you just run ~sfkdk build~ (Sailfish SDK) or ~mb2 build~ (Platform SDK):
 
 ** Installing
 
