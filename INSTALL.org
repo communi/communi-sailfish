@@ -21,6 +21,18 @@
    Builds submitted for Harbour are also build on the community OBS.
    These builds can be found at [[https://build.sailfishos.org/package/show/home:Thaodan:forharbour:communi/communi-sailfish][home:Thaodan:forharbour:communi/communi-sailfish]].
 
+
+* Harbour
+  The for-Harbour builds mentioned above are submitted through Harbour and once approved
+  can be installed from there.
+
+* OpenRepos
+  OpenRepos also contains the same Harbour builds but skips the QA process and thous appear
+  earlier.
+
+  OpenRepos packages can be found [[https://openrepos.net/content/thaodan/communi][here]].
+
+
 * Building locally from source
 ** Prerequisites
 
