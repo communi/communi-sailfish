@@ -1,36 +1,59 @@
 #+TITLE: Building and installing Communi-Sailfish
-* Prerequisites
 
-Before you can anything else you should first [[https://docs.sailfishos.org/Tools/Sailfish_SDK/Installation/][install]][fn:1] the Sailfish SDK (or Platform SDK) and have
-read the Sailfish Wiki about building [[https://docs.sailfishos.org/Tools/Sailfish_SDK/Building_packages][packages]][fn:2].
+* Building on/Installing from the community OBS
+  Communi can be build individually on the community OBS and is already done so.
+
+  We build on the OBS using the OBS service tar_git as explained in
+  the SailfishOS wiki under [[https://docs.sailfishos.org/Tools/Sailfish_SDK/Building_packages/#tar_git-packaging-structure][Building_packages/#tar_git-packaging-structure]].
+
+** SailfishOS-Chum
+   Communi is present in SailfishOS-Chum and can be installed from the chum repositories.
+
+   Please read [[https://github.com/sailfishos-chum/main#users-guide=][SailfishOS-Chum/main#users-guide]] to do so.
+
+   Communi is present in Chum two versions:
+
+   - Chum :: Latest stable version (same as in Harbour)
+
+   - Chum-testing :: Latest nightly version build from master (read [[./docs/chum.org]] for more information)
+
+** (For-)Harbour
+   Builds submitted for Harbour are also build on the community OBS.
+   These builds can be found at [[https://build.sailfishos.org/package/show/home:Thaodan:forharbour:communi/communi-sailfish][home:Thaodan:forharbour:communi/communi-sailfish]].
+
+* Building locally from source
+** Prerequisites
+
+ Before you can anything else you should first [[https://docs.sailfishos.org/Tools/Sailfish_SDK/Installation/][install]][fn:1] the Sailfish SDK (or Platform SDK) and have
+ read the Sailfish Wiki about building [[https://docs.sailfishos.org/Tools/Sailfish_SDK/Building_packages][packages]][fn:2].
 
 
-** Python-CairoSVG
+*** Python-CairoSVG
 
-To build the app need to have python-cairosvg available in your target.
-One source for that is for example [[https://github.com/sailfishos-chum/main][SailfishOS-CHUM]], to add it read the SailfishOS wiki
-under [[https://docs.sailfishos.org/Tools/Sailfish_SDK/Deploying_packages/#deploying-from-repository][Deploying_packages/#deploying-from-repository]].
+ To build the app need to have python-cairosvg available in your target.
+ One source for that is for example [[https://github.com/sailfishos-chum/main][SailfishOS-CHUM]], to add it read the SailfishOS wiki
+ under [[https://docs.sailfishos.org/Tools/Sailfish_SDK/Deploying_packages/#deploying-from-repository][Deploying_packages/#deploying-from-repository]].
 
-* Building
+** Building
 
-Building Communi-Sailish is not different to any Sailfish App.
+ Building Communi-Sailish is not different to any Sailfish App.
 
-To build the app you just run sfkdk (Sailfish SDK):
+ To build the app you just run sfkdk (Sailfish SDK):
 
-#+begin_src sh
-sfkdk build
-#+end_src
+ #+begin_src sh
+ sfkdk build
+ #+end_src
 
-Or mb2 (Platform SDK):
+ Or mb2 (Platform SDK):
 
-#+begin_src sh
-mb2 build
-#+end_src
+ #+begin_src sh
+ mb2 build
+ #+end_src
 
 
-* Installing
+** Installing
 
-Follow: https://docs.sailfishos.org/Tools/Sailfish_SDK/Deploying_packages/
+ Follow: https://docs.sailfishos.org/Tools/Sailfish_SDK/Deploying_packages/
 
 * Footnotes
 
