@@ -1,6 +1,6 @@
 [submodule "src/backend"]
 	path = src/backend
-	url = https://github.com/communi/libcommuni.git
+	url = https://github.com/mornfall/libcommuni
 [submodule "src/shared"]
 	path = src/shared
 	url = https://github.com/communi/communi-shared.git
