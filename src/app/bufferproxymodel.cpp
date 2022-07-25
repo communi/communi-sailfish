@@ -36,6 +36,7 @@
 #include <IrcBufferModel>
 #include <IrcConnection>
 #include <IrcBuffer>
+#include <IrcLagTimer>
 
 IRC_USE_NAMESPACE
 
@@ -153,6 +154,9 @@ void BufferProxyModel::insertConnection(int index, IrcConnection* connection)
     connect(model, &IrcBufferModel::removed, this, &BufferProxyModel::bufferRemoved);
     connect(model, &IrcBufferModel::aboutToBeAdded, this, &BufferProxyModel::bufferAboutToBeAdded);
     connect(model, &IrcBufferModel::aboutToBeRemoved, this, &BufferProxyModel::bufferAboutToBeRemoved);
+
+    IrcLagTimer* lag = new IrcLagTimer(model);
+    lag->setConnection(connection, true);
 
     ZncManager* znc = new ZncManager(model);
     znc->setModel(model);
