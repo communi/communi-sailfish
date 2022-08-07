@@ -148,6 +148,8 @@ void BufferProxyModel::addConnection(IrcConnection* connection)
 
 void BufferProxyModel::insertConnection(int index, IrcConnection* connection)
 {
+    connection->network()->setRequestedCapabilities(Irc::supportedCapabilities());
+
     IrcBufferModel* model = new IrcBufferModel(connection);
     model->setSortMethod(static_cast<Irc::SortMethod>(m_method));
     connect(model, &IrcBufferModel::added, this, &BufferProxyModel::bufferAdded);
