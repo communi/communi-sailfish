@@ -167,6 +167,7 @@ void BufferProxyModel::insertConnection(int index, IrcConnection* connection)
     model->add(buffer);
 
     connection->setReconnectDelay(15); // TODO: settings?
+    connection->network()->setRequestedCapabilities(Irc::supportedCapabilities());
     // give bouncers 2 seconds to start joining channels, otherwise a
     // non-bouncer connection is assumed and model state is restored
     model->setJoinDelay(2);
